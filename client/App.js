@@ -1,42 +1,13 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
-import PersonCard from "./component/personCard";
-export default function CategoryPersonListingScreen() {
-  const Persons = [
-    {
-      name: "Sushil Bhattarai",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Golpark",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwaiil",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
-  ];
-
+import { GoogleFonts } from "next-google-fonts";
+import CategoryPersonListingScreen from "./screen/categoryPersonListingScreen";
+import LoginsScreen from "./screen/loginsScreen";
+export default function App() {
   return (
     <View>
-      {Persons.map((persons) => {
-        return (
-          <PersonCard
-            name={persons.name}
-            image={persons.img}
-            address={persons.address}
-            rating={persons.rating}
-            ratingcount={persons.ratingcount}
-          />
-        );
-      })}
+      <GoogleFonts href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" />
+      <LoginsScreen />
     </View>
   );
 }

@@ -1,7 +1,13 @@
-import React from "react"
-import { StyleSheet, Image, Text, View, ImageBackground } from "react-native"
+import React from "react";
+import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 
-export default function PersonCard({name,image,rating,ratingcount,address}) {
+export default function PersonCard({
+  name,
+  image,
+  rating,
+  ratingcount,
+  address,
+}) {
   return (
     <View style={styles.ThemeLightComponentSongsCard}>
       <Image
@@ -9,22 +15,19 @@ export default function PersonCard({name,image,rating,ratingcount,address}) {
         source={{
           uri: image,
           headers: {
-            Accept: '*/*',
+            Accept: "*/*",
           },
-        
-        }
-       
-      
-      }
+        }}
       />
       <View style={styles.AutoLayoutVertical}>
         <Text style={styles.Txt758}>{name}</Text>
         <Text style={styles.multiple1}>
-          ★ {rating}{ratingcount} · {address} · Technician
+          ★ {rating}
+          {ratingcount} · {address} · Technician
         </Text>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginRight: 16,
-    borderRadius:20,
+    borderRadius: 20,
   },
   AutoLayoutVertical: {
     display: "flex",
@@ -74,4 +77,4 @@ const styles = StyleSheet.create({
     seg6: "[object Object]",
     seg7: "[object Object]",
   },
-})
+});

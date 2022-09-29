@@ -1,37 +1,44 @@
-import React from "react"
-import { StyleSheet, Image, Text, View, ImageBackground } from "react-native"
-import PersonCard  from "../component/personCard";
+import React from "react";
+import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+import PersonCard from "../component/personCard";
 export default function CategoryPersonListingScreen() {
-    const Persons =[{"name":"Sushil Bhattarai",
-    "rating":"4.3",
-    "ratingcount":"300",
-    "address":'Golpark',
-    
-    "img":"https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg"},
-   
+  const Persons = [
+    {
+      name: "Sushil Bhattarai",
+      rating: "4.3",
+      ratingcount: "300",
+      address: "Golpark",
 
-    {"name":"RamKumar",
-    "rating":"4.3",
-    "ratingcount":"300",
-    "address":'Butwal',
-    
-    "img":"https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg"},
-   
-//  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
-];
-  
-  
-    return (
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
+
+    {
+      name: "RamKumar",
+      rating: "4.3",
+      ratingcount: "300",
+      address: "Butwal",
+
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
+
+    //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
+  ];
+
+  return (
     <View>
-  {  Persons.map(persons=>{return(
-<PersonCard name={persons.name} image ={persons.img} address={persons.address} rating ={persons.rating} ratingcount ={persons.ratingcount}
-/>  
- )})
-  }
-    
-    
-        </View>
-  )
+      {Persons.map((persons) => {
+        return (
+          <PersonCard
+            name={persons.name}
+            image={persons.img}
+            address={persons.address}
+            rating={persons.rating}
+            ratingcount={persons.ratingcount}
+          />
+        );
+      })}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -55,7 +62,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginRight: 16,
-    borderRadius:20,
+    borderRadius: 20,
   },
   AutoLayoutVertical: {
     display: "flex",
@@ -73,4 +80,4 @@ const styles = StyleSheet.create({
     color: "rgba(33,33,33,1)",
     width: 319,
   },
-})
+});
