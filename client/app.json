@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "onserivc",
+    "slug": "onserivc",
+    "version": "1.0.0",
+    "ios": {
+      "bundleIdentifier": "com.yourcompany.yourappname",
+      "buildNumber": "1.0.0"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
