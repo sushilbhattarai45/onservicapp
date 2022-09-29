@@ -8,7 +8,7 @@ export default function App() {
   return (
     <View>
       <GoogleFonts href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" />
-      <LoginsScreen />
+      <SignUpScreen />
     </View>
   );
 }
