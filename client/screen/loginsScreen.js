@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   View,
+  Pressable,
   ImageBackground,
 } from "react-native";
 import CheckBox from "expo-checkbox";
@@ -49,7 +50,7 @@ export default function LoginScreen() {
               borderRadius: 4,
               height: 50,
             }}
-            placeholder="Phone NUmber"
+            placeholder="Phone Number"
           />
         </View>
         <View
@@ -83,18 +84,17 @@ export default function LoginScreen() {
           <CheckBox
             value={toggleCheckBox}
             onValueChange={() => setToggleCheckBox(!toggleCheckBox)}
-            color={toggleCheckBox ? "#4630EB" : undefined}
+            color={toggleCheckBox ? Colors.primary : undefined}
           />
           <Text style={{ marginLeft: 12 }}>Remember me</Text>
           <Text style={{ position: "absolute", right: 12 }}>Forgot PIN?</Text>
         </View>
       </View>
-      <View style={{ position: "relative", top: 200 }}>
-        <View
+      <View style={{ position: "relative", top: 150 }}>
+        <Pressable
           style={{
             borderColor: Colors.primary,
             borderWidth: 1,
-
             justifyContent: "center",
             height: 50,
           }}
@@ -103,15 +103,25 @@ export default function LoginScreen() {
             style={{
               textAlign: "center",
               fontSize: 20,
+              fontWeight: "bold",
+              color: Colors.primary,
               fontFamily: "Urbanist",
               textAlignVertical: "center",
             }}
           >
             Login
           </Text>
-        </View>
+        </Pressable>
         <Text style={{ marginTop: 8, textAlign: "center" }}>
-          Dont Have an account? Register
+          Dont Have an account?
+          <Text
+            style={{
+              color: Colors.primary,
+            }}
+          >
+            {" "}
+            Register{" "}
+          </Text>
         </Text>
       </View>
     </View>
