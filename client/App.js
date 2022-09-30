@@ -2,9 +2,9 @@ import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 import { GoogleFonts } from "next-google-fonts";
 import CategoryPersonListingScreen from "./screen/categoryPersonListingScreen";
-import LoginsScreen from "./screen/loginsScreen";
-import SignUpScreen from "./screen/signUpScreen";
-import OtpScreen from "./screen/otpScreen";
+import LoginsScreen from "./screen/Auth/loginsScreen";
+import SignUpScreen from "./screen/Auth/signUpScreen";
+import OtpScreen from "./screen/Auth/otpScreen";
 export default function App() {
   return (
     <View>

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
-import { Colors } from "../styles/main";
+import { Colors } from "../../styles/main";
 import { Dropdown } from "react-native-element-dropdown";
 import CheckBox from "expo-checkbox";
 import { Districts } from "../component/district.js";

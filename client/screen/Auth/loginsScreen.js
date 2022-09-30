@@ -9,7 +9,7 @@ import {
   ImageBackground,
 } from "react-native";
 import CheckBox from "expo-checkbox";
-import { Colors } from "../styles/main";
+import { Colors } from "../../styles/main";
 export default function LoginScreen() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
