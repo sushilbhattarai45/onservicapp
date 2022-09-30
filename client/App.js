@@ -4,11 +4,12 @@ import { GoogleFonts } from "next-google-fonts";
 import CategoryPersonListingScreen from "./screen/categoryPersonListingScreen";
 import LoginsScreen from "./screen/loginsScreen";
 import SignUpScreen from "./screen/signUpScreen";
+import OtpScreen from "./screen/otpScreen";
 export default function App() {
   return (
     <View>
       <GoogleFonts href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" />
-      <SignUpScreen />
+      <OtpScreen />
     </View>
   );
 }
