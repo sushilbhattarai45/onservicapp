@@ -5,11 +5,14 @@ import CategoryPersonListingScreen from "./screen/categoryPersonListingScreen";
 import LoginsScreen from "./screen/Auth/loginsScreen";
 import SignUpScreen from "./screen/Auth/signUpScreen";
 import OtpScreen from "./screen/Auth/otpScreen";
+import createNewPinScreen from "./screen/Auth/createNewPinScreen";
+import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
+import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
 export default function App() {
   return (
     <View>
       <GoogleFonts href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" />
-      <OtpScreen />
+      <ForgetPinScreen />
     </View>
   );
 }
