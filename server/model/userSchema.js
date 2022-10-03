@@ -4,6 +4,9 @@ const user = new Mongoose.Schema({
   user_id: {
     type: String,
   },
+  user_prof: {
+    type: String,
+  },
   user_name: {
     type: String,
   },
@@ -26,6 +29,13 @@ const user = new Mongoose.Schema({
     type: String,
   },
   user_dob: {
+    type: String,
+  },
+  user_toc: {
+    date: { type: String },
+    time: { type: String },
+  },
+  user_doc: {
     type: String,
   },
 });
