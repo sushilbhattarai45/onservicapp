@@ -122,16 +122,23 @@ export default function SignUpScreen() {
       var length = vphone.length;
       alert(length);
 
-      if (vpin != vrepin) {
-        setErrorPin("PIN not matched");
+      if (vpin.length && vrepin.length == 4) {
+        if (vpin != vrepin) {
+          setErrorPin("PIN not matched");
+          setFocusColor8("red");
+          setErrorRepin("PIN not matched");
+          setFocusColor9("red");
+        }
+      } else {
+        setErrorPin("PIN must be of 4 digit");
         setFocusColor8("red");
-        setErrorRepin("PIN not matched");
+        setErrorRepin("PIN must be of 4 digit");
         setFocusColor9("red");
       }
 
       if (length == 10) {
-        if (vpin != vrepin) {
-          alert("not matched");
+        if (vpin == vrepin && vpin.length == 4 && vrepin.length == 4) {
+          alert("registration completed");
         }
       } else {
         alert("not");
@@ -539,6 +546,7 @@ export default function SignUpScreen() {
                 setPin(value);
                 setFocusColor8(Colors.primary);
                 setErrorPin("");
+                setErrorRepin("");
                 console.log(pin);
               }}
               placeholder="Enter A New PIN"
@@ -567,7 +575,9 @@ export default function SignUpScreen() {
                 height: 50,
               }}
               onChangeText={(value) => {
+                setFocusColor8(Colors.primary);
                 setRePin(value);
+                setErrorPin("");
                 setErrorRepin("");
                 setFocusColor9(Colors.primary);
                 console.log(repin);
