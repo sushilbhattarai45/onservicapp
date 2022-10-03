@@ -108,60 +108,80 @@ export default function SignUpScreen() {
     vpin,
     vrepin
   ) => {
-    alert(vname.length + "ok");
-    // if (
-    //   vname.length != 0 &&
-    //   vemail.length != 0 &&
-    //   vphone.length != 0 &&
-    //   vdistrict.length != 0 &&
-    //   vstreet.length != 0 &&
-    //   vchoosedgender.length != 0 &&
-    //   vpin.length != 0 &&
-    //   vrepin.length != 0
-    // ) {
-    // } else {
-    if (vname.length == 0) {
-      setFocusColor1("red");
-      setErrorName("Please Enter Your FullName");
-    }
-    if (vemail.length == 0) {
-      // setErrorEmail("Please Enter Your Email address");
+    // alert(vname.length + "ok");
+    if (
+      vname.length != 0 &&
+      vemail.length != 0 &&
+      vphone.length != 0 &&
+      vdistrict.length != 0 &&
+      vstreet.length != 0 &&
+      vchoosedgender.length != 0 &&
+      vpin.length != 0 &&
+      vrepin.length != 0
+    ) {
+      var length = vphone.length;
+      alert(length);
 
-      setFocusColor2("red");
-    }
-    if (vphone.length == 0 || vphone == null) {
-      // setErrorPhone("Please Enter Your Phone Number");
+      if (vpin != vrepin) {
+        setErrorPin("PIN not matched");
+        setFocusColor8("red");
+        setErrorRepin("PIN not matched");
+        setFocusColor9("red");
+      }
 
-      setFocusColor3("red");
-    }
-    if (vdistrict.length == 0) {
-      // setErrorDistrict("Please Choose your district");
-      setFocusColor4("red");
-    }
-    if (vcity.length == 0) {
-      // setErrorCity("Please Choose your city");
+      if (length == 10) {
+        if (vpin != vrepin) {
+          alert("not matched");
+        }
+      } else {
+        alert("not");
+        setErrorPhone("Enter a valid Phone Number");
+        setFocusColor3("red");
+      }
+    } else {
+      if (vname.length == 0) {
+        setFocusColor1("red");
+        setErrorName("Please Enter Your FullName");
+      }
+      if (vemail.length == 0) {
+        setErrorEmail("Please Enter Your Email address");
 
-      setFocusColor5("red");
-    }
-    if (vstreet.length == 0) {
-      // setErrorStreet("Please Enter Your Streetname");
+        setFocusColor2("red");
+      }
+      if (vphone.length == 0 || vphone == null) {
+        setErrorPhone("Please Enter Your Phone Number");
 
-      setFocusColor6("red");
-    }
-    if (vchoosedgender.length == 0) {
-      // setErrorGender("Please choose your gender");
+        setFocusColor3("red");
+      }
+      if (vdistrict.length == 0) {
+        setErrorDistrict("Please Choose your district");
+        setFocusColor4("red");
+      }
+      if (vcity.length == 0) {
+        setErrorCity("Please Choose your city");
 
-      setFocusColor7("red");
-    }
-    if (vpin.length == 0) {
-      // setErrorPin("Please Enter Your PIN");
+        setFocusColor5("red");
+      }
+      if (vstreet.length == 0) {
+        setErrorStreet("Please Enter Your Streetname");
 
-      setFocusColor8("red");
+        setFocusColor6("red");
+      }
+      if (vchoosedgender.length == 0) {
+        setErrorGender("Please choose your gender");
+
+        setFocusColor7("red");
+      }
+      if (vpin.length == 0) {
+        setErrorPin("Please Enter Your PIN");
+
+        setFocusColor8("red");
+      }
+      if (vrepin.length == 0) {
+        setFocusColor9("red");
+        setErrorRepin("Please ReEnter Your PIN");
+      }
     }
-    if (vrepin.length == 0) {
-      setFocusColor9("red");
-    }
-    // }
   };
 
   return (
@@ -226,12 +246,14 @@ export default function SignUpScreen() {
               onChangeText={(value) => {
                 setName(value);
                 setFocusColor1(Colors.primary);
-
+                setErrorName("");
                 console.log(name);
               }}
               placeholder="Full Name"
             />
-            <Text style={{ color: "red" }}>{errorname}</Text>
+            {errorname ? (
+              <Text style={{ color: "red" }}>{errorname}</Text>
+            ) : null}
           </View>
         </View>
         <View>
@@ -254,11 +276,14 @@ export default function SignUpScreen() {
               onChangeText={(value) => {
                 setEmail(value);
                 setFocusColor2(Colors.primary);
-
+                setErrorEmail("");
                 console.log(email);
               }}
               placeholder="Full Name"
             />
+            {erroremail ? (
+              <Text style={{ color: "red" }}>{erroremail}</Text>
+            ) : null}
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
         </View>
@@ -284,11 +309,14 @@ export default function SignUpScreen() {
               onChangeText={(value) => {
                 setPhone(value);
                 setFocusColor3(Colors.primary);
-
+                setErrorPhone("");
                 console.log(phone);
               }}
               placeholder="Phone Number"
             />
+            {errorphone ? (
+              <Text style={{ color: "red" }}>{errorphone}</Text>
+            ) : null}
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
         </View>
@@ -328,7 +356,7 @@ export default function SignUpScreen() {
                 console.log(vcities);
                 setDValue(item.value);
                 setFocusColor4(Colors.primary);
-
+                setErrorDistrict("");
                 setIsFocus(false);
                 setVCities(item.cities);
                 setDistrict(item.label);
@@ -343,6 +371,9 @@ export default function SignUpScreen() {
                 />
               )}
             />
+            {errordistrict ? (
+              <Text style={{ color: "red" }}>{errordistrict}</Text>
+            ) : null}
           </View>
         </View>
 
@@ -380,7 +411,7 @@ export default function SignUpScreen() {
               onBlur={() => setIsFocus(false)}
               onChange={(item) => {
                 setFocusColor5(Colors.primary);
-
+                setErrorCity("");
                 setChoosedCity(item.value);
                 setIsFocus(false);
                 setCity(item.label);
@@ -395,6 +426,9 @@ export default function SignUpScreen() {
                 />
               )}
             />
+            {errorcity ? (
+              <Text style={{ color: "red" }}>{errorcity}</Text>
+            ) : null}
           </View>
         </View>
 
@@ -417,12 +451,15 @@ export default function SignUpScreen() {
               }}
               onChangeText={(value) => {
                 setFocusColor6(Colors.primary);
-
+                setErrorStreet("");
                 setStreet(value);
                 console.log(street);
               }}
               placeholder="Street"
             />
+            {errorstreet ? (
+              <Text style={{ color: "red" }}>{errorstreet}</Text>
+            ) : null}
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
         </View>
@@ -460,7 +497,7 @@ export default function SignUpScreen() {
               onChange={(item) => {
                 console.log(item);
                 setFocusColor7(Colors.primary);
-
+                setErrorGender("");
                 setChoosedGender(item.value);
                 setGValue(item.value);
                 setIsFocus(false);
@@ -474,6 +511,9 @@ export default function SignUpScreen() {
                 />
               )}
             />
+            {errorgender ? (
+              <Text style={{ color: "red" }}>{errorgender}</Text>
+            ) : null}
           </View>
         </View>
         <View>
@@ -498,11 +538,12 @@ export default function SignUpScreen() {
               onChangeText={(value) => {
                 setPin(value);
                 setFocusColor8(Colors.primary);
-
+                setErrorPin("");
                 console.log(pin);
               }}
               placeholder="Enter A New PIN"
             />
+            {errorpin ? <Text style={{ color: "red" }}>{errorpin}</Text> : null}
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
         </View>
@@ -527,11 +568,16 @@ export default function SignUpScreen() {
               }}
               onChangeText={(value) => {
                 setRePin(value);
+                setErrorRepin("");
                 setFocusColor9(Colors.primary);
                 console.log(repin);
               }}
               placeholder="Re-Enter Your PIN"
             />
+            {errorrepin ? (
+              <Text style={{ color: "red" }}>{errorrepin}</Text>
+            ) : null}
+
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
           <View
