@@ -2,7 +2,7 @@ export const check = (req, res) => {
   res.send("hello utsav");
 };
 export const registerUser = (req, res) => {
-  const dta = {
+  const data = {
     user_id: req.body.userId,
     user_name: req.body.username,
     user_email: req.body.email,

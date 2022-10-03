@@ -10,7 +10,7 @@ import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
 import UserProfileScreen from "./screen/userProfileScreen";
 export default function App() {
-  return <UserProfileScreen />;
+  return <SignUpScreen />;
 }
 
 const styles = StyleSheet.create({
