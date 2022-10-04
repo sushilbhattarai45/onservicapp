@@ -13,8 +13,9 @@ export const registerUser = (req, res) => {
     user_district: req.body.gfid,
     user_gender: req.body.gfid,
     user_password: req.body.gfid,
-
     user_toc: req.body.toc,
     user_prof: req.body.image,
   };
+
+  req.send(data.user_name);
 };
