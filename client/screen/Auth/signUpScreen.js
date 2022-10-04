@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
@@ -46,10 +47,9 @@ export default function SignUpScreen() {
       street,
       choosedgender,
       pin,
-      repin
+      repin,
+      setAccepted
     );
-
-    alert(validation);
   }
   //for showing error
   const [errorname, setErrorName] = useState(null); //name
@@ -61,6 +61,7 @@ export default function SignUpScreen() {
   const [errorgender, setErrorGender] = useState(null); //gender
   const [errorpin, setErrorPin] = useState(null); //pin
   const [errorrepin, setErrorRepin] = useState(null); //repin
+  const [errorcheckbox, setErrorCheckBox] = useState(null); //repin
 
   //end
 
@@ -74,6 +75,8 @@ export default function SignUpScreen() {
   const [focuscolor7, setFocusColor7] = useState(Colors.black); //gender
   const [focuscolor8, setFocusColor8] = useState(Colors.black); //pin
   const [focuscolor9, setFocusColor9] = useState(Colors.black); //repin
+  const [focuscolor10, setFocusColor10] = useState(Colors.black); //repin
+
   //end
   //dropdown
 
@@ -93,7 +96,7 @@ export default function SignUpScreen() {
   const [street, setStreet] = useState("");
   const [pin, setPin] = useState("");
   const [repin, setRePin] = useState("");
-  const [accepted, setAccepted] = useState("");
+  const [accepted, setAccepted] = useState(false);
   const [choosedgender, setChoosedGender] = useState("");
   //end
 
@@ -106,12 +109,13 @@ export default function SignUpScreen() {
     vstreet,
     vchoosedgender,
     vpin,
-    vrepin
+    vrepin,
+    vaccepted
   ) => {
     // alert(vname.length + "ok");
     if (
-      vname.length != 0 &&
-      vemail.length != 0 &&
+      vname.length >= 4 &&
+      vemail.length > 4 &&
       vphone.length != 0 &&
       vdistrict.length != 0 &&
       vstreet.length != 0 &&
@@ -120,7 +124,6 @@ export default function SignUpScreen() {
       vrepin.length != 0
     ) {
       var length = vphone.length;
-      alert(length);
 
       if (vpin.length && vrepin.length == 4) {
         if (vpin != vrepin) {
@@ -138,19 +141,23 @@ export default function SignUpScreen() {
 
       if (length == 10) {
         if (vpin == vrepin && vpin.length == 4 && vrepin.length == 4) {
-          alert("registration completed");
+          if (accepted) {
+            alert("done");
+          } else {
+            setFocusColor10("red");
+            setErrorCheckBox("To proceed please accept the privacy policy.");
+          }
         }
       } else {
-        alert("not");
         setErrorPhone("Enter a valid Phone Number");
         setFocusColor3("red");
       }
     } else {
-      if (vname.length == 0) {
+      if (vname.length < 4) {
         setFocusColor1("red");
         setErrorName("Please Enter Your FullName");
       }
-      if (vemail.length == 0) {
+      if (vemail.length < 4) {
         setErrorEmail("Please Enter Your Email address");
 
         setFocusColor2("red");
@@ -169,8 +176,8 @@ export default function SignUpScreen() {
 
         setFocusColor5("red");
       }
-      if (vstreet.length == 0) {
-        setErrorStreet("Please Enter Your Streetname");
+      if (vstreet.length < 3) {
+        setErrorStreet("Please Enter your full  Streetname");
 
         setFocusColor6("red");
       }
@@ -605,26 +612,56 @@ export default function SignUpScreen() {
               }}
               color={toggleCheckBox ? Colors.primary : undefined}
             />
-            <Text style={{ marginLeft: 12, fontSize: 12 }}>
-              I agree to the{" "}
+            {errorcheckbox ? (
               <Text
                 style={{
-                  color: Colors.primary,
-                  textDecorationLine: "underline",
+                  marginLeft: 12,
+                  color: focuscolor10,
+                  fontSize: 12,
                 }}
               >
-                Terms and Condition
-              </Text>{" "}
-              and{" "}
-              <Text
-                style={{
-                  color: Colors.primary,
-                  textDecorationLine: "underline",
-                }}
-              >
-                Privacy Policy
-              </Text>{" "}
-            </Text>
+                I agree to the{" "}
+                <Text
+                  style={{
+                    color: focuscolor10,
+                    textDecorationLine: "underline",
+                  }}
+                >
+                  Terms and Condition
+                </Text>{" "}
+                and{" "}
+                <Text
+                  style={{
+                    color: Colors.focuscolor10,
+
+                    textDecorationLine: "underline",
+                  }}
+                >
+                  Privacy Policy
+                </Text>{" "}
+              </Text>
+            ) : (
+              <Text style={{ marginLeft: 12, fontSize: 12 }}>
+                I agree to the{" "}
+                <Text
+                  style={{
+                    color: Colors.black,
+                    textDecorationLine: "underline",
+                  }}
+                >
+                  Terms and Condition
+                </Text>{" "}
+                and{" "}
+                <Text
+                  style={{
+                    color: Colors.primary,
+                    textDecorationLine: "underline",
+                  }}
+                >
+                  Privacy Policy
+                </Text>{" "}
+              </Text>
+            )}
           </View>
           <Pressable
             style={{
