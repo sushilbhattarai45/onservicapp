@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+
 import { GoogleFonts } from "next-google-fonts";
 import CategoryPersonListingScreen from "./screen/categoryPersonListingScreen";
 import LoginsScreen from "./screen/Auth/loginsScreen";
@@ -9,47 +10,42 @@ import createNewPinScreen from "./screen/Auth/createNewPinScreen";
 import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
 import UserProfileScreen from "./screen/userProfileScreen";
-export default function App() {
-  return <SignUpScreen />;
+
+
+let customFonts = {
+  '800': require('./assets/fonts/Urbanist-Black.ttf'),
+  '600':require("./assets/fonts/Urbanist-Bold.ttf"),
+  // '400':require('./assets/fonts/UrbanistMedium.ttf'),
+  '400':require('./assets/fonts/Urbanist-Regular.ttf')
+  // 'Inter-SemiBoldItalic': 'https://rsms.me/inter/font-files/Inter-SemiBoldItalic.otf?v=3.12',
+};
+
+export default class App extends React.Component {
+  state = {
+    fontsLoaded: false,
+  };
+
+  async _loadFontsAsync() {
+    await Font.loadAsync(customFonts);
+    this.setState({ fontsLoaded: true });
+  }
+
+  componentDidMount() {
+    this._loadFontsAsync();
+  }
+
+  render() {
+    if (!this.state.fontsLoaded) {
+      return null;
+    }
+
+    return (
+      <SignUpScreen/>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  ThemeLightComponentSongsCard: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingLeft: 15,
-    paddingRight: 15,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "rgba(249,249,252,1)",
-    width: 426,
-    height: 77,
-  },
-  MaskGroup: {
-    width: 60,
-    height: 60,
-    marginRight: 16,
-    borderRadius: 20,
-  },
-  AutoLayoutVertical: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    flex: 1,
-    width: 318,
-  },
-  Txt748: {
-    fontSize: 18,
-    fontFamily: "Urbanist, sans-serif",
-    fontWeight: "400",
-    lineHeight: 18,
-    color: "rgba(33,33,33,1)",
-    width: 319,
-  },
-});
+
+// export default function App() {
+//   return <SignUpScreen />;
+// }
