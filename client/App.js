@@ -11,12 +11,11 @@ import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
 import UserProfileScreen from "./screen/userProfileScreen";
 
-
 let customFonts = {
-  '800': require('./assets/fonts/Urbanist-Black.ttf'),
-  '600':require("./assets/fonts/Urbanist-Bold.ttf"),
+  800: require("./assets/fonts/Urbanist-Black.ttf"),
+  600: require("./assets/fonts/Urbanist-Bold.ttf"),
   // '400':require('./assets/fonts/UrbanistMedium.ttf'),
-  '400':require('./assets/fonts/Urbanist-Regular.ttf')
+  400: require("./assets/fonts/Urbanist-Regular.ttf"),
   // 'Inter-SemiBoldItalic': 'https://rsms.me/inter/font-files/Inter-SemiBoldItalic.otf?v=3.12',
 };
 
@@ -25,26 +24,22 @@ export default class App extends React.Component {
     fontsLoaded: false,
   };
 
-  async _loadFontsAsync() {
-    await Font.loadAsync(customFonts);
-    this.setState({ fontsLoaded: true });
-  }
+  // async _loadFontsAsync() {
+  //   await Font.loadAsync(customFonts);
+  //   this.setState({ fontsLoaded: true });
+  // }
 
-  componentDidMount() {
-    this._loadFontsAsync();
-  }
+  // componentDidMount() {
+  //   this._loadFontsAsync();
+  // }
 
   render() {
-    if (!this.state.fontsLoaded) {
-      return null;
-    }
-
-    return (
-      <SignUpScreen/>
-    );
+    // if (!this.state.fontsLoaded) {
+    //   return null;
+    // }
+    return <SignUpScreen />;
   }
 }
-
 
 // export default function App() {
 //   return <SignUpScreen />;

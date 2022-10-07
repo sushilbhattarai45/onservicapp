@@ -1,22 +1,19 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-const user = new Mongoose.Schema({
-  user_id: {
-    type: String,
-  },
-  user_prof: {
-    type: String,
-  },
+const user = new mongoose.Schema({
   user_name: {
     type: String,
   },
   user_email: {
     type: String,
   },
+  user_district: {
+    type: String,
+  },
   user_city: {
     type: String,
   },
-  user_streetname: {
+  user_street: {
     type: String,
   },
   user_contact: {
@@ -28,15 +25,13 @@ const user = new Mongoose.Schema({
   user_password: {
     type: String,
   },
-  user_dob: {
+  user_profileImage: {
     type: String,
   },
+
   user_toc: {
     date: { type: String },
     time: { type: String },
-  },
-  user_doc: {
-    type: String,
   },
 });
 

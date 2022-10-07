@@ -9,17 +9,23 @@ import {
   Pressable,
   Alert,
 } from "react-native";
+import moment from "moment";
 import AntDesign from "react-native-vector-icons/AntDesign";
-
+import validator from "email-validator";
 import { Colors } from "../../styles/main";
 import { Dropdown } from "react-native-element-dropdown";
 import CheckBox from "expo-checkbox";
 import { Districts } from "../../component/district.js";
+import * as DocumentPicker from "expo-document-picker";
+
+import axios from "axios";
 const gender = [
-  { value: "1", label: "Male" },
-  { value: "2", label: "Female" },
-  { value: "3", label: "Other" },
+  { value: "Male", label: "Male" },
+  { value: "Female", label: "Female" },
+  { value: "Other", label: "Other" },
 ];
+
+const BASE_OUR_API_URL = "http://192.168.16.101:3001";
 
 export default function SignUpScreen() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
@@ -48,7 +54,8 @@ export default function SignUpScreen() {
       choosedgender,
       pin,
       repin,
-      setAccepted
+      setAccepted,
+      image
     );
   }
   //for showing error
@@ -98,9 +105,104 @@ export default function SignUpScreen() {
   const [repin, setRePin] = useState("");
   const [accepted, setAccepted] = useState(false);
   const [choosedgender, setChoosedGender] = useState("");
-  //end
+  const [image, setImage] = useState("");
 
-  const validateSignup = (
+  const [file, setFile] = useState(null);
+
+  //end
+  const uploadImage = async (file) => {
+    console.log("the file you have choosed is ");
+    console.log(file);
+    try {
+      // checks if the file is empty
+      if (file === null) {
+        setError({
+          target: "image",
+          message: "Sorry ,There is some error with the profile picture!!",
+        });
+        return null;
+      }
+      // setError(false);
+      // if not empty creating a form data to send to upload the image to the server
+      // alert("ok");
+
+      const imageToUpload = file;
+      const data = new FormData();
+
+      data.append(
+        "profile",
+        {
+          uri: imageToUpload?.uri,
+          name: imageToUpload?.name,
+          type: imageToUpload?.mimeType,
+        },
+        "myfile"
+      );
+
+      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
+
+      const response = await axios(serverUrl, {
+        method: "post",
+        data: data,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response?.data?.fileName;
+    } catch (e) {
+      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
+
+      console.log("trying again " + serverUrl);
+
+      axios(serverUrl, {
+        method: "post",
+        data: data,
+
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log("second error");
+          console.log(error);
+        });
+
+      // setError({
+      //   target: "image",
+      //   message: "Sry, we are having trouble uploading the Profile ",
+      // });
+      return;
+    }
+  };
+  const selectFile = async () => {
+    try {
+      let result = await DocumentPicker.getDocumentAsync({
+        multiple: false,
+        type: "image/*",
+      });
+      setFile(result);
+
+      uploadImage(result).then((res) => {
+        console.log("hello" + { res });
+        setImage(BASE_OUR_API_URL + "/" + res);
+        console.log(image);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+
+    // console.log({ result });
+    // let result = await launchImageLibraryAsync({ mediaTypes: "photo" });
+    // console.log(result);
+    // if (!result.cancelled) {
+    //   setImage(result.uri);
+    // }
+  };
+
+  const validateSignup = async (
     vname,
     vemail,
     vphone,
@@ -110,7 +212,8 @@ export default function SignUpScreen() {
     vchoosedgender,
     vpin,
     vrepin,
-    vaccepted
+    vaccepted,
+    vprof
   ) => {
     // alert(vname.length + "ok");
     if (
@@ -121,16 +224,22 @@ export default function SignUpScreen() {
       vstreet.length != 0 &&
       vchoosedgender.length != 0 &&
       vpin.length != 0 &&
-      vrepin.length != 0
+      vrepin.length != 0 &&
+      vprof.length != 0
     ) {
       var length = vphone.length;
 
       if (vpin.length && vrepin.length == 4) {
-        if (vpin != vrepin) {
-          setErrorPin("PIN not matched");
-          setFocusColor8("red");
-          setErrorRepin("PIN not matched");
-          setFocusColor9("red");
+        if (validator.validate(vemail)) {
+          if (vpin != vrepin) {
+            setErrorPin("PIN not matched");
+            setFocusColor8("red");
+            setErrorRepin("PIN not matched");
+            setFocusColor9("red");
+          }
+        } else {
+          setErrorEmail("Please Enter a valid email");
+          setFocusColor2("red");
         }
       } else {
         setErrorPin("PIN must be of 4 digit");
@@ -142,7 +251,35 @@ export default function SignUpScreen() {
       if (length == 10) {
         if (vpin == vrepin && vpin.length == 4 && vrepin.length == 4) {
           if (accepted) {
-            alert("done");
+            const res = await axios.post(
+              BASE_OUR_API_URL + "/v1/api/user/register",
+              {
+                user_name: vname,
+
+                user_email: vemail,
+                user_contact: vphone,
+                user_district: vdistrict,
+                user_city: vcity,
+                user_street: vstreet,
+                user_gender: vchoosedgender,
+                user_password: vpin,
+                user_profileImage: vprof,
+                user_toc: {
+                  date: moment().format("ll"),
+                  time: moment().format("LT"),
+                },
+              }
+            );
+            const status = res?.data?.statuscode;
+            if (status == 600) {
+              setFocusColor3("red");
+              setErrorPhone("User with this number already Exists");
+            }
+            if (status == 201) {
+              alert("You are good to go");
+            }
+
+            console.log({ response: e });
           } else {
             setFocusColor10("red");
             setErrorCheckBox("To proceed please accept the privacy policy.");
@@ -222,22 +359,41 @@ export default function SignUpScreen() {
 
           <View
             style={{
-              right: 0,
+              right: 20,
               flex: 1,
               flexDirection: "column",
             }}
           >
-            <Image
+            <Pressable onPress={() => selectFile()}>
+              <Image
+                source={
+                  image !== ""
+                    ? {
+                        uri: image,
+                      }
+                    : {
+                        uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
+                      }
+                }
+                style={{
+                  right: 3,
+                  height: 75,
+                  width: 75,
+                  marginTop: 30,
+                  borderRadius: 50,
+                }}
+              />
+            </Pressable>
+            <Text
               style={{
+                marginLeft: 8,
                 marginTop: 10,
-                width: 50,
-                height: 50,
+                textAlign: "center",
+                color: Colors.primary,
               }}
-              source={{
-                uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
-              }}
-            />
-            <Text style={{ marginTop: 10, color: Colors.primary }}>Choose</Text>
+            >
+              Choose
+            </Text>
           </View>
         </View>
         <View style={{ marginTop: 5 }}>
