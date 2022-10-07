@@ -2,7 +2,6 @@ import Express from "express";
 import mongoose from "mongoose";
 const router = Express.Router();
 import { uploadImage, registerUser } from "../controller/userController.js";
-import { connectDB } from "../db/connectDb.js";
 import multer from "multer";
 import { v4 as uuid } from "uuid";
 
