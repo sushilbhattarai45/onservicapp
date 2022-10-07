@@ -148,10 +148,7 @@ export default function SignUpScreen() {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      var a = response?.data?.fileName;
-      alert(a);
-
+      console.log(response?.data?.fileName);
       return response?.data?.fileName;
     } catch (e) {
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
