@@ -49,8 +49,8 @@ export const uploadImage = async (req, res) => {
   console.log("The incomming req is here" + req);
   console.log({ "function File": req.file });
 
-  if (req.file) return res.status(200).json({ fileName: req.file.path });
-
+  if (req.file) {
+    return res.status(200).json({ fileName: req.file.path })};
   return res.status(400).json({ error: "failed to upload file " });
 };
 

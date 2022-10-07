@@ -141,7 +141,7 @@ export default function SignUpScreen() {
       );
 
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-
+      console.log("s"+serverUrl)
       const response = await axios(serverUrl, {
         method: "post",
         data: data,
@@ -172,7 +172,6 @@ export default function SignUpScreen() {
           console.log("second error");
           console.log(error);
         });
-
       // setError({
       //   target: "image",
       //   message: "Sry, we are having trouble uploading the Profile ",

@@ -13,8 +13,5 @@ App.listen(3001, () => {
   console.log("listening on port " + PORT);
 });
 App.use("/uploads", Express.static("uploads"));
-App.use("/", (req, res) => {
-  res.send("ok");
-});
 
 App.use("/v1/api/user", user_route);
