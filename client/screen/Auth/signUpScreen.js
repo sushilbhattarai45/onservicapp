@@ -125,10 +125,10 @@ export default function SignUpScreen() {
       }
       // setError(false);
       // if not empty creating a form data to send to upload the image to the server
-      // alert("ok");
-
+      
       const imageToUpload = file;
       const data = new FormData();
+      // alert("ok");
 
       data.append(
         "profile",
@@ -149,6 +149,8 @@ export default function SignUpScreen() {
           "Content-Type": "multipart/form-data",
         },
       });
+      let fileName = response?.data?.fileName;
+      alert(fileName) 
       return response?.data?.fileName;
     } catch (e) {
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
@@ -187,7 +189,7 @@ export default function SignUpScreen() {
       setFile(result);
 
       uploadImage(result).then((res) => {
-        console.log("hello" + { res });
+        console.log("hello" + res );
         setImage(BASE_OUR_API_URL + "/" + res);
         console.log(image);
       });
@@ -355,7 +357,7 @@ export default function SignUpScreen() {
               letterspacing: -0.02,
             }}
           >
-            Register
+            Register{image}
           </Text>
 
           <View
