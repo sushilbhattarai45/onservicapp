@@ -3,7 +3,7 @@ import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 
 import { GoogleFonts } from "next-google-fonts";
 import CategoryPersonListingScreen from "./screen/categoryPersonListingScreen";
-import LoginsScreen from "./screen/Auth/loginsScreen";
+import LoginScreen from "./screen/Auth/loginsScreen";
 import SignUpScreen from "./screen/Auth/signUpScreen";
 import OtpScreen from "./screen/Auth/otpScreen";
 import createNewPinScreen from "./screen/Auth/createNewPinScreen";
@@ -37,7 +37,7 @@ export default class App extends React.Component {
     // if (!this.state.fontsLoaded) {
     //   return null;
     // }
-    return <SignUpScreen />;
+    return <LoginScreen />;
   }
 }
 

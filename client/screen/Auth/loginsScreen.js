@@ -13,6 +13,32 @@ import { Colors } from "../../styles/main";
 export default function LoginScreen() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
+  const [num, setNum] = useState("");
+  const [pin, setPin] = useState("");
+
+  const [focuscolor1, setFocusColor1] = useState(Colors.black);
+  const [focuscolor2, setFocusColor2] = useState(Colors.black);
+  const [error1, setError1] = useState("");
+  const [error2, setError2] = useState("");
+
+  async function checkLogin() {
+    if (pin.length != 4 || num.length != 10) {
+      if (pin.length != 4 && num.length != 10) {
+        setError1("Please enter a valid Phone Number");
+        setError2("Please enter a valid OTP");
+        setFocusColor2("red");
+        setFocusColor1("red");
+      } else if (pin.length != 4) {
+        setError2("Please enter a valid OTP");
+        setFocusColor2("red");
+      } else {
+        setError1("Please enter a valid Phone Number");
+        setFocusColor1("red");
+      }
+    } else {
+      alert("ok");
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={{ top: "30%" }}>
@@ -46,12 +72,26 @@ export default function LoginScreen() {
               marginTop: 8,
               borderWidth: 1,
               padding: 16,
-              borderColor: Colors.primary,
+              borderColor: focuscolor1,
               borderRadius: 4,
               height: 50,
             }}
+            onChangeText={(value) => {
+              setNum(value);
+              setFocusColor1(Colors.primary);
+            }}
             placeholder="Phone Number"
           />
+
+          {error1 ? (
+            <Text
+              style={{
+                color: "red",
+              }}
+            >
+              {error1}
+            </Text>
+          ) : null}
         </View>
         <View
           style={{
@@ -67,13 +107,38 @@ export default function LoginScreen() {
               marginTop: 8,
               borderWidth: 1,
               padding: 16,
-              borderColor: Colors.primary,
+              borderColor: focuscolor2,
               borderRadius: 4,
               height: 50,
             }}
+            onChangeText={(value) => {
+              setPin(value);
+              setFocusColor2(Colors.primary);
+            }}
             placeholder="Enter Your Pin"
           />
+
+          {error2 ? (
+            <Text
+              style={{
+                color: "red",
+              }}
+            >
+              {error2}
+            </Text>
+          ) : null}
         </View>
+        {/* {error1 ? (
+          <Text
+            style={{
+              textAlign: "center",
+              marginTop: 20,
+              color: "red",
+            }}
+          >
+            {error1}
+          </Text>
+        ) : null} */}
         <View
           style={{
             marginTop: 12,
@@ -98,6 +163,7 @@ export default function LoginScreen() {
             justifyContent: "center",
             height: 50,
           }}
+          onPress={() => checkLogin()}
         >
           <Text
             style={{
