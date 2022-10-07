@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Colors } from "../../styles/main";
+import axios from "axios";
 export default function LoginScreen() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
@@ -36,7 +37,17 @@ export default function LoginScreen() {
         setFocusColor1("red");
       }
     } else {
-      alert("ok");
+      console.log(num + "   " + pin);
+      const res = await axios.get(
+        "http://192.168.16.101:3001" + "/v1/api/user/login",
+        {
+          user_contact: num,
+          user_password: pin,
+        }
+      );
+      console.log(res);
+      const status = res?.data?.statuscode;
+      alert(status);
     }
   }
   return (

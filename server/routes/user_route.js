@@ -1,7 +1,11 @@
 import Express from "express";
 import mongoose from "mongoose";
 const router = Express.Router();
-import { uploadImage, registerUser } from "../controller/userController.js";
+import {
+  uploadImage,
+  registerUser,
+  loginUser,
+} from "../controller/userController.js";
 import { connectDB } from "../db/connectDb.js";
 import multer from "multer";
 import { v4 as uuid } from "uuid";
@@ -9,6 +13,7 @@ import { v4 as uuid } from "uuid";
 // router.route("/").get(connectDB);
 router.route("/register").post(registerUser);
 // router.route("/register/existance").post(userExistance);
+router.route("/login").get(loginUser);
 
 const storage = multer.diskStorage({
   filename: function (req, file, cb) {

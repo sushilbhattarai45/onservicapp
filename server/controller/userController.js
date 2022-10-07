@@ -53,3 +53,20 @@ export const uploadImage = async (req, res) => {
 
   return res.status(400).json({ error: "failed to upload file " });
 };
+
+export const loginUser = async (req, res) => {
+  const { user_contact, user_password } = req.body;
+  try {
+    const loginUser = await userSchema.findOne({
+      user_contact: user_contact,
+      user_password: user_password,
+    });
+    if (!loginUser) {
+      return res.json({ statuscode: 403, message: "user not found" });
+    } else {
+      return res.json({ statuscode: 201, message: "user  exists" });
+    }
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
