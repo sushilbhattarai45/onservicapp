@@ -53,7 +53,6 @@ export const uploadImage = async (req, res) => {
     return res.status(200).json({ fileName: req.file.path })};
   return res.status(400).json({ error: "failed to upload file " });
 };
-
 export const loginUser = async (req, res) => {
   const { user_contact, user_password } = req.body;
   try {
