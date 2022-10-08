@@ -2,7 +2,7 @@ export const Districts = [
   {
     province: "SudurPaschim",
     label: "Achham",
-    value: "1",
+    value: "Achham",
     cities: [
       { label: "Bayalpata" },
       { label: "Bhatakatiya" },
@@ -21,7 +21,7 @@ export const Districts = [
   {
     province: "SudurPaschim",
     label: "Baitadi",
-    value: "2",
+    value: "Baitadi",
     cities: [
       { label: "Dehimandau" },
       { label: "Dhungad" },
