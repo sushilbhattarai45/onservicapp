@@ -65,10 +65,6 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Header/>
-      {/* <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
-      <Search containerStyle={{marginRight:12}}/>
-      <View style={{height:40, width:40, backgroundColor:'blue'}}></View>
-      </View> */}
       <View style={{marginTop:'30%'}}>
         <Text
           style={{
