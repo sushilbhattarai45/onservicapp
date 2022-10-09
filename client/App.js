@@ -37,7 +37,7 @@ export default class App extends React.Component {
     // if (!this.state.fontsLoaded) {
     //   return null;
     // }
-    return <SignUpScreen />;
+    return <LoginScreen />;
   }
 }
 

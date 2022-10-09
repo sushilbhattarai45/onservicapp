@@ -37,17 +37,27 @@ export default function LoginScreen() {
         setFocusColor1("red");
       }
     } else {
-      console.log(num + "   " + pin);
-      const res = await axios.get(
-        "http://192.168.16.101:3001" + "/v1/api/user/login",
+      const res = await axios.post(
+        "http://192.168.16.104:3001/v1/api/user/login",
         {
-          user_contact: num,
-          user_password: pin,
+          'user_num': num,
+          'user_pass': pin,
         }
       );
-      console.log(res);
       const status = res?.data?.statuscode;
-      alert(status);
+      
+      if (status == 200)
+      {
+    
+        alert("done")
+        }
+  
+      else 
+      {
+        setFocusColor2("red");
+        setFocusColor1("red")
+        setError2("Username Password not matched")
+        }
     }
   }
   return (
@@ -89,6 +99,7 @@ export default function LoginScreen() {
             }}
             onChangeText={(value) => {
               setNum(value);
+              setError1("")
               setFocusColor1(Colors.primary);
             }}
             placeholder="Phone Number"
@@ -124,6 +135,8 @@ export default function LoginScreen() {
             }}
             onChangeText={(value) => {
               setPin(value);
+              setFocusColor1(Colors.primary)
+              setError2("")
               setFocusColor2(Colors.primary);
             }}
             placeholder="Enter Your Pin"
