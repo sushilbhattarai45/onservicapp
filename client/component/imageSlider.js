@@ -6,10 +6,8 @@ Text,
 Dimensions,
 Image
 } from 'react-native';
-import ViewSlider from 'react-native-view-slider'
 import { ImageSlider } from "react-native-image-slider-banner";
 
-const { width, height } = Dimensions.get('window');
 
 export default function ImageSliderComponent() {
   return (

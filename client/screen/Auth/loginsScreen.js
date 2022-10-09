@@ -13,6 +13,7 @@ import { Colors } from "../../styles/main";
 import axios from "axios";
 import Header from "../../component/Header";
 import Search from "../../component/searchBar";
+import ImageSliderComponent from "../../component/imageSlider";
 export default function LoginScreen() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
@@ -65,6 +66,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Header/>
+      <ImageSliderComponent/>
       <View style={{marginTop:'30%'}}>
         <Text
           style={{
