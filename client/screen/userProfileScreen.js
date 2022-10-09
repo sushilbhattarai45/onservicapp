@@ -6,8 +6,6 @@ import {
   TextInput,
   View,
   ScrollView,
-  Pressable,
-  ImageBackground,
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Colors } from "../styles/main";

@@ -20,7 +20,6 @@ to close : popup.close
 import React, { Component } from "react";
 import {
   View,
-  Text,
   Modal,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -43,7 +42,7 @@ class ModalPopup extends Component {
     return (
       <Modal
         transparent={true}
-        visible={this.state.visible}
+        visible={show}
         onRequestClose={this.close}
         animationType={animationType}
         style={{ ...styles.modal, backgroundColor: "#0000" }}
