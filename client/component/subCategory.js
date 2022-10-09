@@ -17,7 +17,8 @@ export default function SubCategory({name,image}) {
       <View style={styles.AutoLayoutVertical}>
         <Text style={styles.Txt748}>{name}</Text>
       </View>
-    </View>
+      </View>
+      </View>
   );
 }
 

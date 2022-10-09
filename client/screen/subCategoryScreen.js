@@ -13,8 +13,11 @@ export default function SubCategoryScreen() {
   
   
     return (
-    <View>
-  {  subcategory.map(subcategory=>{return(
+      <View>
+        
+        {subcategory.map(subcategory => {
+          return (
+    
 <SubCategory name={subcategory.name} image ={subcategory.img}
 />  
  )})

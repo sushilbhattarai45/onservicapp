@@ -11,6 +11,8 @@ import {
 import CheckBox from "expo-checkbox";
 import { Colors } from "../../styles/main";
 import axios from "axios";
+ import { Formik } from 'formik';
+
 export default function LoginScreen() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
