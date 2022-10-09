@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   Txt864: {
     fontSize: 16,
-    fontFamily: "Urbanist, sans-serif",
+    fontFamily: "SemiBold",
     fontWeight: "600",
     lineHeight: 22,
     letterSpacing: 0.2,

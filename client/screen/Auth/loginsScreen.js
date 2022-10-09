@@ -70,7 +70,7 @@ export default function LoginScreen() {
       <View style={{marginTop:'30%'}}>
         <Text
           style={{
-            fontFamily: "Urbanist",
+            fontFamily: "Bold",
             fontStyle: "800",
             fontWeight: "bold",
             fontSize: 32,
@@ -200,7 +200,7 @@ export default function LoginScreen() {
               fontSize: 20,
               fontWeight: "bold",
               color: Colors.primary,
-              fontFamily: "Urbanist",
+              fontFamily: "Bold",
               textAlignVertical: "center",
             }}
           >

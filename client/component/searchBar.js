@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Image, View, TextInput } from "react-native";
-import Constants from 'expo-constants';
+import Icon from 'react-native-remix-icon';
+import { Colors } from "../styles/main";
 
 export default function Search({
   containerStyle,
@@ -10,6 +11,7 @@ export default function Search({
 }) {
   return (
     <View style={[styles.Search, { ...containerStyle }]}>
+      {/* <Icon name="search-line" size={18} color={Colors.gray500} /> */}
       <Image
         style={styles.searchIcon}
         source={{
@@ -34,36 +36,33 @@ export default function Search({
 
 const styles = StyleSheet.create({
   Search: {
-    top: Constants.statusBarHeight ,
+    // marginTop: Constants.statusBarHeight ,
     // flex: 1,
-    display: "flex",
+    // display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 16,
     borderRadius: 14,
     backgroundColor: "rgba(255, 255, 255, 1)",
-    height: 50,
+    padding:16,
     width:'100%',
   },
   searchIcon: {
     width: 18,
     height: 18,
-    padding: 12,
     marginRight:12
   },
   rightIcon: {
     width: 18,
     height: 18,
-    padding: 12,
     marginLeft: 12,
   },
   input: {
     flex: 1,
     // height: "100%",
     fontSize: 16,
-    fontFamily: "Urbanist, sans-serif",
-    fontWeight: "400",
+    fontFamily: "Regular",
     color: "rgba(0,0,0,1)",
     // width: "100%",
     // backgroundColor:'blue'

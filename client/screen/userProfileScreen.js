@@ -42,9 +42,8 @@ export default function UserProfileScreen() {
             <Text
               style={{
                 marginTop: 10,
-                fontFamily: "Urbanist",
+                fontFamily: "Black",
                 fontStyle: "normal",
-                fontWeight: "800",
                 fontSize: 20,
                 lineHeight: 38,
                 display: "flex",
@@ -277,7 +276,7 @@ export default function UserProfileScreen() {
             >
               <Text
                 style={{
-                  fontFamily: "Urbanist",
+                  fontFamily: "Bold",
                   fontStyle: "normal",
                   fontWeight: "800",
                   fontSize: 20,

@@ -25,7 +25,7 @@ export default function ForgetPinScreen() {
         <Text
           style={{
             marginTop: 30,
-            fontFamily: "Urbanist",
+            fontFamily: "Black",
             fontStyle: "normal",
             fontWeight: "800",
             fontSize: 20,
@@ -123,7 +123,7 @@ export default function ForgetPinScreen() {
               fontSize: 20,
               fontWeight: "bold",
               color: Colors.primary,
-              fontFamily: "Urbanist",
+              fontFamily: "Bold",
               textAlignVertical: "center",
             }}
           >

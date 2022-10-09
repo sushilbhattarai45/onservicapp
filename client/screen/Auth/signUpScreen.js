@@ -345,7 +345,7 @@ export default function SignUpScreen() {
               textAlignVertical: "center",
               flex: 5,
 
-              fontFamily: "Urbanist",
+              fontFamily: "Bold",
               fontStyle: "normal",
               fontWeight: "800",
               fontSize: 32,
@@ -838,7 +838,7 @@ export default function SignUpScreen() {
                 fontSize: 20,
                 fontWeight: "bold",
                 color: Colors.primary,
-                fontFamily: "Urbanist",
+                fontFamily: "Bold",
                 textAlignVertical: "center",
               }}
             >
@@ -851,7 +851,7 @@ export default function SignUpScreen() {
               fontSize: 15,
               marginTop: 12,
               color: Colors.black,
-              fontFamily: "Urbanist",
+              fontFamily: "Regular",
               textAlignVertical: "center",
             }}
           >
@@ -863,7 +863,7 @@ export default function SignUpScreen() {
                 marginTop: 12,
                 fontWeight: "bold",
                 color: Colors.primary,
-                fontFamily: "Urbanist",
+                fontFamily: "SemiBold",
                 textDecorationLine: "underline",
 
                 textAlignVertical: "center",

@@ -13,6 +13,7 @@ export default function ImageSliderComponent() {
   return (
     <View>
     <ImageSlider 
+    preview={false}
     data={[
         {img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU'},
         {img: 'https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg'},
@@ -26,3 +27,4 @@ export default function ImageSliderComponent() {
     </View>
   );
 };
+

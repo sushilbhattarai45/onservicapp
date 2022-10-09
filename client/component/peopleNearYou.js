@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
   },
   Txt919: {
     fontSize: 12.89,
-    fontFamily: "Urbanist, sans-serif",
-    fontWeight: "400",
+    fontFamily: "Regular",
     lineHeight: 13,
     color: "rgba(33,33,33,1)",
     opacity: 0.9,
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
   },
   Txt250: {
     fontSize: 10.02,
-    fontFamily: "Urbanist, sans-serif",
+    fontFamily: "SemiBold",
     fontWeight: "600",
     letterSpacing: -0.2,
     color: "rgba(253,169,42,1)",

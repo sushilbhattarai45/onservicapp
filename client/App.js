@@ -1,7 +1,8 @@
-import React from "react";
-import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+import React, { useCallback } from "react";
+import {Text, View} from 'react-native';
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
-import { GoogleFonts } from "next-google-fonts";
 import CategoryPersonListingScreen from "./screen/categoryPersonListingScreen";
 import LoginScreen from "./screen/Auth/loginsScreen";
 import SignUpScreen from "./screen/Auth/signUpScreen";
@@ -10,36 +11,32 @@ import createNewPinScreen from "./screen/Auth/createNewPinScreen";
 import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
 import UserProfileScreen from "./screen/userProfileScreen";
-let customFonts = {
-  800: require("./assets/fonts/Urbanist-Black.ttf"),
-  600: require("./assets/fonts/Urbanist-Bold.ttf"),
-  // '400':require('./assets/fonts/UrbanistMedium.ttf'),
-  400: require("./assets/fonts/Urbanist-Regular.ttf"),
-  // 'Inter-SemiBoldItalic': 'https://rsms.me/inter/font-files/Inter-SemiBoldItalic.otf?v=3.12',
-};
+import HomeScreen from "./screen/homeScreen";
+// import SplashScreen from "./screen/splashScreen";
 
-export default class App extends React.Component {
-  state = {
-    fontsLoaded: false,
-  };
+SplashScreen.preventAutoHideAsync();
 
-  // async _loadFontsAsync() {
-  //   await Font.loadAsync(customFonts);
-  //   this.setState({ fontsLoaded: true });
-  // }
+export default function App() {
+  const [fontsLoaded] = useFonts({
+    Black: require("./assets/fonts/Urbanist-Black.ttf"),
+    Bold: require("./assets/fonts/Urbanist-Bold.ttf"),
+    SemiBold:require("./assets/fonts/Urbanist-Medium.ttf"),
+    Regular: require("./assets/fonts/Urbanist-Regular.ttf"),
+  });
 
-  // componentDidMount() {
-  //   this._loadFontsAsync();
-  // }
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
 
-  render() {
-    // if (!this.state.fontsLoaded) {
-    //   return null;
-    // }
-    return <LoginScreen />;
+  if (!fontsLoaded) {
+    return <View><Text>Error</Text></View>;
   }
-}
 
-// export default function App() {
-//   return <SignUpScreen />;
-// }
+  return (
+    <View style={{flex:1}} onLayout={onLayoutRootView}>
+      <HomeScreen />
+    </View>
+  );
+}

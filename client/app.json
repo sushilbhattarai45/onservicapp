@@ -7,8 +7,10 @@
       "bundleIdentifier": "com.yourcompany.yourappname",
       "buildNumber": "1.0.0"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "splash": {
+      "image": "./assets/github.png"
+    },
+
+    "assetBundlePatterns": ["**/*"]
   }
 }
