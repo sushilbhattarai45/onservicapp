@@ -7,7 +7,8 @@ export default function PersonCard({
   rating,
   ratingcount,
   address,
-}) {
+})
+{
   return (
     <View style={styles.ThemeLightComponentSongsCard}>
       <Image

@@ -10,7 +10,7 @@ import createNewPinScreen from "./screen/Auth/createNewPinScreen";
 import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
 import UserProfileScreen from "./screen/userProfileScreen";
-
+import LScreen from "./screen/Auth/lScreen";
 let customFonts = {
   800: require("./assets/fonts/Urbanist-Black.ttf"),
   600: require("./assets/fonts/Urbanist-Bold.ttf"),
@@ -37,7 +37,7 @@ export default class App extends React.Component {
     // if (!this.state.fontsLoaded) {
     //   return null;
     // }
-    return <LoginScreen />;
+    return <OtpScreen />;
   }
 }
 
