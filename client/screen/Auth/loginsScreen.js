@@ -7,6 +7,7 @@ import {
   View,
   Pressable,
   ImageBackground,
+  FlatList,
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Colors } from "../../styles/main";
@@ -43,31 +44,28 @@ export default function LoginScreen() {
       const res = await axios.post(
         "http://192.168.16.104:3001/v1/api/user/login",
         {
-          'user_num': num,
-          'user_pass': pin,
+          user_num: num,
+          user_pass: pin,
         }
       );
       const status = res?.data?.statuscode;
-      
-      if (status == 200)
-      {
-    
-        alert("done")
-        }
-  
-      else 
-      {
+
+      if (status == 200) {
+        alert("done");
+      } else {
         setFocusColor2("red");
-        setFocusColor1("red")
-        setError2("Username Password not matched")
-        }
+        setFocusColor1("red");
+        setError2("Username Password not matched");
+      }
     }
   }
+
   return (
     <View style={styles.container}>
-      <Header/>
-      <ImageSliderComponent/>
-      <View style={{marginTop:'30%'}}>
+      <Header />
+
+      {/* <ImageSliderComponent/> */}
+      <View style={{ marginTop: "30%" }}>
         <Text
           style={{
             fontFamily: "Urbanist",
@@ -104,7 +102,7 @@ export default function LoginScreen() {
             }}
             onChangeText={(value) => {
               setNum(value);
-              setError1("")
+              setError1("");
               setFocusColor1(Colors.primary);
             }}
             placeholder="Phone Number"
@@ -140,8 +138,8 @@ export default function LoginScreen() {
             }}
             onChangeText={(value) => {
               setPin(value);
-              setFocusColor1(Colors.primary)
-              setError2("")
+              setFocusColor1(Colors.primary);
+              setError2("");
               setFocusColor2(Colors.primary);
             }}
             placeholder="Enter Your Pin"
@@ -170,7 +168,7 @@ export default function LoginScreen() {
         ) : null} */}
         <View
           style={{
-            position:"relative",
+            position: "relative",
             marginTop: 12,
             flexDirection: "row",
           }}
@@ -184,7 +182,7 @@ export default function LoginScreen() {
           <Text style={{ position: "absolute", right: 12 }}>Forgot PIN?</Text>
         </View>
       </View>
-      <View style={{ marginTop:50 }}>
+      <View style={{ marginTop: 50 }}>
         <Pressable
           style={{
             borderColor: Colors.primary,
@@ -224,8 +222,8 @@ export default function LoginScreen() {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:Colors.gray200,
+    backgroundColor: Colors.gray200,
     padding: 24,
-    flex:1,
+    flex: 1,
   },
 });

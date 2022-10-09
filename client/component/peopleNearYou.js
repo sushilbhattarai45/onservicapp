@@ -1,23 +1,17 @@
-import React from "react"
-import { StyleSheet, Image, Text, View, ImageBackground } from "react-native"
-
-export default function PeopleNearYou({
-    name,
-    image,
-    
-}) {
+import React from "react";
+import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+import { Colors } from "../styles/main";
+export default function PeopleNearYou({ name, image, works, number }) {
   return (
     <View style={styles.Card}>
       <Image
-        style={styles.MaskGroup}
+        style={styles.image}
         source={{
-          uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/7s66fqpdgn7-I548%3A1377%3B466%3A336?alt=media&token=81994894-928e-42bb-b70a-90f9a78cf263",
+          uri: image,
         }}
       />
-      <Text style={styles.Txt919}>Tilganga Chapagain </Text>
-      <Text style={styles.multiple1}>
-        Air Conditioner Repair · Television Repair · Car Renting
-      </Text>
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.works}>{works}</Text>
       <Image
         style={styles.Ratings}
         source={{
@@ -28,7 +22,7 @@ export default function PeopleNearYou({
         <Text style={styles.Txt250}>Visit</Text>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -44,14 +38,20 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: "rgba(255, 255, 255, 1)",
     width: 177.54,
-    height: 211.47,
   },
-  MaskGroup: {
+  works: {
+    fontSize: 10,
+    textAlign: "center",
+    color: Colors.gray900,
+    marginBottom: 12,
+  },
+  image: {
+    borderRadius: 50,
     width: 94.49,
     height: 94.49,
     marginBottom: 7,
   },
-  Txt919: {
+  name: {
     fontSize: 12.89,
     fontFamily: "Urbanist, sans-serif",
     fontWeight: "400",
@@ -60,14 +60,7 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     marginBottom: 7,
   },
-  multiple1: {
-    main: "Txt217",
-    seg1: "[object Object]",
-    seg2: "[object Object]",
-    seg3: "[object Object]",
-    seg4: "[object Object]",
-    seg5: "[object Object]",
-  },
+
   Ratings: {
     width: 68,
     height: 12,
@@ -89,7 +82,6 @@ const styles = StyleSheet.create({
     borderColor: "rgba(253,169,42,1)",
     opacity: 0.9,
     width: 143.17,
-    height: 22.45,
   },
   Txt250: {
     fontSize: 10.02,
@@ -101,4 +93,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textTransform: "uppercase",
   },
-})
+});

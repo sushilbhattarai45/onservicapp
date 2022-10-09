@@ -22,7 +22,7 @@ export default function PersonCard({
       />
       <View style={styles.AutoLayoutVertical}>
         <Text style={styles.Txt758}>{name}</Text>
-        <Text style={styles.multiple1}>
+        <Text style={styles.works}>
           ★ {rating}
           {ratingcount} · {address} · Technician
         </Text>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     width: 299,
     marginBottom: 10,
   },
-  multiple1: {
+  works: {
     main: "Txt884",
     seg1: "[object Object]",
     seg2: "[object Object]",
