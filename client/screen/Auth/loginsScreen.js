@@ -11,8 +11,8 @@ import {
 import CheckBox from "expo-checkbox";
 import { Colors } from "../../styles/main";
 import axios from "axios";
- import { Formik } from 'formik';
-
+import Header from "../../component/Header";
+import Search from "../../component/searchBar";
 export default function LoginScreen() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
@@ -64,7 +64,12 @@ export default function LoginScreen() {
   }
   return (
     <View style={styles.container}>
-      <View style={{ top: "30%" }}>
+      <Header/>
+      {/* <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+      <Search containerStyle={{marginRight:12}}/>
+      <View style={{height:40, width:40, backgroundColor:'blue'}}></View>
+      </View> */}
+      <View style={{marginTop:'30%'}}>
         <Text
           style={{
             fontFamily: "Urbanist",
@@ -167,8 +172,8 @@ export default function LoginScreen() {
         ) : null} */}
         <View
           style={{
+            position:"relative",
             marginTop: 12,
-            display: "flex",
             flexDirection: "row",
           }}
         >
@@ -181,7 +186,7 @@ export default function LoginScreen() {
           <Text style={{ position: "absolute", right: 12 }}>Forgot PIN?</Text>
         </View>
       </View>
-      <View style={{ position: "relative", top: 150 }}>
+      <View style={{ marginTop:50 }}>
         <Pressable
           style={{
             borderColor: Colors.primary,
@@ -221,7 +226,8 @@ export default function LoginScreen() {
 }
 const styles = StyleSheet.create({
   container: {
-    margin: 24,
-    display: "flex",
+    backgroundColor:Colors.gray200,
+    padding: 24,
+    flex:1,
   },
 });

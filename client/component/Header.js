@@ -1,30 +1,31 @@
 import React from "react"
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native"
+import Constants from 'expo-constants';
 
-export default function Frame23({headerText=<Text style={styles.headerText}> hello</Text>, onPressButton}) {
+export default function Header({headerText, onPressIcon, icon}) {
   return (
-    <View style={styles.Frame23}>
+    <View style={styles.header}>
       <Image
-        style={styles.IconlyLightOutlineArrowLeft}
+        style={styles.icon}
         source={{
           uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ag65kgjdi0n-184%3A1078?alt=media&token=643549ba-f04f-47ae-b002-4d48e255f978",
         }}
       />
-     {headerText}
+     <Text style={styles.headerText}>{headerText}</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  Frame23: {
-    top:100,
+  header: {
+    top:Constants.statusBarHeight,
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
     height: 28,
   },
-  IconlyLightOutlineArrowLeft: {
+  icon: {
     width: 28,
     height: 28,
     marginRight: 12,

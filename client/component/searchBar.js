@@ -1,23 +1,24 @@
 import React from 'react';
-import { StyleSheet, Image, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Image, View, TextInput } from 'react-native';
 
-export default function Search() {
+export default function Search({containerStyle, inputStyle}) {
   return (
-      <View style={styles.Search}>
+      <View style={[styles.Search, {...containerStyle}]}>
         <Image
-          style={styles.IconlyLightOutlineSearch}
+          style={styles.searchIcon}
           source={{
             uri: 'https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/etttlbocgw6-114%3A314?alt=media&token=3935a084-a9ce-4db5-b2df-b937ddc67f63',
           }}
         />
-        <TextInput style={styles.Txt597} placeholder="Search for services" />
+        <TextInput style={[styles.input, {...inputStyle}]} placeholder="Search for services" />
       </View>
   );
 }
 
 const styles = StyleSheet.create({
   Search: {
-    top:24,
+    // top:24,
+    flex:1,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -26,20 +27,21 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     backgroundColor: 'rgba(255, 255, 255, 1)',
     height: 50,
-    width:'100%',
+    // width:'100%',
   },
-  IconlyLightOutlineSearch: {
+  searchIcon: {
     width: 18,
     height: 18,
     marginRight: 12,
   },
-  Txt597: {
+  input: {
     flex:1,
     height:'100%',
     fontSize: 16,
     fontFamily: 'Urbanist, sans-serif',
     fontWeight: '400',
     color: 'rgba(0,0,0,1)',
-    backgroundColor:'blue'
+    width:'100%',
+    // backgroundColor:'blue'
   },
 });
