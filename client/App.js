@@ -22,6 +22,7 @@ export default function App() {
     Bold: require("./assets/fonts/Urbanist-Bold.ttf"),
     SemiBold:require("./assets/fonts/Urbanist-Medium.ttf"),
     Regular: require("./assets/fonts/Urbanist-Regular.ttf"),
+    remixicon: require("./assets/fonts/remixicon.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {

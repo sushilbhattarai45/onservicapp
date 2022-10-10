@@ -14,6 +14,8 @@ import Constants from "expo-constants";
 import CategoryCard from "../component/categoryCard";
 import Button from "../component/buttonComponent";
 import SubCategoryGroupCard from "../component/subCategoryGroupCard";
+import ImageSliderComponent from "../component/imageSlider";
+import Icon from "../component/Icon";
 
 const wWidth = Dimensions.get("window").width;
 
@@ -34,16 +36,11 @@ const HomeScreen = () => {
             <Text style={styles.userName}>Hey Sanskar!</Text>
             <Text style={styles.userNeedHelp}>Need help?</Text>
           </View>
-          <Image
-            style={{ width: 18, height: 18 }}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/etttlbocgw6-114%3A314?alt=media&token=3935a084-a9ce-4db5-b2df-b937ddc67f63",
-            }}
-          />
+          <Icon name="qr-code-line" size={24} color="white"/>
         </View>
         <View style={{ paddingHorizontal: 24 }}>
           <Search />
-        </View>
+        </View>  
 
         {/* Categories */}
         <View style={styles.categoriesContainer}>
@@ -72,6 +69,34 @@ const HomeScreen = () => {
         <View style={styles.subCategoriesContainer}>
           <Text style={styles.subCategoriesContainerHeading}>
             Electrician, Carpenter & Plumber
+          </Text>
+          <View style={{ alignItems: "center" }}>
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+              <SubCategoryGroupCard />
+              <SubCategoryGroupCard containerStyle={{ marginLeft: 16 }} />
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 16,
+              }}
+            >
+              <SubCategoryGroupCard />
+              <SubCategoryGroupCard containerStyle={{ marginLeft: 16 }} />
+            </View>
+            <View style={{ width: 150, marginTop: 24 }}>
+              <Button label={"View All"} />
+            </View>
+          </View>
+        </View>
+        {/* Slider */}
+        <ImageSliderComponent/>
+
+        {/* Sub Categorie */}
+        <View style={styles.subCategoriesContainer}>
+          <Text style={styles.subCategoriesContainerHeading}>
+            Newly added Services
           </Text>
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>

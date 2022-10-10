@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Image, View, TextInput } from "react-native";
-import Icon from 'react-native-remix-icon';
+import Icon from "./Icon";
 import { Colors } from "../styles/main";
 
 export default function Search({
@@ -11,24 +11,13 @@ export default function Search({
 }) {
   return (
     <View style={[styles.Search, { ...containerStyle }]}>
-      {/* <Icon name="search-line" size={18} color={Colors.gray500} /> */}
-      <Image
-        style={styles.searchIcon}
-        source={{
-          uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/etttlbocgw6-114%3A314?alt=media&token=3935a084-a9ce-4db5-b2df-b937ddc67f63",
-        }}
-      />
+      <Icon name="search-2-line" size={20} color={Colors.gray500} style={styles.searchIcon} />
       <TextInput
         style={[styles.input, { ...inputStyle }]}
         placeholder="Search for services"
       />
       {rightIcon && (
-        <Image
-          style={styles.rightIcon}
-          source={{
-            uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/etttlbocgw6-114%3A314?alt=media&token=3935a084-a9ce-4db5-b2df-b937ddc67f63",
-          }}
-        />
+        <Icon name={rightIcon} size={20} color={Colors.gray500} />
       )}
     </View>
   );
@@ -49,13 +38,9 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   searchIcon: {
-    width: 18,
-    height: 18,
     marginRight:12
   },
   rightIcon: {
-    width: 18,
-    height: 18,
     marginLeft: 12,
   },
   input: {
