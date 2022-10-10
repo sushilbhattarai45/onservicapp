@@ -10,7 +10,6 @@ import OtpScreen from "./screen/Auth/otpScreen";
 import createNewPinScreen from "./screen/Auth/createNewPinScreen";
 import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
-import People from "./screen/peoplenearScreen";
 import UserProfileScreen from "./screen/userProfileScreen";
 import HomeScreen from "./screen/homeScreen";
 // import SplashScreen from "./screen/splashScreen";

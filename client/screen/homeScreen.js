@@ -29,6 +29,22 @@ const Persons = [
 
     img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
   },
+  {
+    name: "Sushil Bhattarai",
+    works: "Ac Repair, Carpenter, Network Repair, Electrician",
+    address: "Golpark",
+    number: "9742993345",
+
+    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+  },
+  {
+    name: "Sushil Bhattarai",
+    works: "Ac Repair, Carpenter, Network Repair, Electrician",
+    address: "Golpark",
+    number: "9742993345",
+
+    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+  },
 
   {
     name: "RamKumar",
@@ -119,7 +135,7 @@ const HomeScreen = () => {
             </View>
           </View>
         </View>
-        {/* Slider */}
+        {/* Add */}
         <ImageSliderComponent />
 
         {/* Sub Categorie */}
@@ -147,6 +163,51 @@ const HomeScreen = () => {
             </View>
           </View>
         </View>
+
+        {/* Add */}
+        <ImageSliderComponent />
+
+        {/* Services Near you */}
+        <View>
+          <Text
+            style={[
+              styles.subCategoriesContainerHeading,
+              { marginTop: 32, paddingHorizontal: 24 },
+            ]}
+          >
+            Services Near You
+          </Text>
+          <FlatList
+            style={{ marginBottom: 32 }}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={Persons}
+            renderItem={({ item, index }) => {
+              let isEnd = index === Persons.length - 1;
+              return (
+                <CategoryCard
+                  containerStyle={{
+                    marginLeft: index === 0 ? 24 : 0,
+                    marginRight: isEnd ? 24 : 0,
+                  }}
+                />
+              );
+            }}
+            ItemSeparatorComponent={() => {
+              return (
+                <View
+                  style={{
+                    height: "100%",
+                    width: 20,
+                    backgroundColor: Colors.gray200,
+                  }}
+                />
+              );
+            }}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+
         {/* People near us */}
         <View>
           <Text
@@ -158,7 +219,7 @@ const HomeScreen = () => {
             People Near You
           </Text>
           <FlatList
-            style={{marginBottom:32}}
+            style={{ marginBottom: 32 }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             data={Persons}

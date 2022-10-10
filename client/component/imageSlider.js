@@ -19,7 +19,9 @@ export default function ImageSliderComponent() {
     onItemChanged={(item) => console.log("item", item)}
     closeIconColor="#fff"
     timer={5000}
-    activeIndicatorStyle={{backgroundColor:Colors.white}}
+    indicatorContainerStyle={{bottom:-10}}
+    inActiveIndicatorStyle={{opacity:.5}}
+    activeIndicatorStyle={{backgroundColor:Colors.primary,opacity:.9 }}
     caroselImageStyle={{ resizeMode: 'cover', height:250 }}
 
 />
