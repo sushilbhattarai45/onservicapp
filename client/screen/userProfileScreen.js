@@ -6,26 +6,56 @@ import {
   TextInput,
   View,
   ScrollView,
+  FlatList,
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Colors } from "../styles/main";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import PeopleNearYou from "../component/peopleNearYou";
 export default function UserProfileScreen() {
+  const Persons = [
+    {
+      name: "Sushil Bhattarai",
+      works: "Ac Repair, Carpenter, Network Repair, Electrician",
+      address: "Golpark",
+      number: "9742993345",
+
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
+
+    {
+      name: "RamKumar",
+      works: "Ac Repair, Carpenter, Network Repair, Electrician",
+      address: "Butwal",
+      number: "9742993345",
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
+
+    {
+      name: "RamKumar",
+      works: "Ac Repair, Carpenter, Network Repair, Electrician",
+      address: "Butwal",
+      number: "9742993345",
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
+    //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
+  ];
+
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: Colors.gray200 }}>
       <View
         style={{
           flex: 1,
           display: "flex",
-
+          backgroundColor: Colors.gray200,
           flexDirection: "column",
         }}
       >
         <View
           style={{
-            flex: 1.9,
+            flex: 1.5,
 
             backgroundColor: Colors.primary,
             borderBottomEndRadius: 20,
@@ -35,7 +65,7 @@ export default function UserProfileScreen() {
           <View
             style={{
               paddingBottom: 20,
-              marginTop: 50,
+              marginTop: 20,
               marginLeft: 30,
             }}
           >
@@ -132,7 +162,9 @@ export default function UserProfileScreen() {
             </View>
           </View>
         </View>
-        <View style={{ display: "flex", flex: 3, backgroundColor: "white" }}>
+        <View
+          style={{ display: "flex", flex: 3, backgroundColor: Colors.gray200 }}
+        >
           <View
             style={{
               margin: 30,
@@ -288,6 +320,37 @@ export default function UserProfileScreen() {
               >
                 People Near You{" "}
               </Text>
+              <View>
+                <FlatList
+                  style={{
+                    marginTop: 15,
+                  }}
+                  //   style={styles.videos_flatList}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  data={Persons}
+                  renderItem={({ item }) => (
+                    <PeopleNearYou
+                      name={item.name}
+                      number={item.number}
+                      image={item.img}
+                      works={item.works}
+                    />
+                  )}
+                  ItemSeparatorComponent={() => {
+                    return (
+                      <View
+                        style={{
+                          height: "100%",
+                          width: 20,
+                          backgroundColor: Colors.gray200,
+                        }}
+                      />
+                    );
+                  }}
+                  keyExtractor={(item, index) => index.toString()}
+                />
+              </View>
             </View>
           </View>
         </View>
