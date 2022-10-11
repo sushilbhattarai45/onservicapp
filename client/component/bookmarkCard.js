@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import Icon from "../component/Icon";
 
-export default function PersonCard({
+export default function BookMarkCard({
   name,
   image,
   rating,
@@ -35,7 +37,16 @@ export default function PersonCard({
             justifyContent: "center",
             alignItems: "center",
           }}
-        ></View>
+        >
+          <Icon
+            style={{
+              alignSelf: "center",
+            }}
+            name="bookmark-2-fill"
+            size={24}
+            color={Colors.primary}
+          />
+        </View>
       </View>
     </View>
   );
@@ -50,9 +61,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 7,
     paddingBottom: 7,
-    paddingLeft: 15,
     paddingRight: 15,
-    backgroundColor: "rgba(255, 255, 255, 1)",
+
+    backgroundColor: "white",
     padding: 10,
   },
   MaskGroup: {
@@ -66,10 +77,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
+    alignContent: "center",
+
     flex: 1,
   },
   Txt758: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: "Regular",
     fontWeight: "400",
     lineHeight: 18,
@@ -78,6 +91,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   works: {
+    fontSize: 12,
     main: "Txt884",
     seg1: "[object Object]",
     seg2: "[object Object]",

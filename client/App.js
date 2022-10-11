@@ -15,6 +15,7 @@ import UserProfileScreen from "./screen/userProfileScreen";
 import HomeScreen from "./screen/homeScreen";
 // import SplashScreen from "./screen/splashScreen";
 import SubCategoryScreen from "./screen/subCategoryScreen";
+import BookMarkScreen from "./screen/bookmarkScreen";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -42,7 +43,7 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <SignUpScreen />
+      <CategoryPersonListingScreen />
     </View>
   );
 }

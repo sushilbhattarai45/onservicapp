@@ -7,12 +7,13 @@ import {
   ImageBackground,
   ScrollView,
 } from "react-native";
-import PersonCard from "../component/personCard";
-import Search from "../component/searchBar";
+import BookMarkCard from "../component/bookmarkCard";
+import Header from "../component/Header";
+import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
-import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
-export default function CategoryPersonListingScreen() {
+
+export default function BookMarkScreen() {
   const Persons = [
     {
       name: "Sushil Bhattarai",
@@ -31,7 +32,14 @@ export default function CategoryPersonListingScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
+    {
+      name: "RamKumar",
+      rating: "4.3",
+      ratingcount: "300",
+      address: "Butwal",
 
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
     {
       name: "RamKumar",
       rating: "4.3",
@@ -49,7 +57,6 @@ export default function CategoryPersonListingScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
-
     {
       name: "RamKumar",
       rating: "4.3",
@@ -58,7 +65,6 @@ export default function CategoryPersonListingScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
-
     {
       name: "RamKumar",
       rating: "4.3",
@@ -67,7 +73,6 @@ export default function CategoryPersonListingScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
-
     {
       name: "RamKumar",
       rating: "4.3",
@@ -76,7 +81,6 @@ export default function CategoryPersonListingScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
-
     {
       name: "RamKumar",
       rating: "4.3",
@@ -85,34 +89,6 @@ export default function CategoryPersonListingScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
     {
       name: "RamKumar",
       rating: "4.3",
@@ -135,25 +111,31 @@ export default function CategoryPersonListingScreen() {
   ];
 
   return (
-    <View
-      style={{
-        backgroundColor: Colors.gray200,
-        // margin:ConnectionStates,
-        // marginTop: Constants.statusBarHeight + 20,
-      }}
-    >
-      <View style={{ marginTop: 40, margin: 10, marginBottom: 30 }}>
-        <Search rightIcon={"equalizer-fill"} />
-        <ScrollView style={{ backgroundColor: Colors.gray200 }}>
-          <View style={{ marginTop: 20 }}>
+    <ScrollView style={{ backgroundColor: Colors.gray200 }}>
+      <View
+        style={{
+          marginTop: Constants.statusBarHeight + 20,
+        }}
+      >
+        <View style={{ marginLeft: 20, marginRight: 20 }}>
+          <Text
+            style={{ fontFamily: "Regular", fontSize: 25, fontWeight: "800" }}
+          >
+            Bookmarks
+          </Text>
+          <View
+            style={{
+              marginTop: 20,
+            }}
+          >
             {Persons.map((persons) => {
               return (
                 <View
                   style={{
-                    marginTop: 2,
+                    marginBottom: 5,
                   }}
                 >
-                  <PersonCard
+                  <BookMarkCard
                     name={persons.name}
                     image={persons.img}
                     address={persons.address}
@@ -164,9 +146,9 @@ export default function CategoryPersonListingScreen() {
               );
             })}
           </View>
-        </ScrollView>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

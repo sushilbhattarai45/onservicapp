@@ -1,7 +1,8 @@
 import userSchema from "../model/userSchema.js";
 import multer from "multer";
 import {} from "dotenv/config";
-const  API_KEY = process.env.API_KEY;
+const API_KEY = process.env.API_KEY;
+
 export const registerUser = async (req, res) => {
   const {
     user_name,
@@ -42,19 +43,19 @@ export const registerUser = async (req, res) => {
 //     msg: "user exists ",
 //   });
 // };
+
 export const uploadImage = async (req, res) => {
   // const imageToUpload = req.data;
-
   // the image url in the server
   // const serverImageUrl = "someUrl";
   console.log("The incomming req is here" + req);
   console.log({ "function File": req.file });
 
   if (req.file) {
-    return res.status(200).json({ fileName: req.file.path })};
+    return res.status(200).json({ fileName: req.file.path });
+  }
   return res.status(400).json({ error: "failed to upload file " });
 };
-
 export const loginUser = async (req, res) => {
   const { user_num, user_pass, givenapi } = req.body;
   if (API_KEY == givenapi) {
@@ -82,48 +83,37 @@ export const loginUser = async (req, res) => {
     } catch (error) {
       return res.status(500).send(error);
     }
+  } else {
+    return res.json({ error: "error" });
   }
-  else 
-  {
-    return res.json({error:"error"})
-    }
 };
 
-
-export const getAllUser = async (req, res) =>
-{
-    const { givenapi } = req.body;
-  if (API_KEY == givenapi) {
-    try {
-      const allUser = await userSchema.find();
-      return res.json({ data: allUser })
-    }
-    catch (e) {
-      return res.json({ error: e })
-    }
-  }
-    else 
-  {
-          return res.json({ error: 'error' })
-
-    }
-
-}
-export const getOneUser = async (req, res) =>
-{
+export const getAllUser = async (req, res) => {
   const { givenapi } = req.body;
   if (API_KEY == givenapi) {
     try {
-      const getOneUser = await userSchema.findOne({ user_contact: '1234567890' })
-      return res.json({ data: getOneUser })
+      const allUser = await userSchema.find();
+      return res.json({ data: allUser });
+    } catch (e) {
+      return res.json({ error: e });
     }
-    catch (e) {
-      return res.json({ error: e })
-    }
+  } else {
+    return res.json({ error: "error" });
   }
-  else 
-  {
-          return res.json({ error: 'error' })
+};
 
+export const getOneUser = async (req, res) => {
+  const { givenapi } = req.body;
+  if (API_KEY == givenapi) {
+    try {
+      const getOneUser = await userSchema.findOne({
+        user_contact: "1234567890",
+      });
+      return res.json({ data: getOneUser });
+    } catch (e) {
+      return res.json({ error: e });
     }
-}
+  } else {
+    return res.json({ error: "error" });
+  }
+};
