@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import {Text, View} from 'react-native';
+import {Text, View, SafeAreaView} from 'react-native';
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -12,7 +12,9 @@ import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
 import UserProfileScreen from "./screen/userProfileScreen";
 import HomeScreen from "./screen/homeScreen";
+import SPProfileScreen from "./screen/SPProfileScreen";
 // import SplashScreen from "./screen/splashScreen";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,7 +22,7 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     Black: require("./assets/fonts/Urbanist-Black.ttf"),
     Bold: require("./assets/fonts/Urbanist-Bold.ttf"),
-    SemiBold:require("./assets/fonts/Urbanist-Medium.ttf"),
+    SemiBold:require("./assets/fonts/Urbanist-SemiBold.ttf"),
     Regular: require("./assets/fonts/Urbanist-Regular.ttf"),
     remixicon: require("./assets/fonts/remixicon.ttf"),
   });
@@ -32,12 +34,13 @@ export default function App() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return <View><Text>Error</Text></View>;
+    return <View style={{flex:1, backgroundColor:'black'}}><Text>Error</Text></View>;
   }
 
   return (
-    <View style={{flex:1}} onLayout={onLayoutRootView}>
-      <HomeScreen />
-    </View>
+    <SafeAreaView style={{flex:1}} onLayout={onLayoutRootView}>
+      <SPProfileScreen />
+    </SafeAreaView>
   );
 }
+

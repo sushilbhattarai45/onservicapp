@@ -1,0 +1,329 @@
+import React from "react";
+import { ScrollView, View, Text, StyleSheet, Image, FlatList } from "react-native";
+
+import Header from "../component/Header";
+import Icon from "../component/Icon";
+import ImageSliderComponent from "../component/imageSlider";
+import { Colors } from "../styles/main";
+import Constants from "expo-constants";
+import { StatusBar } from "expo-status-bar";
+import CategoryCard from "../component/categoryCard";
+
+const Persons = [
+  {
+    name: "Sushil Bhattarai",
+    works: "Ac Repair, Carpenter, Network Repair, Electrician",
+    address: "Golpark",
+    number: "9742993345",
+
+    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+  },
+  {
+    name: "Sushil Bhattarai",
+    works: "Ac Repair, Carpenter, Network Repair, Electrician",
+    address: "Golpark",
+    number: "9742993345",
+
+    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+  },
+  {
+    name: "Sushil Bhattarai",
+    works: "Ac Repair, Carpenter, Network Repair, Electrician",
+    address: "Golpark",
+    number: "9742993345",
+
+    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+  },
+
+  {
+    name: "RamKumar",
+    works: "Ac Repair, Carpenter, Network Repair, Electrician",
+    address: "Butwal",
+    number: "9742993345",
+    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+  },
+
+  {
+    name: "RamKumar",
+    works: "Ac Repair, Carpenter, Network Repair, Electrician",
+    address: "Butwal",
+    number: "9742993345",
+    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+  },
+  //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
+];
+
+const ActionIcon = ({ name, onPress }) => {
+  return (
+    <View style={styles.actionIcon}>
+      <Icon {...{ name }} {...{ onPress }} size={24} color={Colors.gray900} />
+    </View>
+  );
+};
+
+const SkillPill = ({ name }) => {
+  return (
+    <View
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 18,
+        paddingVertical: 6,
+        borderRadius: 40,
+        borderWidth: 1.5,
+        borderColor: Colors.gray500,
+        marginRight: 6,
+        marginBottom: 6,
+      }}
+    >
+      <Text
+        style={{ fontSize: 14, color: Colors.black, fontFamily: "SemiBold" }}
+      >
+        {name}
+      </Text>
+    </View>
+  );
+};
+const SPProfileScreen = () => {
+  return (
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={{ flex: 1 }}>
+        <Header
+          style={{ position: "absolute", zIndex: 10, paddingHorizontal: 24 }}
+          icon="arrow-left-line"
+          right={
+            <Icon
+              name="qr-code-line"
+              size={24}
+              style={styles.icon}
+              color={Colors.white}
+            />
+          }
+          color={Colors.white}
+        />
+        <ImageSliderComponent />
+        {/* <Text>Hello</Text> */}
+        <View style={styles.profileContent}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "flex-end",
+              justifyContent: "space-between",
+              paddingHorizontal: 24,
+            }}
+          >
+            <Image
+              style={styles.profileImage}
+              source={{
+                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU",
+                headers: {
+                  Accept: "*/*",
+                },
+              }}
+            />
+            {/* Buttons call/message/bookmark */}
+            <View style={{ flexDirection: "row", marginBottom: 12 }}>
+              <ActionIcon name="phone-line" />
+              <ActionIcon name="chat-1-line" />
+              <ActionIcon name="map-pin-line" />
+              <ActionIcon name="bookmark-2-line" />
+            </View>
+          </View>
+          {/* Name */}
+          <Text
+            style={{
+              marginTop: 12,
+              fontFamily: "Bold",
+              fontSize: 20,
+              alignItems: "center",
+              color: Colors.black,
+              paddingHorizontal: 24,
+            }}
+          >
+            Shakuntala Pandey{" "}
+            <Icon
+              name="checkbox-circle-fill"
+              color="#2A65FD"
+              size={16}
+              style={{ marginLeft: 8 }}
+            />
+          </Text>
+          {/* Date and address Info */}
+          <View style={{ flexDirection: "row", paddingHorizontal: 24 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 4,
+                alignItems: "center",
+              }}
+            >
+              <Icon name="map-pin-line" color={Colors.gray900} size={14} />
+              <Text
+                style={{
+                  fontFamily: "medium",
+                  fontSize: 12,
+                  color: Colors.gray900,
+                  marginLeft: 4,
+                }}
+              >
+                Butwal 3 Golpark
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 4,
+                alignItems: "center",
+                marginLeft: 12,
+              }}
+            >
+              <Icon name="calendar-2-line" color={Colors.gray900} size={14} />
+              <Text
+                style={{
+                  fontFamily: "medium",
+                  fontSize: 12,
+                  color: Colors.gray900,
+                  marginLeft: 4,
+                }}
+              >
+                Joined on 2073-04-01
+              </Text>
+            </View>
+          </View>
+          {/* Skills */}
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              marginTop: 16,
+              paddingHorizontal: 24,
+            }}
+          >
+            <SkillPill name="Air Conditioner Repair" />
+            <SkillPill name="Telivision Repair" />
+            <SkillPill name="Car Renting" />
+            <SkillPill name="Carpenter" />
+            <SkillPill name="Plumber" />
+          </View>
+          {/* About */}
+          <>
+            <Text
+              style={{
+                fontFamily: "SemiBold",
+                fontSize: 16,
+                marginTop: 24,
+                marginBottom: 8,
+                color: Colors.black,
+                paddingHorizontal: 24,
+              }}
+            >
+              About Work
+            </Text>
+            <Text
+              style={{
+                paddingHorizontal: 24,
+
+                fontFamily: "Regular",
+                fontSize: 14,
+                color: Colors.gray900,
+                letterSpacing: 0.2,
+              }}
+            >
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in
+              ante at eros sagittis tristique sed vitae tortor. Quisque sagittis
+              augue at metus ornare, et semper risus ornare. Suspendisse
+              imperdiet lacus vel sollicitudin volutpat. Etiam fringilla urna
+              libero, sed ultricies ex feugiat eu. Curabitur eu aliquam lorem.
+              Nulla facilisi. Pellentesque feugiat rutrum lacus posuere laoreet.
+              Etiam a elit quam. Morbi metus ligula, fringilla in sapien quis,
+              varius posuere purus.
+            </Text>
+          </>
+          {/* Slider */}
+          <View style={{ marginTop: 24 }}>
+            <ImageSliderComponent />
+          </View>
+
+          {/* Services Near you */}
+          <View>
+            <Text
+              style={[
+                styles.subCategoriesContainerHeading,
+                { marginTop: 32, paddingHorizontal: 24 },
+              ]}
+            >
+              Services Near You
+            </Text>
+            <FlatList
+              style={{ marginBottom: 32 }}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              data={Persons}
+              renderItem={({ item, index }) => {
+                let isEnd = index === Persons.length - 1;
+                return (
+                  <CategoryCard
+                    containerStyle={{
+                      marginLeft: index === 0 ? 24 : 0,
+                      marginRight: isEnd ? 24 : 0,
+                    }}
+                  />
+                );
+              }}
+              ItemSeparatorComponent={() => {
+                return (
+                  <View
+                    style={{
+                      height: "100%",
+                      width: 20,
+                      backgroundColor: Colors.gray200,
+                    }}
+                  />
+                );
+              }}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </View>
+        </View>
+      </View>
+      {/* <StatusBar backgroundColor="#000000"/> */}
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // paddingTop: Constants.statusBarHeight ,
+    // paddingHorizontal: 24,
+    backgroundColor: Colors.gray200,
+  },
+  profileContent: {
+    flex: 1,
+    backgroundColor: Colors.gray200,
+    marginTop: -24,
+    borderTopStartRadius: 24,
+    borderTopEndRadius: 24,
+  },
+  profileImage: {
+    width: 130,
+    height: 130,
+    borderRadius: 20,
+    marginTop: -65,
+  },
+  actionIcon: {
+    padding: 8,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: Colors.gray500,
+    borderRadius: 200,
+    marginLeft: 8,
+  },
+  subCategoriesContainerHeading: {
+    marginBottom: 24,
+    fontFamily: "SemiBold",
+    fontSize: 16,
+  },
+});
+
+export default SPProfileScreen;

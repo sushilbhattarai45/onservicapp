@@ -6,7 +6,7 @@ import { ImageSlider } from "react-native-image-slider-banner";
 import { Colors } from '../styles/main';
 
 
-export default function ImageSliderComponent() {
+export default function ImageSliderComponent({style}) {
   return (
     <ImageSlider 
     preview={false}
@@ -16,7 +16,6 @@ export default function ImageSliderComponent() {
         {img: 'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg'}
     ]}
     autoPlay={true}
-    onItemChanged={(item) => console.log("item", item)}
     closeIconColor="#fff"
     timer={5000}
     indicatorContainerStyle={{bottom:-10}}

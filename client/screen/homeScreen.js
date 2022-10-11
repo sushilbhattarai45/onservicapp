@@ -81,7 +81,7 @@ const HomeScreen = () => {
             <Text style={styles.userName}>Hey Sanskar!</Text>
             <Text style={styles.userNeedHelp}>Need help?</Text>
           </View>
-          <Icon name="qr-code-line" size={24} color="white" />
+          <Icon name="qr-scan-line" size={24} color="white" />
         </View>
         <View style={{ paddingHorizontal: 24 }}>
           <Search />
@@ -158,8 +158,14 @@ const HomeScreen = () => {
               <SubCategoryGroupCard />
               <SubCategoryGroupCard containerStyle={{ marginLeft: 16 }} />
             </View>
-            <View style={{ width: 150, marginTop: 24 }}>
-              <Button label={"View All"} />
+            <View style={styles.Seemore}>
+              <Text style={styles.Txt499}>View All</Text>
+              <Image
+                style={styles.chevronLeftIcon}
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/dxg5x93mpp6-22%3A233?alt=media&token=29e7a436-2721-424a-a9f3-c2973de8de90",
+                }}
+              />
             </View>
           </View>
         </View>
@@ -208,50 +214,6 @@ const HomeScreen = () => {
           />
         </View>
 
-        {/* People near us */}
-        <View>
-          <Text
-            style={[
-              styles.subCategoriesContainerHeading,
-              { paddingHorizontal: 24 },
-            ]}
-          >
-            People Near You
-          </Text>
-          <FlatList
-            style={{ marginBottom: 32 }}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            data={Persons}
-            renderItem={({ item, index }) => {
-              let isEnd = index === Persons.length - 1;
-              return (
-                <PeopleNearYou
-                  containerStyle={{
-                    marginLeft: index === 0 ? 24 : 0,
-                    marginRight: isEnd ? 24 : 0,
-                  }}
-                  name={item.name}
-                  number={item.number}
-                  image={item.img}
-                  works={item.works}
-                />
-              );
-            }}
-            ItemSeparatorComponent={() => {
-              return (
-                <View
-                  style={{
-                    height: "100%",
-                    width: 20,
-                    backgroundColor: Colors.gray200,
-                  }}
-                />
-              );
-            }}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
       </View>
     </ScrollView>
   );
@@ -260,7 +222,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight + 20,
+    marginTop: Constants.statusBarHeight + 16,
     // padding: 24,
     backgroundColor: Colors.gray200,
   },
@@ -303,6 +265,26 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     fontFamily: "Bold",
     fontSize: 20,
+  },
+  Seemore: {
+    flexDirection:"row",
+    marginTop:24,
+  },
+  Txt499: {
+    fontSize: 16,
+    fontFamily: "Regular",
+    fontWeight: "400",
+    letterSpacing: -0.32,
+    color: Colors.primary,
+    // textAlign: "right",
+    justifyContent: "flex-end",
+    width: 53,
+    height: 19,
+  },
+  chevronLeftIcon: {
+    width: 24,
+    height: 24,
+    marginLeft:8,
   },
 });
 
