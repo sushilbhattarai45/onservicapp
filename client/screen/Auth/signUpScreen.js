@@ -26,7 +26,7 @@ const gender = [
 ];
 
 // const BASE_OUR_API_URL = "http://192.168.16.101:3001";
-const BASE_OUR_API_URL = "http://192.168.18.7:3001";
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 export default function SignUpScreen() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
@@ -256,7 +256,6 @@ export default function SignUpScreen() {
               BASE_OUR_API_URL + "/v1/api/user/register",
               {
                 user_name: vname,
-
                 user_email: vemail,
                 user_contact: vphone,
                 user_district: vdistrict,
@@ -408,7 +407,7 @@ export default function SignUpScreen() {
                   color: Colors.primary,
                 }}
               >
-                Choose
+                Choose Photo
               </Text>
             </View>
           </View>

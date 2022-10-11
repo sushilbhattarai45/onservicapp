@@ -24,7 +24,6 @@ export default function UserProfileScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
-
     {
       name: "RamKumar",
       works: "Ac Repair, Carpenter, Network Repair, Electrician",
@@ -32,7 +31,6 @@ export default function UserProfileScreen() {
       number: "9742993345",
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
-
     {
       name: "RamKumar",
       works: "Ac Repair, Carpenter, Network Repair, Electrician",
@@ -56,7 +54,6 @@ export default function UserProfileScreen() {
         <View
           style={{
             flex: 1.5,
-
             backgroundColor: Colors.primary,
             borderBottomEndRadius: 20,
             borderBottomLeftRadius: 20,
@@ -85,7 +82,6 @@ export default function UserProfileScreen() {
             >
               Profile{" "}
             </Text>
-
             <View
               style={{
                 marginTop: 20,

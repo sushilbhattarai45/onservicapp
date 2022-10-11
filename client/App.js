@@ -14,7 +14,7 @@ import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
 import UserProfileScreen from "./screen/userProfileScreen";
 import HomeScreen from "./screen/homeScreen";
 // import SplashScreen from "./screen/splashScreen";
-
+import SubCategoryScreen from "./screen/subCategoryScreen";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {

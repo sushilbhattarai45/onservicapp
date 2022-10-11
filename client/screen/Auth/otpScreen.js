@@ -15,7 +15,6 @@ import { Colors } from "../../styles/main";
 export default function OtpScreen() {
   const secondTextInputRef = useRef(null);
   const thirdTextInputRef = useRef(null);
-
   const fourthTextInputRef = useRef(null);
   const max = 1;
   const firstTextInputRef = useRef(null);
@@ -25,9 +24,7 @@ export default function OtpScreen() {
   const [fourthTextInputValue, setFourthTextInputValue] = useState(null);
   const [focuscolor1, setFocusColor1] = useState(Colors.black);
   const [focuscolor2, setFocusColor2] = useState(Colors.black);
-
   const [focuscolor3, setFocusColor3] = useState(Colors.black);
-
   const [focuscolor4, setFocusColor4] = useState(Colors.black);
 
   const onFocus = (id) => {
