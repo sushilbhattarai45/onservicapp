@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   Txt758: {
     fontSize: 18,
-    fontFamily: "Urbanist, sans-serif",
+    fontFamily: "Regular",
     fontWeight: "400",
     lineHeight: 18,
     color: "rgba(33,33,33,1)",

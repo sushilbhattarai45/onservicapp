@@ -60,7 +60,7 @@ export default function OtpScreen() {
       <Text
         style={{
           marginTop: 50,
-          fontFamily: "Urbanist",
+          fontFamily: "Black",
           fontStyle: "normal",
           fontWeight: "800",
           fontSize: 20,
@@ -223,7 +223,7 @@ export default function OtpScreen() {
             fontSize: 20,
             fontWeight: "700",
             color: Colors.primary,
-            fontFamily: "Urbanist",
+            fontFamily: "Bold",
             textAlignVertical: "center",
           }}
         >

@@ -25,7 +25,7 @@ export default function CreateNewPinScreen() {
         <Text
           style={{
             marginTop: 50,
-            fontFamily: "Urbanist",
+            fontFamily: "Black",
             fontStyle: "normal",
             fontWeight: "800",
             fontSize: 20,
@@ -134,7 +134,7 @@ export default function CreateNewPinScreen() {
               fontSize: 20,
               fontWeight: "bold",
               color: Colors.primary,
-              fontFamily: "Urbanist",
+              fontFamily: "Bold",
               textAlignVertical: "center",
             }}
           >

@@ -1,9 +1,15 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 import { Colors } from "../styles/main";
-export default function PeopleNearYou({ name, image, works, number }) {
+export default function PeopleNearYou({
+  name,
+  image,
+  works,
+  number,
+  containerStyle,
+}) {
   return (
-    <View style={styles.Card}>
+    <View style={[styles.Card, containerStyle]}>
       <Image
         style={styles.image}
         source={{
@@ -31,32 +37,29 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: 10.74,
-    paddingBottom: 10.74,
-    paddingLeft: 16.46,
-    paddingRight: 16.46,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: 4,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    width: 177.54,
+    backgroundColor: Colors.white,
+    width: 180,
   },
   works: {
     fontSize: 10,
     textAlign: "center",
+    fontFamily:'Regular',
     color: Colors.gray900,
-    marginBottom: 12,
+    marginBottom: 8,
   },
   image: {
     borderRadius: 50,
-    width: 94.49,
-    height: 94.49,
-    marginBottom: 7,
+    width: 95,
+    height: 95,
+    marginBottom: 8,
   },
   name: {
-    fontSize: 12.89,
-    fontFamily: "Urbanist, sans-serif",
-    fontWeight: "400",
-    lineHeight: 13,
-    color: "rgba(33,33,33,1)",
+    fontSize: 16,
+    fontFamily: "Regular",
+    color: Colors.black,
     opacity: 0.9,
     marginBottom: 7,
   },
@@ -64,8 +67,8 @@ const styles = StyleSheet.create({
   Ratings: {
     width: 68,
     height: 12,
-    opacity: 0.9,
-    marginBottom: 7,
+    // opacity: 0.9,
+    marginBottom: 8,
   },
   Button: {
     display: "flex",
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
   },
   Txt250: {
     fontSize: 10.02,
-    fontFamily: "Urbanist, sans-serif",
+    fontFamily: "SemiBold",
     fontWeight: "600",
     letterSpacing: -0.2,
     color: "rgba(253,169,42,1)",

@@ -1,20 +1,18 @@
-import React from "react"
-import { StyleSheet, Image, Text, View, ImageBackground } from "react-native"
+import React from "react";
+import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 
-export default function CategoryCard() {
+export default function CategoryCard({ containerStyle }) {
   return (
-    <View style={styles.Category}>
-      <View style={styles.Group257}>
-        <Image
-          style={styles.Repair1}
-          source={{
-            uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
-          }}
-        />
-        <Text style={styles.Txt035}>Repair</Text>
-      </View>
+    <View style={[styles.Category, {...containerStyle}]}>
+      <Image
+        style={styles.Repair1}
+        source={{
+          uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
+        }}
+      />
+      <Text style={styles.Txt035}>Repair</Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -32,13 +30,10 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(0,0,0,0.25)",
     elevation: 1,
     shadowOffset: { width: 0, height: 4 },
-    width: 146,
-    height: 147,
+    width: 140,
+    height: 140,
   },
-  Group257: {
-    display: "flex",
-    flexDirection: "column",
-  },
+
   Repair1: {
     width: 59,
     height: 59.82,
@@ -46,7 +41,7 @@ const styles = StyleSheet.create({
   },
   Txt035: {
     fontSize: 14,
-    fontFamily: "Urbanist, sans-serif",
+    fontFamily: "Regular",
     fontWeight: "400",
     letterSpacing: -0.28,
     color: "rgba(0,0,0,1)",
@@ -55,4 +50,4 @@ const styles = StyleSheet.create({
     width: 56,
     height: 18,
   },
-})
+});

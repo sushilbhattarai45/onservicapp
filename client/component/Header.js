@@ -32,8 +32,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 20,
-    fontFamily: "Urbanist, sans-serif",
-    fontWeight: "700",
+    fontFamily: "Bold",
     letterSpacing: -0.4,
     color: "rgba(33,33,33,1)",
   },

@@ -1,18 +1,15 @@
 import React from 'react';
 import {
-StyleSheet,
 View,
-Text,
-Dimensions,
-Image
 } from 'react-native';
 import { ImageSlider } from "react-native-image-slider-banner";
+import { Colors } from '../styles/main';
 
 
 export default function ImageSliderComponent() {
   return (
-    <View>
     <ImageSlider 
+    preview={false}
     data={[
         {img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU'},
         {img: 'https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg'},
@@ -21,8 +18,11 @@ export default function ImageSliderComponent() {
     autoPlay={true}
     onItemChanged={(item) => console.log("item", item)}
     closeIconColor="#fff"
+    timer={5000}
+    activeIndicatorStyle={{backgroundColor:Colors.white}}
+    caroselImageStyle={{ resizeMode: 'cover', height:250 }}
 
 />
-    </View>
   );
 };
+
