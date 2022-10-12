@@ -1,23 +1,23 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 
-export default function SubCategory({name,image}) {
+export default function SubCategory({ name, image }) {
   return (
     <View style={styles.ThemeLightComponentSongsCard}>
-    <View style={styles.SubCategoryCard}>
-      <Image
-        style={styles.MaskGroup}
-        source={{
-          uri: image,
-          headers: {
-            Accept: '*/*',
-          },
-        }}
-      />
-      <View style={styles.AutoLayoutVertical}>
-        <Text style={styles.Txt748}>{name}</Text>
+      <View style={styles.SubCategoryCard}>
+        <Image
+          style={styles.MaskGroup}
+          source={{
+            uri: image,
+            headers: {
+              Accept: "*/*",
+            },
+          }}
+        />
+        <View style={styles.AutoLayoutVertical}>
+          <Text style={styles.Txt748}>{name}</Text>
+        </View>
       </View>
-    </View>
     </View>
   );
 }
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: "rgba(249,249,252,1)",
-    width: 426,
-    height: 77,
+    padding: 10,
+    borderRadius: 20,
   },
   MaskGroup: {
     width: 60,
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    width: 318,
   },
   Txt748: {
     fontSize: 18,

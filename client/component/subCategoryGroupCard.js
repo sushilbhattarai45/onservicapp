@@ -1,9 +1,19 @@
 import React from "react";
-import { StyleSheet, Image, Text, View, ImageBackground, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  Pressable,
+} from "react-native";
 
-export default function SubCategoryGroupCard({containerStyle, onPress}) {
+export default function SubCategoryGroupCard({ containerStyle, onPress }) {
   return (
-    <Pressable style={[styles.container, {...containerStyle}]} onPress={onPress} >
+    <Pressable
+      style={[styles.container, { ...containerStyle }]}
+      onPress={onPress}
+    >
       <Image
         style={styles.image}
         source={{
@@ -17,7 +27,7 @@ export default function SubCategoryGroupCard({containerStyle, onPress}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1
+    flex: 1,
   },
   image: {
     height: 80,

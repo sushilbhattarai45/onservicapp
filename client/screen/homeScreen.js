@@ -143,6 +143,7 @@ const HomeScreen = () => {
           <Text style={styles.subCategoriesContainerHeading}>
             Newly added Services
           </Text>
+
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <SubCategoryGroupCard />

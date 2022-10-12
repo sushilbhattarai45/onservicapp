@@ -17,7 +17,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import CheckBox from "expo-checkbox";
 import { Districts } from "../../component/district.js";
 import * as DocumentPicker from "expo-document-picker";
-
+import Header from "../../component/Header";
 import axios from "axios";
 const gender = [
   { value: "Male", label: "Male" },
@@ -26,7 +26,7 @@ const gender = [
 ];
 
 // const BASE_OUR_API_URL = "http://192.168.16.101:3001";
-const BASE_OUR_API_URL = "http://192.168.18.7:3001";
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 export default function SignUpScreen() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
@@ -141,7 +141,7 @@ export default function SignUpScreen() {
       );
 
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-      console.log("s"+serverUrl)
+      console.log("s" + serverUrl);
       const response = await axios(serverUrl, {
         method: "post",
         data: data,
@@ -256,7 +256,6 @@ export default function SignUpScreen() {
               BASE_OUR_API_URL + "/v1/api/user/register",
               {
                 user_name: vname,
-
                 user_email: vemail,
                 user_contact: vphone,
                 user_district: vdistrict,
@@ -339,62 +338,77 @@ export default function SignUpScreen() {
   return (
     <ScrollView>
       <View style={{ flex: 1, margin: 30, flexDirection: "column" }}>
-        <View style={{ marginTop: 20, flexDirection: "row" }}>
-          <Text
-            style={{
-              textAlignVertical: "center",
-              flex: 5,
-
-              fontFamily: "Bold",
-              fontStyle: "normal",
-              fontWeight: "800",
-              fontSize: 32,
-              lineHeight: 38,
-              display: "flex",
-              alignItems: "flex-end",
-              letterspacing: -0.02,
-            }}
-          >
-            Register
-          </Text>
-
+        <Header />
+        <View
+          style={{
+            marginTop: 50,
+            flexDirection: "row",
+            flex: 1,
+            marginBottom: 50,
+          }}
+        >
           <View
             style={{
-              right: 20,
               flex: 1,
-              flexDirection: "column",
+              justifyContent: "center",
+              textAlignVertical: "center",
             }}
           >
-            <Pressable onPress={() => selectFile()}>
-              <Image
-                source={
-                  image !== ""
-                    ? {
-                        uri: image,
-                      }
-                    : {
-                        uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
-                      }
-                }
-                style={{
-                  right: 3,
-                  height: 75,
-                  width: 75,
-                  marginTop: 30,
-                  borderRadius: 50,
-                }}
-              />
-            </Pressable>
             <Text
               style={{
-                marginLeft: 8,
-                marginTop: 10,
-                textAlign: "center",
-                color: Colors.primary,
+                textAlignVertical: "center",
+                flex: 5,
+
+                fontFamily: "Bold",
+                fontStyle: "normal",
+                fontWeight: "800",
+                fontSize: 32,
+                lineHeight: 38,
+                display: "flex",
+                alignItems: "flex-end",
+                letterspacing: -0.02,
               }}
             >
-              Choose
+              Register
             </Text>
+
+            <View
+              style={{
+                right: 0,
+                position: "absolute",
+                flexDirection: "column",
+              }}
+            >
+              <Pressable onPress={() => selectFile()}>
+                <Image
+                  source={
+                    image !== ""
+                      ? {
+                          uri: image,
+                        }
+                      : {
+                          uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
+                        }
+                  }
+                  style={{
+                    right: 3,
+                    height: 75,
+                    width: 75,
+                    marginTop: 30,
+                    borderRadius: 50,
+                  }}
+                />
+              </Pressable>
+              <Text
+                style={{
+                  marginTop: 10,
+                  textAlign: "center",
+                  color: Colors.primary,
+                }}
+              >
+                Choose Photo
+              </Text>
+            </View>
           </View>
         </View>
         <View style={{ marginTop: 5 }}>
