@@ -149,9 +149,11 @@ const SkillPill = ({ name }) => {
 };
 const SPProfileScreen = () => {
   const [rating, setRating] = useState(3.5);
+  const popup = createRef();
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={{ flex: 1 }}>
+        
         <Header
           style={{ position: "absolute", zIndex: 10, paddingHorizontal: 24 }}
           icon="arrow-left-line"
@@ -424,6 +426,64 @@ const SPProfileScreen = () => {
           </View>
         </View>
       </View>
+      <ModalPopup
+        ref={popup}
+        containerStyle={{
+          width: "100%",
+          marginTop: "auto",
+          alignItems: "center",
+          borderTopStartRadius: 32,
+          borderTopEndRadius: 32,
+        }}
+      >
+        <View
+          style={{
+            width: 50,
+            height: 2.5,
+            backgroundColor: Colors.black,
+            borderRadius: 5,
+            marginBottom: 24,
+          }}
+        ></View>
+        <Text style={{ fontFamily: "Bold", fontSize: 16 }}>
+          Rate and Review
+        </Text>
+        <Text style={{ fontFamily: "Regular", fontSize: 14 }}>
+          Please rate the user and review your experience
+        </Text>
+        <View style={{ marginVertical: 30 }}>
+          <StarRating
+            starSize={40}
+            onChange={(va) => setRating(va)}
+            rating={rating}
+            color={Colors.gold}
+            starStyle={{ marginLeft: -5 }}
+          />
+        </View>
+        <View style={{ width: "100%" }}>
+          <Text>Review your Service Provider (max 100)</Text>
+          <TextInput
+            maxLength={4}
+            multiline={true}
+            numberOfLines={4}
+            keyboardType={"numeric"}
+            style={{
+              width: "100%",
+              marginTop: 8,
+              padding: 16,
+              borderRadius: 4,
+              height: 100,
+              textAlignVertical: "top",
+              backgroundColor: Colors.gray200,
+            }}
+            placeholder="Share your experience"
+          />
+        </View>
+        {/* {errorpin ? <Text style={{ color: "red" }}>{errorpin}</Text> : null} */}
+        <View style={{ width: "100%", marginTop: 40 }}>
+          <Button label="Share Review" />
+        </View>
+      </ModalPopup>
       {/* <StatusBar backgroundColor="#000000"/> */}
     </ScrollView>
   );

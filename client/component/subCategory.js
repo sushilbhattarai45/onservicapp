@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+import { Colors } from "../styles/main";
 
 export default function SubCategory({ name, image }) {
   return (
@@ -29,12 +30,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 16,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "rgba(249,249,252,1)",
-    padding: 10,
-    borderRadius: 20,
+    backgroundColor: Colors.white,
+    paddingHorizontal:24,
+    paddingVertical:12,
+    marginBottom:2
   },
   MaskGroup: {
     width: 60,

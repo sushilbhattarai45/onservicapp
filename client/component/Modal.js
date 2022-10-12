@@ -36,28 +36,27 @@ class ModalPopup extends Component {
 
   close = () => this.setState({ visible: false });
   render() {
-    let show = this.state;
     let { onTouchOutside } = this.props;
     let animationType = this.props.animationType;
     return (
       <Modal
         transparent={true}
-        visible={show}
+        visible={this.state.visible}
+        // ref={this.props.ref}
         onRequestClose={this.close}
-        animationType={animationType}
-        style={{ ...styles.modal, backgroundColor: "#0000" }}
+        style={{zIndex:100}}
       >
         <View style={[styles.outsideContainer, { ...this.props.style }]}>
           {onTouchOutside ? (
             <TouchableWithoutFeedback onPress={onTouchOutside}>
-              <View style={{ height: "110%", width: "100%", position:"absolute", }} />
+              <View style={{ height: "110%", width: "100%", position:"absolute",zIndex:100 }} />
             </TouchableWithoutFeedback>
           ) : (
             <></>
           )}
-          <View style={styles.modal}>
+          <View style={[styles.modal, this.props.containerStyle]}>
             {/* <Text>Hello</Text> */}
-            {this.props.children}
+            {this.props.children}  
           </View>
         </View>
       </Modal>

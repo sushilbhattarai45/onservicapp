@@ -136,7 +136,7 @@ export default function SignUpScreen() {
         "profile",
         {
           uri: imageToUpload?.uri,
-          name: imageToUpload?.uri + "_profile" + ".jpg",
+          name: imageToUpload?.uri,
           type: "image/jpg",
         },
         "myfile"
@@ -151,8 +151,10 @@ export default function SignUpScreen() {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response?.data?.fileName);
-      return response?.data?.fileName;
+      var url = response?.data?.fileName;
+      const filename = url.split("\\");
+      const finalname = filename[0] + "/" + filename[1];
+      return finalname;
     } catch (e) {
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
 
@@ -188,8 +190,9 @@ export default function SignUpScreen() {
 
       uploadImage(result).then((res) => {
         console.log("hello" + { res });
+
         setImage(BASE_OUR_API_URL + "/" + res);
-        console.log(image);
+        console.log("hello" + image);
       });
     } catch (e) {
       console.log(e);
