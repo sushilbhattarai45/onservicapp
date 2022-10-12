@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { ImageSlider } from "react-native-image-slider-banner";
 import { Colors } from "../styles/main";
 
-export default function ImageSliderComponent({style}) {
+export default function ImageSliderComponent({ style }) {
   return (
     <ImageSlider 
     preview={false}

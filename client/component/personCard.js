@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   ThemeLightComponentSongsCard: {
     display: "flex",
     flexDirection: "row",
-    borderRadius: 10,
     justifyContent: "flex-start",
     alignItems: "center",
     paddingTop: 7,
@@ -56,7 +55,8 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: "rgba(255, 255, 255, 1)",
-    padding: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 24,
   },
   MaskGroup: {
     width: 80,

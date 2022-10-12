@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   right: {
-    marginLeft:'auto',
+    marginLeft: "auto",
   },
   headerText: {
     fontSize: 20,
