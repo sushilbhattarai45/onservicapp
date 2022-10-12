@@ -30,7 +30,7 @@ const gender = [
 // const BASE_OUR_API_URL = "http://192.168.16.101:3001";
 const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
-export default function SignUpScreen() {
+export default function ImagePickerExample() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [vcities, setVCities] = useState([
     // { label: "Bayalpata" },
