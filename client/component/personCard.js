@@ -1,5 +1,8 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+import { Colors } from "../styles/main";
+
+
 
 export default function PersonCard({
   name,

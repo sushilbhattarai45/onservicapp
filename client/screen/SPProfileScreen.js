@@ -1,5 +1,13 @@
-import React from "react";
-import { ScrollView, View, Text, StyleSheet, Image, FlatList } from "react-native";
+import React, { useState } from "react";
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+} from "react-native";
+import StarRating from "react-native-star-rating-widget";
 
 import Header from "../component/Header";
 import Icon from "../component/Icon";
@@ -8,6 +16,7 @@ import { Colors } from "../styles/main";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import CategoryCard from "../component/categoryCard";
+import Button from "../component/buttonComponent";
 
 const Persons = [
   {
@@ -53,6 +62,60 @@ const Persons = [
   //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
 ];
 
+const ReviewsCard = ({ name, image, date, rating, review }) => {
+  return (
+    <View
+      style={{
+        paddingHorizontal: 24,
+        paddingVertical: 16,
+        backgroundColor: Colors.white,
+        marginBottom: 1,
+      }}
+    >
+      <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-start" }}>
+        <Image
+          style={{ width: 40, height: 40, borderRadius: 12 }}
+          source={{
+            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU",
+            headers: {
+              Accept: "*/*",
+            },
+          }}
+        />
+        <View style={{ marginLeft: 16 }}>
+          <Text
+            style={{ fontSize: 14, color: Colors.black, fontFamily: "Regular" }}
+          >
+            Tilganga Acharya
+          </Text>
+          <Text
+            style={{ fontSize: 12, color: Colors.black, fontFamily: "Regular" }}
+          >
+            1 day ago
+          </Text>
+        </View>
+        <View style={{ marginLeft: "auto" }}>
+          <StarRating
+            starSize={12}
+            onChange={() => null}
+            rating={rating}
+            color={Colors.gold}
+            starStyle={{ marginLeft: -5 }}
+            animationConfig={{
+              scale: 1,
+              duration: 0,
+              delay: 0,
+            }}
+          />
+        </View>
+      </View>
+      <Text
+        style={{ fontSize: 14, color: Colors.black, fontFamily: "Regular", marginTop:8 }}
+      >Hedfjkshafjhaesjkf</Text>
+    </View>
+  );
+};
+
 const ActionIcon = ({ name, onPress }) => {
   return (
     <View style={styles.actionIcon}>
@@ -85,6 +148,7 @@ const SkillPill = ({ name }) => {
   );
 };
 const SPProfileScreen = () => {
+  const [rating, setRating] = useState(3.5);
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={{ flex: 1 }}>
@@ -160,7 +224,7 @@ const SPProfileScreen = () => {
               <Icon name="map-pin-line" color={Colors.gray900} size={14} />
               <Text
                 style={{
-                  fontFamily: "medium",
+                  fontFamily: "SemiBold",
                   fontSize: 12,
                   color: Colors.gray900,
                   marginLeft: 4,
@@ -180,7 +244,7 @@ const SPProfileScreen = () => {
               <Icon name="calendar-2-line" color={Colors.gray900} size={14} />
               <Text
                 style={{
-                  fontFamily: "medium",
+                  fontFamily: "SemiBold",
                   fontSize: 12,
                   color: Colors.gray900,
                   marginLeft: 4,
@@ -243,7 +307,81 @@ const SPProfileScreen = () => {
           <View style={{ marginTop: 24 }}>
             <ImageSliderComponent />
           </View>
-
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 32,
+            }}
+          >
+            <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
+              {rating}
+              <Text style={{ fontSize: 20, fontFamily: "Regular" }}>/5</Text>
+            </Text>
+            <View>
+              <StarRating
+                starSize={40}
+                onChange={() => null}
+                rating={rating}
+                color={Colors.gold}
+                starStyle={{ marginLeft: -5 }}
+                animationConfig={{
+                  scale: 1,
+                  duration: 0,
+                  delay: 0,
+                }}
+              />
+            </View>
+            <Text
+              style={{ fontSize: 12, fontFamily: "Regular", marginTop: 12 }}
+            >
+              2000 Reviews
+            </Text>
+            <View style={{ marginTop: 24 }}>
+              <Button label="Rate Us" />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingHorizontal: 24,
+              marginTop: 32,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: "SemiBold",
+                color: Colors.black,
+              }}
+            >
+              User Reviews
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                fontFamily: "Regular",
+                color: Colors.primary,
+                paddingHorizontal: 8,
+                paddingVertical: 4,
+              }}
+            >
+              View All
+            </Text>
+          </View>
+          <FlatList
+            style={{ marginBottom: 32 }}
+            showsHorizontalScrollIndicator={false}
+            data={Persons}
+            renderItem={({ item, index }) => {
+              return <ReviewsCard />;
+            }}
+            keyExtractor={(item, index) => index.toString()}
+          />
           {/* Services Near you */}
           <View>
             <Text
