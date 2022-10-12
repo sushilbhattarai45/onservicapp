@@ -25,11 +25,11 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-class ModalPopup extends Component {
+class  ModalPopup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: true,
+      visible: false,
     };
   }
   show = () => this.setState({ visible: true });
@@ -42,6 +42,7 @@ class ModalPopup extends Component {
       <Modal
         transparent={true}
         visible={this.state.visible}
+        animationType={animationType}
         // ref={this.props.ref}
         onRequestClose={this.close}
         style={{zIndex:100}}
@@ -49,7 +50,7 @@ class ModalPopup extends Component {
         <View style={[styles.outsideContainer, { ...this.props.style }]}>
           {onTouchOutside ? (
             <TouchableWithoutFeedback onPress={onTouchOutside}>
-              <View style={{ height: "110%", width: "100%", position:"absolute",zIndex:100 }} />
+              <View style={{ height: "110%", width: "100%", position:"absolute",}} />
             </TouchableWithoutFeedback>
           ) : (
             <></>
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   modal: {
-    width: "80%",
+    width: "85%",
     padding: 24,
     backgroundColor: "#ffffff",
     borderRadius:8,
