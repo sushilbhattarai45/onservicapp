@@ -145,7 +145,7 @@ export default function CategoryPersonListingScreen() {
         // marginTop: Constants.statusBarHeight + 20,
       }}
     >
-      <View style={{ marginTop: 40, margin: 10, marginBottom: 30 }}>
+      <View style={{ marginTop: 40, marginBottom: 30 }}>
         <Search rightIcon={"equalizer-fill"} />
 
         <ScrollView

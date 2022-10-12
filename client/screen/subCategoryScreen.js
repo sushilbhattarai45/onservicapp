@@ -47,15 +47,14 @@ export default function SubCategoryScreen() {
         backgroundColor: Colors.gray200,
       }}
     >
-      <View
-        style={{
-          margin: 15,
-          marginTop: 20,
-        }}
-      >
-        <Header headerText={"Repair"} />
+      <View>
+        <Header
+          headerText={"Repair"}
+          style={{ paddingHorizontal: 24 }}
+          icon="arrow-left-line"
+        />
 
-        <View style={{ marginTop: 60 }}>
+        <View style={{ marginTop: 24 }}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View
               style={{
@@ -82,7 +81,7 @@ export default function SubCategoryScreen() {
 
             <View
               style={{
-                marginTop: 30,
+                marginTop: 24,
               }}
             >
               {subcategory.map((subcategory) => {

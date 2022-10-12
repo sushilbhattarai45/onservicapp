@@ -26,8 +26,8 @@ export default function PersonCard({
         <View>
           <Text style={styles.Txt758}>{name}</Text>
           <Text style={styles.works}>
-            ★ {rating}
-            {ratingcount} · {address} · Technician
+            ★{rating}
+            {ratingcount}  •  {address}  •  Technician
           </Text>
         </View>
         <View
@@ -50,12 +50,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: 7,
-    paddingBottom: 7,
-    paddingLeft: 15,
-    paddingRight: 15,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    paddingVertical: 8,
+    backgroundColor: Colors.white,
+    paddingVertical:12,
     paddingHorizontal: 24,
   },
   MaskGroup: {
@@ -75,21 +71,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Regular",
     fontWeight: "400",
-    lineHeight: 18,
-    color: "rgba(33,33,33,1)",
-    width: 299,
-    marginBottom: 10,
+    color: Colors.black,
+    marginBottom:10,
   },
   works: {
+    textAlign:"center",
+    textAlignVertical:"center",
     fontFamily: "Regular",
-    fontSize: 12,
-    main: "Txt884",
-    seg1: "[object Object]",
-    seg2: "[object Object]",
-    seg3: "[object Object]",
-    seg4: "[object Object]",
-    seg5: "[object Object]",
-    seg6: "[object Object]",
-    seg7: "[object Object]",
+    fontSize: 12,   
+    color:Colors.gray900
   },
 });
