@@ -12,7 +12,7 @@ export default function Button({  onPress, label }) {
 
 const styles = StyleSheet.create({
   Button: {
-    //   display: "flex",
+    //  flex:1,
     // flexDirection: "column",
     // justifyContent: "center",
     // alignItems: "center",
