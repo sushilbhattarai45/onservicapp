@@ -15,9 +15,11 @@ import UserProfileScreen from "./screen/userProfileScreen";
 import HomeScreen from "./screen/homeScreen";
 import SPProfileScreen from "./screen/SPProfileScreen";
 // import SplashScreen from "./screen/splashScreen";
+
 import SubCategoryScreen from "./screen/subCategoryScreen";
 import BookMarkScreen from "./screen/bookmarkScreen";
 import SearchPersonListingScreen from "./screen/searchPersonListingScreen";
+import ImagePickerExample from "./screen/Auth/imgpicker";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -45,7 +47,7 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <SearchPersonListingScreen />
+      <ImagePickerExample />
     </View>
   );
 }

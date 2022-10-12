@@ -17,6 +17,8 @@ import { Dropdown } from "react-native-element-dropdown";
 import CheckBox from "expo-checkbox";
 import { Districts } from "../../component/district.js";
 import * as DocumentPicker from "expo-document-picker";
+import * as ImagePicker from "expo-image-picker";
+
 import Header from "../../component/Header";
 import axios from "axios";
 const gender = [
@@ -134,8 +136,8 @@ export default function SignUpScreen() {
         "profile",
         {
           uri: imageToUpload?.uri,
-          name: imageToUpload?.name,
-          type: imageToUpload?.mimeType,
+          name: imageToUpload?.uri + "_profile" + ".jpg",
+          type: "image/jpg",
         },
         "myfile"
       );
@@ -180,10 +182,8 @@ export default function SignUpScreen() {
   };
   const selectFile = async () => {
     try {
-      let result = await DocumentPicker.getDocumentAsync({
-        multiple: false,
-        type: "image/*",
-      });
+      let result = await ImagePicker.launchImageLibraryAsync();
+
       setFile(result);
 
       uploadImage(result).then((res) => {
@@ -255,6 +255,7 @@ export default function SignUpScreen() {
             const res = await axios.post(
               BASE_OUR_API_URL + "/v1/api/user/register",
               {
+                API_KEY: "AXCF",
                 user_name: vname,
                 user_email: vemail,
                 user_contact: vphone,
@@ -375,7 +376,11 @@ export default function SignUpScreen() {
             <View
               style={{
                 right: 0,
+                // backgroundColor: "red",
                 position: "absolute",
+                justifyContent: "center",
+
+                textAlign: "center",
                 flexDirection: "column",
               }}
             >
@@ -391,7 +396,8 @@ export default function SignUpScreen() {
                         }
                   }
                   style={{
-                    right: 3,
+                    right: 0,
+                    alignSelf: "center",
                     height: 75,
                     width: 75,
                     marginTop: 30,
@@ -400,8 +406,10 @@ export default function SignUpScreen() {
                 />
               </Pressable>
               <Text
+                onPress={() => selectFile()}
                 style={{
                   marginTop: 10,
+                  alignSelf: "center",
                   textAlign: "center",
                   color: Colors.primary,
                 }}
