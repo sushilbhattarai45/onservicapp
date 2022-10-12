@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createRef } from "react";
 import {
   ScrollView,
   View,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   FlatList,
+  TextInput,
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 
@@ -17,6 +18,7 @@ import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import CategoryCard from "../component/categoryCard";
 import Button from "../component/buttonComponent";
+import ModalPopup from "../component/Modal";
 
 const Persons = [
   {
@@ -342,7 +344,7 @@ const SPProfileScreen = () => {
               2000 Reviews
             </Text>
             <View style={{ marginTop: 24 }}>
-              <Button label="Rate Us" />
+              <Button label="Rate Us" onPress={()=> popup.current.show() }/>
             </View>
           </View>
           <View
@@ -352,6 +354,7 @@ const SPProfileScreen = () => {
               alignItems: "center",
               paddingHorizontal: 24,
               marginTop: 32,
+              marginBottom:16
             }}
           >
             <Text
@@ -376,7 +379,7 @@ const SPProfileScreen = () => {
             </Text>
           </View>
           <FlatList
-            style={{ marginBottom: 32 }}
+            style={{ }}
             showsHorizontalScrollIndicator={false}
             data={Persons}
             renderItem={({ item, index }) => {
@@ -428,6 +431,7 @@ const SPProfileScreen = () => {
       </View>
       <ModalPopup
         ref={popup}
+        animationType="fade"
         containerStyle={{
           width: "100%",
           marginTop: "auto",
@@ -435,6 +439,7 @@ const SPProfileScreen = () => {
           borderTopStartRadius: 32,
           borderTopEndRadius: 32,
         }}
+        onTouchOutside={()=>popup.current.close()}
       >
         <View
           style={{
