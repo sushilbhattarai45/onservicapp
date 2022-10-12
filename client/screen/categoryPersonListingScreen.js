@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -12,7 +12,10 @@ import Search from "../component/searchBar";
 import { StatusBar } from "expo-status-bar";
 import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
+
 export default function CategoryPersonListingScreen() {
+  const [rating, setRating] = useState(3);
+
   const Persons = [
     {
       name: "Sushil Bhattarai",
@@ -144,7 +147,34 @@ export default function CategoryPersonListingScreen() {
     >
       <View style={{ marginTop: 40, margin: 10, marginBottom: 30 }}>
         <Search rightIcon={"equalizer-fill"} />
-        <ScrollView style={{ backgroundColor: Colors.gray200 }}>
+
+        <ScrollView
+          style={{ backgroundColor: Colors.gray200 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View
+            style={{
+              marginTop: 10,
+              width: "100%",
+              height: 180,
+              // backgroundColor: "red",
+            }}
+          >
+            <Image
+              style={{
+                alignSelf: "center",
+                alignSelf: "center",
+                height: "100%",
+                width: "95%",
+              }}
+              source={{
+                uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
+                headers: {
+                  Accept: "*/*",
+                },
+              }}
+            />
+          </View>
           <View style={{ marginTop: 20 }}>
             {Persons.map((persons) => {
               return (

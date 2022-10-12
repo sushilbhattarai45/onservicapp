@@ -339,7 +339,6 @@ export default function SignUpScreen() {
     <ScrollView>
       <View style={{ flex: 1, margin: 30, flexDirection: "column" }}>
         <Header />
-
         <View
           style={{
             marginTop: 50,

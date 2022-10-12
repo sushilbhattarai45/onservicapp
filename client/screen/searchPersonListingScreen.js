@@ -7,13 +7,12 @@ import {
   ImageBackground,
   ScrollView,
 } from "react-native";
-import BookMarkCard from "../component/bookmarkCard";
-import Header from "../component/Header";
-import Constants from "expo-constants";
+import PersonCard from "../component/personCard";
+import Search from "../component/searchBar";
 import { StatusBar } from "expo-status-bar";
+import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
-
-export default function BookMarkScreen() {
+export default function SearchPersonListingScreen() {
   const Persons = [
     {
       name: "Sushil Bhattarai",
@@ -32,22 +31,6 @@ export default function BookMarkScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
 
     {
       name: "RamKumar",
@@ -57,6 +40,7 @@ export default function BookMarkScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
+
     {
       name: "RamKumar",
       rating: "4.3",
@@ -65,6 +49,7 @@ export default function BookMarkScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
+
     {
       name: "RamKumar",
       rating: "4.3",
@@ -73,6 +58,7 @@ export default function BookMarkScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
+
     {
       name: "RamKumar",
       rating: "4.3",
@@ -81,6 +67,7 @@ export default function BookMarkScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
+
     {
       name: "RamKumar",
       rating: "4.3",
@@ -89,6 +76,43 @@ export default function BookMarkScreen() {
 
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
+
+    {
+      name: "RamKumar",
+      rating: "4.3",
+      ratingcount: "300",
+      address: "Butwal",
+
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
+
+    {
+      name: "RamKumar",
+      rating: "4.3",
+      ratingcount: "300",
+      address: "Butwal",
+
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
+
+    {
+      name: "RamKumar",
+      rating: "4.3",
+      ratingcount: "300",
+      address: "Butwal",
+
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
+
+    {
+      name: "RamKumar",
+      rating: "4.3",
+      ratingcount: "300",
+      address: "Butwal",
+
+      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
+    },
+
     {
       name: "RamKumar",
       rating: "4.3",
@@ -111,31 +135,28 @@ export default function BookMarkScreen() {
   ];
 
   return (
-    <ScrollView style={{ backgroundColor: Colors.gray200 }}>
-      <View
-        style={{
-          marginTop: Constants.statusBarHeight + 20,
-        }}
-      >
-        <View style={{ marginLeft: 20, marginRight: 20 }}>
-          <Text
-            style={{ fontFamily: "Regular", fontSize: 25, fontWeight: "800" }}
-          >
-            Bookmarks
-          </Text>
-          <View
-            style={{
-              marginTop: 20,
-            }}
-          >
+    <View
+      style={{
+        backgroundColor: Colors.gray200,
+        // margin:ConnectionStates,
+        // marginTop: Constants.statusBarHeight + 20,
+      }}
+    >
+      <View style={{ marginTop: 40, margin: 10, marginBottom: 30 }}>
+        <Search rightIcon={"equalizer-fill"} />
+        <ScrollView
+          style={{ backgroundColor: Colors.gray200 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={{ marginTop: 20 }}>
             {Persons.map((persons) => {
               return (
                 <View
                   style={{
-                    marginBottom: 5,
+                    marginTop: 2,
                   }}
                 >
-                  <BookMarkCard
+                  <PersonCard
                     name={persons.name}
                     image={persons.img}
                     address={persons.address}
@@ -146,33 +167,9 @@ export default function BookMarkScreen() {
               );
             })}
           </View>
-        </View>
+        </ScrollView>
       </View>
-      <View
-        style={{
-          marginTop: 10,
-          marginBottom: 30,
-          width: "100%",
-          height: 180,
-          // backgroundColor: "red",
-        }}
-      >
-        <Image
-          style={{
-            alignSelf: "center",
-            alignSelf: "center",
-            height: "100%",
-            width: "90%",
-          }}
-          source={{
-            uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
-            headers: {
-              Accept: "*/*",
-            },
-          }}
-        />
-      </View>
-    </ScrollView>
+    </View>
   );
 }
 

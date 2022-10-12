@@ -69,7 +69,7 @@ export default function SubCategoryScreen() {
                   alignSelf: "center",
                   alignSelf: "center",
                   height: "100%",
-                  width: "100%",
+                  width: "95%",
                 }}
                 source={{
                   uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
