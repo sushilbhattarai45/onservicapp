@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import Search from "../component/searchBar";
@@ -17,7 +18,6 @@ import Button from "../component/buttonComponent";
 import SubCategoryGroupCard from "../component/subCategoryGroupCard";
 import ImageSliderComponent from "../component/imageSlider";
 import Icon from "../component/Icon";
-import PeopleNearYou from "../component/peopleNearYou";
 
 const wWidth = Dimensions.get("window").width;
 const Persons = [
@@ -65,6 +65,8 @@ const Persons = [
 ];
 
 const HomeScreen = () => {
+  
+
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -214,7 +216,6 @@ const HomeScreen = () => {
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
-
       </View>
     </ScrollView>
   );
@@ -268,8 +269,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   Seemore: {
-    flexDirection:"row",
-    marginTop:24,
+    flexDirection: "row",
+    marginTop: 24,
   },
   Txt499: {
     fontSize: 16,
@@ -285,7 +286,7 @@ const styles = StyleSheet.create({
   chevronLeftIcon: {
     width: 24,
     height: 24,
-    marginLeft:8,
+    marginLeft: 8,
   },
 });
 
