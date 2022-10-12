@@ -6,6 +6,8 @@ import {
   View,
   ImageBackground,
   ScrollView,
+  FlatList,
+  Pressable,
 } from "react-native";
 import PersonCard from "../component/personCard";
 import Search from "../component/searchBar";
@@ -13,6 +15,26 @@ import { StatusBar } from "expo-status-bar";
 import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
 export default function SearchPersonListingScreen() {
+  const subcategory = [
+    {
+      name: "Car Repair",
+    },
+    {
+      name: "Home Repair",
+    },
+    {
+      name: "Van Repair",
+    },
+    {
+      name: "taxi Repair",
+    },
+    {
+      name: "pokhara Repair",
+    },
+    {
+      name: "DSM ko 4hajar",
+    },
+  ];
   const Persons = [
     {
       name: "Sushil Bhattarai",
@@ -142,13 +164,68 @@ export default function SearchPersonListingScreen() {
         // marginTop: Constants.statusBarHeight + 20,
       }}
     >
-      <View style={{ marginTop: 40, margin: 10, marginBottom: 30 }}>
-        <Search rightIcon={"equalizer-fill"} />
+      <View style={{ marginTop: 40, marginBottom: 30 }}>
+        <View
+          style={{
+            marginHorizontal: 10,
+          }}
+        >
+          <Search rightIcon={"equalizer-fill"} />
+        </View>
+
+        <FlatList
+          style={{
+            marginTop: 15,
+            marginBottom: 10,
+            marginLeft: 10,
+          }}
+          //   style={styles.videos_flatList}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={subcategory}
+          renderItem={({ item }) => {
+            return (
+              <Pressable
+                style={{
+                  zIndex: 10,
+                  borderWidth: 2,
+                  borderColor: Colors.primary,
+                  borderRadius: 15,
+                  width: 120,
+                  marginBottom: 10,
+                  height: 30,
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    padding: 2,
+                  }}
+                >
+                  {item.name}
+                </Text>
+              </Pressable>
+            );
+          }}
+          ItemSeparatorComponent={() => {
+            return (
+              <View
+                style={{
+                  height: "100%",
+                  width: 8,
+                  backgroundColor: Colors.gray200,
+                }}
+              />
+            );
+          }}
+          keyExtractor={(item, index) => index.toString()}
+        />
+
         <ScrollView
           style={{ backgroundColor: Colors.gray200 }}
           showsVerticalScrollIndicator={false}
         >
-          <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 5 }}>
             {Persons.map((persons) => {
               return (
                 <View
@@ -187,12 +264,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: "rgba(249,249,252,1)",
-    width: 426,
-    height: 77,
   },
   MaskGroup: {
     width: 60,
-    height: 60,
+    // height: 60,
     marginRight: 16,
     borderRadius: 20,
   },
