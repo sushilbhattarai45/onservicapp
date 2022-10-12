@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   modal: {
-    width: "80%",
+    width: "85%",
     padding: 24,
     backgroundColor: "#ffffff",
     borderRadius:8,

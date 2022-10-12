@@ -20,6 +20,7 @@ import CategoryCard from "../component/categoryCard";
 import Button from "../component/buttonComponent";
 import ModalPopup from "../component/Modal";
 
+import {G, LinearGradient, } from 'react-native-svg'
 const Persons = [
   {
     name: "Sushil Bhattarai",
@@ -112,8 +113,15 @@ const ReviewsCard = ({ name, image, date, rating, review }) => {
         </View>
       </View>
       <Text
-        style={{ fontSize: 14, color: Colors.black, fontFamily: "Regular", marginTop:8 }}
-      >Hedfjkshafjhaesjkf</Text>
+        style={{
+          fontSize: 14,
+          color: Colors.black,
+          fontFamily: "Regular",
+          marginTop: 8,
+        }}
+      >
+        Hedfjkshafjhaesjkf
+      </Text>
     </View>
   );
 };
@@ -152,10 +160,10 @@ const SkillPill = ({ name }) => {
 const SPProfileScreen = () => {
   const [rating, setRating] = useState(3.5);
   const popup = createRef();
+  const popupQr = createRef();
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={{ flex: 1 }}>
-        
         <Header
           style={{ position: "absolute", zIndex: 10, paddingHorizontal: 24 }}
           icon="arrow-left-line"
@@ -165,10 +173,12 @@ const SPProfileScreen = () => {
               size={24}
               style={styles.icon}
               color={Colors.white}
+              onPress={() => popupQr.current.show()}
             />
           }
           color={Colors.white}
-        />
+        /> 
+        
         <ImageSliderComponent />
         {/* <Text>Hello</Text> */}
         <View style={styles.profileContent}>
@@ -272,6 +282,8 @@ const SPProfileScreen = () => {
             <SkillPill name="Car Renting" />
             <SkillPill name="Carpenter" />
             <SkillPill name="Plumber" />
+            <SkillPill name="Air Conditioner Repair" />
+            <SkillPill name="Carpenter" />
           </View>
           {/* About */}
           <>
@@ -344,7 +356,7 @@ const SPProfileScreen = () => {
               2000 Reviews
             </Text>
             <View style={{ marginTop: 24 }}>
-              <Button label="Rate Us" onPress={()=> popup.current.show() }/>
+              <Button label="Rate Us" onPress={() => popup.current.show()} />
             </View>
           </View>
           <View
@@ -354,7 +366,7 @@ const SPProfileScreen = () => {
               alignItems: "center",
               paddingHorizontal: 24,
               marginTop: 32,
-              marginBottom:16
+              marginBottom: 16,
             }}
           >
             <Text
@@ -379,7 +391,7 @@ const SPProfileScreen = () => {
             </Text>
           </View>
           <FlatList
-            style={{ }}
+            style={{}}
             showsHorizontalScrollIndicator={false}
             data={Persons}
             renderItem={({ item, index }) => {
@@ -430,6 +442,41 @@ const SPProfileScreen = () => {
         </View>
       </View>
       <ModalPopup
+        ref={popupQr}
+        animationType="fade"
+        onTouchOutside={() => popupQr.current.close()}
+      >
+        <View
+          style={{
+            alignItems: "center",
+            paddingHorizontal: 16,
+            paddingVertical: 16,
+          }}
+        >
+          <Text style={{ fontSize: 28, fontFamily: "Black", marginBottom: 16 }}>
+            Share Your Profile
+          </Text>
+          <Image
+            style={{ height: 200, width: 200, marginBottom: 8 }}
+            source={{
+              uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU",
+              headers: {
+                Accept: "*/*",
+              },
+            }}
+          />
+          <Text
+            style={{ fontFamily: "Black", color: Colors.primary, fontSize: 20 }}
+          >
+            Onservic
+          </Text>
+          <Text style={{ fontFamily: "Black", fontSize: 20 }}>
+            Shakuntala Pandey
+          </Text>
+          <Text style={{fontFamily:'Regular', color:Colors.gray900, fontSize:16,}}>977-98000000</Text>
+        </View>
+      </ModalPopup>
+      <ModalPopup
         ref={popup}
         animationType="fade"
         containerStyle={{
@@ -439,7 +486,7 @@ const SPProfileScreen = () => {
           borderTopStartRadius: 32,
           borderTopEndRadius: 32,
         }}
-        onTouchOutside={()=>popup.current.close()}
+        onTouchOutside={() => popup.current.close()}
       >
         <View
           style={{
@@ -484,7 +531,7 @@ const SPProfileScreen = () => {
             placeholder="Share your experience"
           />
         </View>
-        {/* {errorpin ? <Text style={{ color: "red" }}>{errorpin}</Text> : null} */}
+         {/* {errorpin ? <Text style={{ color: "red" }}>{errorpin}</Text> : null}  */}
         <View style={{ width: "100%", marginTop: 40 }}>
           <Button label="Share Review" />
         </View>
