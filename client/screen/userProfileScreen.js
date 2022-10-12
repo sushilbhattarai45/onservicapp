@@ -14,6 +14,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import PeopleNearYou from "../component/peopleNearYou";
+
+import Constants from "expo-constants";
+
 export default function UserProfileScreen() {
   const Persons = [
     {
@@ -61,22 +64,18 @@ export default function UserProfileScreen() {
         >
           <View
             style={{
+              marginTop: Constants.statusBarHeight + 20,
+
               paddingBottom: 20,
-              marginTop: 20,
               marginLeft: 30,
             }}
           >
             <Text
               style={{
-                marginTop: 10,
                 fontFamily: "Black",
                 fontStyle: "normal",
-                fontSize: 20,
-                lineHeight: 38,
-                display: "flex",
-                alignItems: "flex-end",
+                fontSize:32,
                 letterSpacing: -0.02,
-
                 color: Colors.white,
               }}
             >

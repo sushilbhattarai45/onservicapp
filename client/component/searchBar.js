@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Image, View, TextInput } from "react-native";
 import Icon from "./Icon";
 import { Colors } from "../styles/main";
@@ -9,16 +9,22 @@ export default function Search({
   rightIcon,
   onRightIconPress,
 }) {
+  const [active, setActive] = useState(false);
   return (
     <View style={[styles.Search, { ...containerStyle }]}>
-      <Icon name="search-2-line" size={20} color={Colors.gray500} style={styles.searchIcon} />
-      <TextInput
-        style={[styles.input, { ...inputStyle }]}
-        placeholder="Search for services"
+      <Icon
+        name="search-2-line"
+        size={20}
+        color={active ? Colors.black : Colors.gray900}
+        style={styles.searchIcon}
       />
-      {rightIcon && (
-        <Icon name={rightIcon} size={20} color={Colors.gray500} />
-      )}
+      <TextInput
+        onFocus={() => setActive(true)}
+        onBlur={() => setActive(false)}
+        style={[styles.input, { ...inputStyle }]}
+        placeholder={active ? "" : "Search for services"}
+      />
+      {rightIcon && <Icon name={rightIcon} size={20} color={Colors.gray900} />}
     </View>
   );
 }
@@ -33,12 +39,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     borderRadius: 14,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    padding:16,
-    width:'100%',
+    backgroundColor: Colors.white,
+    padding: 16,
+    width: "100%",
   },
   searchIcon: {
-    marginRight:12
+    marginRight: 12,
   },
   rightIcon: {
     marginLeft: 12,
@@ -48,7 +54,7 @@ const styles = StyleSheet.create({
     // height: "100%",
     fontSize: 16,
     fontFamily: "Regular",
-    color: "rgba(0,0,0,1)",
+    color: Colors.gray900,
     // width: "100%",
     // backgroundColor:'blue'
   },

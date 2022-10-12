@@ -117,9 +117,9 @@ export default function BookMarkScreen() {
           marginTop: Constants.statusBarHeight + 20,
         }}
       >
-        <View style={{ marginLeft: 20, marginRight: 20 }}>
+        <View>
           <Text
-            style={{ fontFamily: "Regular", fontSize: 25, fontWeight: "800" }}
+            style={{paddingHorizontal:24, fontFamily: "Regular", fontSize: 25, fontWeight: "800" }}
           >
             Bookmarks
           </Text>
@@ -132,7 +132,7 @@ export default function BookMarkScreen() {
               return (
                 <View
                   style={{
-                    marginBottom: 5,
+                    marginBottom: 2,
                   }}
                 >
                   <BookMarkCard
@@ -153,7 +153,7 @@ export default function BookMarkScreen() {
           marginTop: 10,
           marginBottom: 30,
           width: "100%",
-          height: 180,
+          height: 250,
           // backgroundColor: "red",
         }}
       >
@@ -161,8 +161,9 @@ export default function BookMarkScreen() {
           style={{
             alignSelf: "center",
             alignSelf: "center",
-            height: "100%",
-            width: "90%",
+            width: "100%",
+            height:'100%',
+            objectFit:'cover'
           }}
           source={{
             uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",

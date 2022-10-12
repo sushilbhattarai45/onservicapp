@@ -59,12 +59,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: 7,
-    paddingBottom: 7,
-    paddingRight: 15,
-
+    paddingHorizontal: 24,
+    paddingVertical:8,
     backgroundColor: "white",
-    padding: 10,
   },
   MaskGroup: {
     width: 80,
