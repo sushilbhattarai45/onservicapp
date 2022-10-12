@@ -243,11 +243,19 @@ export default function SearchPersonListingScreen() {
           }}
         >
           {/* <SVGImg width={200} height={200} /> */}
-
-          <SvgUri
-            width="80%"
-            height="50%"
-            uri="http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg"
+          <Image
+            style={{
+              alignSelf: "center",
+              resizeMode: "contain",
+              height: "50%",
+              width: "90%",
+            }}
+            source={{
+              uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/7c63n63o6t3-472%3A6676?alt=media&token=fe730173-04a9-40a8-8afd-1445f2a0ac78",
+              headers: {
+                Accept: "*/*",
+              },
+            }}
           />
 
           <View
