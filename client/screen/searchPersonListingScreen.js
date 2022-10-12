@@ -189,7 +189,6 @@ export default function SearchPersonListingScreen() {
               marginTop: 15,
               marginBottom: 10,
               marginLeft: 10,
-              fontFamily: "Regular",
             }}
             //   style={styles.videos_flatList}
             horizontal={true}
@@ -201,19 +200,22 @@ export default function SearchPersonListingScreen() {
                   style={{
                     justifyContent: "center",
                     zIndex: 10,
-                    borderWidth: 2,
+                    borderWidth: 1.5,
                     borderColor: Colors.primary,
                     borderRadius: 15,
-                    width: 120,
                     marginBottom: 10,
+                    paddingHorizontal:12,
+                    paddingVertical:4,
                     height: 30,
                   }}
                 >
                   <Text
                     style={{
-                      fontFamily: "Regular",
+                      fontSize:10,
+                      fontFamily: "SemiBold",
                       textAlignVertical: "center",
                       textAlign: "center",
+                      color:Colors.primary
                     }}
                   >
                     {item.name}
