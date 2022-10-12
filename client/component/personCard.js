@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   works: {
+    fontFamily: "Regular",
+    fontSize: 12,
     main: "Txt884",
     seg1: "[object Object]",
     seg2: "[object Object]",

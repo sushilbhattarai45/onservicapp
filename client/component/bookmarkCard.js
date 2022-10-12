@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   },
   works: {
     fontSize: 12,
+    fontFamily: "Regular",
     main: "Txt884",
     seg1: "[object Object]",
     seg2: "[object Object]",
