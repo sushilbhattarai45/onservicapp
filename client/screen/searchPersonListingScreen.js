@@ -12,8 +12,10 @@ import {
 import PersonCard from "../component/personCard";
 import Search from "../component/searchBar";
 import { StatusBar } from "expo-status-bar";
+import { SvgUri, G, Path } from "react-native-svg";
 import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
+
 export default function SearchPersonListingScreen() {
   const subcategory = [
     {
@@ -159,12 +161,20 @@ export default function SearchPersonListingScreen() {
   return (
     <View
       style={{
+        flex: 1,
+
         backgroundColor: Colors.gray200,
         // margin:ConnectionStates,
         // marginTop: Constants.statusBarHeight + 20,
       }}
     >
-      <View style={{ marginTop: 40, marginBottom: 30 }}>
+      <View
+        style={{
+          marginTop: 40,
+          marginBottom: 30,
+          backgroundColor: Colors.gray200,
+        }}
+      >
         <View
           style={{
             marginHorizontal: 10,
@@ -173,78 +183,104 @@ export default function SearchPersonListingScreen() {
           <Search rightIcon={"equalizer-fill"} />
         </View>
 
-        <FlatList
-          style={{
-            marginTop: 15,
-            marginBottom: 10,
-            marginLeft: 10,
-          }}
-          //   style={styles.videos_flatList}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={subcategory}
-          renderItem={({ item }) => {
-            return (
-              <Pressable
-                style={{
-                  zIndex: 10,
-                  borderWidth: 2,
-                  borderColor: Colors.primary,
-                  borderRadius: 15,
-                  width: 120,
-                  marginBottom: 10,
-                  height: 30,
-                }}
-              >
-                <Text
+        <View>
+          <FlatList
+            style={{
+              marginTop: 15,
+              marginBottom: 10,
+              marginLeft: 10,
+              fontFamily: "Regular",
+            }}
+            //   style={styles.videos_flatList}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={subcategory}
+            renderItem={({ item }) => {
+              return (
+                <Pressable
                   style={{
-                    textAlign: "center",
-                    padding: 2,
+                    justifyContent: "center",
+                    zIndex: 10,
+                    borderWidth: 2,
+                    borderColor: Colors.primary,
+                    borderRadius: 15,
+                    width: 120,
+                    marginBottom: 10,
+                    height: 30,
                   }}
                 >
-                  {item.name}
-                </Text>
-              </Pressable>
-            );
-          }}
-          ItemSeparatorComponent={() => {
-            return (
-              <View
-                style={{
-                  height: "100%",
-                  width: 8,
-                  backgroundColor: Colors.gray200,
-                }}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
-
-        <ScrollView
-          style={{ backgroundColor: Colors.gray200 }}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={{ marginTop: 5 }}>
-            {Persons.map((persons) => {
+                  <Text
+                    style={{
+                      fontFamily: "Regular",
+                      textAlignVertical: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    {item.name}
+                  </Text>
+                </Pressable>
+              );
+            }}
+            ItemSeparatorComponent={() => {
               return (
                 <View
                   style={{
-                    marginTop: 2,
+                    height: "100%",
+                    width: 8,
+                    backgroundColor: Colors.gray200,
                   }}
-                >
-                  <PersonCard
-                    name={persons.name}
-                    image={persons.img}
-                    address={persons.address}
-                    rating={persons.rating}
-                    ratingcount={persons.ratingcount}
-                  />
-                </View>
+                />
               );
-            })}
+            }}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+        <View
+          style={{
+            marginTop: 50,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {/* <SVGImg width={200} height={200} /> */}
+
+          <SvgUri
+            width="80%"
+            height="50%"
+            uri="http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg"
+          />
+
+          <View
+            style={{
+              marginHorizontal: 20,
+              marginTop: 20,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "Regular",
+                fontWeight: "700",
+                fontSize: 24,
+              }}
+            >
+              Not Found
+            </Text>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "Regular",
+                fontSize: 16,
+                marginTop: 10,
+              }}
+            >
+              Sorry, the keyword you entered cannot be found, please check again
+              or search with another keyword.
+            </Text>
           </View>
-        </ScrollView>
+        </View>
       </View>
     </View>
   );
