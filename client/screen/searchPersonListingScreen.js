@@ -173,14 +173,11 @@ export default function SearchPersonListingScreen() {
           marginTop: 40,
           marginBottom: 30,
           backgroundColor: Colors.gray200,
+          paddingHorizontal: 10,
         }}
       >
-        <View
-          style={{
-            marginHorizontal: 10,
-          }}
-        >
-          <Search rightIcon={"equalizer-fill"} />
+        <View >
+          <Search  rightIcon={"equalizer-fill"} />
         </View>
 
         <View>
@@ -188,7 +185,7 @@ export default function SearchPersonListingScreen() {
             style={{
               marginTop: 15,
               marginBottom: 10,
-              marginLeft: 10,
+              marginRight: 10,
             }}
             //   style={styles.videos_flatList}
             horizontal={true}
@@ -204,18 +201,18 @@ export default function SearchPersonListingScreen() {
                     borderColor: Colors.primary,
                     borderRadius: 15,
                     marginBottom: 10,
-                    paddingHorizontal:12,
-                    paddingVertical:4,
+                    paddingHorizontal: 12,
+                    paddingVertical: 4,
                     height: 30,
                   }}
                 >
                   <Text
                     style={{
-                      fontSize:10,
+                      fontSize: 10,
                       fontFamily: "SemiBold",
                       textAlignVertical: "center",
                       textAlign: "center",
-                      color:Colors.primary
+                      color: Colors.primary,
                     }}
                   >
                     {item.name}

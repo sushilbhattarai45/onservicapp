@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   TextInput,
+  Pressable,
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 
@@ -19,8 +20,8 @@ import { StatusBar } from "expo-status-bar";
 import CategoryCard from "../component/categoryCard";
 import Button from "../component/buttonComponent";
 import ModalPopup from "../component/Modal";
+import ReviewCard from "../component/ReviewCard";
 
-import {G, LinearGradient, } from 'react-native-svg'
 const Persons = [
   {
     name: "Sushil Bhattarai",
@@ -65,72 +66,12 @@ const Persons = [
   //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
 ];
 
-const ReviewsCard = ({ name, image, date, rating, review }) => {
-  return (
-    <View
-      style={{
-        paddingHorizontal: 24,
-        paddingVertical: 16,
-        backgroundColor: Colors.white,
-        marginBottom: 1,
-      }}
-    >
-      <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-start" }}>
-        <Image
-          style={{ width: 40, height: 40, borderRadius: 12 }}
-          source={{
-            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU",
-            headers: {
-              Accept: "*/*",
-            },
-          }}
-        />
-        <View style={{ marginLeft: 16 }}>
-          <Text
-            style={{ fontSize: 14, color: Colors.black, fontFamily: "Regular" }}
-          >
-            Tilganga Acharya
-          </Text>
-          <Text
-            style={{ fontSize: 12, color: Colors.black, fontFamily: "Regular" }}
-          >
-            1 day ago
-          </Text>
-        </View>
-        <View style={{ marginLeft: "auto" }}>
-          <StarRating
-            starSize={12}
-            onChange={() => null}
-            rating={rating}
-            color={Colors.gold}
-            starStyle={{ marginLeft: -5 }}
-            animationConfig={{
-              scale: 1,
-              duration: 0,
-              delay: 0,
-            }}
-          />
-        </View>
-      </View>
-      <Text
-        style={{
-          fontSize: 14,
-          color: Colors.black,
-          fontFamily: "Regular",
-          marginTop: 8,
-        }}
-      >
-        Hedfjkshafjhaesjkf
-      </Text>
-    </View>
-  );
-};
 
 const ActionIcon = ({ name, onPress }) => {
   return (
-    <View style={styles.actionIcon}>
+    <Pressable style={styles.actionIcon} onPress={onPress}>
       <Icon {...{ name }} {...{ onPress }} size={24} color={Colors.gray900} />
-    </View>
+    </Pressable>
   );
 };
 
@@ -177,8 +118,8 @@ const SPProfileScreen = () => {
             />
           }
           color={Colors.white}
-        /> 
-        
+        />
+
         <ImageSliderComponent />
         {/* <Text>Hello</Text> */}
         <View style={styles.profileContent}>
@@ -395,7 +336,7 @@ const SPProfileScreen = () => {
             showsHorizontalScrollIndicator={false}
             data={Persons}
             renderItem={({ item, index }) => {
-              return <ReviewsCard />;
+              return <ReviewCard/>;
             }}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -439,8 +380,50 @@ const SPProfileScreen = () => {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
+          {/* Footer */}
+          <View
+            style={{
+              paddingHorizontal: 24,
+              paddingVertical: 30,
+              backgroundColor: Colors.white,
+              marginTop: 24,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../assets/logo.png")}
+              style={{ width: 130 }}
+              resizeMode="cover"
+            />
+            <View>
+              <View style={{ flexDirection: "row", alignItems: "center", marginTop:4 }}>
+                <Icon name="phone-fill" size={14}  color={Colors.gray900}/>
+                <Text style={{ fontFamily: "Regular", fontSize: 12, color:Colors.gray900 }}>
+                  {" "}
+                  9847000000
+                </Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center", marginTop:4 }}>
+                <Icon name="map-pin-fill" size={14}  color={Colors.gray900}/>
+                <Text style={{ fontFamily: "Regular", fontSize: 12, color:Colors.gray900 }}>
+                  {" "}
+                 Butwal 3 Golpark
+                </Text>
+              </View>
+              <View style={{flexDirection:"row", alignItems:"center", marginTop:4}}>
+              <Icon name="chat-1-fill" size={14} color={Colors.gray900} />
+              <Text style={{ fontFamily: "Regular", fontSize: 12, color:Colors.gray900 }}>
+                {" "}
+                onservic@gmail.com
+              </Text>
+            </View>
+            </View>
+          </View>
         </View>
       </View>
+
       <ModalPopup
         ref={popupQr}
         animationType="fade"
@@ -473,7 +456,15 @@ const SPProfileScreen = () => {
           <Text style={{ fontFamily: "Black", fontSize: 20 }}>
             Shakuntala Pandey
           </Text>
-          <Text style={{fontFamily:'Regular', color:Colors.gray900, fontSize:16,}}>977-98000000</Text>
+          <Text
+            style={{
+              fontFamily: "Regular",
+              color: Colors.gray900,
+              fontSize: 16,
+            }}
+          >
+            977-98000000
+          </Text>
         </View>
       </ModalPopup>
       <ModalPopup
@@ -531,7 +522,7 @@ const SPProfileScreen = () => {
             placeholder="Share your experience"
           />
         </View>
-         {/* {errorpin ? <Text style={{ color: "red" }}>{errorpin}</Text> : null}  */}
+        {/* {errorpin ? <Text style={{ color: "red" }}>{errorpin}</Text> : null}  */}
         <View style={{ width: "100%", marginTop: 40 }}>
           <Button label="Share Review" />
         </View>

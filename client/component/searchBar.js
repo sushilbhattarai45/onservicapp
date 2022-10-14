@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 14,
     backgroundColor: Colors.white,
-    padding: 16,
+    paddingVertical: 12,
     width: "100%",
   },
   searchIcon: {

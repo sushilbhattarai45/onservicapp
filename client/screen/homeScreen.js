@@ -65,8 +65,6 @@ const Persons = [
 ];
 
 const HomeScreen = () => {
-  
-
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
