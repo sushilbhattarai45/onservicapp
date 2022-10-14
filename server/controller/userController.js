@@ -24,7 +24,7 @@ export const registerUser = async (req, res) => {
       const userData = await user.save();
       return res.json({ statuscode: 201, user: userData });
     } else {
-      return res.json({ statuscode: 600, message: "user already exists" });
+      return res.json({ statuscode: 600, message: "User already exists" });
     }
   } catch (e) {
     console.log(e);
