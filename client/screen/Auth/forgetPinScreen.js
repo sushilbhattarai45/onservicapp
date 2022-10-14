@@ -13,76 +13,90 @@ import {
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 import { Colors } from "../../styles/main";
-
+import Header from "../../component/Header";
 export default function ForgetPinScreen() {
   return (
-    <View
-      style={{
-        margin: 30,
-      }}
-    >
-      <View style={{ marginTop: 30 }}>
-        <Text
-          style={{
-            marginTop: 30,
-            fontFamily: "Black",
-            fontStyle: "normal",
-            fontWeight: "800",
-            fontSize: 20,
-            lineHeight: 38,
-            display: "flex",
-            alignItems: "flex-end",
-            letterS: -0.02,
-
-            color: Colors.black,
-          }}
-        >
-          Forgot PIN?{" "}
-        </Text>
-        <View>
-          <Text style={{ color: Colors.gray500 }}>
-            Enter your regestered number below to get an one time password{" "}
-          </Text>
-        </View>
-
-        <View style={{ marginTop: 5 }}>
-          <View
+    <View>
+      <View
+        style={{
+          marginLeft: 24,
+        }}
+      >
+        <Header icon={"arrow-left-line"} />
+      </View>
+      <View
+        style={{
+          margin: 30,
+        }}
+      >
+        <View style={{}}>
+          <Text
             style={{
-              marginTop: 30,
+              fontFamily: "Regular",
+              fontStyle: "normal",
+              fontWeight: "800",
+              fontSize: 20,
+              lineHeight: 38,
+              display: "flex",
+              alignItems: "flex-end",
+              letterS: -0.02,
+
+              color: Colors.black,
             }}
           >
-            <Text>Phone Number </Text>
+            Forgot PIN?{" "}
+          </Text>
+          <View>
+            <Text style={{ color: Colors.gray500, fontFamily: "Regular" }}>
+              Enter your regestered number below to get an one time password{" "}
+            </Text>
+          </View>
+
+          <View style={{ marginTop: 5 }}>
             <View
               style={{
-                display: "flex",
+                marginTop: 16,
               }}
             >
-              <TextInput
-                keyboardType="numeric"
-                maxLength={10}
+              <Text
                 style={{
-                  width: "100%",
-                  marginTop: 8,
-                  borderWidth: 1,
-                  padding: 16,
-                  borderColor: Colors.black,
-                  borderRadius: 4,
-                  height: 50,
+                  fontFamily: "Regular",
                 }}
-                placeholder="Enter your Mobile Number"
-              />
-              {/* <Ionicons
+              >
+                Phone Number{" "}
+              </Text>
+              <View
+                style={{
+                  display: "flex",
+                }}
+              >
+                <TextInput
+                  keyboardType="numeric"
+                  maxLength={10}
+                  style={{
+                    fontFamily: "Regular",
+                    width: "100%",
+                    marginTop: 8,
+                    borderWidth: 1,
+                    padding: 16,
+                    borderColor: Colors.black,
+                    borderRadius: 4,
+                    height: 50,
+                  }}
+                  placeholder="Enter your Mobile Number"
+                />
+                {/* <Ionicons
                 style={{ position: "absolute", paddingVertical: 20, right: 16 }}
                 name="eye-off-outline"
                 size={24}
                 color="black"
               /> */}
+              </View>
+              {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
             </View>
-            {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
-        </View>
-        <View>
-          {/* <View
+          <View>
+            {/* <View
             style={{
               display: "flex",
             }}
@@ -106,30 +120,32 @@ export default function ForgetPinScreen() {
               color="black"
             />
           </View> */}
-        </View>
+          </View>
 
-        <Pressable
-          style={{
-            borderColor: Colors.primary,
-            borderWidth: 1,
-            justifyContent: "center",
-            height: 50,
-            marginTop: 24,
-          }}
-        >
-          <Text
+          <Pressable
             style={{
-              textAlign: "center",
-              fontSize: 20,
-              fontWeight: "bold",
-              color: Colors.primary,
-              fontFamily: "Bold",
-              textAlignVertical: "center",
+              borderColor: Colors.primary,
+              borderWidth: 1,
+              justifyContent: "center",
+              height: 50,
+              marginTop: 24,
             }}
           >
-            SEND
-          </Text>
-        </Pressable>
+            <Text
+              style={{
+                fontFamily: "Regular",
+                textAlign: "center",
+                fontSize: 20,
+                fontWeight: "bold",
+                color: Colors.primary,
+                fontFamily: "Bold",
+                textAlignVertical: "center",
+              }}
+            >
+              SEND
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );

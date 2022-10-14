@@ -341,11 +341,16 @@ export default function SignUpScreen() {
 
   return (
     <ScrollView>
+      <View
+        style={{
+          marginLeft: 24,
+        }}
+      >
+        <Header icon={"arrow-left-line"} />
+      </View>
       <View style={{ flex: 1, margin: 30, flexDirection: "column" }}>
-        <Header />
         <View
           style={{
-            marginTop: 50,
             flexDirection: "row",
             flex: 1,
             marginBottom: 50,
@@ -362,8 +367,8 @@ export default function SignUpScreen() {
               style={{
                 textAlignVertical: "center",
                 flex: 5,
+                fontFamily: "Regular",
 
-                fontFamily: "Bold",
                 fontStyle: "normal",
                 fontWeight: "800",
                 fontSize: 32,
@@ -412,6 +417,8 @@ export default function SignUpScreen() {
                 onPress={() => selectFile()}
                 style={{
                   marginTop: 10,
+                  fontFamily: "Regular",
+
                   alignSelf: "center",
                   textAlign: "center",
                   color: Colors.primary,
@@ -428,9 +435,11 @@ export default function SignUpScreen() {
               marginTop: 10,
             }}
           >
-            <Text>Full Name *</Text>
+            <Text style={{ fontFamily: "Regular" }}>Full Name *</Text>
             <TextInput
               style={{
+                fontFamily: "Regular",
+
                 width: "100%",
                 marginTop: 8,
                 borderWidth: 1,
@@ -448,7 +457,9 @@ export default function SignUpScreen() {
               placeholder="Full Name"
             />
             {errorname ? (
-              <Text style={{ color: "red" }}>{errorname}</Text>
+              <Text style={{ color: "red", fontFamily: "Regular" }}>
+                {errorname}
+              </Text>
             ) : null}
           </View>
         </View>
@@ -458,9 +469,11 @@ export default function SignUpScreen() {
               marginTop: 12,
             }}
           >
-            <Text>Email Address *</Text>
+            <Text style={{ fontFamily: "Regular" }}>Email Address *</Text>
             <TextInput
               style={{
+                fontFamily: "Regular",
+
                 width: "100%",
                 marginTop: 8,
                 borderWidth: 1,
@@ -478,7 +491,9 @@ export default function SignUpScreen() {
               placeholder="Full Name"
             />
             {erroremail ? (
-              <Text style={{ color: "red" }}>{erroremail}</Text>
+              <Text style={{ color: "red", fontFamily: "Regular" }}>
+                {erroremail}
+              </Text>
             ) : null}
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
@@ -489,11 +504,13 @@ export default function SignUpScreen() {
               marginTop: 12,
             }}
           >
-            <Text>Phone Number *</Text>
+            <Text style={{ fontFamily: "Regular" }}>Phone Number *</Text>
             <TextInput
               keyboardType="numeric"
               maxLength={10}
               style={{
+                fontFamily: "Regular",
+
                 width: "100%",
                 marginTop: 8,
                 borderWidth: 1,
@@ -511,7 +528,9 @@ export default function SignUpScreen() {
               placeholder="Phone Number"
             />
             {errorphone ? (
-              <Text style={{ color: "red" }}>{errorphone}</Text>
+              <Text style={{ color: "red", fontFamily: "Regular" }}>
+                {errorphone}
+              </Text>
             ) : null}
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
@@ -522,9 +541,11 @@ export default function SignUpScreen() {
               marginTop: 12,
             }}
           >
-            <Text>District *</Text>
+            <Text style={{ fontFamily: "Regular" }}>District *</Text>
             <Dropdown
               style={{
+                fontFamily: "Regular",
+
                 width: "100%",
                 marginTop: 8,
                 marginRight: -10,
@@ -568,7 +589,9 @@ export default function SignUpScreen() {
               )}
             />
             {errordistrict ? (
-              <Text style={{ color: "red" }}>{errordistrict}</Text>
+              <Text style={{ color: "red", fontFamily: "Regular" }}>
+                {errordistrict}
+              </Text>
             ) : null}
           </View>
         </View>
@@ -579,9 +602,11 @@ export default function SignUpScreen() {
               marginTop: 12,
             }}
           >
-            <Text>Cities *</Text>
+            <Text style={{ fontFamily: "Regular" }}>Cities *</Text>
             <Dropdown
               style={{
+                fontFamily: "Regular",
+
                 width: "100%",
                 marginTop: 8,
                 marginRight: -10,
@@ -623,7 +648,9 @@ export default function SignUpScreen() {
               )}
             />
             {errorcity ? (
-              <Text style={{ color: "red" }}>{errorcity}</Text>
+              <Text style={{ color: "red", fontFamily: "Regular" }}>
+                {errorcity}
+              </Text>
             ) : null}
           </View>
         </View>
@@ -634,10 +661,12 @@ export default function SignUpScreen() {
               marginTop: 12,
             }}
           >
-            <Text>Street *</Text>
+            <Text style={{ fontFamily: "Regular" }}>Street *</Text>
             <TextInput
               style={{
                 width: "100%",
+                fontFamily: "Regular",
+
                 marginTop: 8,
                 borderWidth: 1,
                 padding: 16,
@@ -654,7 +683,9 @@ export default function SignUpScreen() {
               placeholder="Street"
             />
             {errorstreet ? (
-              <Text style={{ color: "red" }}>{errorstreet}</Text>
+              <Text style={{ color: "red", fontFamily: "Regular" }}>
+                {errorstreet}
+              </Text>
             ) : null}
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
@@ -665,10 +696,12 @@ export default function SignUpScreen() {
               marginTop: 12,
             }}
           >
-            <Text>Gender *</Text>
+            <Text style={{ fontFamily: "Regular" }}>Gender *</Text>
             <Dropdown
               style={{
                 width: "100%",
+                fontFamily: "Regular",
+
                 marginTop: 8,
                 marginRight: -10,
                 borderWidth: 1,
@@ -708,7 +741,9 @@ export default function SignUpScreen() {
               )}
             />
             {errorgender ? (
-              <Text style={{ color: "red" }}>{errorgender}</Text>
+              <Text style={{ color: "red", fontFamily: "Regular" }}>
+                {errorgender}
+              </Text>
             ) : null}
           </View>
         </View>
@@ -718,12 +753,14 @@ export default function SignUpScreen() {
               marginTop: 12,
             }}
           >
-            <Text>Create PIN *</Text>
+            <Text style={{ fontFamily: "Regular" }}>Create PIN *</Text>
             <TextInput
               maxLength={4}
               keyboardType={"numeric"}
               style={{
                 width: "100%",
+                fontFamily: "Regular",
+
                 marginTop: 8,
                 borderWidth: 1,
                 padding: 16,
@@ -740,7 +777,11 @@ export default function SignUpScreen() {
               }}
               placeholder="Enter A New PIN"
             />
-            {errorpin ? <Text style={{ color: "red" }}>{errorpin}</Text> : null}
+            {errorpin ? (
+              <Text style={{ color: "red", fontFamily: "Regular" }}>
+                {errorpin}
+              </Text>
+            ) : null}
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
           </View>
         </View>
@@ -750,12 +791,14 @@ export default function SignUpScreen() {
               marginTop: 12,
             }}
           >
-            <Text>Confirm PIN *</Text>
+            <Text style={{ fontFamily: "Regular" }}>Confirm PIN *</Text>
             <TextInput
               maxLength={4}
               keyboardType={"numeric"}
               style={{
                 width: "100%",
+                fontFamily: "Regular",
+
                 marginTop: 8,
                 borderWidth: 1,
                 padding: 16,
@@ -774,7 +817,9 @@ export default function SignUpScreen() {
               placeholder="Re-Enter Your PIN"
             />
             {errorrepin ? (
-              <Text style={{ color: "red" }}>{errorrepin}</Text>
+              <Text style={{ color: "red", fontFamily: "Regular" }}>
+                {errorrepin}
+              </Text>
             ) : null}
 
             {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
@@ -823,7 +868,9 @@ export default function SignUpScreen() {
                 </Text>{" "}
               </Text>
             ) : (
-              <Text style={{ marginLeft: 12, fontSize: 12 }}>
+              <Text
+                style={{ fontFamily: "Regular", marginLeft: 12, fontSize: 12 }}
+              >
                 I agree to the{" "}
                 <Text
                   style={{
@@ -836,6 +883,7 @@ export default function SignUpScreen() {
                 and{" "}
                 <Text
                   style={{
+                    fontFamily: "Regular",
                     color: Colors.primary,
                     textDecorationLine: "underline",
                   }}
@@ -863,7 +911,7 @@ export default function SignUpScreen() {
                 fontSize: 20,
                 fontWeight: "bold",
                 color: Colors.primary,
-                fontFamily: "Bold",
+                fontFamily: "Regular",
                 textAlignVertical: "center",
               }}
             >
@@ -875,6 +923,8 @@ export default function SignUpScreen() {
               textAlign: "center",
               fontSize: 15,
               marginTop: 12,
+              fontFamily: "Regular",
+
               color: Colors.black,
               fontFamily: "Regular",
               textAlignVertical: "center",

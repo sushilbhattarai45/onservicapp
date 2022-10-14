@@ -1,4 +1,4 @@
-import { useRef, React, useState } from "react";
+import { useRef, React, useState, createRef } from "react";
 
 import {
   StyleSheet,
@@ -10,13 +10,16 @@ import {
   Pressable,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-
+import ModalPopup from "../../component/Modal";
+import Header from "../../component/Header";
 import { Colors } from "../../styles/main";
 export default function OtpScreen() {
   const secondTextInputRef = useRef(null);
   const thirdTextInputRef = useRef(null);
   const fourthTextInputRef = useRef(null);
   const max = 1;
+  const popup = createRef();
+
   const firstTextInputRef = useRef(null);
   const [secondTextInputValue, setSecondTextInputValue] = useState(null);
   const [firstTextInputValue, setFirstTextInputValue] = useState(null);
@@ -50,15 +53,23 @@ export default function OtpScreen() {
       secondTextInputValue +
       thirdTextInputValue +
       fourthTextInputValue;
-    alert(givenotp);
+    // alert(givenotp);
+
+    popup.current.show();
   };
   return (
-    <View style={{ margin: 30 }}>
+    <View style={{ margin: 24 }}>
+      <View
+        style={{
+          marginLeft: 0,
+        }}
+      >
+        <Header icon={"arrow-left-line"} />
+      </View>
       <Text
         style={{
-          marginTop: 50,
-          fontFamily: "Black",
-          fontStyle: "normal",
+          marginTop: 24,
+          fontFamily: "Regular",
           fontWeight: "800",
           fontSize: 20,
           lineHeight: 38,
@@ -72,7 +83,7 @@ export default function OtpScreen() {
         Enter Your OTP
       </Text>
       <View>
-        <Text style={{ color: Colors.gray500 }}>
+        <Text style={{ color: Colors.gray500, fontFamily: "Regular" }}>
           We have sent an OTP to the number +977-9800000000
         </Text>
       </View>
@@ -86,6 +97,31 @@ export default function OtpScreen() {
           }}
         >
           <View>
+            <ModalPopup
+              ref={popup}
+              animationType="fade"
+              onTouchOutside={() => popup.current.close()}
+            >
+              <View style={styles.toppopupview}>
+                <Image
+                  style={styles.popupimage}
+                  source={{
+                    uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/uy8sk7ksnt7-493%3A1585?alt=media&token=ec1911f6-d876-4495-96a3-841182d7a423",
+                  }}
+                />
+                <View style={styles.popuptext}>
+                  <Text style={styles.popupmaintext}>Verified</Text>
+                  <Text style={styles.popupsecondarytext}>
+                    You have successfully verified your account
+                  </Text>
+                </View>
+                <View style={styles.Button}>
+                  <Text style={styles.Txt566}>BE OUR PARTNER</Text>
+                </View>
+                <Text style={styles.popupskip}>Skip for now</Text>
+              </View>
+            </ModalPopup>
+
             <TextInput
               ref={(ref) => (firstTextInputRef.current = ref)}
               maxLength={1}
@@ -199,13 +235,19 @@ export default function OtpScreen() {
         </View>
       </View>
       <View style={{ position: "relative", marginTop: 100 }}>
-        <Text style={{ textAlign: "center" }}>
-          Didn't got the OTP?
-          <Text style={{ color: Colors.primary }}> Resend</Text>
+        <Text style={{ textAlign: "center", fontFamily: "Regular" }}>
+          Didn't got the OTP ? {""}
+          <Text
+            style={{ color: Colors.primary, textDecorationLine: "underline" }}
+          >
+            Resend
+          </Text>
         </Text>
       </View>
       <Pressable
-        onPress={() => checkotp()}
+        onPress={() => {
+          checkotp();
+        }}
         style={{
           borderColor: Colors.primary,
           borderWidth: 1,
@@ -219,8 +261,8 @@ export default function OtpScreen() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "700",
+            fontFamily: "Regular",
             color: Colors.primary,
-            fontFamily: "Bold",
             textAlignVertical: "center",
           }}
         >
@@ -230,3 +272,79 @@ export default function OtpScreen() {
     </View>
   );
 }
+const styles = StyleSheet.create({
+  toppopupview: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+
+    borderRadius: 8,
+    backgroundColor: "rgba(255, 255, 255, 1)",
+  },
+  popupimage: {
+    width: 100,
+    height: 100,
+    marginBottom: 24,
+  },
+  popuptext: {
+    display: "flex",
+    fontFamily: "Regular",
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: 24,
+  },
+  popupmaintext: {
+    fontSize: 32,
+    fontFamily: "Urbanist, sans-serif",
+    fontWeight: "800",
+    letterSpacing: -0.64,
+    color: "rgba(33,33,33,1)",
+    marginBottom: 15,
+  },
+  popupsecondarytext: {
+    fontSize: 16,
+    fontFamily: "Urbanist, sans-serif",
+    fontWeight: "400",
+    letterSpacing: -0.32,
+    color: "rgba(208,208,208,1)",
+    textAlign: "center",
+    justifyContent: "center",
+  },
+
+  Button: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 23,
+    paddingRight: 23,
+    marginBottom: 24,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "rgba(45,143,247,1)",
+  },
+  Txt566: {
+    fontSize: 20,
+    fontFamily: "Regular",
+    fontWeight: "700",
+    letterSpacing: -0.4,
+    color: "rgba(45,143,247,1)",
+    textAlign: "center",
+    justifyContent: "center",
+    textTransform: "uppercase",
+  },
+
+  popupskip: {
+    fontSize: 14,
+    fontFamily: "Regular",
+    fontWeight: "400",
+    color: "rgba(51,51,51,1)",
+    textTransform: "uppercase",
+    textDecorationLine: "underline",
+  },
+});
