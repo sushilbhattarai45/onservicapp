@@ -62,13 +62,13 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header icon={"arrow-left-line"} />
 
       {/* <ImageSliderComponent/> */}
-      <View style={{ marginTop: "30%" }}>
+      <View style={{ marginTop: 24 }}>
         <Text
           style={{
-            fontFamily: "Bold",
+            fontFamily: "Regular",
             fontStyle: "800",
             fontWeight: "bold",
             fontSize: 32,
@@ -84,14 +84,22 @@ export default function LoginScreen() {
         </Text>
         <View
           style={{
-            marginTop: 40,
+            marginTop: 24,
           }}
         >
-          <Text>Phone Number</Text>
+          <Text
+            style={{
+              fontFamily: "Regular",
+            }}
+          >
+            Phone Number
+          </Text>
           <TextInput
             keyboardType="numeric"
             maxLength={10}
             style={{
+              fontFamily: "Regular",
+
               width: "100%",
               marginTop: 8,
               borderWidth: 1,
@@ -111,6 +119,8 @@ export default function LoginScreen() {
           {error1 ? (
             <Text
               style={{
+                fontFamily: "Regular",
+
                 color: "red",
               }}
             >
@@ -123,11 +133,13 @@ export default function LoginScreen() {
             marginTop: 12,
           }}
         >
-          <Text>Password</Text>
+          <Text style={{ fontFamily: "Regular" }}>Password</Text>
           <TextInput
             maxLength={4}
             keyboardType="numeric"
             style={{
+              fontFamily: "Regular",
+
               width: "100%",
               marginTop: 8,
               borderWidth: 1,
@@ -178,8 +190,14 @@ export default function LoginScreen() {
             onValueChange={() => setToggleCheckBox(!toggleCheckBox)}
             color={toggleCheckBox ? Colors.primary : undefined}
           />
-          <Text style={{ marginLeft: 12 }}>Remember me</Text>
-          <Text style={{ position: "absolute", right: 12 }}>Forgot PIN?</Text>
+          <Text style={{ marginLeft: 12, fontFamily: "Regular" }}>
+            Remember me
+          </Text>
+          <Text
+            style={{ position: "absolute", fontFamily: "Regular", right: 12 }}
+          >
+            Forgot PIN?
+          </Text>
         </View>
       </View>
       <View style={{ marginTop: 50 }}>
@@ -198,14 +216,16 @@ export default function LoginScreen() {
               fontSize: 20,
               fontWeight: "bold",
               color: Colors.primary,
-              fontFamily: "Bold",
+              fontFamily: "Regular",
               textAlignVertical: "center",
             }}
           >
             Login
           </Text>
         </Pressable>
-        <Text style={{ marginTop: 8, textAlign: "center" }}>
+        <Text
+          style={{ marginTop: 8, fontFamily: "Regular", textAlign: "center" }}
+        >
           Dont Have an account?
           <Text
             style={{

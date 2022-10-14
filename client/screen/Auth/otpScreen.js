@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ModalPopup from "../../component/Modal";
-
+import Header from "../../component/Header";
 import { Colors } from "../../styles/main";
 export default function OtpScreen() {
   const secondTextInputRef = useRef(null);
@@ -58,12 +58,18 @@ export default function OtpScreen() {
     popup.current.show();
   };
   return (
-    <View style={{ margin: 30 }}>
+    <View style={{ margin: 24 }}>
+      <View
+        style={{
+          marginLeft: 0,
+        }}
+      >
+        <Header icon={"arrow-left-line"} />
+      </View>
       <Text
         style={{
-          marginTop: 50,
-          fontFamily: "Black",
-          fontStyle: "normal",
+          marginTop: 24,
+          fontFamily: "Regular",
           fontWeight: "800",
           fontSize: 20,
           lineHeight: 38,
@@ -77,7 +83,7 @@ export default function OtpScreen() {
         Enter Your OTP
       </Text>
       <View>
-        <Text style={{ color: Colors.gray500 }}>
+        <Text style={{ color: Colors.gray500, fontFamily: "Regular" }}>
           We have sent an OTP to the number +977-9800000000
         </Text>
       </View>
@@ -229,9 +235,13 @@ export default function OtpScreen() {
         </View>
       </View>
       <View style={{ position: "relative", marginTop: 100 }}>
-        <Text style={{ textAlign: "center" }}>
-          Didn't got the OTP?
-          <Text style={{ color: Colors.primary }}> Resend</Text>
+        <Text style={{ textAlign: "center", fontFamily: "Regular" }}>
+          Didn't got the OTP ? {""}
+          <Text
+            style={{ color: Colors.primary, textDecorationLine: "underline" }}
+          >
+            Resend
+          </Text>
         </Text>
       </View>
       <Pressable
@@ -251,8 +261,8 @@ export default function OtpScreen() {
             textAlign: "center",
             fontSize: 20,
             fontWeight: "700",
+            fontFamily: "Regular",
             color: Colors.primary,
-            fontFamily: "Bold",
             textAlignVertical: "center",
           }}
         >
