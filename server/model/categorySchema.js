@@ -4,6 +4,7 @@ const categories = mongoose.Schema({
     type: String,
   },
   category_status: {
+    default: true,
     type: Boolean,
   },
   category_doc: {
@@ -22,6 +23,7 @@ const categories = mongoose.Schema({
   },
   category_updatedby: {
     type: String,
+    default: "null",
   },
   category_id: {
     type: Number,
