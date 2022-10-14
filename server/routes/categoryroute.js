@@ -7,7 +7,7 @@ import {
   updateCategory,
 } from "../controller/categoriesController.js";
 router.route("/").post(getAllCategories);
-router.route("/postcategories").post(postcategories);
+router.route("/postcategory").post(postcategories);
 router.route("/updatecategory").post(updateCategory);
 
 export default router;
