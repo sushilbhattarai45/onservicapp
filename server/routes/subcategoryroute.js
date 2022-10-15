@@ -19,5 +19,4 @@ router.route("/getfilteredsubcat").post(getFilteredSubCat);
 router.route("/newaddons").post(newAddons);
 router.route("/deleteallsubcategories").post(deleteAllSubCategories);
 router.route("/deleteone").post(deleteOne);
-
 export default router;

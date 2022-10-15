@@ -1,6 +1,7 @@
 import categorySchema from "../model/categorySchema.js";
 import moment from "moment";
 import {} from "dotenv/config";
+import subcategoriesSchema from "../model/subCatSchema.js";
 const API_KEY = process.env.API_KEY;
 
 export const getAllCategories = async (req, res) => {
@@ -81,7 +82,7 @@ export const postcategories = async (req, res) => {
 export const updateCategory = async (req, res) => {
   const {
     GIVEN_API_KEY,
-    category_id,
+    id,
     category_photo,
     category_status,
     category_showonhome,
@@ -100,7 +101,7 @@ export const updateCategory = async (req, res) => {
       });
       if (exists || exists?.length == 0) {
         const update = await categorySchema.findOneAndUpdate(
-          { _id: category_id },
+          { _id: id },
           {
             category_status: category_status,
             category_photo: category_photo,
@@ -110,7 +111,7 @@ export const updateCategory = async (req, res) => {
             category_dou: category_dou,
           }
         );
-        const updateddata = await categorySchema.findById(category_id);
+        const updateddata = await categorySchema.findById(id);
         return res.json({ "stauscode:": 200, data: updateddata });
       } else {
         return res.json({
@@ -166,6 +167,35 @@ export const deleteOne = async (req, res) => {
           statusCode: 400,
         });
       }
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
+      error: "WrongApi Key",
+    });
+  }
+};
+
+export const featuredOnHome = async (req, res) => {
+  const { GIVEN_API_KEY } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const categories = await categorySchema.findOne({
+        category_status: true,
+        category_showonhome: true,
+      });
+
+      const subCat = await subcategoriesSchema.find({
+        category_id: categories._id,
+      });
+
+      return res.json({
+        catName: categories.category_name,
+        subCat: subCat,
+        subCat_status: true,
+      });
     } catch (e) {
       return res.json({ error: e });
     }
