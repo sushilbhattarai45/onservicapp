@@ -3,7 +3,7 @@ import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 
 export default function CategoryCard({ containerStyle, name, image }) {
   return (
-    <View style={[styles.Category, {...containerStyle}]}>
+    <View style={[styles.Category, { ...containerStyle }]}>
       <Image
         style={styles.Repair1}
         source={{

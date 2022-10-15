@@ -1,9 +1,8 @@
 import Express from "express";
 import mongoose from "mongoose";
-import cors from 'cors';
+// import cors from "cors";
 import {} from "dotenv/config";
 import { connectDB } from "./db/connectDb.js";
-
 
 const PORT = process.env.PORT || 3001;
 
