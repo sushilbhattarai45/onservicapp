@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 3001;
 import user_route from "./routes/user_route.js";
 const App = Express();
 import category_route from "./routes/categoryroute.js";
+import subcategory_route from "./routes/subcategoryroute.js";
+
 connectDB();
 
 // App.use(cors())
@@ -24,3 +26,4 @@ App.use("/uploads", Express.static("uploads"));
 
 App.use("/v1/api/user", user_route);
 App.use("/v1/api/categories", category_route);
+App.use("/v1/api/subcategories", subcategory_route);
