@@ -5,13 +5,12 @@ const API_KEY = process.env.API_KEY;
 
 export const getAllCategories = async (req, res) => {
   const { GIVEN_API_KEY } = req.body;
+  console.log("apiKEy", GIVEN_API_KEY);
   if (GIVEN_API_KEY == API_KEY) {
     try {
       const categories = await categorySchema.find();
-      return res.json({
-        statuscode: 200,
-        data: categories,
-      });
+      console.log(categories)
+      return res.json(categories);
     } catch (e) {
       return res.json({ error: e });
     }
