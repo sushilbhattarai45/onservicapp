@@ -26,7 +26,7 @@ const categories = mongoose.Schema({
     default: "null",
   },
   category_id: {
-    type: Number,
+    type: String,
   },
 });
 const categorySchema = mongoose.model("categories", categories);

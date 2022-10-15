@@ -15,13 +15,16 @@ const subCategories = mongoose.Schema({
     date: { type: String },
     time: { type: String },
   },
-
   subCat_photo: {
     type: String,
   },
   subCat_updatedby: {
     type: String,
     default: "null",
+  },
+  subCat_id: {
+    type: String,
+    default: Date.now(),
   },
   category_id: {
     type: String,

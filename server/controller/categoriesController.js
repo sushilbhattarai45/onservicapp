@@ -94,23 +94,85 @@ export const updateCategory = async (req, res) => {
         date: moment().format("ll"),
         time: moment().format("LT"),
       };
-      const update = await categorySchema.findOneAndUpdate(
-        { _id: category_id },
-        {
-          category_status: category_status,
-          category_photo: category_photo,
-          category_name: category_name,
-          category_showonhome: category_showonhome,
-          category_updatedby: category_updatedby,
-          category_dou: category_dou,
-        }
-      );
-      const updateddata = await categorySchema.findById(category_id);
-      return res.json({ "stauscode:": 200, data: updateddata });
+
+      const exists = await categorySchema.findOne({
+        category_name: category_name,
+      });
+      if (exists || exists?.length == 0) {
+        const update = await categorySchema.findOneAndUpdate(
+          { _id: category_id },
+          {
+            category_status: category_status,
+            category_photo: category_photo,
+            category_name: category_name,
+            category_showonhome: category_showonhome,
+            category_updatedby: category_updatedby,
+            category_dou: category_dou,
+          }
+        );
+        const updateddata = await categorySchema.findById(category_id);
+        return res.json({ "stauscode:": 200, data: updateddata });
+      } else {
+        return res.json({
+          error: "No data found for the given Category id",
+          statuscode: 400,
+        });
+      }
     } catch (e) {
       res.json({ error: e });
     }
   } else {
     res.json({ error: "Wrong Api Key", statuscode: 700 });
+  }
+};
+export const deleteAllCategories = async (req, res) => {
+  const { GIVEN_API_KEY } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const categories = await categorySchema.remove();
+      return res.json({
+        statuscode: 200,
+        message: "sucessfully deleted all data",
+      });
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
+      error: "WrongApi Key",
+    });
+  }
+};
+
+export const deleteOne = async (req, res) => {
+  const { GIVEN_API_KEY, id } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const exists = await categorySchema.findOne({ category_id: id });
+
+      // return res.json({ data: exists, id: id });
+      if (exists || exists?.length == 0) {
+        const categories = await categorySchema.findOneAndDelete({
+          category_id: id,
+        });
+        return res.json({
+          statuscode: 200,
+          message: "Sucessfully deleted  data of given id",
+        });
+      } else {
+        return res.json({
+          error: "No Data Found for Given id",
+          statusCode: 400,
+        });
+      }
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
+      error: "WrongApi Key",
+    });
   }
 };
