@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 
 export default function CategoryCard({ containerStyle, name, image }) {
+  console.log(name)
   return (
     <View style={[styles.Category, {...containerStyle}]}>
       <Image
@@ -19,12 +20,9 @@ const styles = StyleSheet.create({
   Category: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    paddingTop: 18,
-    paddingBottom: 22,
-    paddingLeft: 41,
-    paddingRight: 44,
+    justifyContent: "center",
+    alignItems: "center",
+    padding:24,
     borderRadius: 8,
     backgroundColor: "rgba(255, 255, 255, 1)",
     shadowColor: "rgba(0,0,0,0.25)",
@@ -37,7 +35,7 @@ const styles = StyleSheet.create({
   Repair1: {
     width: 59,
     height: 59.82,
-    marginBottom: 27,
+    marginBottom: 12,
   },
   Txt035: {
     fontSize: 14,
@@ -47,7 +45,5 @@ const styles = StyleSheet.create({
     color: "rgba(0,0,0,1)",
     textAlign: "center",
     justifyContent: "center",
-    width: 56,
-    height: 18,
   },
 });
