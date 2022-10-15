@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 
-export default function CategoryCard({ containerStyle }) {
+export default function CategoryCard({ containerStyle, name, image }) {
   return (
     <View style={[styles.Category, {...containerStyle}]}>
       <Image
@@ -10,7 +10,7 @@ export default function CategoryCard({ containerStyle }) {
           uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
         }}
       />
-      <Text style={styles.Txt035}>Repair</Text>
+      <Text style={styles.Txt035}>{name}</Text>
     </View>
   );
 }

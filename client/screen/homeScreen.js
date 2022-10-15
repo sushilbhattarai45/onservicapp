@@ -1,4 +1,4 @@
-import React, { createRef, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import {
   Dimensions,
   FlatList,
@@ -18,6 +18,7 @@ import Button from "../component/buttonComponent";
 import SubCategoryGroupCard from "../component/subCategoryGroupCard";
 import ImageSliderComponent from "../component/imageSlider";
 import Icon from "../component/Icon";
+import { axiosInstance } from "../component/tools";
 
 const wWidth = Dimensions.get("window").width;
 const Persons = [
@@ -65,6 +66,22 @@ const Persons = [
 ];
 
 const HomeScreen = () => {
+  const [categories, setCategories] = useState([]);
+  const [categoriesOpen, setCategoriesOpen] = useState();
+
+  useEffect(() => {
+    async function getData() {
+      let res = await axiosInstance.post("/categories?", {
+        GIVEN_API_KEY: "AXCF",
+      });
+      if (!res.error) {
+        console.log(res.data.length);
+        setCategories(res.data);
+      }
+    }
+    getData();
+  }, []);
+
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -90,23 +107,35 @@ const HomeScreen = () => {
         {/* Categories */}
         <View style={styles.categoriesContainer}>
           <View>
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <CategoryCard />
-              <CategoryCard containerStyle={{ marginLeft: 16 }} />
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                marginTop: 16,
-              }}
-            >
-              <CategoryCard />
-              <CategoryCard containerStyle={{ marginLeft: 16 }} />
-            </View>
+            {categories
+              .slice(0, categoriesOpen ? categories.length : 4)
+              .map((item, index) => {
+                if (index % 2 == 0) {
+                  return (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        marginTop: index === 0 ? 0 : 16,
+                      }}
+                    >
+                      <CategoryCard
+                        name={categories[index + 1].category_name}
+                      />
+                      <CategoryCard
+                        name={item.category_name}
+                        containerStyle={{ marginLeft: 16 }}
+                      />
+                    </View>
+                  );
+                }
+              })}
           </View>
           <View style={{ width: 150, marginTop: 24 }}>
-            <Button label={"View All"} />
+            <Button
+              label={"View All"}
+              onPress={() => setCategoriesOpen((prev) => !prev)}
+            />
           </View>
         </View>
 
