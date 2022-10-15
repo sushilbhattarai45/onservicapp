@@ -133,7 +133,7 @@ const HomeScreen = () => {
           </View>
           <View style={{ width: 150, marginTop: 24 }}>
             <Button
-              label={"View All"}
+              label={categoriesOpen ? "View Less" : "View All"}
               onPress={() => setCategoriesOpen((prev) => !prev)}
             />
           </View>
@@ -217,11 +217,14 @@ const HomeScreen = () => {
             style={{ marginBottom: 32 }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            data={Persons}
+            data={categories}
             renderItem={({ item, index }) => {
-              let isEnd = index === Persons.length - 1;
+              let isEnd = index === categories.length - 1;
+              console.log(item.category_id);
               return (
                 <CategoryCard
+                  key={item._id}
+                  name={item.category_name}
                   containerStyle={{
                     marginLeft: index === 0 ? 24 : 0,
                     marginRight: isEnd ? 24 : 0,
