@@ -211,9 +211,9 @@ export const newAddons = async (req, res) => {
   const { GIVEN_API_KEY, category_id } = req.body;
   if (API_KEY == GIVEN_API_KEY) {
     try {
-      const data = await subcategoriesSchema
+      const data = await categorySchema
         .find({
-          subCat_status: true,
+          category_status: true,
         })
         .limit(4);
 

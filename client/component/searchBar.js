@@ -54,8 +54,9 @@ const styles = StyleSheet.create({
     // height: "100%",
     fontSize: 16,
     fontFamily: "Regular",
-    color: Colors.gray900,
+    color: Colors.black,
     // width: "100%",
     // backgroundColor:'blue'
   },
 });
+

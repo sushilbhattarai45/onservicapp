@@ -25,7 +25,7 @@ const wWidth = Dimensions.get("window").width;
 const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
   const [newaddons, setNewaddons] = useState([]);
-  const [featured, setFeatured] = useState([]);
+  const [featured, setFeatured] = useState();
 
   const [categoriesOpen, setCategoriesOpen] = useState();
 
@@ -40,15 +40,11 @@ const HomeScreen = () => {
           GIVEN_API_KEY: "AXCF",
         }
       );
-      let newaddons = await axiosInstance.post(
-        "/subcategories/newaddons",
-        {
-          GIVEN_API_KEY: "AXCF",
-        }
-      );
-      console.log(featuredOnHome?.data);
-      console.log(newaddons?.data);
-      if (!featuredOnHome.error) setFeatured(featuredOnHome);
+      let newaddons = await axiosInstance.post("/categories/newaddons", {
+        GIVEN_API_KEY: "AXCF",
+      });
+      console.log(newaddons.data);
+      if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!res.error) setCategories(res.data);
       if (!newaddons.error) setNewaddons(res.data);
 
@@ -122,12 +118,15 @@ const HomeScreen = () => {
         {/* Sub Categorie */}
         <View style={styles.subCategoriesContainer}>
           <Text style={styles.subCategoriesContainerHeading}>
-            Electrician, Carpenter & Plumber
+            {featured?.catName}
           </Text>
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <SubCategoryGroupCard />
-              <SubCategoryGroupCard containerStyle={{ marginLeft: 16 }} />
+              <SubCategoryGroupCard name={featured?.subCat[0]?.subCat_name} />
+              <SubCategoryGroupCard
+                name={featured?.subCat[1]?.subCat_name}
+                containerStyle={{ marginLeft: 16 }}
+              />
             </View>
             <View
               style={{
@@ -136,8 +135,11 @@ const HomeScreen = () => {
                 marginTop: 16,
               }}
             >
-              <SubCategoryGroupCard />
-              <SubCategoryGroupCard containerStyle={{ marginLeft: 16 }} />
+              <SubCategoryGroupCard name={featured?.subCat[2]?.subCat_name} />
+              <SubCategoryGroupCard
+                name={featured?.subCat[3]?.subCat_name}
+                containerStyle={{ marginLeft: 16 }}
+              />
             </View>
             <View style={{ width: 150, marginTop: 24 }}>
               <Button label={"View All"} />
@@ -155,8 +157,11 @@ const HomeScreen = () => {
 
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <SubCategoryGroupCard />
-              <SubCategoryGroupCard containerStyle={{ marginLeft: 16 }} />
+              <SubCategoryGroupCard name={newaddons[0]?.category_name} />
+              <SubCategoryGroupCard
+                name={newaddons[1]?.category_name}
+                containerStyle={{ marginLeft: 16 }}
+              />
             </View>
             <View
               style={{
@@ -165,8 +170,11 @@ const HomeScreen = () => {
                 marginTop: 16,
               }}
             >
-              <SubCategoryGroupCard />
-              <SubCategoryGroupCard containerStyle={{ marginLeft: 16 }} />
+              <SubCategoryGroupCard name={newaddons[2]?.category_name} />
+              <SubCategoryGroupCard
+                name={newaddons[3]?.category_name}
+                containerStyle={{ marginLeft: 16 }}
+              />
             </View>
             <View style={styles.Seemore}>
               <Text style={styles.Txt499}>View All</Text>

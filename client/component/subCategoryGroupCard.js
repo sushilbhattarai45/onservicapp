@@ -8,7 +8,7 @@ import {
   Pressable,
 } from "react-native";
 
-export default function SubCategoryGroupCard({ containerStyle, onPress }) {
+export default function SubCategoryGroupCard({ containerStyle, onPress, name }) {
   return (
     <Pressable
       style={[styles.container, { ...containerStyle }]}
@@ -20,7 +20,7 @@ export default function SubCategoryGroupCard({ containerStyle, onPress }) {
           uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
         }}
       />
-      <Text style={styles.text}>Carpenter</Text>
+      <Text style={styles.text}>{name}</Text>
     </Pressable>
   );
 }
