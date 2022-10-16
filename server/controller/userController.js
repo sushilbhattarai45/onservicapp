@@ -58,8 +58,8 @@ export const uploadImage = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
-  const { user_num, user_pass, givenapi } = req.body;
-  if (API_KEY == givenapi) {
+  const { user_num, user_pass, GIVEN_API_KEY } = req.body;
+  if (API_KEY == GIVEN_API_KEY) {
     try {
       const loginUser = await userSchema.find({
         user_contact: user_num,
@@ -90,8 +90,8 @@ export const loginUser = async (req, res) => {
 };
 
 export const getAllUser = async (req, res) => {
-  const { givenapi } = req.body;
-  if (API_KEY == givenapi) {
+  const { GIVEN_API_KEY } = req.body;
+  if (API_KEY == GIVEN_API_KEY) {
     try {
       const allUser = await userSchema.find();
       return res.json({ data: allUser });
@@ -104,17 +104,17 @@ export const getAllUser = async (req, res) => {
 };
 
 export const getOneUser = async (req, res) => {
-  const { givenapi } = req.body;
-  if (API_KEY == givenapi) {
+  const { GIVEN_API_KEY, user_contact } = req.body;
+  if (API_KEY == GIVEN_API_KEY) {
     try {
       const getOneUser = await userSchema.findOne({
-        user_contact: "1234567890",
+        user_contact: user_contact,
       });
       return res.json({ data: getOneUser });
     } catch (e) {
       return res.json({ error: e });
     }
   } else {
-    return res.json({ error: "error" });
+    return res.json({ error: "Wrong Api Key", statuscode: 600 });
   }
 };

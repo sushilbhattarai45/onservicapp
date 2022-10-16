@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -14,10 +14,27 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import PeopleNearYou from "../component/peopleNearYou";
-
+import { axiosInstance } from "../component/tools";
 import Constants from "expo-constants";
+import axios from "axios";
 
 export default function UserProfileScreen() {
+  useEffect(() => {
+    async function getData() {
+      let res = await axiosInstance.post("/user/getOneUser", {
+        GIVEN_API_KEY: "AXCF",
+        user_contact: 123456780,
+      });
+      if (!res.error) {
+        setUser(res.data);
+        console.log(user);
+      } else {
+        console.error(res.error);
+      }
+    }
+    getData();
+  }, []);
+
   const Persons = [
     {
       name: "Sushil Bhattarai",
@@ -43,7 +60,7 @@ export default function UserProfileScreen() {
     },
     //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
   ];
-
+  const [user, setUser] = useState({});
   return (
     <ScrollView style={{ backgroundColor: Colors.gray200 }}>
       <View
@@ -74,7 +91,7 @@ export default function UserProfileScreen() {
               style={{
                 fontFamily: "Black",
                 fontStyle: "normal",
-                fontSize:32,
+                fontSize: 32,
                 letterSpacing: -0.02,
                 color: Colors.white,
               }}
@@ -100,6 +117,9 @@ export default function UserProfileScreen() {
                   }}
                 />
                 <AntDesign
+                  onPress={() => {
+                    getProfile();
+                  }}
                   style={{
                     position: "absolute",
                     bottom: 2,
@@ -116,14 +136,16 @@ export default function UserProfileScreen() {
                   style={{
                     color: "white",
                     fontSize: 20,
+                    fontFamily: "Regular",
                     marginLeft: 24,
                   }}
                 >
-                  Shakuntala Pandey{" "}
+                  {user.data.user_name}{" "}
                 </Text>
                 <Text
                   style={{
                     marginTop: 4,
+                    fontFamily: "Regular",
 
                     marginLeft: 17,
                     fontSize: 15,
@@ -137,7 +159,7 @@ export default function UserProfileScreen() {
                     style={{}}
                     color="white"
                   />{" "}
-                  Butwal 12 Lalyang
+                  {user.data.user_city + " " + user.data.user_street}{" "}
                 </Text>
 
                 <Text
@@ -145,13 +167,16 @@ export default function UserProfileScreen() {
                     marginTop: 4,
                     marginLeft: 17,
                     fontSize: 15,
+                    fontFamily: "Regular",
+
                     color: Colors.white,
                   }}
                 >
                   {"  "}
                   <FontAwesome name="phone" size={20} color="white" />
                   {"  "}
-                  90800000000{"  "}
+                  {user.data.user_contact}
+                  {"  "}
                 </Text>
               </View>
             </View>
@@ -165,7 +190,14 @@ export default function UserProfileScreen() {
               margin: 30,
             }}
           >
-            <Text style={{ color: Colors.black, fontSize: 20, argimnLeft: 4 }}>
+            <Text
+              style={{
+                color: Colors.black,
+                fontSize: 20,
+                argimnLeft: 4,
+                fontFamily: "Regular",
+              }}
+            >
               General Information
             </Text>
 
@@ -177,6 +209,8 @@ export default function UserProfileScreen() {
               >
                 <Text
                   style={{
+                    fontFamily: "Regular",
+
                     fontSize: 12,
                     color: Colors.gray900,
                   }}
@@ -193,10 +227,11 @@ export default function UserProfileScreen() {
                     borderRadius: 4,
                     height: 35,
                     color: Colors.black,
+                    fontFamily: "Regular",
 
                     fontSize: 15,
                   }}
-                  value="9742993345"
+                  value={user.data.user_contact}
                   read
                 />
                 {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
@@ -209,6 +244,8 @@ export default function UserProfileScreen() {
                 <Text
                   style={{
                     fontSize: 12,
+                    fontFamily: "Regular",
+
                     color: Colors.gray900,
                   }}
                 >
@@ -218,6 +255,8 @@ export default function UserProfileScreen() {
                   editable={false}
                   style={{
                     width: "100%",
+                    fontFamily: "Regular",
+
                     borderBottomWidth: 1,
                     paddingLeft: 0,
                     borderColor: Colors.black,
@@ -226,7 +265,7 @@ export default function UserProfileScreen() {
                     fontSize: 15,
                     color: Colors.black,
                   }}
-                  value="Kathmandu"
+                  value={user.data.user_city}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
@@ -239,6 +278,8 @@ export default function UserProfileScreen() {
               >
                 <Text
                   style={{
+                    fontFamily: "Regular",
+
                     fontSize: 12,
                     color: Colors.gray900,
                   }}
@@ -254,10 +295,12 @@ export default function UserProfileScreen() {
                     borderColor: Colors.black,
                     borderRadius: 4,
                     height: 35,
+                    fontFamily: "Regular",
+
                     fontSize: 15,
                     color: Colors.black,
                   }}
-                  value="Baneshwor"
+                  value={user.data.user_street}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
@@ -271,6 +314,8 @@ export default function UserProfileScreen() {
                 <Text
                   style={{
                     fontSize: 12,
+                    fontFamily: "Regular",
+
                     color: Colors.gray900,
                   }}
                 >
@@ -280,6 +325,7 @@ export default function UserProfileScreen() {
                   editable={false}
                   style={{
                     width: "100%",
+                    fontFamily: "Regular",
                     borderBottomWidth: 1,
                     paddingLeft: 0,
                     borderColor: Colors.black,
@@ -288,7 +334,7 @@ export default function UserProfileScreen() {
                     height: 35,
                     fontSize: 15,
                   }}
-                  value="Male"
+                  value={user.data.user_gender}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
