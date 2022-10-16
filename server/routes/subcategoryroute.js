@@ -5,7 +5,6 @@ import {
   updateSubCategory,
   getAllSubCat,
   getFilteredSubCat,
-  newAddons,
   deleteAllSubCategories,
   deleteOne,
 } from "../controller/subcategoryController.js";
@@ -16,7 +15,6 @@ router.route("/postsubcategory").post(postSubCategories);
 router.route("/updatesubcategory").post(updateSubCategory);
 router.route("/getallsubcategory").post(getAllSubCat);
 router.route("/getfilteredsubcat").post(getFilteredSubCat);
-router.route("/newaddons").post(newAddons);
 router.route("/deleteallsubcategories").post(deleteAllSubCategories);
 router.route("/deleteone").post(deleteOne);
 export default router;
