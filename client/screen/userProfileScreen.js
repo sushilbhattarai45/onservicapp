@@ -73,7 +73,7 @@ export default function UserProfileScreen() {
       >
         <View
           style={{
-            flex: 1.5,
+            flex: 1.1,
             backgroundColor: Colors.primary,
             borderBottomEndRadius: 20,
             borderBottomLeftRadius: 20,
