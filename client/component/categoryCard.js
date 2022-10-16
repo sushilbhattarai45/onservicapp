@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 
 export default function CategoryCard({ containerStyle, name, image }) {
-  console.log(name)
   return (
     <View style={[styles.Category, { ...containerStyle }]}>
       <Image

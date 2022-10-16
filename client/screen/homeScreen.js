@@ -24,6 +24,7 @@ const wWidth = Dimensions.get("window").width;
 
 const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
+  const [newaddons, setNewaddons] = useState([]);
   const [categoriesOpen, setCategoriesOpen] = useState();
 
   useEffect(() => {
@@ -31,8 +32,13 @@ const HomeScreen = () => {
       let res = await axiosInstance.post("/categories?", {
         GIVEN_API_KEY: "AXCF",
       });
-      let featuredOnHome = await axiosInstance.post('/subcategories/newaddons');
-      console.log(featuredOnHome)
+      let featuredOnHome = await axiosInstance.post(
+        "/subcategories/newaddons",
+        {
+          GIVEN_API_KEY: "AXCF",
+        }
+      );
+      console.log(featuredOnHome?.data);
       if (!res.error) {
         setCategories(res.data);
       } else {
@@ -71,7 +77,6 @@ const HomeScreen = () => {
               categories
                 .slice(0, categoriesOpen ? categories.length : 4)
                 .map((item, index) => {
-                  console.log(categories[index+1]?.category_name);
                   if (index % 2 == 0) {
                     return (
                       <View
@@ -81,14 +86,13 @@ const HomeScreen = () => {
                           marginTop: index === 0 ? 0 : 16,
                         }}
                       >
-                        <CategoryCard
-                          name={item.category_name}
-                        />
-                        {categories[index+1] && <CategoryCard
-                          name={categories[index + 1]?.category_name}
-                          containerStyle={{ marginLeft: 16 }}
-                        />
-                        }
+                        <CategoryCard name={item.category_name} />
+                        {categories[index + 1] && (
+                          <CategoryCard
+                            name={categories[index + 1]?.category_name}
+                            containerStyle={{ marginLeft: 16 }}
+                          />
+                        )}
                       </View>
                     );
                   }
@@ -183,7 +187,6 @@ const HomeScreen = () => {
             data={categories}
             renderItem={({ item, index }) => {
               let isEnd = index === categories.length - 1;
-              console.log(item.category_id);
               return (
                 <CategoryCard
                   key={item._id}
