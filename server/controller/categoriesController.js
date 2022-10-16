@@ -182,11 +182,12 @@ export const featuredOnHome = async (req, res) => {
   const { GIVEN_API_KEY } = req.body;
   if (GIVEN_API_KEY == API_KEY) {
     try {
-      const categories = await categorySchema.findOne({
-        category_status: true,
-        category_showonhome: true,
-      });
-
+      const categories = await categorySchema
+        .findOne({
+          category_status: true,
+          category_showonhome: true,
+        })
+        .limit(1);
       const subCat = await subcategoriesSchema.find({
         category_id: categories._id,
       });
