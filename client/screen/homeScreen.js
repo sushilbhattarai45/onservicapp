@@ -25,6 +25,8 @@ const wWidth = Dimensions.get("window").width;
 const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
   const [newaddons, setNewaddons] = useState([]);
+  const [featured, setFeatured] = useState([]);
+
   const [categoriesOpen, setCategoriesOpen] = useState();
 
   useEffect(() => {
@@ -33,16 +35,27 @@ const HomeScreen = () => {
         GIVEN_API_KEY: "AXCF",
       });
       let featuredOnHome = await axiosInstance.post(
+        "/categories/featuredOnHome",
+        {
+          GIVEN_API_KEY: "AXCF",
+        }
+      );
+      let newaddons = await axiosInstance.post(
         "/subcategories/newaddons",
         {
           GIVEN_API_KEY: "AXCF",
         }
       );
       console.log(featuredOnHome?.data);
-      if (!res.error) {
-        setCategories(res.data);
-      } else {
-        console.error(res.error);
+      console.log(newaddons?.data);
+      if (!featuredOnHome.error) setFeatured(featuredOnHome);
+      if (!res.error) setCategories(res.data);
+      if (!newaddons.error) setNewaddons(res.data);
+
+      if (res.error || featuredOnHome.error || newaddons.error) {
+        console.error(res?.error);
+        console.error(featuredOnHome?.error);
+        console.error(newaddons?.error);
       }
     }
     getData();
