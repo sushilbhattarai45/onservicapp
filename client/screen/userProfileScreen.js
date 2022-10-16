@@ -60,7 +60,7 @@ export default function UserProfileScreen() {
     },
     //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
   ];
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
   return (
     <ScrollView style={{ backgroundColor: Colors.gray200 }}>
       <View
@@ -117,9 +117,7 @@ export default function UserProfileScreen() {
                   }}
                 />
                 <AntDesign
-                  onPress={() => {
-                    getProfile();
-                  }}
+                  onPress={() => {}}
                   style={{
                     position: "absolute",
                     bottom: 2,
@@ -140,7 +138,7 @@ export default function UserProfileScreen() {
                     marginLeft: 24,
                   }}
                 >
-                  {user.data.user_name}{" "}
+                  {user?.data.user_name}{" "}
                 </Text>
                 <Text
                   style={{
@@ -159,7 +157,7 @@ export default function UserProfileScreen() {
                     style={{}}
                     color="white"
                   />{" "}
-                  {user.data.user_city + " " + user.data.user_street}{" "}
+                  {user?.data.user_city + " " + user?.data.user_street}{" "}
                 </Text>
 
                 <Text
@@ -175,7 +173,7 @@ export default function UserProfileScreen() {
                   {"  "}
                   <FontAwesome name="phone" size={20} color="white" />
                   {"  "}
-                  {user.data.user_contact}
+                  {user?.data.user_contact}
                   {"  "}
                 </Text>
               </View>
@@ -231,7 +229,7 @@ export default function UserProfileScreen() {
 
                     fontSize: 15,
                   }}
-                  value={user.data.user_contact}
+                  value={user?.data.user_contact}
                   read
                 />
                 {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
@@ -265,7 +263,7 @@ export default function UserProfileScreen() {
                     fontSize: 15,
                     color: Colors.black,
                   }}
-                  value={user.data.user_city}
+                  value={user?.data.user_city}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
@@ -300,7 +298,7 @@ export default function UserProfileScreen() {
                     fontSize: 15,
                     color: Colors.black,
                   }}
-                  value={user.data.user_street}
+                  value={user?.data.user_street}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
@@ -334,7 +332,7 @@ export default function UserProfileScreen() {
                     height: 35,
                     fontSize: 15,
                   }}
-                  value={user.data.user_gender}
+                  value={user?.data.user_gender}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
