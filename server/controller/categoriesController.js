@@ -182,11 +182,12 @@ export const featuredOnHome = async (req, res) => {
   const { GIVEN_API_KEY } = req.body;
   if (GIVEN_API_KEY == API_KEY) {
     try {
-      const categories = await categorySchema.findOne({
-        category_status: true,
-        category_showonhome: true,
-      });
-
+      const categories = await categorySchema
+        .findOne({
+          category_status: true,
+          category_showonhome: true,
+        })
+        .limit(1);
       const subCat = await subcategoriesSchema.find({
         category_id: categories._id,
       });
@@ -204,5 +205,26 @@ export const featuredOnHome = async (req, res) => {
       statuscode: 600,
       error: "WrongApi Key",
     });
+  }
+};
+export const newAddons = async (req, res) => {
+  const { GIVEN_API_KEY, category_id } = req.body;
+  if (API_KEY == GIVEN_API_KEY) {
+    try {
+      const data = await subcategoriesSchema
+        .find({
+          subCat_status: true,
+        })
+        .limit(4);
+
+      return res.json({
+        status: 200,
+        data: data,
+      });
+    } catch (e) {
+      res.json({ error: e });
+    }
+  } else {
+    return res.json({ error: "Wrong Api Key", statuscode: 700 });
   }
 };

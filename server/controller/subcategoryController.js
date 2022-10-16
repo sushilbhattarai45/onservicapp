@@ -129,26 +129,6 @@ export const getFilteredSubCat = async (req, res) => {
   }
 };
 
-export const newAddons = async (req, res) => {
-  const { GIVEN_API_KEY, category_id } = req.body;
-  if (API_KEY == GIVEN_API_KEY) {
-    try {
-      const data = await subcategoriesSchema.find({
-        subCat_status: true,
-      });
-
-      return res.json({
-        status: 200,
-        data: data,
-      });
-    } catch (e) {
-      res.json({ error: e });
-    }
-  } else {
-    return res.json({ error: "Wrong Api Key", statuscode: 700 });
-  }
-};
-
 export const deleteAllSubCategories = async (req, res) => {
   const { GIVEN_API_KEY } = req.body;
   if (GIVEN_API_KEY == API_KEY) {
