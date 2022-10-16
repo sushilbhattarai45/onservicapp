@@ -21,49 +21,6 @@ import Icon from "../component/Icon";
 import { axiosInstance } from "../component/tools";
 
 const wWidth = Dimensions.get("window").width;
-const Persons = [
-  {
-    name: "Sushil Bhattarai",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Golpark",
-    number: "9742993345",
-
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-  {
-    name: "Sushil Bhattarai",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Golpark",
-    number: "9742993345",
-
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-  {
-    name: "Sushil Bhattarai",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Golpark",
-    number: "9742993345",
-
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-
-  {
-    name: "RamKumar",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Butwal",
-    number: "9742993345",
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-
-  {
-    name: "RamKumar",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Butwal",
-    number: "9742993345",
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-  //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
-];
 
 const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
@@ -74,9 +31,12 @@ const HomeScreen = () => {
       let res = await axiosInstance.post("/categories?", {
         GIVEN_API_KEY: "AXCF",
       });
+      let featuredOnHome = await axiosInstance.post('/subcategories/newaddons');
+      console.log(featuredOnHome)
       if (!res.error) {
-        console.log(res.data.length);
         setCategories(res.data);
+      } else {
+        console.error(res.error);
       }
     }
     getData();
@@ -107,29 +67,32 @@ const HomeScreen = () => {
         {/* Categories */}
         <View style={styles.categoriesContainer}>
           <View>
-            {categories
-              .slice(0, categoriesOpen ? categories.length : 4)
-              .map((item, index) => {
-                if (index % 2 == 0) {
-                  return (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        marginTop: index === 0 ? 0 : 16,
-                      }}
-                    >
-                      <CategoryCard
-                        name={categories[index + 1].category_name}
-                      />
-                      <CategoryCard
-                        name={item.category_name}
-                        containerStyle={{ marginLeft: 16 }}
-                      />
-                    </View>
-                  );
-                }
-              })}
+            {categories !== [] &&
+              categories
+                .slice(0, categoriesOpen ? categories.length : 4)
+                .map((item, index) => {
+                  console.log(categories[index+1]?.category_name);
+                  if (index % 2 == 0) {
+                    return (
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          marginTop: index === 0 ? 0 : 16,
+                        }}
+                      >
+                        <CategoryCard
+                          name={item.category_name}
+                        />
+                        {categories[index+1] && <CategoryCard
+                          name={categories[index + 1]?.category_name}
+                          containerStyle={{ marginLeft: 16 }}
+                        />
+                        }
+                      </View>
+                    );
+                  }
+                })}
           </View>
           <View style={{ width: 150, marginTop: 24 }}>
             <Button
