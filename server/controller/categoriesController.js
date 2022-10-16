@@ -207,6 +207,7 @@ export const featuredOnHome = async (req, res) => {
     });
   }
 };
+
 export const newAddons = async (req, res) => {
   const { GIVEN_API_KEY, category_id } = req.body;
   if (API_KEY == GIVEN_API_KEY) {
@@ -225,6 +226,6 @@ export const newAddons = async (req, res) => {
       res.json({ error: e });
     }
   } else {
-    return res.json({ error: "Wrong Api Key", statuscode: 700 });
+    return res.json({ error: "Wrong Api Key", statuscode: 600 });
   }
 };
