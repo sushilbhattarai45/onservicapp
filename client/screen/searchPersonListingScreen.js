@@ -173,11 +173,10 @@ export default function SearchPersonListingScreen() {
           marginTop: 40,
           marginBottom: 30,
           backgroundColor: Colors.gray200,
-          paddingHorizontal: 10,
         }}
       >
-        <View >
-          <Search  rightIcon={"equalizer-fill"} />
+        <View style={{paddingHorizontal:24}} >
+          <Search  containerStyle={{padding:0}} rightIcon={"equalizer-fill"} />
         </View>
 
         <View>
@@ -185,9 +184,8 @@ export default function SearchPersonListingScreen() {
             style={{
               marginTop: 15,
               marginBottom: 10,
-              marginRight: 10,
+              paddingHorizontal:24
             }}
-            //   style={styles.videos_flatList}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             data={subcategory}

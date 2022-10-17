@@ -17,6 +17,7 @@ import PeopleNearYou from "../component/peopleNearYou";
 import { axiosInstance } from "../component/tools";
 import Constants from "expo-constants";
 import axios from "axios";
+import Icon from "../component/Icon";
 
 export default function UserProfileScreen() {
   useEffect(() => {
@@ -62,79 +63,72 @@ export default function UserProfileScreen() {
   ];
   const [user, setUser] = useState();
   return (
-    <ScrollView style={{ backgroundColor: Colors.gray200 }}>
+    <ScrollView>
       <View
         style={{
           flex: 1,
           display: "flex",
-          backgroundColor: Colors.gray200,
+          backgroundColor: Colors.primary,
           flexDirection: "column",
         }}
       >
-        <View
-          style={{
-            flex: 1.5,
-            backgroundColor: Colors.primary,
-            borderBottomEndRadius: 20,
-            borderBottomLeftRadius: 20,
-          }}
-        >
+        <View style={{ zIndex: 10 }}>
           <View
             style={{
               marginTop: Constants.statusBarHeight + 20,
-
-              paddingBottom: 20,
               marginLeft: 30,
             }}
           >
             <Text
               style={{
-                fontFamily: "Black",
-                fontStyle: "normal",
-                fontSize: 32,
+                fontFamily: "Regular",
+                fontSize: 24,
+                fontWeight: "800",
                 letterSpacing: -0.02,
                 color: Colors.white,
               }}
             >
-              Profile{" "}
+              Profile
             </Text>
             <View
               style={{
-                marginTop: 20,
+                marginTop: 24,
                 display: "flex",
                 flexDirection: "row",
+                alignItems: "flex-start",
+                overflow: "visible",
               }}
             >
-              <View style={{}}>
+              <View style={{ overflow: "visible" }}>
                 <Image
                   style={{
-                    width: 100,
+                    width: 120,
                     borderRadius: 20,
-                    height: 100,
+                    height: 120,
                   }}
                   source={{
                     uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
                   }}
                 />
-                <AntDesign
+                <Icon
                   onPress={() => {}}
                   style={{
                     position: "absolute",
-                    bottom: 2,
-                    right: 2,
+                    bottom: -2,
+                    right: -2,
                   }}
-                  name="pluscircle"
+                  name="add-circle-fill"
                   size={28}
                   color="white"
                 />
               </View>
 
-              <View style={{ marginTop: 10 }}>
+              <View>
                 <Text
                   style={{
                     color: "white",
                     fontSize: 20,
-                    fontFamily: "Regular",
+                    fontFamily: "Bold",
                     marginLeft: 24,
                   }}
                 >
@@ -181,11 +175,18 @@ export default function UserProfileScreen() {
           </View>
         </View>
         <View
-          style={{ display: "flex", flex: 3, backgroundColor: Colors.gray200 }}
+          style={{
+            display: "flex",
+            backgroundColor: Colors.gray200,
+            borderTopEndRadius: 20,
+            borderTopLeftRadius: 20,
+            marginTop: -30,
+          }}
         >
           <View
             style={{
-              margin: 30,
+              paddingHorizontal: 24,
+              marginTop: 54,
             }}
           >
             <Text
@@ -341,8 +342,7 @@ export default function UserProfileScreen() {
             </View>
             <View
               style={{
-                marginLeft: 0,
-                marginTop: 10,
+                marginTop: 24,
               }}
             >
               <Text
@@ -362,7 +362,7 @@ export default function UserProfileScreen() {
               <View>
                 <FlatList
                   style={{
-                    marginTop: 15,
+                    marginTop: 12,
                   }}
                   //   style={styles.videos_flatList}
                   horizontal={true}

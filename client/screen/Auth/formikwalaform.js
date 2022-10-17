@@ -58,6 +58,7 @@ export default App = () => {
 
   let popupRef = createRef();
   const [citiesList, setCitiesList] = useState([]);
+  
   const onImageLibraryPress = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       // mediaTypes: ImagePicker.MediaTypeOptions.All,

@@ -3,23 +3,8 @@ import { Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
-import CategoryPersonListingScreen from "./screen/categoryPersonListingScreen";
-import LoginScreen from "./screen/Auth/loginsScreen";
-import SignUpScreen from "./screen/Auth/signUpScreen";
-import OtpScreen from "./screen/Auth/otpScreen";
-import createNewPinScreen from "./screen/Auth/createNewPinScreen";
-import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
-import ForgetPinScreen from "./screen/Auth/forgetPinScreen";
-// import People from "./screen/peoplenearScreen";
-import UserProfileScreen from "./screen/userProfileScreen";
-import HomeScreen from "./screen/homeScreen";
-import SPProfileScreen from "./screen/SPProfileScreen";
-// import SplashScreen from "./screen/splashScreen";
-
-import SubCategoryScreen from "./screen/subCategoryScreen";
-import BookMarkScreen from "./screen/bookmarkScreen";
-import SearchPersonListingScreen from "./screen/searchPersonListingScreen";
-import ImagePickerExample from "./screen/Auth/imgpicker";
+import AppStack from "./navigation/MainStack";
+import { NavigationContainer } from "@react-navigation/native";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -33,6 +18,7 @@ export default function App() {
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
+      console.log("hi");
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
@@ -46,8 +32,8 @@ export default function App() {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <HomeScreen />
-    </View>
+    <NavigationContainer onReady={onLayoutRootView} style={{ flex: 1 }}>
+      <AppStack />
+    </NavigationContainer>
   );
 }

@@ -119,7 +119,12 @@ export default function BookMarkScreen() {
       >
         <View>
           <Text
-            style={{paddingHorizontal:24, fontFamily: "Regular", fontSize: 25, fontWeight: "800" }}
+            style={{
+              paddingHorizontal: 24,
+              fontFamily: "Regular",
+              fontSize: 24,
+              fontWeight: "800",
+            }}
           >
             Bookmarks
           </Text>
@@ -162,8 +167,8 @@ export default function BookMarkScreen() {
             alignSelf: "center",
             alignSelf: "center",
             width: "100%",
-            height:'100%',
-            objectFit:'cover'
+            height: "100%",
+            objectFit: "cover",
           }}
           source={{
             uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",

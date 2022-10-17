@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+
 import Icon from "../component/Icon";
+import { Colors } from "../styles/main";
 
 export default function BookMarkCard({
   name,
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 24,
-    paddingVertical:8,
+    paddingVertical: 8,
     backgroundColor: "white",
   },
   MaskGroup: {
