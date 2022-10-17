@@ -23,7 +23,7 @@ import { axiosInstance } from "../component/tools";
 const wWidth = Dimensions.get("window").width;
 const NewlyAddedServices = ({ containerStyle, name }) => {
   return (
-    <View style={{ ...containerStyle,  }}>
+    <View style={{ ...containerStyle }}>
       <Image
         style={{ width: 100, borderRadius: 8, height: 100 }}
         source={{
@@ -129,7 +129,6 @@ const HomeScreen = () => {
             />
           </View>
         </View>
-        
 
         {/* Sub Categorie */}
         <View style={styles.subCategoriesContainer}>
@@ -157,8 +156,22 @@ const HomeScreen = () => {
                 containerStyle={{ marginLeft: 16 }}
               />
             </View>
-            <View style={{ width: 150, marginTop: 24 }}>
-              <Button label={"View All"} />
+            <View style={{ flexDirection: "row", marginTop: 24 }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontFamily: "Regular",
+                  color: Colors.primary,
+                }}
+              >
+                Seemore
+              </Text>
+              <Icon
+                name="arrow-right-s-line"
+                size={20}
+                color={Colors.primary}
+                style={{ marginLeft: 4 }}
+              />
             </View>
           </View>
         </View>
@@ -166,32 +179,47 @@ const HomeScreen = () => {
         <ImageSliderComponent />
 
         {/* New Addons */}
-        <View style={styles.subCategoriesContainer}>
-          <Text style={styles.subCategoriesContainerHeading}>
+        <View
+          style={[
+            styles.subCategoriesContainer,
+            { marginTop: 32, paddingHorizontal: 0 },
+          ]}
+        >
+          <Text
+            style={{
+              ...styles.subCategoriesContainerHeading,
+              paddingHorizontal: 24,
+            }}
+          >
             Newly added Services
           </Text>
 
-          <ScrollView contentContainerStyle={{ alignItems: "flex-start" }} horizontal={true} showsHorizontalScrollIndicator={false}>
-          {newaddons?.map((item, index) => {
-          if (index % 2 == 0) {
-            return (
-              <View
-                style={{
-                  justifyContent: "center",
-                  // marginTop: index === 0 ? 0 : 16,
-                }}
-              >
-                <NewlyAddedServices name={item.category_name}  />
-                {categories[index + 1] && (
-                  <NewlyAddedServices
-                    name={newaddons[index + 1]?.category_name}
-                    containerStyle={{ marginTop: 24, marginRight:24 }}
-                  />
-                )}
-              </View>
-            );
-          }
-        })}
+          <ScrollView
+            contentContainerStyle={{ alignItems: "flex-start" }}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          >
+            {newaddons?.map((item, index) => {
+              if (index % 2 == 0) {
+                return (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      marginLeft: index === 0 ? 24 : 0,
+                      marginRight: index === newaddons.length - 1 ? 24 : 0,
+                    }}
+                  >
+                    <NewlyAddedServices name={item.category_name} />
+                    {categories[index + 1] && (
+                      <NewlyAddedServices
+                        name={newaddons[index + 1]?.category_name}
+                        containerStyle={{ marginTop: 24, marginRight: 24 }}
+                      />
+                    )}
+                  </View>
+                );
+              }
+            })}
           </ScrollView>
         </View>
 

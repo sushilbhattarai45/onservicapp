@@ -1,6 +1,6 @@
 // App.js
 
-import React, { useCallback, useState } from "react";
+import React, { createRef, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -9,13 +9,17 @@ import {
   Alert,
   View,
   StyleSheet,
-  Image
+  Image,
 } from "react-native";
 import CheckBox from "expo-checkbox";
-import * as ImagePicker from 'react-native-image-picker';
+import { Dropdown } from "react-native-element-dropdown";
+
+import { DistrictsList } from "./district";
+import * as ImagePicker from "expo-image-picker";
 
 import * as yup from "yup";
 import { Formik } from "formik";
+import ModalPopoup from "./Model";
 export const Colors = {
   primary: "#FDA92A",
   gray500: "#D0D0D0",
@@ -23,47 +27,56 @@ export const Colors = {
   gray200: "#F9F9FC",
   black: "#212121",
   gray900: "#616161",
-  gold: "#F7B840"
+  gold: "#F7B840",
 };
 
+const gendersList = [
+  { value: "Male", label: "Male" },
+  { value: "Female", label: "Female" },
+  { value: "Other", label: "Other" },
+];
 const userValidationSchema = yup.object().shape({
-  name: yup.string().min(4).required("Please, provide your name!"),
+  name: yup.string().min(6).required("Please, provide your name!"),
   email: yup.string().email().required(),
-  phone: yup.number().min(10).max(10),
+  phone: yup.string().min(10).max(10).required(),
   accepted: yup.bool().oneOf([true], "Field must be checked"),
   password: yup.string().min(4, "Pin must be of 4 digits").max(4).required(),
+  gender: yup.string().required(),
+  district: yup.string().required(),
+  city: yup.string().required(),
+  street: yup.string().min(6).required(),
   confirm: yup
     .string()
     .label("confirm password")
     .required()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+  image: yup.string().required(),
 });
 
 export default App = () => {
-  const [pickerResponse, setPickerResponse] = useState(null);
+  // const [district, setDistrict] = useState();
 
-  const inputStyle = {
-    width: "100%",
-    marginTop: 8,
-    borderWidth: 1,
-    padding: 16,
-    borderColor: Colors.primary,
-    borderRadius: 4,
-    height: 50,
-    outline: "none"
+  let popupRef = createRef();
+  const [citiesList, setCitiesList] = useState([]);
+  const onImageLibraryPress = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      // mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.cancelled) {
+      return result.uri;
+      // return result.uri;
+    }
   };
-
-  const onImageLibraryPress = useCallback(() => {
-    const options = {
-      selectionLimit: 1,
-      mediaType: "photo",
-      includeBase64: false
-    };
-    ImagePicker.launchImageLibrary(options, setPickerResponse);
-  }, []);
-
   return (
     <ScrollView style={styles.container}>
+      <ModalPopoup
+        ref={(target) => (popupRef = target)}
+        onTouchOutside={() => popupRef.close()}
+      />
       <Formik
         initialValues={{
           name: "",
@@ -72,12 +85,13 @@ export default App = () => {
           confirm: "",
           phone: "",
           district: "",
+          gender: "",
           city: "",
           street: "",
           accepted: false,
-          image: ""
+          image: null,
         }}
-        onSubmit={(values) => Alert.alert(JSON.stringify(values))}
+        onSubmit={(values) => console.log(JSON.stringify(values))}
         validationSchema={() => userValidationSchema}
       >
         {({
@@ -88,14 +102,14 @@ export default App = () => {
           setFieldTouched,
           touched,
           isValid,
-          handleSubmit
+          handleSubmit,
         }) => (
           <View>
             <View
               style={{
                 marginTop: 20,
                 flexDirection: "row",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Text
@@ -107,7 +121,7 @@ export default App = () => {
                   lineHeight: 38,
                   display: "flex",
                   alignItems: "flex-end",
-                  letterspacing: -0.02
+                  letterspacing: -0.02,
                 }}
               >
                 Register
@@ -117,25 +131,29 @@ export default App = () => {
                 style={{
                   right: 20,
                   flex: 1,
-                  flexDirection: "column"
+                  flexDirection: "column",
                 }}
               >
                 <Pressable
-                  onPress={() => {
-                    onImageLibraryPress();
+                  onPress={async () => {
+                    let img = await onImageLibraryPress();
+                    console.log("a" + img);
+                    setFieldValue("image", img);
                   }}
                 >
                   <Image
                     source={{
-                      uri:
-                        "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e"
+                      uri: values.image
+                        ? values.image
+                        : "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
                     }}
                     style={{
                       right: 3,
                       height: 75,
                       width: 75,
                       borderRadius: 24,
-                      objectFit: "contain"
+                      borderWidth: StyleSheet.hairlineWidth,
+                      objectFit: "contain",
                     }}
                   />
                   <Text
@@ -143,7 +161,7 @@ export default App = () => {
                       marginLeft: 8,
                       marginTop: 10,
                       textAlign: "center",
-                      color: Colors.primary
+                      color: errors.image ? "red" : Colors.primary,
                     }}
                   >
                     Choose
@@ -154,20 +172,20 @@ export default App = () => {
             <View style={styles.formContainer}>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
                 }}
               >
                 <Text>Full Name*</Text>
                 <TextInput
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
                       borderColor: !touched.name
                         ? Colors.gray900
-                        : !errors.name
-                        ? Colors.primary
-                        : "red"
-                    }
+                        : errors.name
+                        ? "red"
+                        : Colors.primary,
+                    },
                   ]}
                   value={values.name}
                   onChangeText={handleChange("name")}
@@ -181,20 +199,20 @@ export default App = () => {
               </View>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
                 }}
               >
                 <Text>Email Address *</Text>
                 <TextInput
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
                       borderColor: !touched.email
                         ? Colors.gray900
-                        : !errors.email
-                        ? Colors.primary
-                        : "red"
-                    }
+                        : errors.email
+                        ? "red"
+                        : Colors.primary,
+                    },
                   ]}
                   value={values.email}
                   onChangeText={handleChange("email")}
@@ -207,46 +225,197 @@ export default App = () => {
               </View>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
                 }}
               >
                 <Text>Phone Number *</Text>
                 <TextInput
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
-                      borderColor: !touched.email
+                      borderColor: !touched.phone
                         ? Colors.gray900
-                        : !errors.email
-                        ? Colors.primary
-                        : "red"
-                    }
+                        : errors.phone
+                        ? "red"
+                        : Colors.primary,
+                    },
                   ]}
                   value={values.phone}
                   onChangeText={handleChange("phone")}
                   onBlur={() => setFieldTouched("phone")}
                   placeholder="Phone Number"
                 />
-                {touched.email && errors.email && (
+                {touched.phone && errors.phone && (
                   <Text style={{ color: "red" }}>{errors.email}</Text>
                 )}
               </View>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
+                }}
+              >
+                <Text>Gender *</Text>
+                <Dropdown
+                  style={[
+                    {
+                      width: "100%",
+                      marginTop: 8,
+                      marginRight: -10,
+                      borderWidth: 1,
+                      padding: 16,
+                      borderRadius: 4,
+                      height: 50,
+                    },
+                    !touched.gender
+                      ? { borderColor: Colors.gray900 }
+                      : !errors.gender
+                      ? { borderColor: Colors.primary }
+                      : "red",
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  data={gendersList}
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={"Select item"}
+                  value={values.gender}
+                  onChange={(item) => {
+                    setFieldValue("gender", item.value);
+                    setFieldValue("gender", item.value);
+
+                    setFieldTouched("gender");
+                  }}
+                  // onBlur={() => setFieldTouched("gender")}
+                />
+                {touched.gender && errors.gender && (
+                  <Text style={{ color: "red" }}>{errors.gender}</Text>
+                )}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>District *</Text>
+                <Dropdown
+                  style={[
+                    {
+                      width: "100%",
+                      marginTop: 8,
+                      marginRight: -10,
+                      borderWidth: 1,
+                      padding: 16,
+                      borderRadius: 4,
+                      height: 50,
+                    },
+                    !touched.district
+                      ? { borderColor: Colors.gray900 }
+                      : !errors.district
+                      ? { borderColor: Colors.primary }
+                      : "red",
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  data={DistrictsList}
+                  labelField="label"
+                  onBlur={() => setFieldTouched("district")}
+                  valueField="label"
+                  placeholder={"Select item"}
+                  searchPlaceholder="Search..."
+                  search
+                  value={values.district}
+                  onChange={(item) => {
+                    setFieldValue("district", item.label);
+                    setCitiesList(item.cities);
+                  }}
+                />
+                {touched.district && errors.district && (
+                  <Text style={{ color: "red" }}>{errors.district}</Text>
+                )}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>City *</Text>
+                <Dropdown
+                  style={[
+                    {
+                      width: "100%",
+                      marginTop: 8,
+                      marginRight: -10,
+                      borderWidth: 1,
+                      padding: 16,
+                      borderRadius: 4,
+                      height: 50,
+                    },
+                    !touched.city
+                      ? { borderColor: Colors.gray900 }
+                      : !errors.city
+                      ? { borderColor: Colors.primary }
+                      : "red",
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  data={citiesList ? citiesList : []}
+                  labelField="label"
+                  onBlur={() => setFieldTouched("city")}
+                  valueField="label"
+                  placeholder={"Select item"}
+                  value={values.city}
+                  onChange={(item) => {
+                    setFieldValue("city", item.label);
+                    console.log(item.label);
+                  }}
+                />
+                {touched.city && errors.city && (
+                  <Text style={{ color: "red" }}>{errors.city}</Text>
+                )}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>Street *</Text>
+                <TextInput
+                  style={[
+                    styles.inputStyle,
+                    {
+                      borderColor: !touched.street
+                        ? Colors.gray900
+                        : errors.street
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.street}
+                  onChangeText={handleChange("street")}
+                  onBlur={() => setFieldTouched("street")}
+                  placeholder="Street"
+                />
+                {touched.street && errors.street && (
+                  <Text style={{ color: "red" }}>{errors.street}</Text>
+                )}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
                 }}
               >
                 <Text>Password *</Text>
                 <TextInput
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
-                      borderColor: !touched.email
+                      borderColor: !touched.password
                         ? Colors.gray900
-                        : !errors.email
-                        ? Colors.primary
-                        : "red"
-                    }
+                        : errors.password
+                        ? "red"
+                        : Colors.primary,
+                    },
                   ]}
                   value={values.password}
                   onChangeText={handleChange("password")}
@@ -259,20 +428,20 @@ export default App = () => {
               </View>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
                 }}
               >
                 <Text>Confirm Password *</Text>
                 <TextInput
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
-                      borderColor: !touched.email
+                      borderColor: !touched.confirm
                         ? Colors.gray900
-                        : !errors.email
-                        ? Colors.primary
-                        : "red"
-                    }
+                        : errors.confirm
+                        ? "red"
+                        : Colors.primary,
+                    },
                   ]}
                   value={values.confirm}
                   onChangeText={handleChange("confirm")}
@@ -287,7 +456,7 @@ export default App = () => {
                 style={{
                   marginTop: 24,
                   display: "flex",
-                  flexDirection: "row"
+                  flexDirection: "row",
                 }}
               >
                 <CheckBox
@@ -296,7 +465,9 @@ export default App = () => {
                     setFieldValue("accepted", !values.accepted);
                   }}
                   color={
-                    values.accepted
+                    !touched.accepted
+                      ? undefined
+                      : values.accepted
                       ? Colors.primary
                       : errors.accepted && !touched.accepted
                       ? "red"
@@ -308,14 +479,14 @@ export default App = () => {
                     style={{
                       marginLeft: 12,
                       color: errors.accepted ? Colors.black : Colors.red,
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     I agree to the{" "}
                     <Text
                       style={{
                         color: errors.accepted ? "red" : Colors.primary,
-                        textDecorationLine: "underline"
+                        textDecorationLine: "underline",
                       }}
                     >
                       Terms and Condition
@@ -324,7 +495,7 @@ export default App = () => {
                     <Text
                       style={{
                         color: errors.accepted ? "red" : Colors.primary,
-                        textDecorationLine: "underline"
+                        textDecorationLine: "underline",
                       }}
                     >
                       Privacy Policy
@@ -339,7 +510,7 @@ export default App = () => {
                   borderWidth: 1,
                   justifyContent: "center",
                   height: 50,
-                  marginTop: 24
+                  marginTop: 24,
                 }}
                 onPress={handleSubmit}
               >
@@ -350,7 +521,7 @@ export default App = () => {
                     fontWeight: "bold",
                     color: Colors.primary,
                     fontFamily: "Urbanist",
-                    textAlignVertical: "center"
+                    textAlignVertical: "center",
                   }}
                 >
                   CREATE
@@ -363,7 +534,7 @@ export default App = () => {
                   marginTop: 12,
                   color: Colors.black,
                   fontFamily: "Urbanist",
-                  textAlignVertical: "center"
+                  textAlignVertical: "center",
                 }}
               >
                 Already Have an Account?{" "}
@@ -377,7 +548,7 @@ export default App = () => {
                     fontFamily: "Urbanist",
                     textDecorationLine: "underline",
 
-                    textAlignVertical: "center"
+                    textAlignVertical: "center",
                   }}
                 >
                   Login
@@ -392,11 +563,18 @@ export default App = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    marginTop: 40,
   },
-  formContainer: {
-    marginTop: 50
-    // paddingHorizontal: 24
-  }
+  inputStyle: {
+    width: "100%",
+    marginTop: 8,
+    borderWidth: 1,
+    padding: 16,
+    borderColor: Colors.primary,
+    borderRadius: 4,
+    height: 50,
+    outline: "none",
+  },
 });
 console.disableYellowBox = true;
