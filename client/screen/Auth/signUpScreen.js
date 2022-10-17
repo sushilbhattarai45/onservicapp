@@ -197,517 +197,526 @@ export default registerUser = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {/* <ModalPopoup
+    <View
+      style={{
+        flex: 1,
+      }}
+    >
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : 0.1}>
+        <ScrollView style={styles.container}>
+          {/* <ModalPopoup
         ref={(target) => (popupRef = target)}
         onTouchOutside={() => popupRef.close()}
       /> */}
-      <View
-        style={{
-          marginTop: 0,
-          marginBottom: 20,
-        }}
-      >
-        <Header icon={"arrow-left-line"} />
-      </View>
-      <KeyboardAvoidingView style={{ flex: 1 }}>
-        <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            password: "",
-            confirm: "",
-            phone: "",
-            district: "",
-            gender: "",
-            city: "",
-            street: "",
-            accepted: false,
-            image: null,
-          }}
-          onSubmit={postData}
-          validationSchema={() => userValidationSchema}
-        >
-          {({
-            values,
-            handleChange,
-            errors,
-            setFieldValue,
-            setFieldTouched,
-            touched,
-            isValid,
-            handleSubmit,
-          }) => (
-            <View>
-              <View
-                style={{
-                  marginTop: 8,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    flex: 5,
-                    fontStyle: "normal",
-                    fontWeight: "800",
-                    fontSize: 32,
-                    lineHeight: 38,
-                    display: "flex",
-                    alignItems: "flex-end",
-                    letterspacing: -0.02,
-                  }}
-                >
-                  Register
-                </Text>
+          <View
+            style={{
+              marginTop: 0,
 
-                <View
-                  style={{
-                    right: 20,
-                    flex: 1,
-                    justifyContent: "center",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Pressable
-                    onPress={async () => {
-                      let img = await selectFile();
-                      console.log("a" + img);
-                      setFieldValue("image", img);
-                    }}
-                  >
-                    <Image
-                      source={{
-                        uri: values.image
-                          ? values.image
-                          : "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
-                      }}
-                      style={{
-                        alignSelf: "center",
-                        right: 0,
-                        height: 75,
-                        width: 75,
-                        borderRadius: 24,
-                        borderWidth: StyleSheet.hairlineWidth,
-                        objectFit: "contain",
-                      }}
-                    />
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        textAlign: "center",
-                        color: errors.image ? "red" : Colors.primary,
-                      }}
-                    >
-                      Choose
-                    </Text>
-                  </Pressable>
-                </View>
-              </View>
-              <View style={styles.formContainer}>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>Full Name*</Text>
-                  <TextInput
-                    style={[
-                      styles.inputStyle,
-                      {
-                        borderColor: !touched.name
-                          ? Colors.gray900
-                          : errors.name
-                          ? "red"
-                          : Colors.primary,
-                      },
-                    ]}
-                    value={values.name}
-                    onChangeText={handleChange("name")}
-                    onBlur={() => setFieldTouched("name")}
-                    placeholder="Name"
-                  />
-                  {touched.name && errors.name && (
-                    <Text style={{ color: "red" }}>{errors.name}</Text>
-                  )}
-                  {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
-                </View>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>Email Address *</Text>
-                  <TextInput
-                    style={[
-                      styles.inputStyle,
-                      {
-                        borderColor: !touched.email
-                          ? Colors.gray900
-                          : errors.email
-                          ? "red"
-                          : Colors.primary,
-                      },
-                    ]}
-                    value={values.email}
-                    onChangeText={handleChange("email")}
-                    onBlur={() => setFieldTouched("email")}
-                    placeholder="Email"
-                  />
-                  {touched.email && errors.email && (
-                    <Text style={{ color: "red" }}>{errors.email}</Text>
-                  )}
-                </View>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>Phone Number *</Text>
-                  <TextInput
-                    keyboardType="numeric"
-                    maxLength={10}
-                    style={[
-                      styles.inputStyle,
-                      {
-                        borderColor: !touched.phone
-                          ? Colors.gray900
-                          : errors.phone
-                          ? "red"
-                          : Colors.primary,
-                      },
-                    ]}
-                    value={values.phone}
-                    onChangeText={handleChange("phone")}
-                    onBlur={() => setFieldTouched("phone")}
-                    placeholder="Phone Number"
-                  />
-                  {touched.phone && errors.phone && (
-                    <Text style={{ color: "red" }}>{errors.phone}</Text>
-                  )}
-                </View>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>Gender *</Text>
-                  <Dropdown
-                    style={[
-                      {
-                        width: "100%",
-                        marginTop: 8,
-                        marginRight: -10,
-                        borderWidth: 1,
-                        padding: 16,
-                        borderRadius: 4,
-                        height: 50,
-                      },
-                      !touched.gender
-                        ? { borderColor: Colors.gray900 }
-                        : !values.gender
-                        ? { borderColor: "red" }
-                        : { borderColor: Colors.primary },
-                    ]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    data={gendersList}
-                    maxHeight={300}
-                    labelField="label"
-                    valueField="value"
-                    placeholder={"Select item"}
-                    value={values.gender}
-                    onChange={(item) => {
-                      setFieldValue("gender", item.value);
-                      setFieldValue("gender", item.value);
+              marginBottom: 20,
+            }}
+          >
+            <Header icon={"arrow-left-line"} />
+          </View>
 
-                      setFieldTouched("gender");
-                    }}
-                    // onBlur={() => setFieldTouched("gender")}
-                  />
-                  {!values.gender && touched.gender ? (
-                    <Text style={{ color: "red" }}>{errors.gender}</Text>
-                  ) : null}
-                </View>
+          <Formik
+            initialValues={{
+              name: "",
+              email: "",
+              password: "",
+              confirm: "",
+              phone: "",
+              district: "",
+              gender: "",
+              city: "",
+              street: "",
+              accepted: false,
+              image: null,
+            }}
+            onSubmit={postData}
+            validationSchema={() => userValidationSchema}
+          >
+            {({
+              values,
+              handleChange,
+              errors,
+              setFieldValue,
+              setFieldTouched,
+              touched,
+              isValid,
+              handleSubmit,
+            }) => (
+              <View>
                 <View
                   style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>District *</Text>
-                  <Dropdown
-                    style={[
-                      {
-                        width: "100%",
-                        marginTop: 8,
-                        marginRight: -10,
-                        borderWidth: 1,
-                        padding: 16,
-                        borderRadius: 4,
-                        height: 50,
-                      },
-                      !touched.district
-                        ? { borderColor: Colors.gray900 }
-                        : values.district
-                        ? { borderColor: Colors.primary }
-                        : { borderColor: "red" },
-                    ]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    data={Districts}
-                    labelField="label"
-                    onBlur={() => setFieldTouched("district")}
-                    valueField="label"
-                    placeholder={"Select item"}
-                    searchPlaceholder="Search..."
-                    search
-                    value={values.district}
-                    onChange={(item) => {
-                      setFieldValue("district", item.label);
-                      setCitiesList(item.cities);
-                    }}
-                  />
-                  {!values.district && touched.district ? (
-                    <Text style={{ color: "red" }}>{errors.district}</Text>
-                  ) : null}
-                </View>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>City *</Text>
-                  <Dropdown
-                    style={[
-                      {
-                        width: "100%",
-                        marginTop: 8,
-                        marginRight: -10,
-                        borderWidth: 1,
-                        padding: 16,
-                        borderRadius: 4,
-                        height: 50,
-                      },
-                      !touched.city
-                        ? { borderColor: Colors.gray900 }
-                        : values.city
-                        ? { borderColor: Colors.primary }
-                        : { borderColor: "red" },
-                    ]}
-                    placeholderStyle={styles.placeholderStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    data={citiesList ? citiesList : []}
-                    labelField="label"
-                    onBlur={() => setFieldTouched("city")}
-                    valueField="label"
-                    placeholder={"Select item"}
-                    value={values.city}
-                    onChange={(item) => {
-                      setFieldValue("city", item.label);
-                      console.log(item.label);
-                    }}
-                  />
-                  {!values.city && touched.city ? (
-                    <Text style={{ color: "red" }}>{errors.city}</Text>
-                  ) : null}
-                </View>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>Street *</Text>
-                  <TextInput
-                    style={[
-                      styles.inputStyle,
-                      {
-                        borderColor: !touched.street
-                          ? Colors.gray900
-                          : errors.street
-                          ? "red"
-                          : Colors.primary,
-                      },
-                    ]}
-                    value={values.street}
-                    onChangeText={handleChange("street")}
-                    onBlur={() => setFieldTouched("street")}
-                    placeholder="Street"
-                  />
-                  {touched.street && errors.street && (
-                    <Text style={{ color: "red" }}>{errors.street}</Text>
-                  )}
-                </View>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>Password *</Text>
-                  <TextInput
-                    keyboardType="numeric"
-                    maxLength={4}
-                    style={[
-                      styles.inputStyle,
-                      {
-                        borderColor: !touched.password
-                          ? Colors.gray900
-                          : errors.password
-                          ? "red"
-                          : Colors.primary,
-                      },
-                    ]}
-                    value={values.password}
-                    onChangeText={handleChange("password")}
-                    onBlur={() => setFieldTouched("password")}
-                    placeholder="Password"
-                  />
-                  {touched.password && errors.password && (
-                    <Text style={{ color: "red" }}>{errors.password}</Text>
-                  )}
-                </View>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>Confirm Password *</Text>
-                  <TextInput
-                    keyboardType="numeric"
-                    maxLength={4}
-                    style={[
-                      styles.inputStyle,
-                      {
-                        borderColor: !touched.confirm
-                          ? Colors.gray900
-                          : errors.confirm
-                          ? "red"
-                          : Colors.primary,
-                      },
-                    ]}
-                    value={values.confirm}
-                    onChangeText={handleChange("confirm")}
-                    onBlur={() => setFieldTouched("confirm")}
-                    placeholder="Confirm Password"
-                  />
-                  {touched.confirm && errors.confirm && (
-                    <Text style={{ color: "red" }}>{errors.confirm}</Text>
-                  )}
-                </View>
-                <View
-                  style={{
-                    marginTop: 24,
-                    marginRight: 10,
-                    display: "flex",
+                    marginTop: 8,
                     flexDirection: "row",
+                    alignItems: "center",
                   }}
-                >
-                  <CheckBox
-                    value={values.accepted}
-                    onValueChange={() => {
-                      setFieldValue("accepted", !values.accepted);
-                    }}
-                    color={
-                      !touched.accepted
-                        ? undefined
-                        : values.accepted
-                        ? Colors.primary
-                        : errors.accepted && !touched.accepted
-                        ? "red"
-                        : undefined
-                    }
-                  />
-                  {
-                    <Text
-                      style={{
-                        marginLeft: 12,
-                        color: errors.accepted ? Colors.black : Colors.red,
-                        fontSize: 12,
-                      }}
-                    >
-                      I agree to the{" "}
-                      <Text
-                        style={{
-                          color: errors.accepted ? "red" : Colors.primary,
-                          textDecorationLine: "underline",
-                        }}
-                      >
-                        Terms and Condition
-                      </Text>{" "}
-                      and{" "}
-                      <Text
-                        style={{
-                          color: errors.accepted ? "red" : Colors.primary,
-                          textDecorationLine: "underline",
-                        }}
-                      >
-                        Privacy Policy
-                      </Text>{" "}
-                    </Text>
-                  }
-                </View>
-
-                <Pressable
-                  style={{
-                    borderColor: Colors.primary,
-                    borderWidth: 1,
-                    justifyContent: "center",
-                    height: 50,
-                    marginTop: 24,
-                  }}
-                  onPress={handleSubmit}
                 >
                   <Text
                     style={{
-                      textAlign: "center",
-                      fontSize: 20,
-                      fontWeight: "bold",
-                      color: Colors.primary,
-                      fontFamily: "Urbanist",
-                      textAlignVertical: "center",
+                      flex: 5,
+                      fontStyle: "normal",
+                      fontWeight: "800",
+                      fontSize: 32,
+                      lineHeight: 38,
+                      display: "flex",
+                      alignItems: "flex-end",
+                      letterspacing: -0.02,
                     }}
                   >
-                    CREATE
+                    Register
                   </Text>
-                </Pressable>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 15,
-                    marginTop: 12,
-                    color: Colors.black,
-                    fontFamily: "Urbanist",
-                    textAlignVertical: "center",
-                  }}
-                >
-                  Already Have an Account?{" "}
+
+                  <View
+                    style={{
+                      right: 20,
+                      flex: 1,
+                      justifyContent: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Pressable
+                      onPress={async () => {
+                        let img = await selectFile();
+                        console.log("a" + img);
+                        setFieldValue("image", img);
+                      }}
+                    >
+                      <Image
+                        source={{
+                          uri: values.image
+                            ? values.image
+                            : "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
+                        }}
+                        style={{
+                          alignSelf: "center",
+                          right: 0,
+                          height: 75,
+                          width: 75,
+                          borderRadius: 24,
+                          borderWidth: StyleSheet.hairlineWidth,
+                          objectFit: "contain",
+                        }}
+                      />
+                      <Text
+                        style={{
+                          marginTop: 10,
+                          textAlign: "center",
+                          color: errors.image ? "red" : Colors.primary,
+                        }}
+                      >
+                        Choose
+                      </Text>
+                    </Pressable>
+                  </View>
+                </View>
+                <View style={styles.formContainer}>
+                  <View
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <Text>Full Name*</Text>
+                    <TextInput
+                      style={[
+                        styles.inputStyle,
+                        {
+                          borderColor: !touched.name
+                            ? Colors.gray900
+                            : errors.name
+                            ? "red"
+                            : Colors.primary,
+                        },
+                      ]}
+                      value={values.name}
+                      onChangeText={handleChange("name")}
+                      onBlur={() => setFieldTouched("name")}
+                      placeholder="Name"
+                    />
+                    {touched.name && errors.name && (
+                      <Text style={{ color: "red" }}>{errors.name}</Text>
+                    )}
+                    {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <Text>Email Address *</Text>
+                    <TextInput
+                      style={[
+                        styles.inputStyle,
+                        {
+                          borderColor: !touched.email
+                            ? Colors.gray900
+                            : errors.email
+                            ? "red"
+                            : Colors.primary,
+                        },
+                      ]}
+                      value={values.email}
+                      onChangeText={handleChange("email")}
+                      onBlur={() => setFieldTouched("email")}
+                      placeholder="Email"
+                    />
+                    {touched.email && errors.email && (
+                      <Text style={{ color: "red" }}>{errors.email}</Text>
+                    )}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <Text>Phone Number *</Text>
+                    <TextInput
+                      keyboardType="numeric"
+                      maxLength={10}
+                      style={[
+                        styles.inputStyle,
+                        {
+                          borderColor: !touched.phone
+                            ? Colors.gray900
+                            : errors.phone
+                            ? "red"
+                            : Colors.primary,
+                        },
+                      ]}
+                      value={values.phone}
+                      onChangeText={handleChange("phone")}
+                      onBlur={() => setFieldTouched("phone")}
+                      placeholder="Phone Number"
+                    />
+                    {touched.phone && errors.phone && (
+                      <Text style={{ color: "red" }}>{errors.phone}</Text>
+                    )}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <Text>Gender *</Text>
+                    <Dropdown
+                      style={[
+                        {
+                          width: "100%",
+                          marginTop: 8,
+                          marginRight: -10,
+                          borderWidth: 1,
+                          padding: 16,
+                          borderRadius: 4,
+                          height: 50,
+                        },
+                        !touched.gender
+                          ? { borderColor: Colors.gray900 }
+                          : !values.gender
+                          ? { borderColor: "red" }
+                          : { borderColor: Colors.primary },
+                      ]}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      data={gendersList}
+                      maxHeight={300}
+                      labelField="label"
+                      valueField="value"
+                      placeholder={"Select item"}
+                      value={values.gender}
+                      onChange={(item) => {
+                        setFieldValue("gender", item.value);
+                        setFieldValue("gender", item.value);
+
+                        setFieldTouched("gender");
+                      }}
+                      // onBlur={() => setFieldTouched("gender")}
+                    />
+                    {!values.gender && touched.gender ? (
+                      <Text style={{ color: "red" }}>{errors.gender}</Text>
+                    ) : null}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <Text>District *</Text>
+                    <Dropdown
+                      style={[
+                        {
+                          width: "100%",
+                          marginTop: 8,
+                          marginRight: -10,
+                          borderWidth: 1,
+                          padding: 16,
+                          borderRadius: 4,
+                          height: 50,
+                        },
+                        !touched.district
+                          ? { borderColor: Colors.gray900 }
+                          : values.district
+                          ? { borderColor: Colors.primary }
+                          : { borderColor: "red" },
+                      ]}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      data={Districts}
+                      labelField="label"
+                      onBlur={() => setFieldTouched("district")}
+                      valueField="label"
+                      placeholder={"Select item"}
+                      searchPlaceholder="Search..."
+                      search
+                      value={values.district}
+                      onChange={(item) => {
+                        setFieldValue("district", item.label);
+                        setCitiesList(item.cities);
+                      }}
+                    />
+                    {!values.district && touched.district ? (
+                      <Text style={{ color: "red" }}>{errors.district}</Text>
+                    ) : null}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <Text>City *</Text>
+                    <Dropdown
+                      style={[
+                        {
+                          width: "100%",
+                          marginTop: 8,
+                          marginRight: -10,
+                          borderWidth: 1,
+                          padding: 16,
+                          borderRadius: 4,
+                          height: 50,
+                        },
+                        !touched.city
+                          ? { borderColor: Colors.gray900 }
+                          : values.city
+                          ? { borderColor: Colors.primary }
+                          : { borderColor: "red" },
+                      ]}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      data={citiesList ? citiesList : []}
+                      labelField="label"
+                      onBlur={() => setFieldTouched("city")}
+                      valueField="label"
+                      placeholder={"Select item"}
+                      value={values.city}
+                      onChange={(item) => {
+                        setFieldValue("city", item.label);
+                        console.log(item.label);
+                      }}
+                    />
+                    {!values.city && touched.city ? (
+                      <Text style={{ color: "red" }}>{errors.city}</Text>
+                    ) : null}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <Text>Street *</Text>
+                    <TextInput
+                      style={[
+                        styles.inputStyle,
+                        {
+                          borderColor: !touched.street
+                            ? Colors.gray900
+                            : errors.street
+                            ? "red"
+                            : Colors.primary,
+                        },
+                      ]}
+                      value={values.street}
+                      onChangeText={handleChange("street")}
+                      onBlur={() => setFieldTouched("street")}
+                      placeholder="Street"
+                    />
+                    {touched.street && errors.street && (
+                      <Text style={{ color: "red" }}>{errors.street}</Text>
+                    )}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <Text>Password *</Text>
+                    <TextInput
+                      keyboardType="numeric"
+                      maxLength={4}
+                      style={[
+                        styles.inputStyle,
+                        {
+                          borderColor: !touched.password
+                            ? Colors.gray900
+                            : errors.password
+                            ? "red"
+                            : Colors.primary,
+                        },
+                      ]}
+                      value={values.password}
+                      onChangeText={handleChange("password")}
+                      onBlur={() => setFieldTouched("password")}
+                      placeholder="Password"
+                    />
+                    {touched.password && errors.password && (
+                      <Text style={{ color: "red" }}>{errors.password}</Text>
+                    )}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <Text>Confirm Password *</Text>
+                    <TextInput
+                      keyboardType="numeric"
+                      maxLength={4}
+                      style={[
+                        styles.inputStyle,
+                        {
+                          borderColor: !touched.confirm
+                            ? Colors.gray900
+                            : errors.confirm
+                            ? "red"
+                            : Colors.primary,
+                        },
+                      ]}
+                      value={values.confirm}
+                      onChangeText={handleChange("confirm")}
+                      onBlur={() => setFieldTouched("confirm")}
+                      placeholder="Confirm Password"
+                    />
+                    {touched.confirm && errors.confirm && (
+                      <Text style={{ color: "red" }}>{errors.confirm}</Text>
+                    )}
+                  </View>
+                  <View
+                    style={{
+                      marginTop: 24,
+                      marginRight: 10,
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <CheckBox
+                      value={values.accepted}
+                      onValueChange={() => {
+                        setFieldValue("accepted", !values.accepted);
+                      }}
+                      color={
+                        !touched.accepted
+                          ? undefined
+                          : values.accepted
+                          ? Colors.primary
+                          : errors.accepted && !touched.accepted
+                          ? "red"
+                          : undefined
+                      }
+                    />
+                    {
+                      <Text
+                        style={{
+                          marginLeft: 12,
+                          color: errors.accepted ? Colors.black : Colors.red,
+                          fontSize: 12,
+                        }}
+                      >
+                        I agree to the{" "}
+                        <Text
+                          style={{
+                            color: errors.accepted ? "red" : Colors.primary,
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          Terms and Condition
+                        </Text>{" "}
+                        and{" "}
+                        <Text
+                          style={{
+                            color: errors.accepted ? "red" : Colors.primary,
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          Privacy Policy
+                        </Text>{" "}
+                      </Text>
+                    }
+                  </View>
+
+                  <Pressable
+                    style={{
+                      borderColor: Colors.primary,
+                      borderWidth: 1,
+                      justifyContent: "center",
+                      height: 50,
+                      marginTop: 24,
+                    }}
+                    onPress={handleSubmit}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        color: Colors.primary,
+                        fontFamily: "Urbanist",
+                        textAlignVertical: "center",
+                      }}
+                    >
+                      CREATE
+                    </Text>
+                  </Pressable>
                   <Text
                     style={{
                       textAlign: "center",
                       fontSize: 15,
                       marginTop: 12,
-                      fontWeight: "bold",
-                      color: Colors.primary,
+                      color: Colors.black,
                       fontFamily: "Urbanist",
-                      textDecorationLine: "underline",
-
                       textAlignVertical: "center",
                     }}
                   >
-                    Login
+                    Already Have an Account?{" "}
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 15,
+                        marginTop: 12,
+                        fontWeight: "bold",
+                        color: Colors.primary,
+                        fontFamily: "Urbanist",
+                        textDecorationLine: "underline",
+
+                        textAlignVertical: "center",
+                      }}
+                    >
+                      Login
+                    </Text>
                   </Text>
-                </Text>
+                </View>
               </View>
-            </View>
-          )}
-        </Formik>
+            )}
+          </Formik>
+        </ScrollView>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
     marginTop: 10,
+    position: "relative",
     marginBottom: 10,
   },
   inputStyle: {
