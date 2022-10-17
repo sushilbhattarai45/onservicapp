@@ -1,6 +1,6 @@
 // App.js
 
-import React, { useCallback, useState } from "react";
+import React, { createRef, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -12,10 +12,16 @@ import {
   Image,
 } from "react-native";
 import CheckBox from "expo-checkbox";
-import * as ImagePicker from "react-native-image-picker";
+import { Dropdown } from "react-native-element-dropdown";
 
+import { Districts } from "../../component/district";
+import * as ImagePicker from "expo-image-picker";
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
+import axios from "axios";
 import * as yup from "yup";
-import { Formik } from "formik";
+import { Field, Formik } from "formik";
+
+// import ModalPopup from "../../component/Modal";
 export const Colors = {
   primary: "#FDA92A",
   gray500: "#D0D0D0",
@@ -26,44 +32,139 @@ export const Colors = {
   gold: "#F7B840",
 };
 
+const gendersList = [
+  { value: "Male", label: "Male" },
+  { value: "Female", label: "Female" },
+  { value: "Other", label: "Other" },
+];
 const userValidationSchema = yup.object().shape({
-  name: yup.string().min(4).required("Please, provide your name!"),
-  email: yup.string().email().required(),
-  phone: yup.number().min(10).max(10),
+  name: yup.string().min(6).required("Please, provide your name!"),
+  email: yup
+    .string()
+    .email("Please, provide a valid email!")
+    .required("Please, provide your email!"),
+  phone: yup
+    .number("Phone number must be Numeric")
+    .min(10)
+    .required("Please, provide your Phone Number!"),
   accepted: yup.bool().oneOf([true], "Field must be checked"),
-  password: yup.string().min(4, "Pin must be of 4 digits").max(4).required(),
+  password: yup
+    .string()
+    .min(4, "Pin must be of 4 digits")
+    .max(4)
+    .required("Please, create a new PIN!"),
+  gender: yup.string().required("Please, select your gender"),
+  district: yup.string().required("Please, provide your district!"),
+  city: yup.string().required("Please, provide your city!"),
+  street: yup.string().min(6).required("Please, provide your street!"),
   confirm: yup
     .string()
     .label("confirm password")
-    .required()
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
+    .required("Please, Reenter your PIN!")
+    .oneOf([yup.ref("password"), null], "PIN must match"),
+  image: yup.string().required(),
 });
 
-export default FormicWalaForm = () => {
-  const [pickerResponse, setPickerResponse] = useState(null);
+export default Formikwalaform = () => {
+  // const [district, setDistrict] = useState();
 
-  const inputStyle = {
-    width: "100%",
-    marginTop: 8,
-    borderWidth: 1,
-    padding: 16,
-    borderColor: Colors.primary,
-    borderRadius: 4,
-    height: 50,
-    outline: "none",
+  let popupRef = createRef();
+  const [citiesList, setCitiesList] = useState([]);
+  const [file, setFile] = useState(null);
+  const uploadImage = async (file) => {
+    console.log("the file you have choosed is ");
+    console.log(file);
+    try {
+      // checks if the file is empty
+      if (file === null) {
+        setError({
+          target: "image",
+          message: "Sorry ,There is some error with the profile picture!!",
+        });
+        return null;
+      }
+      // setError(false);
+      // if not empty creating a form data to send to upload the image to the server
+      // alert("ok");
+
+      const imageToUpload = file;
+      const data = new FormData();
+
+      data.append(
+        "profile",
+        {
+          uri: imageToUpload?.uri,
+          name: imageToUpload?.uri,
+          type: "image/jpg",
+        },
+        "myfile"
+      );
+
+      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
+      console.log("s" + serverUrl);
+      const response = await axios(serverUrl, {
+        method: "post",
+        data: data,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      var url = response?.data?.fileName;
+      const filename = url.split("\\");
+      const finalname = filename[0] + "/" + filename[1];
+      return finalname;
+    } catch (e) {
+      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
+
+      console.log("trying again " + serverUrl);
+
+      axios(serverUrl, {
+        method: "post",
+        data: data,
+
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log("second error");
+          console.log(error);
+        });
+      // setError({
+      //   target: "image",
+      //   message: "Sry, we are having trouble uploading the Profile ",
+      // });
+      return;
+    }
   };
+  const selectFile = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync();
 
-  const onImageLibraryPress = useCallback(() => {
-    const options = {
-      selectionLimit: 1,
-      mediaType: "photo",
-      includeBase64: false,
-    };
-    ImagePicker.launchImageLibrary(options, setPickerResponse);
-  }, []);
+      setFile(result);
+
+      let uri = result.uri;
+      return uri;
+    } catch (e) {
+      console.log(e);
+    }
+    // console.log({ result });
+    // let result = await launchImageLibraryAsync({ mediaTypes: "photo" });
+    // console.log(result);
+    // if (!result.cancelled) {
+    //   setImage(result.uri);
+    // }
+  };
 
   return (
     <ScrollView style={styles.container}>
+      {/* <ModalPopoup
+        ref={(target) => (popupRef = target)}
+        onTouchOutside={() => popupRef.close()}
+      /> */}
       <Formik
         initialValues={{
           name: "",
@@ -72,12 +173,21 @@ export default FormicWalaForm = () => {
           confirm: "",
           phone: "",
           district: "",
+          gender: "",
           city: "",
           street: "",
           accepted: false,
-          image: "",
+          image: null,
         }}
-        onSubmit={(values) => Alert.alert(JSON.stringify(values))}
+        onSubmit={(values) => {
+          console.log(JSON.stringify(values));
+
+          uploadImage(file).then((res) => {
+            console.log("hello" + { res });
+
+            // handleChange(BASE_OUR_API_URL + "/" + res);
+          });
+        }}
         validationSchema={() => userValidationSchema}
       >
         {({
@@ -121,19 +231,24 @@ export default FormicWalaForm = () => {
                 }}
               >
                 <Pressable
-                  onPress={() => {
-                    onImageLibraryPress();
+                  onPress={async () => {
+                    let img = await selectFile();
+                    console.log("a" + img);
+                    setFieldValue("image", img);
                   }}
                 >
                   <Image
                     source={{
-                      uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
+                      uri: values.image
+                        ? values.image
+                        : "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
                     }}
                     style={{
                       right: 3,
                       height: 75,
                       width: 75,
                       borderRadius: 24,
+                      borderWidth: StyleSheet.hairlineWidth,
                       objectFit: "contain",
                     }}
                   />
@@ -142,7 +257,7 @@ export default FormicWalaForm = () => {
                       marginLeft: 8,
                       marginTop: 10,
                       textAlign: "center",
-                      color: Colors.primary,
+                      color: errors.image ? "red" : Colors.primary,
                     }}
                   >
                     Choose
@@ -159,13 +274,13 @@ export default FormicWalaForm = () => {
                 <Text>Full Name*</Text>
                 <TextInput
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
                       borderColor: !touched.name
                         ? Colors.gray900
-                        : !errors.name
-                        ? Colors.primary
-                        : "red",
+                        : errors.name
+                        ? "red"
+                        : Colors.primary,
                     },
                   ]}
                   value={values.name}
@@ -186,13 +301,13 @@ export default FormicWalaForm = () => {
                 <Text>Email Address *</Text>
                 <TextInput
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
                       borderColor: !touched.email
                         ? Colors.gray900
-                        : !errors.email
-                        ? Colors.primary
-                        : "red",
+                        : errors.email
+                        ? "red"
+                        : Colors.primary,
                     },
                   ]}
                   value={values.email}
@@ -211,14 +326,15 @@ export default FormicWalaForm = () => {
               >
                 <Text>Phone Number *</Text>
                 <TextInput
+                  maxLength={10}
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
-                      borderColor: !touched.email
+                      borderColor: !touched.phone
                         ? Colors.gray900
-                        : !errors.email
-                        ? Colors.primary
-                        : "red",
+                        : errors.phone
+                        ? "red"
+                        : Colors.primary,
                     },
                   ]}
                   value={values.phone}
@@ -226,8 +342,159 @@ export default FormicWalaForm = () => {
                   onBlur={() => setFieldTouched("phone")}
                   placeholder="Phone Number"
                 />
-                {touched.email && errors.email && (
-                  <Text style={{ color: "red" }}>{errors.email}</Text>
+                {touched.phone && errors.phone && (
+                  <Text style={{ color: "red" }}>{errors.phone}</Text>
+                )}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>Gender *</Text>
+                <Dropdown
+                  style={[
+                    {
+                      width: "100%",
+                      marginTop: 8,
+                      marginRight: -10,
+                      borderWidth: 1,
+                      padding: 16,
+                      borderRadius: 4,
+                      height: 50,
+                    },
+                    !touched.gender
+                      ? { borderColor: Colors.gray900 }
+                      : !values.gender
+                      ? { borderColor: "red" }
+                      : { borderColor: Colors.primary },
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  data={gendersList}
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={"Select item"}
+                  value={values.gender}
+                  onChange={(item) => {
+                    setFieldValue("gender", item.value);
+                    setFieldValue("gender", item.value);
+
+                    setFieldTouched("gender");
+                  }}
+                  // onBlur={() => setFieldTouched("gender")}
+                />
+                {!values.gender ? (
+                  <Text style={{ color: "red" }}>{errors.gender}</Text>
+                ) : null}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>District *</Text>
+                <Dropdown
+                  style={[
+                    {
+                      width: "100%",
+                      marginTop: 8,
+                      marginRight: -10,
+                      borderWidth: 1,
+                      padding: 16,
+                      borderRadius: 4,
+                      height: 50,
+                    },
+                    !touched.district
+                      ? { borderColor: Colors.gray900 }
+                      : values.district
+                      ? { borderColor: Colors.primary }
+                      : { borderColor: "red" },
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  data={Districts}
+                  labelField="label"
+                  onBlur={() => setFieldTouched("district")}
+                  valueField="label"
+                  placeholder={"Select item"}
+                  searchPlaceholder="Search..."
+                  search
+                  value={values.district}
+                  onChange={(item) => {
+                    setFieldValue("district", item.label);
+                    setCitiesList(item.cities);
+                  }}
+                />
+                {!values.district ? (
+                  <Text style={{ color: "red" }}>{errors.district}</Text>
+                ) : null}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>City *</Text>
+                <Dropdown
+                  style={[
+                    {
+                      width: "100%",
+                      marginTop: 8,
+                      marginRight: -10,
+                      borderWidth: 1,
+                      padding: 16,
+                      borderRadius: 4,
+                      height: 50,
+                    },
+                    !touched.city
+                      ? { borderColor: Colors.gray900 }
+                      : values.city
+                      ? { borderColor: Colors.primary }
+                      : { borderColor: "red" },
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  data={citiesList ? citiesList : []}
+                  labelField="label"
+                  onBlur={() => setFieldTouched("city")}
+                  valueField="label"
+                  placeholder={"Select item"}
+                  value={values.city}
+                  onChange={(item) => {
+                    setFieldValue("city", item.label);
+                    console.log(item.label);
+                  }}
+                />
+                {!values.city ? (
+                  <Text style={{ color: "red" }}>{errors.city}</Text>
+                ) : null}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>Street *</Text>
+                <TextInput
+                  style={[
+                    styles.inputStyle,
+                    {
+                      borderColor: !touched.street
+                        ? Colors.gray900
+                        : errors.street
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.street}
+                  onChangeText={handleChange("street")}
+                  onBlur={() => setFieldTouched("street")}
+                  placeholder="Street"
+                />
+                {touched.street && errors.street && (
+                  <Text style={{ color: "red" }}>{errors.street}</Text>
                 )}
               </View>
               <View
@@ -238,13 +505,13 @@ export default FormicWalaForm = () => {
                 <Text>Password *</Text>
                 <TextInput
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
-                      borderColor: !touched.email
+                      borderColor: !touched.password
                         ? Colors.gray900
-                        : !errors.email
-                        ? Colors.primary
-                        : "red",
+                        : errors.password
+                        ? "red"
+                        : Colors.primary,
                     },
                   ]}
                   value={values.password}
@@ -264,13 +531,13 @@ export default FormicWalaForm = () => {
                 <Text>Confirm Password *</Text>
                 <TextInput
                   style={[
-                    inputStyle,
+                    styles.inputStyle,
                     {
-                      borderColor: !touched.email
+                      borderColor: !touched.confirm
                         ? Colors.gray900
-                        : !errors.email
-                        ? Colors.primary
-                        : "red",
+                        : errors.confirm
+                        ? "red"
+                        : Colors.primary,
                     },
                   ]}
                   value={values.confirm}
@@ -295,7 +562,9 @@ export default FormicWalaForm = () => {
                     setFieldValue("accepted", !values.accepted);
                   }}
                   color={
-                    values.accepted
+                    !touched.accepted
+                      ? undefined
+                      : values.accepted
                       ? Colors.primary
                       : errors.accepted && !touched.accepted
                       ? "red"
@@ -392,10 +661,17 @@ export default FormicWalaForm = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
+    marginTop: 40,
   },
-  formContainer: {
-    marginTop: 50,
-    // paddingHorizontal: 24
+  inputStyle: {
+    width: "100%",
+    marginTop: 8,
+    borderWidth: 1,
+    padding: 16,
+    borderColor: Colors.primary,
+    borderRadius: 4,
+    height: 50,
+    outline: "none",
   },
 });
 console.disableYellowBox = true;
