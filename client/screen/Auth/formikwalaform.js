@@ -326,6 +326,7 @@ export default Formikwalaform = () => {
               >
                 <Text>Phone Number *</Text>
                 <TextInput
+                  keyboardType="numeric"
                   maxLength={10}
                   style={[
                     styles.inputStyle,
@@ -385,7 +386,7 @@ export default Formikwalaform = () => {
                   }}
                   // onBlur={() => setFieldTouched("gender")}
                 />
-                {!values.gender ? (
+                {!values.gender && touched.gender ? (
                   <Text style={{ color: "red" }}>{errors.gender}</Text>
                 ) : null}
               </View>
@@ -427,7 +428,7 @@ export default Formikwalaform = () => {
                     setCitiesList(item.cities);
                   }}
                 />
-                {!values.district ? (
+                {!values.district && touched.district ? (
                   <Text style={{ color: "red" }}>{errors.district}</Text>
                 ) : null}
               </View>
@@ -467,7 +468,7 @@ export default Formikwalaform = () => {
                     console.log(item.label);
                   }}
                 />
-                {!values.city ? (
+                {!values.city && touched.city ? (
                   <Text style={{ color: "red" }}>{errors.city}</Text>
                 ) : null}
               </View>
@@ -504,6 +505,8 @@ export default Formikwalaform = () => {
               >
                 <Text>Password *</Text>
                 <TextInput
+                  keyboardType="numeric"
+                  maxLength={4}
                   style={[
                     styles.inputStyle,
                     {
@@ -530,6 +533,8 @@ export default Formikwalaform = () => {
               >
                 <Text>Confirm Password *</Text>
                 <TextInput
+                  keyboardType="numeric"
+                  maxLength={4}
                   style={[
                     styles.inputStyle,
                     {
