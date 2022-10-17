@@ -5,7 +5,6 @@ import * as SplashScreen from "expo-splash-screen";
 
 import CategoryPersonListingScreen from "./screen/categoryPersonListingScreen";
 import LoginScreen from "./screen/Auth/loginsScreen";
-import SignUpScreen from "./screen/Auth/signUpScreen";
 import OtpScreen from "./screen/Auth/otpScreen";
 import createNewPinScreen from "./screen/Auth/createNewPinScreen";
 import CreateNewPinScreen from "./screen/Auth/createNewPinScreen";
@@ -21,6 +20,7 @@ import BookMarkScreen from "./screen/bookmarkScreen";
 import SearchPersonListingScreen from "./screen/searchPersonListingScreen";
 import ImagePickerExample from "./screen/Auth/imgpicker";
 import Formikwalaform from "./screen/Auth/formikwalaform";
+import SignUpScreen from "./screen/Auth/signUpScreen";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {

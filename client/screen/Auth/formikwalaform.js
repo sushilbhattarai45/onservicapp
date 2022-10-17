@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Dropdown } from "react-native-element-dropdown";
-
+import moment from "moment";
 import { Districts } from "../../component/district";
 import * as ImagePicker from "expo-image-picker";
 const BASE_OUR_API_URL = "http://192.168.100.11:3001";
@@ -71,9 +71,11 @@ export default Formikwalaform = () => {
   let popupRef = createRef();
   const [citiesList, setCitiesList] = useState([]);
   const [file, setFile] = useState(null);
+  const [image, setImage] = useState("");
+
   const uploadImage = async (file) => {
-    console.log("the file you have choosed is ");
-    console.log(file);
+    // console.log("the file you have choosed is ");
+    // console.log(file);
     try {
       // checks if the file is empty
       if (file === null) {
@@ -140,6 +142,39 @@ export default Formikwalaform = () => {
       return;
     }
   };
+  async function postData(values, { setSubmitting, setFieldError }) {
+    uploadImage(file).then(async (res) => {
+      let response = await axios.post(
+        BASE_OUR_API_URL + "/v1/api/user/register",
+        {
+          API_KEY: "AXCF",
+          user_name: values.name,
+          user_email: values.email,
+          user_contact: values.phone,
+          user_district: values.district,
+          user_city: values.city,
+          user_street: values.street,
+          user_gender: values.gender,
+          user_password: values.password,
+          user_profileImage: BASE_OUR_API_URL + "/" + res,
+          user_toc: {
+            date: moment().format("ll"),
+            time: moment().format("LT"),
+          },
+        }
+      );
+      const status = response?.data?.statuscode;
+      if (status == 201) {
+        alert("done");
+      } else if (status == 600) {
+        setFieldError("phone", "Phone Number already exists");
+      } else {
+        alert("no");
+      }
+
+      alert(status);
+    });
+  }
   const selectFile = async () => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync();
@@ -179,15 +214,7 @@ export default Formikwalaform = () => {
           accepted: false,
           image: null,
         }}
-        onSubmit={(values) => {
-          console.log(JSON.stringify(values));
-
-          uploadImage(file).then((res) => {
-            console.log("hello" + { res });
-
-            // handleChange(BASE_OUR_API_URL + "/" + res);
-          });
-        }}
+        onSubmit={postData}
         validationSchema={() => userValidationSchema}
       >
         {({
