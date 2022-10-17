@@ -13,13 +13,15 @@ import {
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Dropdown } from "react-native-element-dropdown";
-
-import { DistrictsList } from "./district";
+import moment from "moment";
+import { Districts } from "../../component/district";
 import * as ImagePicker from "expo-image-picker";
-
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
+import axios from "axios";
 import * as yup from "yup";
-import { Formik } from "formik";
-import ModalPopoup from "./Model";
+import { Field, Formik } from "formik";
+
+// import ModalPopup from "../../component/Modal";
 export const Colors = {
   primary: "#FDA92A",
   gray500: "#D0D0D0",
@@ -37,47 +39,167 @@ const gendersList = [
 ];
 const userValidationSchema = yup.object().shape({
   name: yup.string().min(6).required("Please, provide your name!"),
-  email: yup.string().email().required(),
-  phone: yup.string().min(10).max(10).required(),
+  email: yup
+    .string()
+    .email("Please, provide a valid email!")
+    .required("Please, provide your email!"),
+  phone: yup
+    .number("Phone number must be Numeric")
+    .min(10)
+    .required("Please, provide your Phone Number!"),
   accepted: yup.bool().oneOf([true], "Field must be checked"),
-  password: yup.string().min(4, "Pin must be of 4 digits").max(4).required(),
-  gender: yup.string().required(),
-  district: yup.string().required(),
-  city: yup.string().required(),
-  street: yup.string().min(6).required(),
+  password: yup
+    .string()
+    .min(4, "Pin must be of 4 digits")
+    .max(4)
+    .required("Please, create a new PIN!"),
+  gender: yup.string().required("Please, select your gender"),
+  district: yup.string().required("Please, provide your district!"),
+  city: yup.string().required("Please, provide your city!"),
+  street: yup.string().min(6).required("Please, provide your street!"),
   confirm: yup
     .string()
     .label("confirm password")
-    .required()
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
+    .required("Please, Reenter your PIN!")
+    .oneOf([yup.ref("password"), null], "PIN must match"),
   image: yup.string().required(),
 });
 
-export default App = () => {
+export default Formikwalaform = () => {
   // const [district, setDistrict] = useState();
 
   let popupRef = createRef();
   const [citiesList, setCitiesList] = useState([]);
-  
-  const onImageLibraryPress = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      // mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    console.log(result);
-    if (!result.cancelled) {
-      return result.uri;
-      // return result.uri;
+  const [file, setFile] = useState(null);
+  const [image, setImage] = useState("");
+
+  const uploadImage = async (file) => {
+    // console.log("the file you have choosed is ");
+    // console.log(file);
+    try {
+      // checks if the file is empty
+      if (file === null) {
+        setError({
+          target: "image",
+          message: "Sorry ,There is some error with the profile picture!!",
+        });
+        return null;
+      }
+      // setError(false);
+      // if not empty creating a form data to send to upload the image to the server
+      // alert("ok");
+
+      const imageToUpload = file;
+      const data = new FormData();
+
+      data.append(
+        "profile",
+        {
+          uri: imageToUpload?.uri,
+          name: imageToUpload?.uri,
+          type: "image/jpg",
+        },
+        "myfile"
+      );
+
+      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
+      console.log("s" + serverUrl);
+      const response = await axios(serverUrl, {
+        method: "post",
+        data: data,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      var url = response?.data?.fileName;
+      const filename = url.split("\\");
+      const finalname = filename[0] + "/" + filename[1];
+      return finalname;
+    } catch (e) {
+      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
+
+      console.log("trying again " + serverUrl);
+
+      axios(serverUrl, {
+        method: "post",
+        data: data,
+
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log("second error");
+          console.log(error);
+        });
+      // setError({
+      //   target: "image",
+      //   message: "Sry, we are having trouble uploading the Profile ",
+      // });
+      return;
     }
   };
+  async function postData(values, { setSubmitting, setFieldError }) {
+    uploadImage(file).then(async (res) => {
+      let response = await axios.post(
+        BASE_OUR_API_URL + "/v1/api/user/register",
+        {
+          API_KEY: "AXCF",
+          user_name: values.name,
+          user_email: values.email,
+          user_contact: values.phone,
+          user_district: values.district,
+          user_city: values.city,
+          user_street: values.street,
+          user_gender: values.gender,
+          user_password: values.password,
+          user_profileImage: BASE_OUR_API_URL + "/" + res,
+          user_toc: {
+            date: moment().format("ll"),
+            time: moment().format("LT"),
+          },
+        }
+      );
+      const status = response?.data?.statuscode;
+      if (status == 201) {
+        alert("done");
+      } else if (status == 600) {
+        setFieldError("phone", "Phone Number already exists");
+      } else {
+        alert("no");
+      }
+
+      alert(status);
+    });
+  }
+  const selectFile = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync();
+
+      setFile(result);
+
+      let uri = result.uri;
+      return uri;
+    } catch (e) {
+      console.log(e);
+    }
+    // console.log({ result });
+    // let result = await launchImageLibraryAsync({ mediaTypes: "photo" });
+    // console.log(result);
+    // if (!result.cancelled) {
+    //   setImage(result.uri);
+    // }
+  };
+
   return (
     <ScrollView style={styles.container}>
-      <ModalPopoup
+      {/* <ModalPopoup
         ref={(target) => (popupRef = target)}
         onTouchOutside={() => popupRef.close()}
-      />
+      /> */}
       <Formik
         initialValues={{
           name: "",
@@ -92,7 +214,7 @@ export default App = () => {
           accepted: false,
           image: null,
         }}
-        onSubmit={(values) => console.log(JSON.stringify(values))}
+        onSubmit={postData}
         validationSchema={() => userValidationSchema}
       >
         {({
@@ -137,7 +259,7 @@ export default App = () => {
               >
                 <Pressable
                   onPress={async () => {
-                    let img = await onImageLibraryPress();
+                    let img = await selectFile();
                     console.log("a" + img);
                     setFieldValue("image", img);
                   }}
@@ -231,6 +353,8 @@ export default App = () => {
               >
                 <Text>Phone Number *</Text>
                 <TextInput
+                  keyboardType="numeric"
+                  maxLength={10}
                   style={[
                     styles.inputStyle,
                     {
@@ -247,7 +371,7 @@ export default App = () => {
                   placeholder="Phone Number"
                 />
                 {touched.phone && errors.phone && (
-                  <Text style={{ color: "red" }}>{errors.email}</Text>
+                  <Text style={{ color: "red" }}>{errors.phone}</Text>
                 )}
               </View>
               <View
@@ -269,9 +393,9 @@ export default App = () => {
                     },
                     !touched.gender
                       ? { borderColor: Colors.gray900 }
-                      : !errors.gender
-                      ? { borderColor: Colors.primary }
-                      : "red",
+                      : !values.gender
+                      ? { borderColor: "red" }
+                      : { borderColor: Colors.primary },
                   ]}
                   placeholderStyle={styles.placeholderStyle}
                   selectedTextStyle={styles.selectedTextStyle}
@@ -289,9 +413,9 @@ export default App = () => {
                   }}
                   // onBlur={() => setFieldTouched("gender")}
                 />
-                {touched.gender && errors.gender && (
+                {!values.gender && touched.gender ? (
                   <Text style={{ color: "red" }}>{errors.gender}</Text>
-                )}
+                ) : null}
               </View>
               <View
                 style={{
@@ -312,13 +436,13 @@ export default App = () => {
                     },
                     !touched.district
                       ? { borderColor: Colors.gray900 }
-                      : !errors.district
+                      : values.district
                       ? { borderColor: Colors.primary }
-                      : "red",
+                      : { borderColor: "red" },
                   ]}
                   placeholderStyle={styles.placeholderStyle}
                   selectedTextStyle={styles.selectedTextStyle}
-                  data={DistrictsList}
+                  data={Districts}
                   labelField="label"
                   onBlur={() => setFieldTouched("district")}
                   valueField="label"
@@ -331,9 +455,9 @@ export default App = () => {
                     setCitiesList(item.cities);
                   }}
                 />
-                {touched.district && errors.district && (
+                {!values.district && touched.district ? (
                   <Text style={{ color: "red" }}>{errors.district}</Text>
-                )}
+                ) : null}
               </View>
               <View
                 style={{
@@ -354,9 +478,9 @@ export default App = () => {
                     },
                     !touched.city
                       ? { borderColor: Colors.gray900 }
-                      : !errors.city
+                      : values.city
                       ? { borderColor: Colors.primary }
-                      : "red",
+                      : { borderColor: "red" },
                   ]}
                   placeholderStyle={styles.placeholderStyle}
                   selectedTextStyle={styles.selectedTextStyle}
@@ -371,9 +495,9 @@ export default App = () => {
                     console.log(item.label);
                   }}
                 />
-                {touched.city && errors.city && (
+                {!values.city && touched.city ? (
                   <Text style={{ color: "red" }}>{errors.city}</Text>
-                )}
+                ) : null}
               </View>
               <View
                 style={{
@@ -408,6 +532,8 @@ export default App = () => {
               >
                 <Text>Password *</Text>
                 <TextInput
+                  keyboardType="numeric"
+                  maxLength={4}
                   style={[
                     styles.inputStyle,
                     {
@@ -434,6 +560,8 @@ export default App = () => {
               >
                 <Text>Confirm Password *</Text>
                 <TextInput
+                  keyboardType="numeric"
+                  maxLength={4}
                   style={[
                     styles.inputStyle,
                     {

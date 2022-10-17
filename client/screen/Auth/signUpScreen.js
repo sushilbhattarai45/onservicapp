@@ -1,121 +1,83 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Image,
-  TextInput,
-  Pressable,
-  Alert,
-} from "react-native";
-import moment from "moment";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import validator from "email-validator";
-import { Colors } from "../../styles/main";
-import { Dropdown } from "react-native-element-dropdown";
-import CheckBox from "expo-checkbox";
-import { Districts } from "../../component/district.js";
-import * as DocumentPicker from "expo-document-picker";
-import * as ImagePicker from "expo-image-picker";
+// App.js
 
-import Header from "../../component/Header";
+import React, { createRef, useState } from "react";
+import {
+  Pressable,
+  ScrollView,
+  TextInput,
+  Text,
+  Alert,
+  View,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+} from "react-native";
+import CheckBox from "expo-checkbox";
+import { Dropdown } from "react-native-element-dropdown";
+import moment from "moment";
+import { Districts } from "../../component/district";
+import * as ImagePicker from "expo-image-picker";
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 import axios from "axios";
-const gender = [
+import * as yup from "yup";
+import { Field, Formik } from "formik";
+import Header from "../../component/Header";
+
+// import ModalPopup from "../../component/Modal";
+export const Colors = {
+  primary: "#FDA92A",
+  gray500: "#D0D0D0",
+  white: "#FFFFFF",
+  gray200: "#F9F9FC",
+  black: "#212121",
+  gray900: "#616161",
+  gold: "#F7B840",
+};
+
+const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },
   { value: "Other", label: "Other" },
 ];
+const userValidationSchema = yup.object().shape({
+  name: yup.string().min(6).required("Please, provide your name!"),
+  email: yup
+    .string()
+    .email("Please, provide a valid email!")
+    .required("Please, provide your email!"),
+  phone: yup
+    .number("Phone number must be Numeric")
+    .min(10)
+    .required("Please, provide your Phone Number!"),
+  accepted: yup.bool().oneOf([true], "Field must be checked"),
+  password: yup
+    .string()
+    .min(4, "Pin must be of 4 digits")
+    .max(4)
+    .required("Please, create a new PIN!"),
+  gender: yup.string().required("Please, select your gender"),
+  district: yup.string().required("Please, provide your district!"),
+  city: yup.string().required("Please, provide your city!"),
+  street: yup.string().min(6).required("Please, provide your street!"),
+  confirm: yup
+    .string()
+    .label("confirm password")
+    .required("Please, Reenter your PIN!")
+    .oneOf([yup.ref("password"), null], "PIN must match"),
+  image: yup.string().required(),
+});
 
-// const BASE_OUR_API_URL = "http://192.168.16.101:3001";
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
+export default registerUser = () => {
+  // const [district, setDistrict] = useState();
 
-export default function SignUpScreen() {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [vcities, setVCities] = useState([
-    // { label: "Bayalpata" },
-    // { label: "Bhatakatiya" },
-    // { label: "Chaurpati" },
-    // { label: "Dhakari" },
-    // { label: "Jayagadh" },
-    // { label: "Kalagaun" },
-    // { label: "Kamal bazar" },
-    // { label: "Kuchikot" },
-    // { label: "Mellekh" },
-    // { label: "Srikot" },
-    // { label: "Thanti" },
-    // { label: "Turmakhad" },
-  ]);
-  async function registerUser() {
-    const validation = validateSignup(
-      name,
-      email,
-      phone,
-      district,
-      city,
-      street,
-      choosedgender,
-      pin,
-      repin,
-      setAccepted,
-      image
-    );
-  }
-  //for showing error
-  const [errorname, setErrorName] = useState(null); //name
-  const [erroremail, setErrorEmail] = useState(null); //email
-  const [errorphone, setErrorPhone] = useState(null); //phone
-  const [errordistrict, setErrorDistrict] = useState(null); //district
-  const [errorcity, setErrorCity] = useState(null); //city
-  const [errorstreet, setErrorStreet] = useState(null); //street
-  const [errorgender, setErrorGender] = useState(null); //gender
-  const [errorpin, setErrorPin] = useState(null); //pin
-  const [errorrepin, setErrorRepin] = useState(null); //repin
-  const [errorcheckbox, setErrorCheckBox] = useState(null); //repin
-
-  //end
-
-  //for detrmining the validation and focusing the unvalidated part
-  const [focuscolor1, setFocusColor1] = useState(Colors.black); //name
-  const [focuscolor2, setFocusColor2] = useState(Colors.black); //email
-  const [focuscolor3, setFocusColor3] = useState(Colors.black); //phone
-  const [focuscolor4, setFocusColor4] = useState(Colors.black); //district
-  const [focuscolor5, setFocusColor5] = useState(Colors.black); //city
-  const [focuscolor6, setFocusColor6] = useState(Colors.black); //street
-  const [focuscolor7, setFocusColor7] = useState(Colors.black); //gender
-  const [focuscolor8, setFocusColor8] = useState(Colors.black); //pin
-  const [focuscolor9, setFocusColor9] = useState(Colors.black); //repin
-  const [focuscolor10, setFocusColor10] = useState(Colors.black); //repin
-
-  //end
-  //dropdown
-
-  const [choosedcity, setChoosedCity] = useState(null);
-  const [gvalue, setGValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
-  const [dvalue, setDValue] = useState(null);
-  //end
-
-  //normal data states
-  const [name, setName] = useState("");
-
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [district, setDistrict] = useState("");
-  const [city, setCity] = useState("");
-  const [street, setStreet] = useState("");
-  const [pin, setPin] = useState("");
-  const [repin, setRePin] = useState("");
-  const [accepted, setAccepted] = useState(false);
-  const [choosedgender, setChoosedGender] = useState("");
+  let popupRef = createRef();
+  const [citiesList, setCitiesList] = useState([]);
+  const [file, setFile] = useState(null);
   const [image, setImage] = useState("");
 
-  const [file, setFile] = useState(null);
-
-  //end
   const uploadImage = async (file) => {
-    console.log("the file you have choosed is ");
-    console.log(file);
+    // console.log("the file you have choosed is ");
+    // console.log(file);
     try {
       // checks if the file is empty
       if (file === null) {
@@ -182,22 +144,50 @@ export default function SignUpScreen() {
       return;
     }
   };
+  async function postData(values, { setSubmitting, setFieldError }) {
+    uploadImage(file).then(async (res) => {
+      let response = await axios.post(
+        BASE_OUR_API_URL + "/v1/api/user/register",
+        {
+          API_KEY: "AXCF",
+          user_name: values.name,
+          user_email: values.email,
+          user_contact: values.phone,
+          user_district: values.district,
+          user_city: values.city,
+          user_street: values.street,
+          user_gender: values.gender,
+          user_password: values.password,
+          user_profileImage: BASE_OUR_API_URL + "/" + res,
+          user_toc: {
+            date: moment().format("ll"),
+            time: moment().format("LT"),
+          },
+        }
+      );
+      const status = response?.data?.statuscode;
+      if (status == 201) {
+        alert("done");
+      } else if (status == 600) {
+        setFieldError("phone", "Phone Number already exists");
+      } else {
+        alert("no");
+      }
+
+      alert(status);
+    });
+  }
   const selectFile = async () => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync();
 
       setFile(result);
 
-      uploadImage(result).then((res) => {
-        console.log("hello" + { res });
-
-        setImage(BASE_OUR_API_URL + "/" + res);
-        console.log("hello" + image);
-      });
+      let uri = result.uri;
+      return uri;
     } catch (e) {
       console.log(e);
     }
-
     // console.log({ result });
     // let result = await launchImageLibraryAsync({ mediaTypes: "photo" });
     // console.log(result);
@@ -206,783 +196,529 @@ export default function SignUpScreen() {
     // }
   };
 
-  const validateSignup = async (
-    vname,
-    vemail,
-    vphone,
-    vdistrict,
-    vcity,
-    vstreet,
-    vchoosedgender,
-    vpin,
-    vrepin,
-    vaccepted,
-    vprof
-  ) => {
-    // alert(vname.length + "ok");
-    if (
-      vname.length >= 4 &&
-      vemail.length > 4 &&
-      vphone.length != 0 &&
-      vdistrict.length != 0 &&
-      vstreet.length != 0 &&
-      vchoosedgender.length != 0 &&
-      vpin.length != 0 &&
-      vrepin.length != 0 &&
-      vprof.length != 0
-    ) {
-      var length = vphone.length;
-
-      if (vpin.length && vrepin.length == 4) {
-        if (validator.validate(vemail)) {
-          if (vpin != vrepin) {
-            setErrorPin("PIN not matched");
-            setFocusColor8("red");
-            setErrorRepin("PIN not matched");
-            setFocusColor9("red");
-          }
-        } else {
-          setErrorEmail("Please Enter a valid email");
-          setFocusColor2("red");
-        }
-      } else {
-        setErrorPin("PIN must be of 4 digit");
-        setFocusColor8("red");
-        setErrorRepin("PIN must be of 4 digit");
-        setFocusColor9("red");
-      }
-
-      if (length == 10) {
-        if (vpin == vrepin && vpin.length == 4 && vrepin.length == 4) {
-          if (accepted) {
-            const res = await axios.post(
-              BASE_OUR_API_URL + "/v1/api/user/register",
-              {
-                API_KEY: "AXCF",
-                user_name: vname,
-                user_email: vemail,
-                user_contact: vphone,
-                user_district: vdistrict,
-                user_city: vcity,
-                user_street: vstreet,
-                user_gender: vchoosedgender,
-                user_password: vpin,
-                user_profileImage: vprof,
-                user_toc: {
-                  date: moment().format("ll"),
-                  time: moment().format("LT"),
-                },
-              }
-            );
-            const status = res?.data?.statuscode;
-            if (status == 600) {
-              setFocusColor3("red");
-              setErrorPhone("User with this number already Exists");
-            }
-            if (status == 201) {
-              alert("You are good to go");
-            }
-
-            console.log({ response: e });
-          } else {
-            setFocusColor10("red");
-            setErrorCheckBox("To proceed please accept the privacy policy.");
-          }
-        }
-      } else {
-        setErrorPhone("Enter a valid Phone Number");
-        setFocusColor3("red");
-      }
-    } else {
-      if (vname.length < 4) {
-        setFocusColor1("red");
-        setErrorName("Please Enter Your FullName");
-      }
-      if (vemail.length < 4) {
-        setErrorEmail("Please Enter Your Email address");
-
-        setFocusColor2("red");
-      }
-      if (vphone.length == 0 || vphone == null) {
-        setErrorPhone("Please Enter Your Phone Number");
-
-        setFocusColor3("red");
-      }
-      if (vdistrict.length == 0) {
-        setErrorDistrict("Please Choose your district");
-        setFocusColor4("red");
-      }
-      if (vcity.length == 0) {
-        setErrorCity("Please Choose your city");
-
-        setFocusColor5("red");
-      }
-      if (vstreet.length < 3) {
-        setErrorStreet("Please Enter your full  Streetname");
-
-        setFocusColor6("red");
-      }
-      if (vchoosedgender.length == 0) {
-        setErrorGender("Please choose your gender");
-
-        setFocusColor7("red");
-      }
-      if (vpin.length == 0) {
-        setErrorPin("Please Enter Your PIN");
-
-        setFocusColor8("red");
-      }
-      if (vrepin.length == 0) {
-        setFocusColor9("red");
-        setErrorRepin("Please ReEnter Your PIN");
-      }
-    }
-  };
-
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
+      {/* <ModalPopoup
+        ref={(target) => (popupRef = target)}
+        onTouchOutside={() => popupRef.close()}
+      /> */}
       <View
         style={{
-          marginLeft: 24,
+          marginTop: 0,
+          marginBottom: 20,
         }}
       >
         <Header icon={"arrow-left-line"} />
       </View>
-      <View style={{ flex: 1, margin: 30, flexDirection: "column" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            flex: 1,
-            marginBottom: 50,
+      <KeyboardAvoidingView style={{ flex: 1 }}>
+        <Formik
+          initialValues={{
+            name: "",
+            email: "",
+            password: "",
+            confirm: "",
+            phone: "",
+            district: "",
+            gender: "",
+            city: "",
+            street: "",
+            accepted: false,
+            image: null,
           }}
+          onSubmit={postData}
+          validationSchema={() => userValidationSchema}
         >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              textAlignVertical: "center",
-            }}
-          >
-            <Text
-              style={{
-                textAlignVertical: "center",
-                flex: 5,
-                fontFamily: "Regular",
+          {({
+            values,
+            handleChange,
+            errors,
+            setFieldValue,
+            setFieldTouched,
+            touched,
+            isValid,
+            handleSubmit,
+          }) => (
+            <View>
+              <View
+                style={{
+                  marginTop: 8,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    flex: 5,
+                    fontStyle: "normal",
+                    fontWeight: "800",
+                    fontSize: 32,
+                    lineHeight: 38,
+                    display: "flex",
+                    alignItems: "flex-end",
+                    letterspacing: -0.02,
+                  }}
+                >
+                  Register
+                </Text>
 
-                fontStyle: "normal",
-                fontWeight: "800",
-                fontSize: 32,
-                lineHeight: 38,
-                display: "flex",
-                alignItems: "flex-end",
-                letterspacing: -0.02,
-              }}
-            >
-              Register
-            </Text>
+                <View
+                  style={{
+                    right: 20,
+                    flex: 1,
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Pressable
+                    onPress={async () => {
+                      let img = await selectFile();
+                      console.log("a" + img);
+                      setFieldValue("image", img);
+                    }}
+                  >
+                    <Image
+                      source={{
+                        uri: values.image
+                          ? values.image
+                          : "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
+                      }}
+                      style={{
+                        alignSelf: "center",
+                        right: 0,
+                        height: 75,
+                        width: 75,
+                        borderRadius: 24,
+                        borderWidth: StyleSheet.hairlineWidth,
+                        objectFit: "contain",
+                      }}
+                    />
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        textAlign: "center",
+                        color: errors.image ? "red" : Colors.primary,
+                      }}
+                    >
+                      Choose
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <View style={styles.formContainer}>
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>Full Name*</Text>
+                  <TextInput
+                    style={[
+                      styles.inputStyle,
+                      {
+                        borderColor: !touched.name
+                          ? Colors.gray900
+                          : errors.name
+                          ? "red"
+                          : Colors.primary,
+                      },
+                    ]}
+                    value={values.name}
+                    onChangeText={handleChange("name")}
+                    onBlur={() => setFieldTouched("name")}
+                    placeholder="Name"
+                  />
+                  {touched.name && errors.name && (
+                    <Text style={{ color: "red" }}>{errors.name}</Text>
+                  )}
+                  {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
+                </View>
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>Email Address *</Text>
+                  <TextInput
+                    style={[
+                      styles.inputStyle,
+                      {
+                        borderColor: !touched.email
+                          ? Colors.gray900
+                          : errors.email
+                          ? "red"
+                          : Colors.primary,
+                      },
+                    ]}
+                    value={values.email}
+                    onChangeText={handleChange("email")}
+                    onBlur={() => setFieldTouched("email")}
+                    placeholder="Email"
+                  />
+                  {touched.email && errors.email && (
+                    <Text style={{ color: "red" }}>{errors.email}</Text>
+                  )}
+                </View>
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>Phone Number *</Text>
+                  <TextInput
+                    keyboardType="numeric"
+                    maxLength={10}
+                    style={[
+                      styles.inputStyle,
+                      {
+                        borderColor: !touched.phone
+                          ? Colors.gray900
+                          : errors.phone
+                          ? "red"
+                          : Colors.primary,
+                      },
+                    ]}
+                    value={values.phone}
+                    onChangeText={handleChange("phone")}
+                    onBlur={() => setFieldTouched("phone")}
+                    placeholder="Phone Number"
+                  />
+                  {touched.phone && errors.phone && (
+                    <Text style={{ color: "red" }}>{errors.phone}</Text>
+                  )}
+                </View>
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>Gender *</Text>
+                  <Dropdown
+                    style={[
+                      {
+                        width: "100%",
+                        marginTop: 8,
+                        marginRight: -10,
+                        borderWidth: 1,
+                        padding: 16,
+                        borderRadius: 4,
+                        height: 50,
+                      },
+                      !touched.gender
+                        ? { borderColor: Colors.gray900 }
+                        : !values.gender
+                        ? { borderColor: "red" }
+                        : { borderColor: Colors.primary },
+                    ]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    data={gendersList}
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={"Select item"}
+                    value={values.gender}
+                    onChange={(item) => {
+                      setFieldValue("gender", item.value);
+                      setFieldValue("gender", item.value);
 
-            <View
-              style={{
-                right: 0,
-                // backgroundColor: "red",
-                position: "absolute",
-                justifyContent: "center",
-
-                textAlign: "center",
-                flexDirection: "column",
-              }}
-            >
-              <Pressable onPress={() => selectFile()}>
-                <Image
-                  source={
-                    image !== ""
-                      ? {
-                          uri: image,
-                        }
-                      : {
-                          uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
-                        }
+                      setFieldTouched("gender");
+                    }}
+                    // onBlur={() => setFieldTouched("gender")}
+                  />
+                  {!values.gender && touched.gender ? (
+                    <Text style={{ color: "red" }}>{errors.gender}</Text>
+                  ) : null}
+                </View>
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>District *</Text>
+                  <Dropdown
+                    style={[
+                      {
+                        width: "100%",
+                        marginTop: 8,
+                        marginRight: -10,
+                        borderWidth: 1,
+                        padding: 16,
+                        borderRadius: 4,
+                        height: 50,
+                      },
+                      !touched.district
+                        ? { borderColor: Colors.gray900 }
+                        : values.district
+                        ? { borderColor: Colors.primary }
+                        : { borderColor: "red" },
+                    ]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    data={Districts}
+                    labelField="label"
+                    onBlur={() => setFieldTouched("district")}
+                    valueField="label"
+                    placeholder={"Select item"}
+                    searchPlaceholder="Search..."
+                    search
+                    value={values.district}
+                    onChange={(item) => {
+                      setFieldValue("district", item.label);
+                      setCitiesList(item.cities);
+                    }}
+                  />
+                  {!values.district && touched.district ? (
+                    <Text style={{ color: "red" }}>{errors.district}</Text>
+                  ) : null}
+                </View>
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>City *</Text>
+                  <Dropdown
+                    style={[
+                      {
+                        width: "100%",
+                        marginTop: 8,
+                        marginRight: -10,
+                        borderWidth: 1,
+                        padding: 16,
+                        borderRadius: 4,
+                        height: 50,
+                      },
+                      !touched.city
+                        ? { borderColor: Colors.gray900 }
+                        : values.city
+                        ? { borderColor: Colors.primary }
+                        : { borderColor: "red" },
+                    ]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    data={citiesList ? citiesList : []}
+                    labelField="label"
+                    onBlur={() => setFieldTouched("city")}
+                    valueField="label"
+                    placeholder={"Select item"}
+                    value={values.city}
+                    onChange={(item) => {
+                      setFieldValue("city", item.label);
+                      console.log(item.label);
+                    }}
+                  />
+                  {!values.city && touched.city ? (
+                    <Text style={{ color: "red" }}>{errors.city}</Text>
+                  ) : null}
+                </View>
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>Street *</Text>
+                  <TextInput
+                    style={[
+                      styles.inputStyle,
+                      {
+                        borderColor: !touched.street
+                          ? Colors.gray900
+                          : errors.street
+                          ? "red"
+                          : Colors.primary,
+                      },
+                    ]}
+                    value={values.street}
+                    onChangeText={handleChange("street")}
+                    onBlur={() => setFieldTouched("street")}
+                    placeholder="Street"
+                  />
+                  {touched.street && errors.street && (
+                    <Text style={{ color: "red" }}>{errors.street}</Text>
+                  )}
+                </View>
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>Password *</Text>
+                  <TextInput
+                    keyboardType="numeric"
+                    maxLength={4}
+                    style={[
+                      styles.inputStyle,
+                      {
+                        borderColor: !touched.password
+                          ? Colors.gray900
+                          : errors.password
+                          ? "red"
+                          : Colors.primary,
+                      },
+                    ]}
+                    value={values.password}
+                    onChangeText={handleChange("password")}
+                    onBlur={() => setFieldTouched("password")}
+                    placeholder="Password"
+                  />
+                  {touched.password && errors.password && (
+                    <Text style={{ color: "red" }}>{errors.password}</Text>
+                  )}
+                </View>
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>Confirm Password *</Text>
+                  <TextInput
+                    keyboardType="numeric"
+                    maxLength={4}
+                    style={[
+                      styles.inputStyle,
+                      {
+                        borderColor: !touched.confirm
+                          ? Colors.gray900
+                          : errors.confirm
+                          ? "red"
+                          : Colors.primary,
+                      },
+                    ]}
+                    value={values.confirm}
+                    onChangeText={handleChange("confirm")}
+                    onBlur={() => setFieldTouched("confirm")}
+                    placeholder="Confirm Password"
+                  />
+                  {touched.confirm && errors.confirm && (
+                    <Text style={{ color: "red" }}>{errors.confirm}</Text>
+                  )}
+                </View>
+                <View
+                  style={{
+                    marginTop: 24,
+                    marginRight: 10,
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <CheckBox
+                    value={values.accepted}
+                    onValueChange={() => {
+                      setFieldValue("accepted", !values.accepted);
+                    }}
+                    color={
+                      !touched.accepted
+                        ? undefined
+                        : values.accepted
+                        ? Colors.primary
+                        : errors.accepted && !touched.accepted
+                        ? "red"
+                        : undefined
+                    }
+                  />
+                  {
+                    <Text
+                      style={{
+                        marginLeft: 12,
+                        color: errors.accepted ? Colors.black : Colors.red,
+                        fontSize: 12,
+                      }}
+                    >
+                      I agree to the{" "}
+                      <Text
+                        style={{
+                          color: errors.accepted ? "red" : Colors.primary,
+                          textDecorationLine: "underline",
+                        }}
+                      >
+                        Terms and Condition
+                      </Text>{" "}
+                      and{" "}
+                      <Text
+                        style={{
+                          color: errors.accepted ? "red" : Colors.primary,
+                          textDecorationLine: "underline",
+                        }}
+                      >
+                        Privacy Policy
+                      </Text>{" "}
+                    </Text>
                   }
+                </View>
+
+                <Pressable
                   style={{
-                    right: 0,
-                    alignSelf: "center",
-                    height: 75,
-                    width: 75,
-                    marginTop: 30,
-                    borderRadius: 50,
+                    borderColor: Colors.primary,
+                    borderWidth: 1,
+                    justifyContent: "center",
+                    height: 50,
+                    marginTop: 24,
                   }}
-                />
-              </Pressable>
-              <Text
-                onPress={() => selectFile()}
-                style={{
-                  marginTop: 10,
-                  fontFamily: "Regular",
-
-                  alignSelf: "center",
-                  textAlign: "center",
-                  color: Colors.primary,
-                }}
-              >
-                Choose Photo
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View style={{ marginTop: 5 }}>
-          <View
-            style={{
-              marginTop: 10,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>Full Name *</Text>
-            <TextInput
-              style={{
-                fontFamily: "Regular",
-
-                width: "100%",
-                marginTop: 8,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor1,
-                borderRadius: 4,
-                height: 50,
-              }}
-              onChangeText={(value) => {
-                setName(value);
-                setFocusColor1(Colors.primary);
-                setErrorName("");
-                console.log(name);
-              }}
-              placeholder="Full Name"
-            />
-            {errorname ? (
-              <Text style={{ color: "red", fontFamily: "Regular" }}>
-                {errorname}
-              </Text>
-            ) : null}
-          </View>
-        </View>
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>Email Address *</Text>
-            <TextInput
-              style={{
-                fontFamily: "Regular",
-
-                width: "100%",
-                marginTop: 8,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor2,
-                borderRadius: 4,
-                height: 50,
-              }}
-              onChangeText={(value) => {
-                setEmail(value);
-                setFocusColor2(Colors.primary);
-                setErrorEmail("");
-                console.log(email);
-              }}
-              placeholder="Full Name"
-            />
-            {erroremail ? (
-              <Text style={{ color: "red", fontFamily: "Regular" }}>
-                {erroremail}
-              </Text>
-            ) : null}
-            {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
-          </View>
-        </View>
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>Phone Number *</Text>
-            <TextInput
-              keyboardType="numeric"
-              maxLength={10}
-              style={{
-                fontFamily: "Regular",
-
-                width: "100%",
-                marginTop: 8,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor3,
-                borderRadius: 4,
-                height: 50,
-              }}
-              onChangeText={(value) => {
-                setPhone(value);
-                setFocusColor3(Colors.primary);
-                setErrorPhone("");
-                console.log(phone);
-              }}
-              placeholder="Phone Number"
-            />
-            {errorphone ? (
-              <Text style={{ color: "red", fontFamily: "Regular" }}>
-                {errorphone}
-              </Text>
-            ) : null}
-            {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
-          </View>
-        </View>
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>District *</Text>
-            <Dropdown
-              style={{
-                fontFamily: "Regular",
-
-                width: "100%",
-                marginTop: 8,
-                marginRight: -10,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor4,
-                borderRadius: 4,
-                height: 50,
-              }}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={Districts}
-              maxHeight={300}
-              labelField="label"
-              search
-              valueField="value"
-              placeholder={!isFocus ? "Select item" : "..."}
-              searchPlaceholder="Search..."
-              value={dvalue}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
-              onChange={(item) => {
-                console.log(vcities);
-                setDValue(item.value);
-                setFocusColor4(Colors.primary);
-                setErrorDistrict("");
-                setIsFocus(false);
-                setVCities(item.cities);
-                setDistrict(item.label);
-                console.log(vcities);
-              }}
-              renderLeftIcon={() => (
-                <AntDesign
-                  style={styles.icon}
-                  color={isFocus ? "blue" : "black"}
-                  name="Safety"
-                  size={20}
-                />
-              )}
-            />
-            {errordistrict ? (
-              <Text style={{ color: "red", fontFamily: "Regular" }}>
-                {errordistrict}
-              </Text>
-            ) : null}
-          </View>
-        </View>
-
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>Cities *</Text>
-            <Dropdown
-              style={{
-                fontFamily: "Regular",
-
-                width: "100%",
-                marginTop: 8,
-                marginRight: -10,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor5,
-                borderRadius: 4,
-                height: 50,
-              }}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={vcities}
-              maxHeight={300}
-              labelField="label"
-              search
-              valueField="value"
-              placeholder={!isFocus ? "Select item" : "..."}
-              searchPlaceholder="Search..."
-              value={choosedcity}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
-              onChange={(item) => {
-                setFocusColor5(Colors.primary);
-                setErrorCity("");
-                setChoosedCity(item.value);
-                setIsFocus(false);
-                setCity(item.label);
-                console.log(vcities);
-              }}
-              renderLeftIcon={() => (
-                <AntDesign
-                  style={styles.icon}
-                  color={isFocus ? "blue" : "black"}
-                  name="Safety"
-                  size={20}
-                />
-              )}
-            />
-            {errorcity ? (
-              <Text style={{ color: "red", fontFamily: "Regular" }}>
-                {errorcity}
-              </Text>
-            ) : null}
-          </View>
-        </View>
-
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>Street *</Text>
-            <TextInput
-              style={{
-                width: "100%",
-                fontFamily: "Regular",
-
-                marginTop: 8,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor6,
-                borderRadius: 4,
-                height: 50,
-              }}
-              onChangeText={(value) => {
-                setFocusColor6(Colors.primary);
-                setErrorStreet("");
-                setStreet(value);
-                console.log(street);
-              }}
-              placeholder="Street"
-            />
-            {errorstreet ? (
-              <Text style={{ color: "red", fontFamily: "Regular" }}>
-                {errorstreet}
-              </Text>
-            ) : null}
-            {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
-          </View>
-        </View>
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>Gender *</Text>
-            <Dropdown
-              style={{
-                width: "100%",
-                fontFamily: "Regular",
-
-                marginTop: 8,
-                marginRight: -10,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor7,
-                borderRadius: 4,
-                height: 50,
-              }}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={gender}
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder={!isFocus ? "Select item" : "..."}
-              searchPlaceholder="Search..."
-              value={gvalue}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
-              onChange={(item) => {
-                console.log(item);
-                setFocusColor7(Colors.primary);
-                setErrorGender("");
-                setChoosedGender(item.value);
-                setGValue(item.value);
-                setIsFocus(false);
-              }}
-              renderLeftIcon={() => (
-                <AntDesign
-                  style={styles.icon}
-                  color={isFocus ? "blue" : "black"}
-                  name="Safety"
-                  size={20}
-                />
-              )}
-            />
-            {errorgender ? (
-              <Text style={{ color: "red", fontFamily: "Regular" }}>
-                {errorgender}
-              </Text>
-            ) : null}
-          </View>
-        </View>
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>Create PIN *</Text>
-            <TextInput
-              maxLength={4}
-              keyboardType={"numeric"}
-              style={{
-                width: "100%",
-                fontFamily: "Regular",
-
-                marginTop: 8,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor8,
-                borderRadius: 4,
-                height: 50,
-              }}
-              onChangeText={(value) => {
-                setPin(value);
-                setFocusColor8(Colors.primary);
-                setErrorPin("");
-                setErrorRepin("");
-                console.log(pin);
-              }}
-              placeholder="Enter A New PIN"
-            />
-            {errorpin ? (
-              <Text style={{ color: "red", fontFamily: "Regular" }}>
-                {errorpin}
-              </Text>
-            ) : null}
-            {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
-          </View>
-        </View>
-        <View>
-          <View
-            style={{
-              marginTop: 12,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>Confirm PIN *</Text>
-            <TextInput
-              maxLength={4}
-              keyboardType={"numeric"}
-              style={{
-                width: "100%",
-                fontFamily: "Regular",
-
-                marginTop: 8,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor9,
-                borderRadius: 4,
-                height: 50,
-              }}
-              onChangeText={(value) => {
-                setFocusColor8(Colors.primary);
-                setRePin(value);
-                setErrorPin("");
-                setErrorRepin("");
-                setFocusColor9(Colors.primary);
-                console.log(repin);
-              }}
-              placeholder="Re-Enter Your PIN"
-            />
-            {errorrepin ? (
-              <Text style={{ color: "red", fontFamily: "Regular" }}>
-                {errorrepin}
-              </Text>
-            ) : null}
-
-            {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
-          </View>
-          <View
-            style={{
-              marginTop: 24,
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <CheckBox
-              value={toggleCheckBox}
-              onValueChange={() => {
-                setToggleCheckBox(!toggleCheckBox);
-                setAccepted(!toggleCheckBox);
-              }}
-              color={toggleCheckBox ? Colors.primary : undefined}
-            />
-            {errorcheckbox ? (
-              <Text
-                style={{
-                  marginLeft: 12,
-                  color: focuscolor10,
-                  fontSize: 12,
-                }}
-              >
-                I agree to the{" "}
-                <Text
-                  style={{
-                    color: focuscolor10,
-                    textDecorationLine: "underline",
-                  }}
+                  onPress={handleSubmit}
                 >
-                  Terms and Condition
-                </Text>{" "}
-                and{" "}
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      color: Colors.primary,
+                      fontFamily: "Urbanist",
+                      textAlignVertical: "center",
+                    }}
+                  >
+                    CREATE
+                  </Text>
+                </Pressable>
                 <Text
                   style={{
-                    color: Colors.focuscolor10,
-
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  Privacy Policy
-                </Text>{" "}
-              </Text>
-            ) : (
-              <Text
-                style={{ fontFamily: "Regular", marginLeft: 12, fontSize: 12 }}
-              >
-                I agree to the{" "}
-                <Text
-                  style={{
+                    textAlign: "center",
+                    fontSize: 15,
+                    marginTop: 12,
                     color: Colors.black,
-                    textDecorationLine: "underline",
+                    fontFamily: "Urbanist",
+                    textAlignVertical: "center",
                   }}
                 >
-                  Terms and Condition
-                </Text>{" "}
-                and{" "}
-                <Text
-                  style={{
-                    fontFamily: "Regular",
-                    color: Colors.primary,
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  Privacy Policy
-                </Text>{" "}
-              </Text>
-            )}
-          </View>
-          <Pressable
-            style={{
-              borderColor: Colors.primary,
-              borderWidth: 1,
-              justifyContent: "center",
-              height: 50,
-              marginTop: 24,
-            }}
-            onPress={async () => {
-              await registerUser();
-            }}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 20,
-                fontWeight: "bold",
-                color: Colors.primary,
-                fontFamily: "Regular",
-                textAlignVertical: "center",
-              }}
-            >
-              CREATE
-            </Text>
-          </Pressable>
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 15,
-              marginTop: 12,
-              fontFamily: "Regular",
+                  Already Have an Account?{" "}
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 15,
+                      marginTop: 12,
+                      fontWeight: "bold",
+                      color: Colors.primary,
+                      fontFamily: "Urbanist",
+                      textDecorationLine: "underline",
 
-              color: Colors.black,
-              fontFamily: "Regular",
-              textAlignVertical: "center",
-            }}
-          >
-            Already Have an Account?{" "}
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 15,
-                marginTop: 12,
-                fontWeight: "bold",
-                color: Colors.primary,
-                fontFamily: "SemiBold",
-                textDecorationLine: "underline",
-
-                textAlignVertical: "center",
-              }}
-            >
-              Login
-            </Text>
-          </Text>
-        </View>
-      </View>
+                      textAlignVertical: "center",
+                    }}
+                  >
+                    Login
+                  </Text>
+                </Text>
+              </View>
+            </View>
+          )}
+        </Formik>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    paddingHorizontal: 24,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  inputStyle: {
+    width: "100%",
+    marginTop: 8,
+    borderWidth: 1,
     padding: 16,
-  },
-
-  icon: {
-    marginRight: 5,
-  },
-  label: {
-    position: "absolute",
-    backgroundColor: "white",
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
-  },
-  placeholderStyle: {
-    fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
+    borderColor: Colors.primary,
+    borderRadius: 4,
+    height: 50,
+    outline: "none",
   },
 });
+console.disableYellowBox = true;
