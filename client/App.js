@@ -20,6 +20,7 @@ import SubCategoryScreen from "./screen/subCategoryScreen";
 import BookMarkScreen from "./screen/bookmarkScreen";
 import SearchPersonListingScreen from "./screen/searchPersonListingScreen";
 import ImagePickerExample from "./screen/Auth/imgpicker";
+import Formikwalaform from "./screen/Auth/formikwalaform";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -47,7 +48,7 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <LoginScreen />
+      <HomeScreen />
     </View>
   );
 }

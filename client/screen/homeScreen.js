@@ -21,6 +21,21 @@ import Icon from "../component/Icon";
 import { axiosInstance } from "../component/tools";
 
 const wWidth = Dimensions.get("window").width;
+const NewlyAddedServices = ({ containerStyle, name }) => {
+  return (
+    <View style={{ ...containerStyle,  }}>
+      <Image
+        style={{ width: 100, borderRadius: 8, height: 100 }}
+        source={{
+          uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
+        }}
+      />
+      <Text style={{ fontFamily: "Regular", fontSize: 16, marginTop: 8 }}>
+        {name}
+      </Text>
+    </View>
+  );
+};
 
 const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
@@ -114,6 +129,7 @@ const HomeScreen = () => {
             />
           </View>
         </View>
+        
 
         {/* Sub Categorie */}
         <View style={styles.subCategoriesContainer}>
@@ -149,43 +165,34 @@ const HomeScreen = () => {
         {/* Add */}
         <ImageSliderComponent />
 
-        {/* Sub Categorie */}
+        {/* New Addons */}
         <View style={styles.subCategoriesContainer}>
           <Text style={styles.subCategoriesContainerHeading}>
             Newly added Services
           </Text>
 
-          <View style={{ alignItems: "center" }}>
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <SubCategoryGroupCard name={newaddons[0]?.category_name} />
-              <SubCategoryGroupCard
-                name={newaddons[1]?.category_name}
-                containerStyle={{ marginLeft: 16 }}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                marginTop: 16,
-              }}
-            >
-              <SubCategoryGroupCard name={newaddons[2]?.category_name} />
-              <SubCategoryGroupCard
-                name={newaddons[3]?.category_name}
-                containerStyle={{ marginLeft: 16 }}
-              />
-            </View>
-            <View style={styles.Seemore}>
-              <Text style={styles.Txt499}>View All</Text>
-              <Image
-                style={styles.chevronLeftIcon}
-                source={{
-                  uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/dxg5x93mpp6-22%3A233?alt=media&token=29e7a436-2721-424a-a9f3-c2973de8de90",
+          <ScrollView contentContainerStyle={{ alignItems: "flex-start" }} horizontal={true} showsHorizontalScrollIndicator={false}>
+          {newaddons?.map((item, index) => {
+          if (index % 2 == 0) {
+            return (
+              <View
+                style={{
+                  justifyContent: "center",
+                  // marginTop: index === 0 ? 0 : 16,
                 }}
-              />
-            </View>
-          </View>
+              >
+                <NewlyAddedServices name={item.category_name}  />
+                {categories[index + 1] && (
+                  <NewlyAddedServices
+                    name={newaddons[index + 1]?.category_name}
+                    containerStyle={{ marginTop: 24, marginRight:24 }}
+                  />
+                )}
+              </View>
+            );
+          }
+        })}
+          </ScrollView>
         </View>
 
         {/* Add */}

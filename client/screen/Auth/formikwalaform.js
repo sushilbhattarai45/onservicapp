@@ -9,10 +9,10 @@ import {
   Alert,
   View,
   StyleSheet,
-  Image
+  Image,
 } from "react-native";
 import CheckBox from "expo-checkbox";
-import * as ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from "react-native-image-picker";
 
 import * as yup from "yup";
 import { Formik } from "formik";
@@ -23,7 +23,7 @@ export const Colors = {
   gray200: "#F9F9FC",
   black: "#212121",
   gray900: "#616161",
-  gold: "#F7B840"
+  gold: "#F7B840",
 };
 
 const userValidationSchema = yup.object().shape({
@@ -36,10 +36,10 @@ const userValidationSchema = yup.object().shape({
     .string()
     .label("confirm password")
     .required()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
-export default App = () => {
+export default FormicWalaForm = () => {
   const [pickerResponse, setPickerResponse] = useState(null);
 
   const inputStyle = {
@@ -50,14 +50,14 @@ export default App = () => {
     borderColor: Colors.primary,
     borderRadius: 4,
     height: 50,
-    outline: "none"
+    outline: "none",
   };
 
   const onImageLibraryPress = useCallback(() => {
     const options = {
       selectionLimit: 1,
       mediaType: "photo",
-      includeBase64: false
+      includeBase64: false,
     };
     ImagePicker.launchImageLibrary(options, setPickerResponse);
   }, []);
@@ -75,7 +75,7 @@ export default App = () => {
           city: "",
           street: "",
           accepted: false,
-          image: ""
+          image: "",
         }}
         onSubmit={(values) => Alert.alert(JSON.stringify(values))}
         validationSchema={() => userValidationSchema}
@@ -88,14 +88,14 @@ export default App = () => {
           setFieldTouched,
           touched,
           isValid,
-          handleSubmit
+          handleSubmit,
         }) => (
           <View>
             <View
               style={{
                 marginTop: 20,
                 flexDirection: "row",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Text
@@ -107,7 +107,7 @@ export default App = () => {
                   lineHeight: 38,
                   display: "flex",
                   alignItems: "flex-end",
-                  letterspacing: -0.02
+                  letterspacing: -0.02,
                 }}
               >
                 Register
@@ -117,7 +117,7 @@ export default App = () => {
                 style={{
                   right: 20,
                   flex: 1,
-                  flexDirection: "column"
+                  flexDirection: "column",
                 }}
               >
                 <Pressable
@@ -127,15 +127,14 @@ export default App = () => {
                 >
                   <Image
                     source={{
-                      uri:
-                        "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e"
+                      uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
                     }}
                     style={{
                       right: 3,
                       height: 75,
                       width: 75,
                       borderRadius: 24,
-                      objectFit: "contain"
+                      objectFit: "contain",
                     }}
                   />
                   <Text
@@ -143,7 +142,7 @@ export default App = () => {
                       marginLeft: 8,
                       marginTop: 10,
                       textAlign: "center",
-                      color: Colors.primary
+                      color: Colors.primary,
                     }}
                   >
                     Choose
@@ -154,7 +153,7 @@ export default App = () => {
             <View style={styles.formContainer}>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
                 }}
               >
                 <Text>Full Name*</Text>
@@ -166,8 +165,8 @@ export default App = () => {
                         ? Colors.gray900
                         : !errors.name
                         ? Colors.primary
-                        : "red"
-                    }
+                        : "red",
+                    },
                   ]}
                   value={values.name}
                   onChangeText={handleChange("name")}
@@ -181,7 +180,7 @@ export default App = () => {
               </View>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
                 }}
               >
                 <Text>Email Address *</Text>
@@ -193,8 +192,8 @@ export default App = () => {
                         ? Colors.gray900
                         : !errors.email
                         ? Colors.primary
-                        : "red"
-                    }
+                        : "red",
+                    },
                   ]}
                   value={values.email}
                   onChangeText={handleChange("email")}
@@ -207,7 +206,7 @@ export default App = () => {
               </View>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
                 }}
               >
                 <Text>Phone Number *</Text>
@@ -219,8 +218,8 @@ export default App = () => {
                         ? Colors.gray900
                         : !errors.email
                         ? Colors.primary
-                        : "red"
-                    }
+                        : "red",
+                    },
                   ]}
                   value={values.phone}
                   onChangeText={handleChange("phone")}
@@ -233,7 +232,7 @@ export default App = () => {
               </View>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
                 }}
               >
                 <Text>Password *</Text>
@@ -245,8 +244,8 @@ export default App = () => {
                         ? Colors.gray900
                         : !errors.email
                         ? Colors.primary
-                        : "red"
-                    }
+                        : "red",
+                    },
                   ]}
                   value={values.password}
                   onChangeText={handleChange("password")}
@@ -259,7 +258,7 @@ export default App = () => {
               </View>
               <View
                 style={{
-                  marginTop: 12
+                  marginTop: 12,
                 }}
               >
                 <Text>Confirm Password *</Text>
@@ -271,8 +270,8 @@ export default App = () => {
                         ? Colors.gray900
                         : !errors.email
                         ? Colors.primary
-                        : "red"
-                    }
+                        : "red",
+                    },
                   ]}
                   value={values.confirm}
                   onChangeText={handleChange("confirm")}
@@ -287,7 +286,7 @@ export default App = () => {
                 style={{
                   marginTop: 24,
                   display: "flex",
-                  flexDirection: "row"
+                  flexDirection: "row",
                 }}
               >
                 <CheckBox
@@ -308,14 +307,14 @@ export default App = () => {
                     style={{
                       marginLeft: 12,
                       color: errors.accepted ? Colors.black : Colors.red,
-                      fontSize: 12
+                      fontSize: 12,
                     }}
                   >
                     I agree to the{" "}
                     <Text
                       style={{
                         color: errors.accepted ? "red" : Colors.primary,
-                        textDecorationLine: "underline"
+                        textDecorationLine: "underline",
                       }}
                     >
                       Terms and Condition
@@ -324,7 +323,7 @@ export default App = () => {
                     <Text
                       style={{
                         color: errors.accepted ? "red" : Colors.primary,
-                        textDecorationLine: "underline"
+                        textDecorationLine: "underline",
                       }}
                     >
                       Privacy Policy
@@ -339,7 +338,7 @@ export default App = () => {
                   borderWidth: 1,
                   justifyContent: "center",
                   height: 50,
-                  marginTop: 24
+                  marginTop: 24,
                 }}
                 onPress={handleSubmit}
               >
@@ -350,7 +349,7 @@ export default App = () => {
                     fontWeight: "bold",
                     color: Colors.primary,
                     fontFamily: "Urbanist",
-                    textAlignVertical: "center"
+                    textAlignVertical: "center",
                   }}
                 >
                   CREATE
@@ -363,7 +362,7 @@ export default App = () => {
                   marginTop: 12,
                   color: Colors.black,
                   fontFamily: "Urbanist",
-                  textAlignVertical: "center"
+                  textAlignVertical: "center",
                 }}
               >
                 Already Have an Account?{" "}
@@ -377,7 +376,7 @@ export default App = () => {
                     fontFamily: "Urbanist",
                     textDecorationLine: "underline",
 
-                    textAlignVertical: "center"
+                    textAlignVertical: "center",
                   }}
                 >
                   Login
@@ -392,11 +391,11 @@ export default App = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
   },
   formContainer: {
-    marginTop: 50
+    marginTop: 50,
     // paddingHorizontal: 24
-  }
+  },
 });
 console.disableYellowBox = true;
