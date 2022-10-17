@@ -33,7 +33,6 @@ export const registerUser = async (req, res) => {
     });
   }
 };
-
 // export const userExistance = async (req, res) => {
 //   const id = req.body?.num;
 //   const exists = await userSchema.findOne({ user_contact: num });
