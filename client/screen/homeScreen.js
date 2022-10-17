@@ -6,8 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
-  View,
+  View
 } from "react-native";
 import Search from "../component/searchBar";
 import { Colors } from "../styles/main";

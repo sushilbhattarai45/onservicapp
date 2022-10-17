@@ -9,12 +9,13 @@ import OtpScreen from "../screen/Auth/otpScreen";
 import CreateNewPinScreen from "../screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "../screen/Auth/forgetPinScreen";
 import SPProfileScreen from "../screen/SPProfileScreen";
+import BecomeSPScreen from "../screen/Auth/becomeSPScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function AppStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="BecomeSP" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={MyTabs} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignUpScreen} />
@@ -22,6 +23,7 @@ export default function AppStack() {
       <Stack.Screen name="ForgotPin" component={ForgetPinScreen} />
       <Stack.Screen name="CreateNewPin" component={CreateNewPinScreen} />
       <Stack.Screen name="SubCategory" component={SubCategoryScreen} />
+      <Stack.Screen name="BecomeSP" component={BecomeSPScreen} />
       <Stack.Screen
         name="CategoryPersonListing"
         component={CategoryPersonListingScreen}

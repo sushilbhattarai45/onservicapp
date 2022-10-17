@@ -1,302 +1,69 @@
-// App.js
-
-import React, { createRef, useState } from "react";
+import React, { useState } from "react";
 import {
+  KeyboardAvoidingView,
   Pressable,
   ScrollView,
-  TextInput,
-  Text,
-  Alert,
-  View,
   StyleSheet,
-  Image,
-  KeyboardAvoidingView,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
-import CheckBox from "expo-checkbox";
-import { Dropdown } from "react-native-element-dropdown";
-import moment from "moment";
-import { Districts } from "../../component/district";
-import * as ImagePicker from "expo-image-picker";
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
-import axios from "axios";
-import * as yup from "yup";
-import { Field, Formik } from "formik";
-import Header from "../../component/Header";
-import { Colors } from "../../styles/main";
 
-// import ModalPopup from "../../component/Modal";
+import { Colors } from "../../styles/main";
+import Header from "../../component/Header";
+import { Formik } from "formik";
+import { Dropdown } from "react-native-element-dropdown";
+import { Districts } from "../../component/district";
+import Checkbox from "expo-checkbox";
 
 const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },
   { value: "Other", label: "Other" },
 ];
-const userValidationSchema = yup.object().shape({
-  name: yup.string().min(6).required("Please, provide your name!"),
-  email: yup
-    .string()
-    .email("Please, provide a valid email!")
-    .required("Please, provide your email!"),
-  phone: yup
-    .number("Phone number must be Numeric")
-    .min(10)
-    .required("Please, provide your Phone Number!"),
-  accepted: yup.bool().oneOf([true], "Field must be checked"),
-  password: yup
-    .string()
-    .min(4, "Pin must be of 4 digits")
-    .max(4)
-    .required("Please, create a new PIN!"),
-  gender: yup.string().required("Please, select your gender"),
-  district: yup.string().required("Please, provide your district!"),
-  city: yup.string().required("Please, provide your city!"),
-  street: yup.string().min(6).required("Please, provide your street!"),
-  confirm: yup
-    .string()
-    .label("confirm password")
-    .required("Please, Reenter your PIN!")
-    .oneOf([yup.ref("password"), null], "PIN must match"),
-  image: yup.string().required(),
-});
 
-export default registerUser = () => {
-  // const [district, setDistrict] = useState();
-
-  let popupRef = createRef();
+const BecomeSPScreen = () => {
   const [citiesList, setCitiesList] = useState([]);
-  const [file, setFile] = useState(null);
-  const [image, setImage] = useState("");
-
-  const uploadImage = async (file) => {
-    // console.log("the file you have choosed is ");
-    // console.log(file);
-    try {
-      // checks if the file is empty
-      if (file === null) {
-        setError({
-          target: "image",
-          message: "Sorry ,There is some error with the profile picture!!",
-        });
-        return null;
-      }
-      // setError(false);
-      // if not empty creating a form data to send to upload the image to the server
-      // alert("ok");
-
-      const imageToUpload = file;
-      const data = new FormData();
-
-      data.append(
-        "profile",
-        {
-          uri: imageToUpload?.uri,
-          name: imageToUpload?.uri,
-          type: "image/jpg",
-        },
-        "myfile"
-      );
-
-      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-      console.log("s" + serverUrl);
-      const response = await axios(serverUrl, {
-        method: "post",
-        data: data,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      var url = response?.data?.fileName;
-      const filename = url.split("\\");
-      const finalname = filename[0] + "/" + filename[1];
-      return finalname;
-    } catch (e) {
-      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-
-      console.log("trying again " + serverUrl);
-
-      axios(serverUrl, {
-        method: "post",
-        data: data,
-
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log("second error");
-          console.log(error);
-        });
-      // setError({
-      //   target: "image",
-      //   message: "Sry, we are having trouble uploading the Profile ",
-      // });
-      return;
-    }
-  };
-  async function postData(values, { setSubmitting, setFieldError }) {
-    uploadImage(file).then(async (res) => {
-      let response = await axios.post(
-        BASE_OUR_API_URL + "/v1/api/user/register",
-        {
-          API_KEY: "AXCF",
-          user_name: values.name,
-          user_email: values.email,
-          user_contact: values.phone,
-          user_district: values.district,
-          user_city: values.city,
-          user_street: values.street,
-          user_gender: values.gender,
-          user_password: values.password,
-          user_profileImage: BASE_OUR_API_URL + "/" + res,
-          user_toc: {
-            date: moment().format("ll"),
-            time: moment().format("LT"),
-          },
-        }
-      );
-      const status = response?.data?.statuscode;
-      if (status == 201) {
-        alert("done");
-      } else if (status == 600) {
-        setFieldError("phone", "Phone Number already exists");
-      } else {
-        alert("no");
-      }
-
-      alert(status);
-    });
-  }
-  const selectFile = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync();
-
-      setFile(result);
-
-      let uri = result.uri;
-      return uri;
-    } catch (e) {
-      console.log(e);
-    }
-    // console.log({ result });
-    // let result = await launchImageLibraryAsync({ mediaTypes: "photo" });
-    // console.log(result);
-    // if (!result.cancelled) {
-    //   setImage(result.uri);
-    // }
-  };
 
   return (
-    <ScrollView style={styles.container}>
-      {/* <ModalPopoup
-        ref={(target) => (popupRef = target)}
-        onTouchOutside={() => popupRef.close()}
-      /> */}
-      <View
-        style={{
-          marginTop: 0,
-          marginBottom: 20,
-        }}
-      >
-        <Header icon={"arrow-left-line"} />
-      </View>
-      <KeyboardAvoidingView style={{ flex: 1 }}>
-        <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            password: "",
-            confirm: "",
-            phone: "",
-            district: "",
-            gender: "",
-            city: "",
-            street: "",
-            accepted: false,
-            image: null,
-          }}
-          onSubmit={postData}
-          validationSchema={() => userValidationSchema}
-        >
-          {({
-            values,
-            handleChange,
-            errors,
-            setFieldValue,
-            setFieldTouched,
-            touched,
-            isValid,
-            handleSubmit,
-          }) => (
-            <View>
-              <View
-                style={{
-                  marginTop: 8,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    flex: 5,
-                    fontStyle: "normal",
-                    fontWeight: "800",
-                    fontSize: 32,
-                    lineHeight: 38,
-                    display: "flex",
-                    alignItems: "flex-end",
-                    letterspacing: -0.02,
-                  }}
-                >
-                  Register
-                </Text>
-
-                <View
-                  style={{
-                    right: 20,
-                    flex: 1,
-                    justifyContent: "center",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Pressable
-                    onPress={async () => {
-                      let img = await selectFile();
-                      console.log("a" + img);
-                      setFieldValue("image", img);
-                    }}
-                  >
-                    <Image
-                      source={{
-                        uri: values.image
-                          ? values.image
-                          : "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
-                      }}
-                      style={{
-                        alignSelf: "center",
-                        right: 0,
-                        height: 75,
-                        width: 75,
-                        borderRadius: 24,
-                        borderWidth: StyleSheet.hairlineWidth,
-                        objectFit: "contain",
-                      }}
-                    />
-                    <Text
-                      style={{
-                        marginTop: 10,
-                        textAlign: "center",
-                        color: errors.image ? "red" : Colors.primary,
-                      }}
-                    >
-                      Choose
-                    </Text>
-                  </Pressable>
-                </View>
-              </View>
-              <View style={styles.formContainer}>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: Colors.gray200 }}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.container}>
+        <Header icon="arrow-left-line" />
+        <Text style={styles.heading}>BE OUR PARTNER</Text>
+        <KeyboardAvoidingView style={{ flex: 1 }}>
+          <Formik
+            initialValues={{
+              name: "",
+              email: "",
+              password: "",
+              confirm: "",
+              phone: "",
+              officePhone: "",
+              district: "",
+              gender: "",
+              city: "",
+              street: "",
+              accepted: false,
+              googlemaplink: "",
+              skills: [],
+              photos: [],
+              video: [],
+            }}
+          >
+            {({
+              values,
+              handleChange,
+              errors,
+              setFieldValue,
+              setFieldTouched,
+              touched,
+              isValid,
+              handleSubmit,
+            }) => (
+              <View>
                 <View
                   style={{
                     marginTop: 12,
@@ -529,62 +296,8 @@ export default registerUser = () => {
                     <Text style={{ color: "red" }}>{errors.street}</Text>
                   )}
                 </View>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>Password *</Text>
-                  <TextInput
-                    keyboardType="numeric"
-                    maxLength={4}
-                    style={[
-                      styles.inputStyle,
-                      {
-                        borderColor: !touched.password
-                          ? Colors.gray900
-                          : errors.password
-                          ? "red"
-                          : Colors.primary,
-                      },
-                    ]}
-                    value={values.password}
-                    onChangeText={handleChange("password")}
-                    onBlur={() => setFieldTouched("password")}
-                    placeholder="Password"
-                  />
-                  {touched.password && errors.password && (
-                    <Text style={{ color: "red" }}>{errors.password}</Text>
-                  )}
-                </View>
-                <View
-                  style={{
-                    marginTop: 12,
-                  }}
-                >
-                  <Text>Confirm Password *</Text>
-                  <TextInput
-                    keyboardType="numeric"
-                    maxLength={4}
-                    style={[
-                      styles.inputStyle,
-                      {
-                        borderColor: !touched.confirm
-                          ? Colors.gray900
-                          : errors.confirm
-                          ? "red"
-                          : Colors.primary,
-                      },
-                    ]}
-                    value={values.confirm}
-                    onChangeText={handleChange("confirm")}
-                    onBlur={() => setFieldTouched("confirm")}
-                    placeholder="Confirm Password"
-                  />
-                  {touched.confirm && errors.confirm && (
-                    <Text style={{ color: "red" }}>{errors.confirm}</Text>
-                  )}
-                </View>
+
+                {/* SCheckBox */}
                 <View
                   style={{
                     marginTop: 24,
@@ -593,7 +306,7 @@ export default registerUser = () => {
                     flexDirection: "row",
                   }}
                 >
-                  <CheckBox
+                  <Checkbox
                     value={values.accepted}
                     onValueChange={() => {
                       setFieldValue("accepted", !values.accepted);
@@ -633,11 +346,11 @@ export default registerUser = () => {
                         }}
                       >
                         Privacy Policy
-                      </Text>{" "}
+                      </Text>
                     </Text>
                   }
                 </View>
-
+                {/* Submit Button */}
                 <Pressable
                   style={{
                     borderColor: Colors.primary,
@@ -645,6 +358,7 @@ export default registerUser = () => {
                     justifyContent: "center",
                     height: 50,
                     marginTop: 24,
+                    marginBottom:24
                   }}
                   onPress={handleSubmit}
                 >
@@ -652,55 +366,35 @@ export default registerUser = () => {
                     style={{
                       textAlign: "center",
                       fontSize: 20,
-                      fontWeight: "bold",
+                      fontFamily: "Bold",
                       color: Colors.primary,
-                      fontFamily: "Urbanist",
                       textAlignVertical: "center",
                     }}
                   >
                     CREATE
                   </Text>
                 </Pressable>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 15,
-                    marginTop: 12,
-                    color: Colors.black,
-                    fontFamily: "Urbanist",
-                    textAlignVertical: "center",
-                  }}
-                >
-                  Already Have an Account?{" "}
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 15,
-                      marginTop: 12,
-                      fontWeight: "bold",
-                      color: Colors.primary,
-                      fontFamily: "Urbanist",
-                      textDecorationLine: "underline",
-
-                      textAlignVertical: "center",
-                    }}
-                  >
-                    Login
-                  </Text>
-                </Text>
               </View>
-            </View>
-          )}
-        </Formik>
-      </KeyboardAvoidingView>
+            )}
+          </Formik>
+        </KeyboardAvoidingView>
+      </View>
     </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    // marginTop: Constants.statusBarHeight + 16,
+    backgroundColor: Colors.gray200,
     paddingHorizontal: 24,
-    marginTop: 10,
-    marginBottom: 10,
+  },
+  heading: {
+    fontSize: 32,
+    fontFamily: "Black",
+    color: Colors.black,
+    marginTop: 32,
   },
   inputStyle: {
     width: "100%",
@@ -713,4 +407,5 @@ const styles = StyleSheet.create({
     outline: "none",
   },
 });
-console.disableYellowBox = true;
+
+export default BecomeSPScreen;
