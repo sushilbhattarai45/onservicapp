@@ -18,13 +18,14 @@ import { axiosInstance } from "../component/tools";
 import Constants from "expo-constants";
 import axios from "axios";
 import Icon from "../component/Icon";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function UserProfileScreen() {
   useEffect(() => {
     async function getData() {
+      const user_data = await AsyncStorage.getItem("user_contact");
       let res = await axiosInstance.post("/user/getOneUser", {
         GIVEN_API_KEY: "AXCF",
-        user_contact: 9742993345,
+        user_contact: user_data,
       });
       if (!res.error) {
         setUser(res.data);

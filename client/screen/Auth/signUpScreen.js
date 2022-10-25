@@ -23,7 +23,7 @@ import * as yup from "yup";
 import { Field, Formik } from "formik";
 import Header from "../../component/Header";
 import { Colors } from "../../styles/main";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import ModalPopup from "../../component/Modal";
 
 const gendersList = [
@@ -31,6 +31,7 @@ const gendersList = [
   { value: "Female", label: "Female" },
   { value: "Other", label: "Other" },
 ];
+
 const userValidationSchema = yup.object().shape({
   name: yup.string().min(6).required("Please, provide your name!"),
   email: yup
@@ -59,9 +60,9 @@ const userValidationSchema = yup.object().shape({
   image: yup.string().required(),
 });
 
-export default registerUser = () => {
+export default registerUser = ({ navigation }) => {
   // const [district, setDistrict] = useState();
-
+  const [data, setData] = useState();
   let popupRef = createRef();
   const [citiesList, setCitiesList] = useState([]);
   const [file, setFile] = useState(null);
@@ -159,7 +160,11 @@ export default registerUser = () => {
       );
       const status = response?.data?.statuscode;
       if (status == 201) {
-        alert("done");
+        const finaldata = response?.data?.user;
+        setData(finaldata);
+
+        await storeData(data);
+        navigation.navigate("Home");
       } else if (status == 600) {
         setFieldError("phone", "Phone Number already exists");
       } else {
@@ -169,6 +174,12 @@ export default registerUser = () => {
       alert(status);
     });
   }
+  const storeData = async (value) => {
+    try {
+      console.log(value);
+      await AsyncStorage.setItem("user_contact", value?.user_contact);
+    } catch (e) {}
+  };
   const selectFile = async () => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync();

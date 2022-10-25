@@ -12,14 +12,16 @@ import {
 import CheckBox from "expo-checkbox";
 import { Colors } from "../../styles/main";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../component/Header";
 import Search from "../../component/searchBar";
 import ImageSliderComponent from "../../component/imageSlider";
-export default function LoginScreen() {
+import { number } from "yup";
+export default function LoginScreen({ navigation }) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
-  const [num, setNum] = useState("");
-  const [pin, setPin] = useState("");
+  const [num, setNum] = useState();
+  const [pin, setPin] = useState();
 
   const [focuscolor1, setFocusColor1] = useState(Colors.black);
   const [focuscolor2, setFocusColor2] = useState(Colors.black);
@@ -27,7 +29,14 @@ export default function LoginScreen() {
   const [error2, setError2] = useState("");
 
   async function checkLogin() {
+    // alert(Number.isInteger(num));
     if (pin.length != 4 || num.length != 10) {
+      // if (Number.isInteger(pin) == false || Number.isInteger(num) == false) {
+      //   if (Number.isInteger(pin) == false) {
+      //     setError2("Please Enter A Valid Pin");
+      //     setFocusColor2("red");
+      //   }
+      // } else
       if (pin.length != 4 && num.length != 10) {
         setError1("Please enter a valid Phone Number");
         setError2("Please enter a valid OTP");
@@ -42,15 +51,18 @@ export default function LoginScreen() {
       }
     } else {
       const res = await axios.post(
-        "http://192.168.16.104:3001/v1/api/user/login",
+        "http://192.168.100.11:3001/v1/api/user/login",
         {
+          GIVEN_API_KEY: "AXCF",
           user_num: num,
           user_pass: pin,
         }
       );
       const status = res?.data?.statuscode;
-
+      console.log(res);
       if (status == 200) {
+        await AsyncStorage.setItem("user_contact", num);
+        navigation.navigate("Home");
         alert("done");
       } else {
         setFocusColor2("red");

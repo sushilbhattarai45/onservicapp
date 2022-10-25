@@ -6,7 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
 } from "react-native";
 import Search from "../component/searchBar";
 import { Colors } from "../styles/main";
@@ -18,7 +18,7 @@ import SubCategoryGroupCard from "../component/subCategoryGroupCard";
 import ImageSliderComponent from "../component/imageSlider";
 import Icon from "../component/Icon";
 import { axiosInstance } from "../component/tools";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const wWidth = Dimensions.get("window").width;
 const NewlyAddedServices = ({ containerStyle, name }) => {
   return (
@@ -40,11 +40,21 @@ const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
   const [newaddons, setNewaddons] = useState([]);
   const [featured, setFeatured] = useState();
-
+  const [loggedIn, setLoggedIn] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState();
-
+  const [userData, setUserData] = useState();
   useEffect(() => {
     async function getData() {
+      const number = await AsyncStorage.getItem("user_contact");
+      if (number.length != 0) {
+        setLoggedIn(true);
+        let user = await axiosInstance.post("/user/getOneUser", {
+          GIVEN_API_KEY: "AXCF",
+          user_contact: number,
+        });
+        setUserData(user?.data.data);
+      }
+
       let res = await axiosInstance.post("/categories?", {
         GIVEN_API_KEY: "AXCF",
       });
@@ -57,7 +67,7 @@ const HomeScreen = () => {
       let newaddons = await axiosInstance.post("/categories/newaddons", {
         GIVEN_API_KEY: "AXCF",
       });
-      console.log(newaddons.data);
+      // console.log(newaddons.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!res.error) setCategories(res.data);
       if (!newaddons.error) setNewaddons(res.data);
@@ -84,7 +94,11 @@ const HomeScreen = () => {
           }}
         >
           <View>
-            <Text style={styles.userName}>Hey Sanskar!</Text>
+            {loggedIn ? (
+              <Text style={styles.userName}>Hey {userData?.user_name}!</Text>
+            ) : (
+              <Text style={styles.userName}>Hey User!</Text>
+            )}
             <Text style={styles.userNeedHelp}>Need help?</Text>
           </View>
           <Icon name="qr-scan-line" size={24} color="white" />
