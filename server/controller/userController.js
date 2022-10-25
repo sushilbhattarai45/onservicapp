@@ -2,6 +2,7 @@ import userSchema from "../model/userSchema.js";
 import multer from "multer";
 import {} from "dotenv/config";
 const API_KEY = process.env.API_KEY;
+import saltHash from "password-salt-and-hash";
 
 export const registerUser = async (req, res) => {
   const {
@@ -16,7 +17,6 @@ export const registerUser = async (req, res) => {
     user_toc,
     user_profileImage,
   } = req.body;
-
   try {
     const exists = await userSchema.findOne({ user_contact: user_contact });
     if (!exists || exists?.length == 0) {

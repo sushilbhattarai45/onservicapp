@@ -16,12 +16,15 @@ export default function AppStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={MyTabs} />
-      <Stack.Screen name="Login" component={LoginScreen} />
+
       <Stack.Screen name="Signup" component={SignUpScreen} />
+
+      <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="OtpScreen" component={OtpScreen} />
       <Stack.Screen name="ForgotPin" component={ForgetPinScreen} />
       <Stack.Screen name="CreateNewPin" component={CreateNewPinScreen} />
       <Stack.Screen name="SubCategory" component={SubCategoryScreen} />
+
       <Stack.Screen
         name="CategoryPersonListing"
         component={CategoryPersonListingScreen}

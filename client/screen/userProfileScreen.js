@@ -24,7 +24,7 @@ export default function UserProfileScreen() {
     async function getData() {
       let res = await axiosInstance.post("/user/getOneUser", {
         GIVEN_API_KEY: "AXCF",
-        user_contact: 123456780,
+        user_contact: 9742993345,
       });
       if (!res.error) {
         setUser(res.data);
@@ -107,7 +107,8 @@ export default function UserProfileScreen() {
                     height: 120,
                   }}
                   source={{
-                    uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
+                    // uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
+                    uri: user?.data.user_profileImage,
                   }}
                 />
                 <Icon
