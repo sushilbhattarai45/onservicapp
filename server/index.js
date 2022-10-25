@@ -5,7 +5,7 @@ import {} from "dotenv/config";
 import { connectDB } from "./db/connectDb.js";
 
 const PORT = process.env.PORT || 3001;
-
+import sp_route from "./routes/sp_routes.js";
 import user_route from "./routes/user_route.js";
 const App = Express();
 import category_route from "./routes/categoryroute.js";
@@ -24,5 +24,7 @@ App.use("/uploads", Express.static("uploads"));
 // });
 
 App.use("/v1/api/user", user_route);
+App.use("/v1/api/sp", sp_route);
+
 App.use("/v1/api/categories", category_route);
 App.use("/v1/api/subcategories", subcategory_route);

@@ -28,7 +28,10 @@ const user = new mongoose.Schema({
   user_profileImage: {
     type: String,
   },
-
+  user_status: {
+    type: String,
+    default: "ACTIVE",
+  },
   user_toc: {
     date: { type: String },
     time: { type: String },

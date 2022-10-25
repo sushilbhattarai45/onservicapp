@@ -84,7 +84,7 @@ export const loginUser = async (req, res) => {
       return res.status(500).send(error);
     }
   } else {
-    return res.json({ error: "error" });
+    return res.json({ error: "Error! Wrong Api Key", statuscode: 700 });
   }
 };
 
@@ -114,6 +114,6 @@ export const getOneUser = async (req, res) => {
       return res.json({ error: e });
     }
   } else {
-    return res.json({ error: "Wrong Api Key", statuscode: 600 });
+    return res.json({ error: "Wrong Api Key", statuscode: 700 });
   }
 };

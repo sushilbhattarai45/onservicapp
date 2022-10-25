@@ -1,0 +1,26 @@
+{
+  "sp_contact": 9744389345,
+  "sp_name": "Suhil Traders",
+  "user_id": "099903",
+  "sp_officeNumber": 9856667678334,
+  "sp_street": "baneswheoe",
+  "sp_city": "Hirandani",
+  "sp_gender": "Male",
+  "sp_skills": [
+    "sushil",
+    "sis"
+  ],
+  "sp_district": "kjym",
+  "GIVEN_API_KEY": "AXCF",
+  "sp_profileImage": "profileimage",
+  "sp_media": {
+    "photo": [
+      "sushil",
+      "hariom"
+    ],
+    "video": "okok"
+  },
+  "sp_location": "sushil00988",
+  "sp_status": "Active",
+  "sp_bio": "okokokok"
+}
