@@ -6,6 +6,8 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from "react-native";
 import Search from "../component/searchBar";
@@ -36,7 +38,7 @@ const NewlyAddedServices = ({ containerStyle, name }) => {
   );
 };
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
   const [newaddons, setNewaddons] = useState([]);
   const [featured, setFeatured] = useState();

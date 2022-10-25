@@ -1,7 +1,12 @@
 import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 
-export default function CategoryCard({ containerStyle, name, image }) {
+export default function CategoryCard({
+  containerStyle,
+  name,
+  image,
+  navigation,
+}) {
   return (
     <View style={[styles.Category, { ...containerStyle }]}>
       <Image
@@ -21,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    padding:24,
+    padding: 24,
     borderRadius: 8,
     backgroundColor: "rgba(255, 255, 255, 1)",
     shadowColor: "rgba(0,0,0,0.25)",
