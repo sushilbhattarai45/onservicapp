@@ -12,9 +12,10 @@ import {
 import { Colors } from "../../styles/main";
 import Header from "../../component/Header";
 import { Formik } from "formik";
-import { Dropdown } from "react-native-element-dropdown";
+import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import { Districts } from "../../component/district";
 import Checkbox from "expo-checkbox";
+import Icon from "../../component/Icon";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -22,9 +23,51 @@ const gendersList = [
   { value: "Other", label: "Other" },
 ];
 
+const data = [
+  { label: "Item 1", value: "1" },
+  { label: "Item 2", value: "2" },
+  { label: "Item 3", value: "3" },
+  { label: "Item 4", value: "4" },
+  { label: "Item 5", value: "5" },
+  { label: "Item 6", value: "6" },
+  { label: "Item 7", value: "7" },
+  { label: "Item 8", value: "8" },
+];
+
+const SkillPill = ({ name, onPress }) => {
+  return (
+    <View
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: 18,
+        paddingVertical: 6,
+        borderRadius: 40,
+        borderWidth: 2,
+        borderColor: Colors.gray500,
+        marginRight: 6,
+        marginBottom: 6,
+        flexDirection: "row",
+      }}
+    >
+      <Text
+        style={{ fontSize: 14, color: Colors.black, fontFamily: "SemiBold" }}
+      >
+        {name}
+      </Text>
+      <Icon
+        style={{ marginLeft: 4 }}
+        color={Colors.gray900}
+        name="close-fill"
+        onPress={onPress}
+        size={20}
+      />
+    </View>
+  );
+};
+
 const BecomeSPScreen = () => {
   const [citiesList, setCitiesList] = useState([]);
-
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: Colors.gray200 }}
@@ -296,7 +339,38 @@ const BecomeSPScreen = () => {
                     <Text style={{ color: "red" }}>{errors.street}</Text>
                   )}
                 </View>
-
+                <View
+                  style={{
+                    marginTop: 12,
+                  }}
+                >
+                  <Text>Skills *</Text>
+                  <MultiSelect
+                    style={styles.inputStyle}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    search
+                    data={data}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select item"
+                    searchPlaceholder="Search..."
+                    value={values.skills}
+                    containerStyle={{ marginTop: 24 }}
+                    onChange={(item) => {
+                      setFieldValue("skills", item);
+                    }}
+                    renderSelectedItem={(item, unselect) => (
+                      <SkillPill name={item.label} onPress={unselect} />
+                    )}
+                    selectedStyle={styles.selectedStyle}
+                  />
+                  {!values.city && touched.city ? (
+                    <Text style={{ color: "red" }}>{errors.city}</Text>
+                  ) : null}
+                </View>
                 {/* SCheckBox */}
                 <View
                   style={{
@@ -358,7 +432,7 @@ const BecomeSPScreen = () => {
                     justifyContent: "center",
                     height: 50,
                     marginTop: 24,
-                    marginBottom:24
+                    marginBottom: 24,
                   }}
                   onPress={handleSubmit}
                 >

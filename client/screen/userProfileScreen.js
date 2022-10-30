@@ -23,15 +23,17 @@ export default function UserProfileScreen() {
   useEffect(() => {
     async function getData() {
       const user_data = await AsyncStorage.getItem("user_contact");
-      let res = await axiosInstance.post("/user/getOneUser", {
-        GIVEN_API_KEY: "AXCF",
-        user_contact: user_data,
-      });
-      if (!res.error) {
-        setUser(res.data);
-        console.log(user);
-      } else {
-        console.error(res.error);
+      if (user_data) {
+        let res = await axiosInstance.post("/user/getOneUser", {
+          GIVEN_API_KEY: "AXCF",
+          user_contact: user_data,
+        });
+        if (!res.error) {
+          setUser(res.data);
+          console.log(user);
+        } else {
+          console.error(res.error);
+        }
       }
     }
     getData();
