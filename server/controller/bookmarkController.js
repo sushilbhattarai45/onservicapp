@@ -61,3 +61,30 @@ export const postBm = async (req, res) => {
     return res.json({ statuscode: 700, error: "Wrong Api Key" });
   }
 };
+
+export const checkBm = async (req, res) => {
+  const { GIVEN_API_KEY, sp_id, user_id } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const data = await bookmarkSchema.find({
+        sp_id: sp_id,
+        user_id: user_id,
+      });
+      if (data.length != 0) {
+        return res.json({
+          message: "Bookmarked",
+          statuscode: 201,
+        });
+      } else {
+        return res.json({
+          message: "Not Bookmarked",
+          statuscode: 400,
+        });
+      }
+    } catch (e) {
+      return res.json({ error: " Server side error" });
+    }
+  } else {
+    return res.json({ statuscode: 700, error: "Wrong Api Key" });
+  }
+};
