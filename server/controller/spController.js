@@ -58,12 +58,32 @@ export const getAllSp = async (req, res) => {
     return res.json({ statuscode: 700, message: "Wrong Api Key" });
   }
 };
+
 export const getOneSp = async (req, res) => {
   const { GIVEN_API_KEY } = req.body;
   if (GIVEN_API_KEY == API_KEY) {
     try {
       const spdata = await spSchema.findOne({
         sp_contact: 9742993345,
+      });
+      return res.json({ statuscode: 201, data: spdata });
+    } catch (e) {
+      return res.json({
+        error: "Sry there is some error in our side",
+      });
+    }
+  } else {
+    return res.json({ statuscode: 700, message: "Wrong Api Key" });
+  }
+};
+
+export const getSearchedSp = async (req, res) => {
+  const { GIVEN_API_KEY } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const spdata = await spSchema.find({
+        sp_city: "Hirandani",
+        sp_skills: "plumber",
       });
       return res.json({ statuscode: 201, data: spdata });
     } catch (e) {
