@@ -17,7 +17,6 @@ import { Dropdown } from "react-native-element-dropdown";
 import moment from "moment";
 import { Districts } from "../../component/district";
 import * as ImagePicker from "expo-image-picker";
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 import axios from "axios";
 import * as yup from "yup";
 import { Field, Formik } from "formik";
@@ -25,6 +24,9 @@ import Header from "../../component/Header";
 import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import ModalPopup from "../../component/Modal";
+
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
+
 
 const gendersList = [
   { value: "Male", label: "Male" },
