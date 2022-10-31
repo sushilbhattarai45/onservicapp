@@ -10,13 +10,14 @@ import CreateNewPinScreen from "../screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "../screen/Auth/forgetPinScreen";
 import SPProfileScreen from "../screen/SPProfileScreen";
 import BecomeSPScreen from "../screen/Auth/becomeSPScreen";
+import SearchPersonListingScreen from "../screen/searchPersonListingScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function AppStack() {
   return (
     <Stack.Navigator
-      initialRouteName="BecomeSP"
+      initialRouteName="HomeTabs"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="HomeTabs" component={MyTabs} />

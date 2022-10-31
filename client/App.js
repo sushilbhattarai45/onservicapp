@@ -5,6 +5,7 @@ import * as SplashScreen from "expo-splash-screen";
 
 import AppStack from "./navigation/MainStack";
 import { NavigationContainer } from "@react-navigation/native";
+import { ContextProvider } from "./component/appContext";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -31,8 +32,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer onReady={onLayoutRootView} style={{ flex: 1 }}>
-      <AppStack />
-    </NavigationContainer>
+    <ContextProvider>
+      <NavigationContainer onReady={onLayoutRootView} style={{ flex: 1 }}>
+        <AppStack />
+      </NavigationContainer>
+    </ContextProvider>
   );
 }

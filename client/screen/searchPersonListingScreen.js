@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -15,28 +15,31 @@ import { StatusBar } from "expo-status-bar";
 import { SvgUri, G, Path } from "react-native-svg";
 import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
+import AppContext from "../component/appContext";
 
 export default function SearchPersonListingScreen() {
-  const subcategory = [
-    {
-      name: "Car Repair",
-    },
-    {
-      name: "Home Repair",
-    },
-    {
-      name: "Van Repair",
-    },
-    {
-      name: "taxi Repair",
-    },
-    {
-      name: "pokhara Repair",
-    },
-    {
-      name: "DSM ko 4hajar",
-    },
-  ];
+  const { subCategories } = useContext(AppContext);
+  console.log(subCategories);
+  // const subcategory = [
+  //   {
+  //     name: "Car Repair",
+  //   },
+  //   {
+  //     name: "Home Repair",
+  //   },
+  //   {
+  //     name: "Van Repair",
+  //   },
+  //   {
+  //     name: "taxi Repair",
+  //   },
+  //   {
+  //     name: "pokhara Repair",
+  //   },
+  //   {
+  //     name: "DSM ko 4hajar",
+  //   },
+  // ];
   const Persons = [
     {
       name: "Sushil Bhattarai",
@@ -157,7 +160,8 @@ export default function SearchPersonListingScreen() {
 
     //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
   ];
-
+  const [searchData, serSearchData] = useState(null);
+  const [searching, setSearching] = useState(null);
   return (
     <View
       style={{
@@ -170,25 +174,27 @@ export default function SearchPersonListingScreen() {
     >
       <View
         style={{
+          flex: 1,
           marginTop: 40,
-          marginBottom: 30,
           backgroundColor: Colors.gray200,
         }}
       >
-        <View style={{paddingHorizontal:24}} >
-          <Search  containerStyle={{padding:0}} rightIcon={"equalizer-fill"} />
+        <View style={{ paddingHorizontal: 24 }}>
+          <Search
+            containerStyle={{ padding: 0 }}
+            rightIcon={"equalizer-fill"}
+          />
         </View>
-
+        {/* FlatList */}
         <View>
           <FlatList
             style={{
               marginTop: 15,
-              marginBottom: 10,
-              paddingHorizontal:24
+              paddingHorizontal: 24,
             }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            data={subcategory}
+            data={subCategories}
             renderItem={({ item }) => {
               return (
                 <Pressable
@@ -213,7 +219,7 @@ export default function SearchPersonListingScreen() {
                       color: Colors.primary,
                     }}
                   >
-                    {item.name}
+                    {item.subCat_name}
                   </Text>
                 </Pressable>
               );
@@ -232,60 +238,86 @@ export default function SearchPersonListingScreen() {
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
-        <View
-          style={{
-            marginTop: 50,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {/* <SVGImg width={200} height={200} /> */}
-          <Image
-            style={{
-              alignSelf: "center",
-              resizeMode: "contain",
-              height: "50%",
-              width: "90%",
-            }}
-            source={{
-              uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/7c63n63o6t3-472%3A6676?alt=media&token=fe730173-04a9-40a8-8afd-1445f2a0ac78",
-              headers: {
-                Accept: "*/*",
-              },
-            }}
-          />
 
+        {/* PersonList */}
+        {searchData && (
+          <ScrollView style={{ marginTop: 16, flex: 1 }}>
+            {Persons.map((persons) => {
+              return (
+                <View
+                  style={{
+                    marginTop: 2,
+                  }}
+                >
+                  <PersonCard
+                    name={persons.name}
+                    image={persons.img}
+                    address={persons.address}
+                    rating={persons.rating}
+                    ratingcount={persons.ratingcount}
+                  />
+                </View>
+              );
+            })}
+          </ScrollView>
+        )}
+        {/* notfound */}
+        {!searchData && (
           <View
             style={{
-              marginHorizontal: 20,
-              marginTop: 20,
+              flex: 1,
+              marginTop: -50,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Text
+            {/* <SVGImg width={200} height={200} /> */}
+            <Image
               style={{
-                textAlign: "center",
-                fontFamily: "Regular",
-                fontWeight: "700",
-                fontSize: 24,
+                height: "50%",
+                width: "80%",
               }}
-            >
-              Not Found
-            </Text>
-            <Text
+              resizeMode="contain"
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/7c63n63o6t3-472%3A6676?alt=media&token=fe730173-04a9-40a8-8afd-1445f2a0ac78",
+                headers: {
+                  Accept: "*/*",
+                },
+              }}
+            />
+
+            <View
               style={{
-                textAlign: "center",
-                fontFamily: "Regular",
-                fontSize: 16,
+                marginHorizontal: 20,
                 marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              Sorry, the keyword you entered cannot be found, please check again
-              or search with another keyword.
-            </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Regular",
+                  fontWeight: "700",
+                  fontSize: 24,
+                }}
+              >
+                Not Found
+              </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Regular",
+                  fontSize: 16,
+                  marginTop: 10,
+                }}
+              >
+                Sorry, the keyword you entered cannot be found, please check
+                again or search with another keyword.
+              </Text>
+            </View>
           </View>
-        </View>
+        )}
       </View>
     </View>
   );

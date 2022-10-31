@@ -6,7 +6,6 @@ import SearchPersonListingScreen from "../screen/searchPersonListingScreen";
 import UserProfileScreen from "../screen/userProfileScreen";
 import { Colors } from "../styles/main";
 
-
 const Tab = createBottomTabNavigator();
 
 export default function MyTabs() {
@@ -30,6 +29,7 @@ export default function MyTabs() {
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: Colors.gray900,
         tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
       })}
     >
       <Tab.Screen
