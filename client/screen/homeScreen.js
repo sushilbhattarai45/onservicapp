@@ -45,15 +45,15 @@ const HomeScreen = ({ navigation }) => {
   const [userData, setUserData] = useState();
   useEffect(() => {
     async function getData() {
-      // const number = await AsyncStorage.getItem("user_contact");
-      // if (number.length != 0) {
-      //   setLoggedIn(true);
-      //   let user = await axiosInstance.post("/user/getOneUser", {
-      //     GIVEN_API_KEY: "AXCF",
-      //     user_contact: number,
-      //   });
-      //   setUserData(user?.data.data);
-      // }
+      const number = await AsyncStorage.getItem("user_contact");
+      if (number.length != 0) {
+        setLoggedIn(true);
+        let user = await axiosInstance.post("/user/getOneUser", {
+          GIVEN_API_KEY: "AXCF",
+          user_contact: number,
+        });
+        setUserData(user?.data.data);
+      }
 
       let res = await axiosInstance.post("/categories?", {
         GIVEN_API_KEY: "AXCF",

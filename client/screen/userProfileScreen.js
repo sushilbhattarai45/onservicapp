@@ -19,7 +19,7 @@ import Constants from "expo-constants";
 import axios from "axios";
 import Icon from "../component/Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-export default function UserProfileScreen() {
+export default function UserProfileScreen({ navigation }) {
   useEffect(() => {
     async function getData() {
       const user_data = await AsyncStorage.getItem("user_contact");
@@ -34,6 +34,8 @@ export default function UserProfileScreen() {
         } else {
           console.error(res.error);
         }
+      } else {
+        navigation.navigate("Login");
       }
     }
     getData();

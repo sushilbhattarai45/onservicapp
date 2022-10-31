@@ -21,7 +21,9 @@ export const getBm = async (req, res) => {
         let i = 0;
         bm_spidData.map(async (item) => {
           const spData = await spSchema.find({ _id: item });
-          bm_spData.push(spData);
+          spData.map((i) => {
+            bm_spData.push(i);
+          });
           i++;
           if (i == data.length) {
             return res.json({
