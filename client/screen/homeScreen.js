@@ -48,8 +48,6 @@ const HomeScreen = ({ navigation }) => {
   const [userData, setUserData] = useState();
   useEffect(() => {
     async function getData() {
-<<<<<<< HEAD
-=======
       const number = await AsyncStorage.getItem("user_contact");
       if (number.length != 0) {
         setLoggedIn(true);
@@ -63,7 +61,6 @@ const HomeScreen = ({ navigation }) => {
       let res = await axiosInstance.post("/categories?", {
         GIVEN_API_KEY: "AXCF",
       });
->>>>>>> 7d82d7108a684ac76242a80bdf55d2860a3ed87b
       let featuredOnHome = await axiosInstance.post(
         "/categories/featuredOnHome",
         {
@@ -129,7 +126,10 @@ const HomeScreen = ({ navigation }) => {
                           marginTop: index === 0 ? 0 : 16,
                         }}
                       >
-                        <CategoryCard name={item.category_name} />
+                        <CategoryCard
+                          name={item.category_name}
+                          category_id={item._id}
+                        />
                         {categories[index + 1] && (
                           <CategoryCard
                             name={categories[index + 1]?.category_name}
@@ -177,13 +177,18 @@ const HomeScreen = ({ navigation }) => {
             </View>
             <View style={{ flexDirection: "row", marginTop: 24 }}>
               <Text
+                onPress={() => {
+                  navigation.navigate("SubCategory", {
+                    category_id: featured?.catId,
+                  });
+                }}
                 style={{
                   fontSize: 16,
                   fontFamily: "Regular",
                   color: Colors.primary,
                 }}
               >
-                Seemore
+                See More{" "}
               </Text>
               <Icon
                 name="arrow-right-s-line"

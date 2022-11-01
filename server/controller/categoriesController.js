@@ -194,6 +194,7 @@ export const featuredOnHome = async (req, res) => {
 
       return res.json({
         catName: categories.category_name,
+        catId: categories._id,
         subCat: subCat,
         subCat_status: true,
       });

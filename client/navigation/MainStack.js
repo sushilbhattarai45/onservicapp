@@ -10,12 +10,8 @@ import CreateNewPinScreen from "../screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "../screen/Auth/forgetPinScreen";
 import SPProfileScreen from "../screen/SPProfileScreen";
 import BecomeSPScreen from "../screen/Auth/becomeSPScreen";
-<<<<<<< HEAD
-import SearchPersonListingScreen from "../screen/searchPersonListingScreen";
-
-=======
 import BookMarkScreen from "../screen/bookmarkScreen";
->>>>>>> 7d82d7108a684ac76242a80bdf55d2860a3ed87b
+import CategoryCard from "../component/categoryCard";
 const Stack = createNativeStackNavigator();
 export default function AppStack() {
   return (
@@ -33,6 +29,8 @@ export default function AppStack() {
       <Stack.Screen name="SubCategory" component={SubCategoryScreen} />
       <Stack.Screen name="BecomeSP" component={BecomeSPScreen} />
       <Stack.Screen name="Sp" component={SPProfileScreen} />
+      <Stack.Screen name="CategoryCard" component={CategoryCard} />
+
       <Stack.Screen
         name="CategoryPersonListing"
         component={CategoryPersonListingScreen}

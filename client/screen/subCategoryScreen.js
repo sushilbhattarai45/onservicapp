@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -11,8 +11,28 @@ import SubCategory from "../component/subCategory";
 import Header from "../component/Header";
 import Constants from "expo-constants";
 import { Colors } from "../styles/main";
+import axios from "axios";
+export default function SubCategoryScreen({ route, navigation }) {
+  const { category_id } = route.params;
+  useEffect(() => {
+    async function getSubC() {
+      const data = await axios.post(
+        "http://192.168.100.11:3001/v1/api/subcategories/getfilteredsubcat",
+        {
+          GIVEN_API_KEY: "AXCF",
+          category_id: category_id,
+        }
+      );
+      setSData(data.data.data);
+      setEmptydata(false);
+      console.log(JSON.stringify(sData));
+      console.log("OK");
+    }
+    getSubC();
+  }, []);
+  const [emptydata, setEmptydata] = useState(true);
 
-export default function SubCategoryScreen() {
+  const [sData, setSData] = useState();
   const subcategory = [
     {
       name: "Telivision",
@@ -50,6 +70,7 @@ export default function SubCategoryScreen() {
       <View>
         <Header
           headerText={"Repair"}
+          onPressIcon={() => navigation.navigate("Login")}
           style={{ paddingHorizontal: 24 }}
           icon="arrow-left-line"
         />
@@ -84,14 +105,16 @@ export default function SubCategoryScreen() {
                 marginTop: 24,
               }}
             >
-              {subcategory.map((subcategory) => {
-                return (
-                  <SubCategory
-                    name={subcategory.name}
-                    image={subcategory.img}
-                  />
-                );
-              })}
+              {!emptydata
+                ? sData.map((subcategory) => {
+                    return (
+                      <SubCategory
+                        name={subcategory.subCat_name}
+                        image={subcategory.subCat_photo}
+                      />
+                    );
+                  })
+                : null}
             </View>
           </ScrollView>
         </View>
