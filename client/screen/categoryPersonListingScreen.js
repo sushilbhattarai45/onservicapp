@@ -146,8 +146,6 @@ export default function CategoryPersonListingScreen() {
       }}
     >
       <View style={{ marginTop: 40, marginBottom: 30 }}>
-        <Search rightIcon={"equalizer-fill"} />
-
         <ScrollView
           style={{ backgroundColor: Colors.gray200 }}
           showsVerticalScrollIndicator={false}

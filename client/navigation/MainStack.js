@@ -12,6 +12,7 @@ import SPProfileScreen from "../screen/SPProfileScreen";
 import BecomeSPScreen from "../screen/Auth/becomeSPScreen";
 import BookMarkScreen from "../screen/bookmarkScreen";
 import CategoryCard from "../component/categoryCard";
+import SearchPersonListingScreen from "../screen/searchPersonListingScreen";
 const Stack = createNativeStackNavigator();
 export default function AppStack() {
   return (
@@ -32,8 +33,8 @@ export default function AppStack() {
       <Stack.Screen name="CategoryCard" component={CategoryCard} />
 
       <Stack.Screen
-        name="CategoryPersonListing"
-        component={CategoryPersonListingScreen}
+        name="SearchPersonListing"
+        component={SearchPersonListingScreen}
       />
       <Stack.Screen name="SPProfile" component={SPProfileScreen} />
     </Stack.Navigator>

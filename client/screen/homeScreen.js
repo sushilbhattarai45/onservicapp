@@ -50,6 +50,7 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     async function getData() {
       const number = await AsyncStorage.getItem("user_contact");
+
       if (number.length != 0) {
         setLoggedIn(true);
         let user = await axiosInstance.post("/user/getOneUser", {
@@ -108,7 +109,7 @@ const HomeScreen = ({ navigation }) => {
           <Icon name="qr-scan-line" size={24} color="white" />
         </View>
         <View style={{ paddingHorizontal: 24 }}>
-          <TouchableOpacity onPress={() => alert("Ok")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Search")}>
             <Search editable={false} />
           </TouchableOpacity>
         </View>

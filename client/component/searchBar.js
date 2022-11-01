@@ -7,8 +7,9 @@ export default function Search({
   containerStyle,
   inputStyle,
   rightIcon,
+  onChangeText,
   onRightIconPress,
-  editable,
+  ...props
 }) {
   const [active, setActive] = useState(false);
   return (
@@ -20,13 +21,19 @@ export default function Search({
         style={styles.searchIcon}
       />
       <TextInput
-        editable={editable}
-        onFocus={() => setActive(true)}
-        onBlur={() => setActive(false)}
         style={[styles.input, { ...inputStyle }]}
         placeholder={active ? "" : "Search for services"}
+        onChangeText={onChangeText}
+        {...props}
       />
-      {rightIcon && <Icon name={rightIcon} size={20} color={Colors.gray900} />}
+      {rightIcon && (
+        <Icon
+          name={rightIcon}
+          size={20}
+          color={Colors.gray900}
+          onPress={onRightIconPress}
+        />
+      )}
     </View>
   );
 }
