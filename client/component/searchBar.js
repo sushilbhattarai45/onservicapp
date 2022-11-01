@@ -8,6 +8,7 @@ export default function Search({
   inputStyle,
   rightIcon,
   onRightIconPress,
+  editable,
 }) {
   const [active, setActive] = useState(false);
   return (
@@ -19,6 +20,7 @@ export default function Search({
         style={styles.searchIcon}
       />
       <TextInput
+        editable={editable}
         onFocus={() => setActive(true)}
         onBlur={() => setActive(false)}
         style={[styles.input, { ...inputStyle }]}
@@ -59,4 +61,3 @@ const styles = StyleSheet.create({
     // backgroundColor:'blue'
   },
 });
-

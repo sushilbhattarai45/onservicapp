@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import Search from "../component/searchBar";
@@ -107,7 +108,9 @@ const HomeScreen = ({ navigation }) => {
           <Icon name="qr-scan-line" size={24} color="white" />
         </View>
         <View style={{ paddingHorizontal: 24 }}>
-          <Search />
+          <TouchableOpacity onPress={() => alert("Ok")}>
+            <Search editable={false} />
+          </TouchableOpacity>
         </View>
 
         {/* Categories */}
