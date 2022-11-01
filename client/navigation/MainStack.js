@@ -33,6 +33,10 @@ export default function AppStack() {
       <Stack.Screen name="CategoryCard" component={CategoryCard} />
 
       <Stack.Screen
+        name="CategoryPersonListing"
+        component={CategoryPersonListingScreen}
+      />
+      <Stack.Screen
         name="SearchPersonListing"
         component={SearchPersonListingScreen}
       />

@@ -1,24 +1,42 @@
 import React from "react";
-import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import { Colors } from "../styles/main";
+import { useNavigation } from "@react-navigation/native";
 
 export default function SubCategory({ name, image }) {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.ThemeLightComponentSongsCard}>
-      <View style={styles.SubCategoryCard}>
-        <Image
-          style={styles.MaskGroup}
-          source={{
-            uri: image,
-            headers: {
-              Accept: "*/*",
-            },
-          }}
-        />
-        <View style={styles.AutoLayoutVertical}>
-          <Text style={styles.Txt748}>{name}</Text>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("CategoryPersonListing", {
+            category_id: "123",
+          });
+        }}
+      >
+        <View style={styles.SubCategoryCard}>
+          <Image
+            style={styles.MaskGroup}
+            source={{
+              uri: image,
+              headers: {
+                Accept: "*/*",
+              },
+            }}
+          />
+          <View style={styles.AutoLayoutVertical}>
+            <Text style={styles.Txt748}>{name}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -31,9 +49,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     backgroundColor: Colors.white,
-    paddingHorizontal:24,
-    paddingVertical:12,
-    marginBottom:2
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    marginBottom: 2,
   },
   MaskGroup: {
     width: 60,

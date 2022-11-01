@@ -12,74 +12,13 @@ import Search from "../component/searchBar";
 import { StatusBar } from "expo-status-bar";
 import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
-
-export default function CategoryPersonListingScreen() {
+import Header from "../component/Header";
+export default function CategoryPersonListingScreen({
+  navigation: { goBack },
+}) {
   const [rating, setRating] = useState(3);
 
   const Persons = [
-    {
-      name: "Sushil Bhattarai",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Golpark",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
     {
       name: "RamKumar",
       rating: "4.3",
@@ -145,7 +84,13 @@ export default function CategoryPersonListingScreen() {
         // marginTop: Constants.statusBarHeight + 20,
       }}
     >
-      <View style={{ marginTop: 40, marginBottom: 30 }}>
+      <Header
+        headerText={"Repair"}
+        onPressIcon={() => goBack()}
+        style={{ paddingHorizontal: 10 }}
+        icon="arrow-left-line"
+      />
+      <View style={{ marginTop: 10, marginBottom: 50 }}>
         <ScrollView
           style={{ backgroundColor: Colors.gray200 }}
           showsVerticalScrollIndicator={false}

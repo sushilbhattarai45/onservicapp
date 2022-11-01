@@ -12,8 +12,12 @@ import Header from "../component/Header";
 import Constants from "expo-constants";
 import { Colors } from "../styles/main";
 import axios from "axios";
-export default function SubCategoryScreen({ route, navigation }) {
-  const { category_id } = route.params;
+export default function SubCategoryScreen({
+  route,
+  category_name,
+  navigation: { goBack },
+}) {
+  const { category_id, cat_name } = route.params;
   useEffect(() => {
     async function getSubC() {
       const data = await axios.post(
@@ -69,9 +73,9 @@ export default function SubCategoryScreen({ route, navigation }) {
     >
       <View>
         <Header
-          headerText={"Repair"}
-          onPressIcon={() => navigation.navigate("Login")}
-          style={{ paddingHorizontal: 24 }}
+          headerText={cat_name}
+          onPressIcon={() => goBack()}
+          style={{ paddingHorizontal: 12 }}
           icon="arrow-left-line"
         />
 

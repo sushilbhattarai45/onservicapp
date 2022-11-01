@@ -24,6 +24,7 @@ export default function CategoryCard({
         onPress={() => {
           navigation.navigate("SubCategory", {
             category_id: category_id,
+            cat_name: name,
           });
         }}
       >
