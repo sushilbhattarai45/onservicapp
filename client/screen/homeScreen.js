@@ -48,6 +48,22 @@ const HomeScreen = ({ navigation }) => {
   const [userData, setUserData] = useState();
   useEffect(() => {
     async function getData() {
+<<<<<<< HEAD
+=======
+      const number = await AsyncStorage.getItem("user_contact");
+      if (number.length != 0) {
+        setLoggedIn(true);
+        let user = await axiosInstance.post("/user/getOneUser", {
+          GIVEN_API_KEY: "AXCF",
+          user_contact: number,
+        });
+        setUserData(user?.data.data);
+      }
+
+      let res = await axiosInstance.post("/categories?", {
+        GIVEN_API_KEY: "AXCF",
+      });
+>>>>>>> 7d82d7108a684ac76242a80bdf55d2860a3ed87b
       let featuredOnHome = await axiosInstance.post(
         "/categories/featuredOnHome",
         {

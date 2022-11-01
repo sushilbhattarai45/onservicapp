@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -12,8 +12,35 @@ import Header from "../component/Header";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "../styles/main";
-
+import axios from "axios";
 export default function BookMarkScreen() {
+  useEffect(() => {
+    async function getBm() {
+      const data = await axios.post(
+        "http://192.168.100.11:3001/v1/api/bm/get",
+        {
+          GIVEN_API_KEY: "AXCF",
+          user_id: 9846761072,
+        }
+      );
+      if (data.data.statuscode == 201) {
+        // console.log(data.data.message);
+        const finaldata = data.data.data;
+        console.log(finaldata);
+        setBmPersons(finaldata);
+        setBookmarked(true);
+      } else {
+        console.log(data.data.message);
+        setBookmarked(false);
+      }
+      // console.log(data.data);
+    }
+    getBm();
+    console.log("ok" + BmPersons);
+  }, []);
+
+  const [boomarked, setBookmarked] = useState(false);
+  const [BmPersons, setBmPersons] = useState();
   const Persons = [
     {
       name: "Sushil Bhattarai",
@@ -133,32 +160,33 @@ export default function BookMarkScreen() {
               marginTop: 20,
             }}
           >
-            {Persons.map((persons) => {
-              return (
-                <View
-                  style={{
-                    marginBottom: 2,
-                  }}
-                >
-                  <BookMarkCard
-                    name={persons.name}
-                    image={persons.img}
-                    address={persons.address}
-                    rating={persons.rating}
-                    ratingcount={persons.ratingcount}
-                  />
-                </View>
-              );
-            })}
+            {boomarked
+              ? BmPersons.map((persons) => {
+                  return (
+                    <View
+                      style={{
+                        marginBottom: 2,
+                      }}
+                    >
+                      <BookMarkCard
+                        name={persons.sp_name}
+                        image={persons.sp_profileImage}
+                        address={persons.sp_district + " " + persons.sp_city}
+                        rating={persons.rating}
+                        ratingcount={persons.ratingcount}
+                      />
+                    </View>
+                  );
+                })
+              : null}
           </View>
         </View>
       </View>
       <View
         style={{
-          marginTop: 10,
-          marginBottom: 30,
+          marginTop: 20,
           width: "100%",
-          height: 250,
+          height: 200,
           // backgroundColor: "red",
         }}
       >

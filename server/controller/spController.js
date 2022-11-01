@@ -78,12 +78,12 @@ export const getOneSp = async (req, res) => {
 };
 
 export const getSearchedSp = async (req, res) => {
-  const { GIVEN_API_KEY } = req.body;
+  const { GIVEN_API_KEY, city, skills } = req.body;
   if (GIVEN_API_KEY == API_KEY) {
     try {
       const spdata = await spSchema.find({
-        sp_city: "Hirandani",
-        sp_skills: "plumber",
+        sp_city: city,
+        sp_skills: skills,
       });
       return res.json({ statuscode: 201, data: spdata });
     } catch (e) {

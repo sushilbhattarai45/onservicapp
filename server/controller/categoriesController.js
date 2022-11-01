@@ -140,7 +140,7 @@ export const deleteAllCategories = async (req, res) => {
     }
   } else {
     return res.json({
-      statuscode: 600,
+      statuscode: 700,
       error: "WrongApi Key",
     });
   }
@@ -172,7 +172,7 @@ export const deleteOne = async (req, res) => {
     }
   } else {
     return res.json({
-      statuscode: 600,
+      statuscode: 700,
       error: "WrongApi Key",
     });
   }
@@ -202,7 +202,7 @@ export const featuredOnHome = async (req, res) => {
     }
   } else {
     return res.json({
-      statuscode: 600,
+      statuscode: 700,
       error: "WrongApi Key",
     });
   }
