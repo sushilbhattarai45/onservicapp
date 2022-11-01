@@ -10,12 +10,7 @@ import CreateNewPinScreen from "../screen/Auth/createNewPinScreen";
 import ForgetPinScreen from "../screen/Auth/forgetPinScreen";
 import SPProfileScreen from "../screen/SPProfileScreen";
 import BecomeSPScreen from "../screen/Auth/becomeSPScreen";
-<<<<<<< HEAD
-import SearchPersonListingScreen from "../screen/searchPersonListingScreen";
-
-=======
 import BookMarkScreen from "../screen/bookmarkScreen";
->>>>>>> 7d82d7108a684ac76242a80bdf55d2860a3ed87b
 const Stack = createNativeStackNavigator();
 export default function AppStack() {
   return (

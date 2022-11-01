@@ -2,8 +2,6 @@ import React from "react";
 import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
 import { Colors } from "../styles/main";
 
-
-
 export default function PersonCard({
   name,
   image,
@@ -26,8 +24,7 @@ export default function PersonCard({
         <View>
           <Text style={styles.Txt758}>{name}</Text>
           <Text style={styles.works}>
-            ★{rating}
-            {ratingcount}  •  {address}  •  Technician
+            ★{rating}({ratingcount}) • {address} • Technician
           </Text>
         </View>
         <View
@@ -51,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: Colors.white,
-    paddingVertical:12,
+    paddingVertical: 12,
     paddingHorizontal: 24,
   },
   MaskGroup: {
@@ -72,13 +69,13 @@ const styles = StyleSheet.create({
     fontFamily: "Regular",
     fontWeight: "400",
     color: Colors.black,
-    marginBottom:10,
+    marginBottom: 10,
   },
   works: {
-    textAlign:"center",
-    textAlignVertical:"center",
+    textAlign: "center",
+    textAlignVertical: "center",
     fontFamily: "Regular",
-    fontSize: 12,   
-    color:Colors.gray900
+    fontSize: 12,
+    color: Colors.gray900,
   },
 });
