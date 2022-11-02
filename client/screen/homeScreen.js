@@ -18,7 +18,7 @@ import Button from "../component/buttonComponent";
 import SubCategoryGroupCard from "../component/subCategoryGroupCard";
 import ImageSliderComponent from "../component/imageSlider";
 import Icon from "../component/Icon";
-import { S } from "@env";
+// import { S, URL } from "@env";
 
 import { axiosInstance } from "../component/tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
