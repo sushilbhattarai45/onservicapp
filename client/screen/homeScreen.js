@@ -137,6 +137,7 @@ const HomeScreen = ({ navigation }) => {
                         {categories[index + 1] && (
                           <CategoryCard
                             name={categories[index + 1]?.category_name}
+                            category_id={categories[index + 1]?._id}
                             containerStyle={{ marginLeft: 16 }}
                           />
                         )}
@@ -184,6 +185,7 @@ const HomeScreen = ({ navigation }) => {
                 onPress={() => {
                   navigation.navigate("SubCategory", {
                     category_id: featured?.catId,
+                    cat_name: featured?.catName,
                   });
                 }}
                 style={{
