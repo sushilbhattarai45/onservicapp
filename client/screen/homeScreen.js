@@ -51,17 +51,18 @@ const HomeScreen = ({ navigation }) => {
   const [userData, setUserData] = useState();
   useEffect(() => {
     async function getData() {
-      const number = await AsyncStorage.getItem("user_contact");
+      // const number = await AsyncStorage.getItem("user_contact");
 
-      if (number.length != 0) {
-        setLoggedIn(true);
-        let user = await axiosInstance.post("/user/getOneUser", {
-          GIVEN_API_KEY: "AXCF",
-          user_contact: number,
-        });
-        setUserData(user?.data.data);
-      }
+      // if (number.length != 0) {
+      //   setLoggedIn(true);
+      //   let user = await axiosInstance.post("/user/getOneUser", {
+      //     GIVEN_API_KEY: "AXCF",
+      //     user_contact: number,
+      //   });
+      //   setUserData(user?.data.data);
+      // }
 
+      console.log('hello')
       let res = await axiosInstance.post("/categories?", {
         GIVEN_API_KEY: "AXCF",
       });

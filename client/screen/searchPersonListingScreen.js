@@ -10,6 +10,7 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Keyboard,
+  TextInput,
 } from "react-native";
 import PersonCard from "../component/personCard";
 import Search from "../component/searchBar";
@@ -143,10 +144,14 @@ export default function SearchPersonListingScreen() {
 
     //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
   ];
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggestionTouched, setSuggestionsTouched] = useState(false);
+  const [suggestionsActive, setSuggestionsActive] = useState(false);
+  const [value, setValue] = useState("");
 
   const [searchData, setSearchData] = useState(null);
-  const [searchText, setSearchText] = useState("");
-  const [searching, setSearching] = useState(false);
+  // const [searchText, setSearchText] = useState("");
+  // const [searching, setSearching] = useState(false);
 
   const getPeopleList = async (location, skill) => {
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
@@ -154,11 +159,25 @@ export default function SearchPersonListingScreen() {
       city: "ram",
       GIVEN_API_KEY: "AXCF",
     });
-    console.log(res.data.data);
     if (res.data.data.length > 0) {
       setSearchData(res.data.data);
     } else {
       setSearchData(null);
+    }
+  };
+
+  const handleSearchText = (text) => {
+    setValue(text);
+    setSearchData([]);
+    if (text.length > 1) {
+      const filterSuggestions = subCategories.filter(
+        (suggestion) =>
+          suggestion.subCat_name.toLowerCase().indexOf(text.toLowerCase()) > -1
+      );
+      setSuggestions(filterSuggestions);
+      setSuggestionsActive(true);
+    } else {
+      setSuggestionsActive(false);
     }
   };
   return (
@@ -174,17 +193,23 @@ export default function SearchPersonListingScreen() {
         <Search
           containerStyle={{ padding: 0 }}
           rightIcon={"equalizer-fill"}
-          onBlur={() => setSearching(false)}
-          onFocus={() => setSearching(true)}
-          value={searchText}
-          onChangeText={setSearchText}
+          onBlur={() => setSuggestionsTouched(true)}
+          // onFocus={() => setSearching(true)}
+          value={value}
+          onChangeText={handleSearchText}
+          onSubmitEditing={() => {
+            console.log("hello")
+            setSuggestions([]);
+            setSuggestionsActive(false);
+            getPeopleList("", value);
+          }}  
         />
       </View>
       {/* Suggestions */}
-      {searching && (
+      {suggestionsActive && (
         <View style={{ marginTop: 16, backgroundColor: Colors.white }}>
           <ScrollView keyboardShouldPersistTaps={"handled"}>
-            {subCategories.map((item, index) => {
+            {suggestions.map((item, index) => {
               return (
                 <Pressable
                   style={{
@@ -196,8 +221,9 @@ export default function SearchPersonListingScreen() {
                   key={index.toString()}
                   onPress={() => {
                     Keyboard.dismiss();
-                    console.log("hello");
-                    setSearchText(item.subCat_name);
+                    setSuggestions([]);
+                    setValue(item.subCat_name);
+                    setSuggestionsActive(false);
                     getPeopleList("", item.subCat_name);
                   }}
                 >
@@ -209,7 +235,7 @@ export default function SearchPersonListingScreen() {
         </View>
       )}
       {/* PersonList */}
-      {searchData && !searching && (
+      {searchData && !suggestionsActive && value.length > 0 && (
         <ScrollView style={{ marginTop: 16, flex: 1 }}>
           {searchData.map((person, index) => {
             return (
@@ -234,7 +260,7 @@ export default function SearchPersonListingScreen() {
         </ScrollView>
       )}
       {/* notfound */}
-      {!searchData && !searching && (
+      {!searchData && !suggestionsActive && value.length > 1 && (
         <View
           style={{
             flex: 1,
