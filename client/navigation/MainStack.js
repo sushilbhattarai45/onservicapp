@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator();
 export default function AppStack() {
   return (
     <Stack.Navigator
-      initialRouteName="BecomeSP"
+      initialRouteName="HomeTabs"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="HomeTabs" component={MyTabs} />

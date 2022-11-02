@@ -199,11 +199,11 @@ export default function SearchPersonListingScreen() {
           value={value}
           onChangeText={handleSearchText}
           onSubmitEditing={() => {
-            console.log("hello")
+            console.log("hello");
             setSuggestions([]);
             setSuggestionsActive(false);
             getPeopleList("", value);
-          }}  
+          }}
         />
       </View>
       {/* Suggestions */}
