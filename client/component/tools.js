@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { URL } from "@env";
 export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2 - lat1); // deg2rad below
@@ -21,6 +21,6 @@ function deg2rad(deg) {
 
 export const axiosInstance = axios.create({
   // baseURL: "http:/192.168.18.7:3001/v1/api/",
-  baseURL: "http://192.168.100.11:3001/v1/api/",
+  baseURL: URL,
   headers: { "Content-Type": "application/json" },
 });

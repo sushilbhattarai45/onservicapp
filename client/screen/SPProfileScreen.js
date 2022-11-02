@@ -66,7 +66,6 @@ const Persons = [
   //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
 ];
 
-
 const ActionIcon = ({ name, onPress }) => {
   return (
     <Pressable style={styles.actionIcon} onPress={onPress}>
@@ -336,7 +335,7 @@ const SPProfileScreen = () => {
             showsHorizontalScrollIndicator={false}
             data={Persons}
             renderItem={({ item, index }) => {
-              return <ReviewCard/>;
+              return <ReviewCard />;
             }}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -398,27 +397,63 @@ const SPProfileScreen = () => {
               resizeMode="cover"
             />
             <View>
-              <View style={{ flexDirection: "row", alignItems: "center", marginTop:4 }}>
-                <Icon name="phone-fill" size={14}  color={Colors.gray900}/>
-                <Text style={{ fontFamily: "Regular", fontSize: 12, color:Colors.gray900 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 4,
+                }}
+              >
+                <Icon name="phone-fill" size={14} color={Colors.gray900} />
+                <Text
+                  style={{
+                    fontFamily: "Regular",
+                    fontSize: 12,
+                    color: Colors.gray900,
+                  }}
+                >
                   {" "}
                   9847000000
                 </Text>
               </View>
-              <View style={{ flexDirection: "row", alignItems: "center", marginTop:4 }}>
-                <Icon name="map-pin-fill" size={14}  color={Colors.gray900}/>
-                <Text style={{ fontFamily: "Regular", fontSize: 12, color:Colors.gray900 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 4,
+                }}
+              >
+                <Icon name="map-pin-fill" size={14} color={Colors.gray900} />
+                <Text
+                  style={{
+                    fontFamily: "Regular",
+                    fontSize: 12,
+                    color: Colors.gray900,
+                  }}
+                >
                   {" "}
-                 Butwal 3 Golpark
+                  Butwal 3 Golpark
                 </Text>
               </View>
-              <View style={{flexDirection:"row", alignItems:"center", marginTop:4}}>
-              <Icon name="chat-1-fill" size={14} color={Colors.gray900} />
-              <Text style={{ fontFamily: "Regular", fontSize: 12, color:Colors.gray900 }}>
-                {" "}
-                onservic@gmail.com
-              </Text>
-            </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 4,
+                }}
+              >
+                <Icon name="chat-1-fill" size={14} color={Colors.gray900} />
+                <Text
+                  style={{
+                    fontFamily: "Regular",
+                    fontSize: 12,
+                    color: Colors.gray900,
+                  }}
+                >
+                  {" "}
+                  onservic@gmail.com
+                </Text>
+              </View>
             </View>
           </View>
         </View>
