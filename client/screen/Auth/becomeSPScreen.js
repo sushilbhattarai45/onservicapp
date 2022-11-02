@@ -5,9 +5,14 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  Image,
   TextInput,
   View,
+  ActivityIndicator,
+  Touchable,
+  TouchableOpacity,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 import * as yup from "yup";
 
@@ -21,7 +26,7 @@ import Icon from "../../component/Icon";
 import { axiosInstance } from "../../component/tools";
 import axios from "axios";
 
-const BASE_OUR_API_URL = "http://192.168.18.7:3001";
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -120,6 +125,92 @@ const BecomeSPScreen = () => {
     });
     console.log(response.data);
   };
+  const [file, setFile] = useState();
+  const [imgFile, setImgFile] = useState([]);
+  const [loading, setLoading] = useState(false);
+  // const mulFile = [];
+  const [img, setImg] = useState(false);
+  const selectFile = async () => {
+    setLoading(true);
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsMultipleSelection: true,
+      });
+
+      console.log(result.selected);
+      console.log("okok" + file);
+      // result.selected.map((item) => {
+      //   mulFile.push(item);
+      // });
+      // uploadImage();
+      if (!result.cancelled) {
+        console.log(result.selected);
+        setImgFile((prev) => {
+          setLoading(false);
+          if (result?.selected) {
+            return [...prev, ...result.selected];
+
+            setLoading(false);
+          } else return [...prev, result];
+        });
+        setImg(true);
+        setLoading(false);
+        // console.log("ok" + JSON.stringify(mulFile));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const uploadImage = async (file) => {
+    // console.log("the file you have choosed is ");
+    // console.log(file);
+    try {
+      // checks if the file is empty
+      if (file === null) {
+        setError({
+          target: "image",
+          message: "Sorry ,There is some error with the profile picture!!",
+        });
+        return null;
+      }
+      // setError(false);
+      // if not empty creating a form data to send to upload the image to the server
+      // alert("ok");
+      file.map(async (item) => {
+        const imageToUpload = item;
+        const data = new FormData();
+
+        data.append(
+          "profile",
+          {
+            uri: imageToUpload?.uri,
+            name: imageToUpload?.uri,
+            type: "image/jpg",
+          },
+          "myfile"
+        );
+
+        const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
+        console.log("s" + serverUrl);
+        const response = await axios(serverUrl, {
+          method: "post",
+          data: data,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        var url = response?.data?.fileName;
+        const filename = url.split("\\");
+        const finalname = filename[0] + "/" + filename[1];
+        setImg(true);
+        return finalname;
+      });
+    } catch (e) {
+      alert("Error! Sorry");
+    }
+  };
 
   return (
     <ScrollView
@@ -128,7 +219,7 @@ const BecomeSPScreen = () => {
     >
       <View style={styles.container}>
         <Header icon="arrow-left-line" />
-        <Text style={styles.heading}>BE OUR PARTNER</Text>
+        <Text style={styles.heading}>BE OUR PARTNER{file}</Text>
         {/* <KeyboardAvoidingView style={{ flex: 1 }}> */}
         <Formik
           initialValues={{
@@ -471,6 +562,122 @@ const BecomeSPScreen = () => {
                   <Text style={{ color: "red" }}>{errors.skills}</Text>
                 ) : null}
               </View>
+              <View style={{ marginTop: 12 }}>
+                <Text>Upload Photos of your work!</Text>
+                <View
+                  style={{
+                    display: "flex",
+                    marginTop: 8,
+                    flexWrap: "wrap",
+                    alignItems: "flex-start",
+                    padding: 10,
+                    borderWidth: 0.8,
+                    borderColor: Colors.gray900,
+                    flexDirection: "row",
+                  }}
+                >
+                  {img
+                    ? imgFile?.map((item, index) => (
+                        <TouchableOpacity
+                          onPress={() => {
+                            // setImgFile((prev) => {
+                            //   prev.filter((item1, index1) => index1 != index);
+                            // });
+
+                            setImgFile((current) =>
+                              current.filter((file, idx) => idx !== index)
+                            );
+                          }}
+                        >
+                          <View
+                            style={{
+                              height: 60,
+                              width: 60,
+                              marginBottom: 6,
+                              marginRight: 4,
+                              position: "relative",
+                              flexWrap: "wrap",
+                              borderRadius: 10,
+                              alignItems: "center",
+                              justifyContent: "center",
+                              alignContent: "center",
+                            }}
+                          >
+                            <View
+                              style={{
+                                backgroundColor: "white",
+                                borderRadius: 20,
+                                width: 20,
+                                height: 20,
+                                zIndex: 9,
+                                top: -1.5,
+                                right: -1.5,
+                                position: "absolute",
+                              }}
+                            >
+                              <Icon
+                                style={{}}
+                                name="close-circle-fill"
+                                size={20}
+                                color={Colors.gray900}
+                              />
+                            </View>
+                            <Image
+                              style={{
+                                alignSelf: "center",
+                                alignSelf: "center",
+                                height: "100%",
+                                borderRadius: 10,
+                                width: "95%",
+                              }}
+                              source={{
+                                uri: item?.uri
+                                  ? item.uri
+                                  : "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
+                                headers: {
+                                  Accept: "*/*",
+                                },
+                              }}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      ))
+                    : null}
+                  {loading ? (
+                    <ActivityIndicator
+                      size="large"
+                      style={{
+                        marginTop: 8,
+                      }}
+                      color="#0000ff"
+                    />
+                  ) : (
+                    <View
+                      style={{
+                        height: 60,
+                        width: 60,
+
+                        borderRadius: 5,
+                        marginBottom: 4,
+                        marginLeft: 4,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        backgroundColor: Colors.gray500,
+                      }}
+                    >
+                      <Icon
+                        onPress={() => {
+                          selectFile();
+                        }}
+                        name="add-line"
+                        size={24}
+                        color="white"
+                      />
+                    </View>
+                  )}
+                </View>
+              </View>
               {/* SCheckBox */}
               <View
                 style={{
@@ -502,6 +709,7 @@ const BecomeSPScreen = () => {
                       color: errors.accepted ? Colors.black : Colors.red,
                       fontSize: 12,
                     }}
+                    onPress={() => uploadImage(imgFile)}
                   >
                     I agree to the{" "}
                     <Text

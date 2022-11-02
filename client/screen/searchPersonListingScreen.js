@@ -106,42 +106,6 @@ export default function SearchPersonListingScreen() {
       img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
     },
 
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
     //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
   ];
   const [suggestions, setSuggestions] = useState([]);
@@ -154,6 +118,7 @@ export default function SearchPersonListingScreen() {
   // const [searching, setSearching] = useState(false);
 
   const getPeopleList = async (location, skill) => {
+    https;
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
       city: "ram",
@@ -198,11 +163,11 @@ export default function SearchPersonListingScreen() {
           value={value}
           onChangeText={handleSearchText}
           onSubmitEditing={() => {
-            console.log("hello")
+            console.log("hello");
             setSuggestions([]);
             setSuggestionsActive(false);
             getPeopleList("", value);
-          }}  
+          }}
         />
       </View>
       {/* Suggestions */}
