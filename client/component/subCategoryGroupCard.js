@@ -7,12 +7,27 @@ import {
   ImageBackground,
   Pressable,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export default function SubCategoryGroupCard({ containerStyle, onPress, name }) {
+export default function SubCategoryGroupCard({
+  containerStyle,
+  onPress,
+  name,
+  cat_name,
+  cat_id,
+}) {
+  const navigation = useNavigation();
+
   return (
     <Pressable
       style={[styles.container, { ...containerStyle }]}
-      onPress={onPress}
+      onPress={() =>
+        navigation.navigate("CategoryPersonListing", {
+          cat_name: cat_name,
+          sub_name: name,
+          category_id: cat_id,
+        })
+      }
     >
       <Image
         style={styles.image}

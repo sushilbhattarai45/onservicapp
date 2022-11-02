@@ -161,9 +161,15 @@ const HomeScreen = ({ navigation }) => {
           </Text>
           <View style={{ alignItems: "center" }}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <SubCategoryGroupCard name={featured?.subCat[0]?.subCat_name} />
+              <SubCategoryGroupCard
+                name={featured?.subCat[0]?.subCat_name}
+                cat_name={featured?.catName}
+                cat_id={featured?.catId}
+              />
               <SubCategoryGroupCard
                 name={featured?.subCat[1]?.subCat_name}
+                cat_name={featured?.catName}
+                cat_id={featured?.catId}
                 containerStyle={{ marginLeft: 16 }}
               />
             </View>
@@ -174,9 +180,15 @@ const HomeScreen = ({ navigation }) => {
                 marginTop: 16,
               }}
             >
-              <SubCategoryGroupCard name={featured?.subCat[2]?.subCat_name} />
+              <SubCategoryGroupCard
+                name={featured?.subCat[2]?.subCat_name}
+                cat_name={featured?.catName}
+                cat_id={featured?.catId}
+              />
               <SubCategoryGroupCard
                 name={featured?.subCat[3]?.subCat_name}
+                cat_name={featured?.catName}
+                cat_id={featured?.catId}
                 containerStyle={{ marginLeft: 16 }}
               />
             </View>
