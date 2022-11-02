@@ -14,6 +14,7 @@ import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
 import Header from "../component/Header";
 import axios from "axios";
+import { axiosInstance } from "../component/tools";
 export default function CategoryPersonListingScreen({
   route,
   navigation,
@@ -86,14 +87,11 @@ export default function CategoryPersonListingScreen({
     });
 
     async function getSpData() {
-      const data = await axios.post(
-        "http://192.168.100.11:3001/v1/api/sp/getSearchedSp",
-        {
-          GIVEN_API_KEY: "AXCF",
-          city: "ram",
-          skill: sub_name,
-        }
-      );
+      const data = await axiosInstance.post("sp/getSearchedSp", {
+        GIVEN_API_KEY: "AXCF",
+        city: "ram",
+        skill: sub_name,
+      });
       setSpData(data.data.data);
       setHasData(true);
       console.log("ok" + JSON.stringify(data.data.data));
@@ -115,7 +113,7 @@ export default function CategoryPersonListingScreen({
       }}
     >
       <Header
-        headerText={cat_name}
+        headerText={sub_name}
         onPressIcon={() => goBack()}
         style={{ paddingHorizontal: 10 }}
         icon="arrow-left-line"

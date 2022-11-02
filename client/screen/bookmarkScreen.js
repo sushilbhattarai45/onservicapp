@@ -13,16 +13,14 @@ import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "../styles/main";
 import axios from "axios";
+import { axiosInstance } from "../component/tools";
 export default function BookMarkScreen() {
   useEffect(() => {
     async function getBm() {
-      const data = await axios.post(
-        "http://192.168.100.11:3001/v1/api/bm/get",
-        {
-          GIVEN_API_KEY: "AXCF",
-          user_id: 9846761072,
-        }
-      );
+      const data = await axiosInstance.post("bm/get", {
+        GIVEN_API_KEY: "AXCF",
+        user_id: 9846761072,
+      });
       if (data.data.statuscode == 201) {
         // console.log(data.data.message);
         const finaldata = data.data.data;
