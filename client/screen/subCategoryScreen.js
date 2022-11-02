@@ -113,6 +113,8 @@ export default function SubCategoryScreen({
                 ? sData.map((subcategory) => {
                     return (
                       <SubCategory
+                        category_id={category_id}
+                        cat_name={cat_name}
                         name={subcategory.subCat_name}
                         image={subcategory.subCat_photo}
                       />

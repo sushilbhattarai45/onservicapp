@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -13,11 +13,13 @@ import { StatusBar } from "expo-status-bar";
 import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
 import Header from "../component/Header";
+import axios from "axios";
 export default function CategoryPersonListingScreen({
+  route,
+  navigation,
   navigation: { goBack },
 }) {
   const [rating, setRating] = useState(3);
-
   const Persons = [
     {
       name: "RamKumar",
@@ -75,17 +77,45 @@ export default function CategoryPersonListingScreen({
 
     //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
   ];
+  const { category_id, cat_name, sub_name } = route.params;
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getSpData();
+      //Put your Data loading function here instead of my loadData()
+    });
+
+    async function getSpData() {
+      const data = await axios.post(
+        "http://192.168.100.11:3001/v1/api/sp/getSearchedSp",
+        {
+          GIVEN_API_KEY: "AXCF",
+          city: "ram",
+          skill: sub_name,
+        }
+      );
+      setSpData(data.data.data);
+      setHasData(true);
+      console.log("ok" + JSON.stringify(data.data.data));
+    }
+    return unsubscribe;
+    // getSpData();
+  }, [navigation]);
+  const [spData, setSpData] = useState();
+  const [hasData, setHasData] = useState(false);
 
   return (
     <View
       style={{
         backgroundColor: Colors.gray200,
+        flex: 1,
+        paddingBottom: 20,
         // margin:ConnectionStates,
         // marginTop: Constants.statusBarHeight + 20,
       }}
     >
       <Header
-        headerText={"Repair"}
+        headerText={cat_name}
         onPressIcon={() => goBack()}
         style={{ paddingHorizontal: 10 }}
         icon="arrow-left-line"
@@ -119,23 +149,25 @@ export default function CategoryPersonListingScreen({
             />
           </View>
           <View style={{ marginTop: 20 }}>
-            {Persons.map((persons) => {
-              return (
-                <View
-                  style={{
-                    marginTop: 2,
-                  }}
-                >
-                  <PersonCard
-                    name={persons.name}
-                    image={persons.img}
-                    address={persons.address}
-                    rating={persons.rating}
-                    ratingcount={persons.ratingcount}
-                  />
-                </View>
-              );
-            })}
+            {hasData
+              ? spData.map((persons) => {
+                  return (
+                    <View
+                      style={{
+                        marginTop: 2,
+                      }}
+                    >
+                      <PersonCard
+                        name={persons.sp_name}
+                        image={persons.sp_profileimage}
+                        address={persons.sp_city + " " + persons.sp_district}
+                        rating={persons.rating}
+                        ratingcount={persons.ratingcount}
+                      />
+                    </View>
+                  );
+                })
+              : null}
           </View>
         </ScrollView>
       </View>

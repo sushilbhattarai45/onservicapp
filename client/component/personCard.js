@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: Colors.white,
-    paddingVertical: 12,
+    padingVertical: 12,
     paddingHorizontal: 24,
   },
   MaskGroup: {

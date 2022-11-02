@@ -10,7 +10,7 @@ import {
 import { Colors } from "../styles/main";
 import { useNavigation } from "@react-navigation/native";
 
-export default function SubCategory({ name, image }) {
+export default function SubCategory({ name, image, cat_name, category_id }) {
   const navigation = useNavigation();
 
   return (
@@ -18,7 +18,9 @@ export default function SubCategory({ name, image }) {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("CategoryPersonListing", {
-            category_id: "123",
+            category_id: category_id,
+            cat_name: cat_name,
+            sub_name: name,
           });
         }}
       >
