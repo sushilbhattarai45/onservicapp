@@ -159,7 +159,7 @@ export default function CategoryPersonListingScreen({
                     >
                       <PersonCard
                         name={persons.sp_name}
-                        image={persons.sp_profileimage}
+                        image={persons.sp_profileImage}
                         address={persons.sp_city + " " + persons.sp_district}
                         rating={persons.rating}
                         ratingcount={persons.ratingcount}
