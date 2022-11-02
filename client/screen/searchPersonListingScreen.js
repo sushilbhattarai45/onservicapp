@@ -149,6 +149,7 @@ export default function SearchPersonListingScreen() {
   const [searching, setSearching] = useState(false);
 
   const getPeopleList = async (location, skill) => {
+    https;
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
       city: "ram",
