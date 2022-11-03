@@ -72,3 +72,23 @@ export const getOneSpReview = async (req, res) => {
     return res.json({ error: "Wrong Api Key", statuscode: 700 });
   }
 };
+
+export const deleteAllReviews = async (req, res) => {
+  const { GIVEN_API_KEY } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const deleteReview = await ReviewSchema.remove();
+      return res.json({
+        statuscode: 200,
+        message: "sucessfully deleted all data",
+      });
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
+      error: "WrongApi Key",
+    });
+  }
+};
