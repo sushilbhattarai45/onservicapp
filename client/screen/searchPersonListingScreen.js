@@ -42,13 +42,16 @@ export default function SearchPersonListingScreen({navigation}) {
   // const [searching, setSearching] = useState(false);
 
   const getPeopleList = async (location, skill) => {
+    console.log(filter.city)
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
-      city: filter.city,
+      city: filter?.city,
       GIVEN_API_KEY: "AXCF",
     });
+    console.log(res.data)
     if (res.data.data.length > 0) {
       setSearchData(res.data.data);
+      console.log(res.data.data)
     } else {
       setSearchData(null);
     }

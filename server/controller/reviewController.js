@@ -24,11 +24,11 @@ export const postReview = async (req, res) => {
   }
 };
 export const getOneSpReview = async (req, res) => {
-  const { GIVEN_API_KEY, sp_contact } = req.body;
+  const { GIVEN_API_KEY, id } = req.body;
 
   if (GIVEN_API_KEY == API_KEY) {
     const postData = await ReviewSchema.find({
-      sp_contact: sp_contact,
+      sp_id: id,
     });
     if (postData.length != 0) {
       return res.json({
