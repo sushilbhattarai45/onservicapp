@@ -43,6 +43,7 @@ export const postSp = async (req, res) => {
     return res.json({ statuscode: 700, message: "Wrong Api Key" });
   }
 };
+
 export const getAllSp = async (req, res) => {
   const { GIVEN_API_KEY } = req.body;
   if (GIVEN_API_KEY == API_KEY) {
