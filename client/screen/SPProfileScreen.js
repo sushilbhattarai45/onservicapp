@@ -97,7 +97,9 @@ const SkillPill = ({ name }) => {
     </View>
   );
 };
-const SPProfileScreen = () => {
+const SPProfileScreen = ({navigation, route}) => {
+  const {sp} = route.params;
+  console.log(sp)
   const [rating, setRating] = useState(3.5);
   const popup = createRef();
   const popupQr = createRef();
@@ -471,35 +473,7 @@ const SPProfileScreen = () => {
             paddingVertical: 16,
           }}
         >
-          <Text style={{ fontSize: 28, fontFamily: "Black", marginBottom: 16 }}>
-            Share Your Profile
-          </Text>
-          <Image
-            style={{ height: 200, width: 200, marginBottom: 8 }}
-            source={{
-              uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU",
-              headers: {
-                Accept: "*/*",
-              },
-            }}
-          />
-          <Text
-            style={{ fontFamily: "Black", color: Colors.primary, fontSize: 20 }}
-          >
-            Onservic
-          </Text>
-          <Text style={{ fontFamily: "Black", fontSize: 20 }}>
-            Shakuntala Pandey
-          </Text>
-          <Text
-            style={{
-              fontFamily: "Regular",
-              color: Colors.gray900,
-              fontSize: 16,
-            }}
-          >
-            977-98000000
-          </Text>
+          
         </View>
       </ModalPopup>
       <ModalPopup

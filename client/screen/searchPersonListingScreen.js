@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { createRef, useContext, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -20,8 +20,11 @@ import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
 import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
+import ModalPopup from "../component/Modal";
+import { Dropdown } from "react-native-element-dropdown";
+import { Districts } from "../component/district";
 
-export default function SearchPersonListingScreen() {
+export default function SearchPersonListingScreen({navigation}) {
   const { subCategories } = useContext(AppContext);
 
   const [suggestions, setSuggestions] = useState([]);
@@ -30,13 +33,18 @@ export default function SearchPersonListingScreen() {
   const [value, setValue] = useState("");
 
   const [searchData, setSearchData] = useState(null);
+  const popup = createRef();
+
+  const [citiesList, setCitiesList] = useState(Districts);
+  const [filter, setFilter] = useState({ city: "" });
+
   // const [searchText, setSearchText] = useState("");
   // const [searching, setSearching] = useState(false);
 
   const getPeopleList = async (location, skill) => {
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
-      city: "ram",
+      city: filter.city,
       GIVEN_API_KEY: "AXCF",
     });
     if (res.data.data.length > 0) {
@@ -74,6 +82,7 @@ export default function SearchPersonListingScreen() {
           containerStyle={{ padding: 0 }}
           rightIcon={"equalizer-fill"}
           onBlur={() => setSuggestionsTouched(true)}
+          onRightIconPress={() => popup.current.show()}
           // onFocus={() => setSearching(true)}
           value={value}
           onChangeText={handleSearchText}
@@ -133,6 +142,7 @@ export default function SearchPersonListingScreen() {
                   address={person.sp_city + person.sp_district}
                   rating={5}
                   ratingcount={5}
+                  onPress={()=> navigation.navigate('Sp',{sp:person})}
                 />
               </View>
             );
@@ -194,6 +204,53 @@ export default function SearchPersonListingScreen() {
           </View>
         </View>
       )}
+      <ModalPopup
+        ref={popup}
+        animationType="fade"
+        onTouchOutside={() => popup.current.close()}
+      >
+        <View
+          style={{
+            // paddingHorizontal: 16,
+            paddingVertical: 16,
+          }}
+        >
+          <Text style={{ fontSize: 28, fontFamily: "Black", marginBottom: 16 }}>
+            Search Filter
+          </Text>
+          <View
+            style={{
+              marginTop: 12,
+            }}
+          >
+            <Text>City *</Text>
+            <Dropdown
+              style={{
+                width: "100%",
+                marginTop: 8,
+                marginRight: -10,
+                borderWidth: 1,
+                padding: 16,
+                borderRadius: 4,
+                height: 50,
+                borderColor: Colors.black,
+              }}
+              placeholderStyle={{ color: Colors.gray900, fontSize: 14 }}
+              data={citiesList ? citiesList : []}
+              labelField="label"
+              valueField="label"
+              placeholder={"Select item"}
+              search
+              searchPlaceholder="Search..."
+              value={filter.city}
+              onChange={(item) => {
+                setFilter({ ...filter, city: item.label });
+                console.log(item.label);
+              }}
+            />
+          </View>
+        </View>
+      </ModalPopup>
     </ScrollView>
   );
 }
