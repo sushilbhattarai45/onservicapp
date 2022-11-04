@@ -25,7 +25,7 @@ export default function PersonCard({
     <Pressable
       style={styles.ThemeLightComponentSongsCard}
       onPress={() => {
-        navigation.navigate("SPProfile", {
+        navigation.navigate("Sp", {
           sp_contact: sp_contact,
         });
       }}
