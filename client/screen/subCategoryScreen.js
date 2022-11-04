@@ -66,6 +66,7 @@ export default function SubCategoryScreen({
     <View
       style={{
         flex: 1,
+        marginBottom: 90,
         display: "flex",
         backgroundColor: Colors.gray200,
       }}
