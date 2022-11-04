@@ -256,7 +256,7 @@ const HomeScreen = ({ navigation }) => {
                     />
                     {categories[index + 1] && (
                       <NewlyAddedServices
-                        cat_id={item._id}
+                        cat_id={newaddons[index + 1]?._id}
                         navigation={navigation}
                         name={newaddons[index + 1]?.category_name}
                         containerStyle={{ marginTop: 24, marginRight: 24 }}
