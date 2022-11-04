@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useEffect } from "react";
 import {
   ScrollView,
   View,
@@ -8,6 +8,7 @@ import {
   FlatList,
   TextInput,
   Pressable,
+  Linking,
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 
@@ -21,6 +22,7 @@ import CategoryCard from "../component/categoryCard";
 import Button from "../component/buttonComponent";
 import ModalPopup from "../component/Modal";
 import ReviewCard from "../component/ReviewCard";
+import { axiosInstance } from "../component/tools";
 
 const Persons = [
   {
@@ -97,11 +99,22 @@ const SkillPill = ({ name }) => {
     </View>
   );
 };
-const SPProfileScreen = () => {
-  const [rating, setRating] = useState(3.5);
+const SPProfileScreen = ({ navigation, route }) => {
+  const { sp } = route.params;
+  const [rating, setRating] = useState(sp.sp_rating ? sp.sp_rating : 5);
   const popup = createRef();
   const popupQr = createRef();
-  return (
+
+  useEffect(() => {
+    const getReviews = async (id) => {
+      let res = await axiosInstance.post("/review/getSpreview", {  
+        GIVEN_API_KEY: "AXCF",  
+      }); 
+      console.log(res.data);
+    };
+    getReviews();
+  });
+  return (  
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={{ flex: 1 }}>
         <Header
@@ -141,8 +154,28 @@ const SPProfileScreen = () => {
             />
             {/* Buttons call/message/bookmark */}
             <View style={{ flexDirection: "row", marginBottom: 12 }}>
-              <ActionIcon name="phone-line" />
-              <ActionIcon name="chat-1-line" />
+              <ActionIcon
+                name="phone-line"
+                onPress={() => {
+                  Linking.openURL(`tel:${sp.sp_officeNumber}`);
+                }}
+              />
+              <ActionIcon
+                name="chat-1-line"
+                onPress={() => {
+                  let url =
+                    "whatsapp://send?text=" +
+                    "Hello" +
+                    "&phone=+9779742993345"
+                  Linking.openURL(url)
+                    .then((data) => {
+                      console.log("WhatsApp Opened");
+                    })
+                    .catch(() => {
+                      alert("Make sure Whatsapp installed on your device");
+                    });
+                }}
+              />
               <ActionIcon name="map-pin-line" />
               <ActionIcon name="bookmark-2-line" />
             </View>
@@ -158,13 +191,15 @@ const SPProfileScreen = () => {
               paddingHorizontal: 24,
             }}
           >
-            Shakuntala Pandey{" "}
-            <Icon
-              name="checkbox-circle-fill"
-              color="#2A65FD"
-              size={16}
-              style={{ marginLeft: 8 }}
-            />
+            {sp.sp_name}{" "}
+            {sp.sp_sp_verified && (
+              <Icon
+                name="checkbox-circle-fill"
+                color="#2A65FD"
+                size={16}
+                style={{ marginLeft: 8 }}
+              />
+            )}
           </Text>
           {/* Date and address Info */}
           <View style={{ flexDirection: "row", paddingHorizontal: 24 }}>
@@ -184,7 +219,7 @@ const SPProfileScreen = () => {
                   marginLeft: 4,
                 }}
               >
-                Butwal 3 Golpark
+                {sp.sp_street + " " + sp.sp_city}
               </Text>
             </View>
             <View
@@ -217,13 +252,9 @@ const SPProfileScreen = () => {
               paddingHorizontal: 24,
             }}
           >
-            <SkillPill name="Air Conditioner Repair" />
-            <SkillPill name="Telivision Repair" />
-            <SkillPill name="Car Renting" />
-            <SkillPill name="Carpenter" />
-            <SkillPill name="Plumber" />
-            <SkillPill name="Air Conditioner Repair" />
-            <SkillPill name="Carpenter" />
+            {sp.sp_skills.map((name) => (
+              <SkillPill name={name} />
+            ))}
           </View>
           {/* About */}
           <>
@@ -249,14 +280,7 @@ const SPProfileScreen = () => {
                 letterSpacing: 0.2,
               }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in
-              ante at eros sagittis tristique sed vitae tortor. Quisque sagittis
-              augue at metus ornare, et semper risus ornare. Suspendisse
-              imperdiet lacus vel sollicitudin volutpat. Etiam fringilla urna
-              libero, sed ultricies ex feugiat eu. Curabitur eu aliquam lorem.
-              Nulla facilisi. Pellentesque feugiat rutrum lacus posuere laoreet.
-              Etiam a elit quam. Morbi metus ligula, fringilla in sapien quis,
-              varius posuere purus.
+              {sp.sp_bio}
             </Text>
           </>
           {/* Slider */}
@@ -273,14 +297,14 @@ const SPProfileScreen = () => {
             }}
           >
             <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
-              {rating}
+              {sp.sp_rating}
               <Text style={{ fontSize: 20, fontFamily: "Regular" }}>/5</Text>
             </Text>
             <View>
               <StarRating
                 starSize={40}
                 onChange={() => null}
-                rating={rating}
+                rating={sp.sp_rating}
                 color={Colors.gold}
                 starStyle={{ marginLeft: -5 }}
                 animationConfig={{
@@ -470,37 +494,7 @@ const SPProfileScreen = () => {
             paddingHorizontal: 16,
             paddingVertical: 16,
           }}
-        >
-          <Text style={{ fontSize: 28, fontFamily: "Black", marginBottom: 16 }}>
-            Share Your Profile
-          </Text>
-          <Image
-            style={{ height: 200, width: 200, marginBottom: 8 }}
-            source={{
-              uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU",
-              headers: {
-                Accept: "*/*",
-              },
-            }}
-          />
-          <Text
-            style={{ fontFamily: "Black", color: Colors.primary, fontSize: 20 }}
-          >
-            Onservic
-          </Text>
-          <Text style={{ fontFamily: "Black", fontSize: 20 }}>
-            Shakuntala Pandey
-          </Text>
-          <Text
-            style={{
-              fontFamily: "Regular",
-              color: Colors.gray900,
-              fontSize: 16,
-            }}
-          >
-            977-98000000
-          </Text>
-        </View>
+        ></View>
       </ModalPopup>
       <ModalPopup
         ref={popup}

@@ -60,13 +60,11 @@ export const getMyReview = async (req, res) => {
 };
 
 export const getOneSpReview = async (req, res) => {
-  const { GIVEN_API_KEY, sp_contact } = req.body;
+  const { GIVEN_API_KEY, id } = req.body;
 
   if (GIVEN_API_KEY == API_KEY) {
-    const uid = [];
-    const udata = [];
-    let postData = await ReviewSchema.find({
-      sp_contact: sp_contact,
+    const postData = await ReviewSchema.find({
+      sp_id: id,
     });
     postData.map(async (item) => {
       uid.push(item.user_contact);

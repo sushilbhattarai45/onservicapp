@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { createRef, useContext, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -20,8 +20,11 @@ import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
 import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
+import ModalPopup from "../component/Modal";
+import { Dropdown } from "react-native-element-dropdown";
+import { Districts } from "../component/district";
 
-export default function SearchPersonListingScreen() {
+export default function SearchPersonListingScreen({ navigation }) {
   const { subCategories } = useContext(AppContext);
 
   const [suggestions, setSuggestions] = useState([]);
@@ -30,17 +33,25 @@ export default function SearchPersonListingScreen() {
   const [value, setValue] = useState("");
 
   const [searchData, setSearchData] = useState(null);
+  const popup = createRef();
+
+  const [citiesList, setCitiesList] = useState(Districts);
+  const [filter, setFilter] = useState({ city: "" });
+
   // const [searchText, setSearchText] = useState("");
   // const [searching, setSearching] = useState(false);
 
   const getPeopleList = async (location, skill) => {
+    console.log(filter.city);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
-      city: "ram",
+      city: filter?.city,
       GIVEN_API_KEY: "AXCF",
     });
+    console.log(res.data);
     if (res.data.data.length > 0) {
       setSearchData(res.data.data);
+      console.log(res.data.data);
     } else {
       setSearchData(null);
     }
@@ -61,18 +72,20 @@ export default function SearchPersonListingScreen() {
     }
   };
   return (
-    <View
+    <ScrollView
       style={{
         flex: 1,
         backgroundColor: Colors.gray200,
         marginTop: 40,
       }}
+      keyboardShouldPersistTaps="handled"
     >
       <View style={{ paddingHorizontal: 24 }}>
         <Search
           containerStyle={{ padding: 0 }}
           rightIcon={"equalizer-fill"}
           onBlur={() => setSuggestionsTouched(true)}
+          onRightIconPress={() => popup.current.show()}
           // onFocus={() => setSearching(true)}
           value={value}
           onChangeText={handleSearchText}
@@ -84,117 +97,163 @@ export default function SearchPersonListingScreen() {
           }}
         />
       </View>
-      <ScrollView keyboardShouldPersistTaps="handled">
-        {/* Suggestions */}
-        {suggestionsActive && (
-          <View style={{ marginTop: 16, backgroundColor: Colors.white }}>
-            <ScrollView keyboardShouldPersistTaps={"handled"}>
-              {suggestions.map((item, index) => {
-                return (
-                  <Pressable
-                    style={{
-                      padding: 16,
-                      paddingHorizontal: 24,
-                      borderColor: Colors.gray500,
-                      borderBottomWidth: StyleSheet.hairlineWidth,
-                    }}
-                    key={index.toString()}
-                    onPress={() => {
-                      Keyboard.dismiss();
-                      setSuggestions([]);
-                      setValue(item.subCat_name);
-                      setSuggestionsActive(false);
-                      getPeopleList("", item.subCat_name);
-                    }}
-                  >
-                    <Text>{item.subCat_name}</Text>
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
-          </View>
-        )}
-        {/* PersonList */}
-        {searchData && !suggestionsActive && value.length > 0 && (
-          <ScrollView style={{ marginTop: 16, flex: 1 }}>
-            {searchData.map((person, index) => {
+      {/* Suggestions */}
+      {suggestionsActive && (
+        <View style={{ marginTop: 16, backgroundColor: Colors.white }}>
+          <ScrollView keyboardShouldPersistTaps={"handled"}>
+            {suggestions.map((item, index) => {
               return (
-                <View
-                  key={index.toString()}
+                <Pressable
                   style={{
-                    marginTop: 2,
+                    padding: 16,
+                    paddingHorizontal: 24,
+                    borderColor: Colors.gray500,
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                  }}
+                  key={index.toString()}
+                  onPress={() => {
+                    Keyboard.dismiss();
+                    setSuggestions([]);
+                    setValue(item.subCat_name);
+                    setSuggestionsActive(false);
+                    getPeopleList("", item.subCat_name);
                   }}
                 >
-                  <PersonCard
-                    name={person.sp_name}
-                    image={
-                      "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg"
-                    }
-                    address={person.sp_city + person.sp_district}
-                    rating={5}
-                    ratingcount={5}
-                  />
-                </View>
+                  <Text>{item.subCat_name}</Text>
+                </Pressable>
               );
             })}
           </ScrollView>
-        )}
-        {/* notfound */}
-        {!searchData && !suggestionsActive && value.length > 1 && (
+        </View>
+      )}
+      {/* PersonList */}
+      {searchData && !suggestionsActive && value.length > 0 && (
+        <ScrollView style={{ marginTop: 16, flex: 1 }}>
+          {searchData.map((person, index) => {
+            return (
+              <View
+                key={index.toString()}
+                style={{
+                  marginTop: 2,
+                }}
+              >
+                <PersonCard
+                  name={person.sp_name}
+                  image={
+                    "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg"
+                  }
+                  address={person.sp_city + person.sp_district}
+                  rating={5}
+                  ratingcount={5}
+                  onPress={() => navigation.navigate("Sp", { sp: person })}
+                />
+              </View>
+            );
+          })}
+        </ScrollView>
+      )}
+      {/* notfound */}
+      {!searchData && !suggestionsActive && value.length > 1 && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 100,
+          }}
+        >
+          <View>
+            <Image
+              source={{
+                uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/7c63n63o6t3-472%3A6676?alt=media&token=fe730173-04a9-40a8-8afd-1445f2a0ac78",
+                headers: {
+                  Accept: "*/*",
+                },
+              }}
+              style={{ width: "90%", aspectRatio: 1.5 }}
+              resizeMode="contain"
+            />
+          </View>
+
           <View
             style={{
-              flex: 1,
+              marginHorizontal: 20,
+              marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
-              marginTop: 100,
             }}
           >
-            <View>
-              <Image
-                source={{
-                  uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/7c63n63o6t3-472%3A6676?alt=media&token=fe730173-04a9-40a8-8afd-1445f2a0ac78",
-                  headers: {
-                    Accept: "*/*",
-                  },
-                }}
-                style={{ width: "90%", aspectRatio: 1.5 }}
-                resizeMode="contain"
-              />
-            </View>
-
-            <View
+            <Text
               style={{
-                marginHorizontal: 20,
-                marginTop: 10,
-                justifyContent: "center",
-                alignItems: "center",
+                textAlign: "center",
+                fontFamily: "Regular",
+                fontWeight: "700",
+                fontSize: 24,
               }}
             >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontFamily: "Regular",
-                  fontWeight: "700",
-                  fontSize: 24,
-                }}
-              >
-                Not Found
-              </Text>
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontFamily: "Regular",
-                  fontSize: 16,
-                  marginTop: 10,
-                }}
-              >
-                Sorry, the keyword you entered cannot be found, please check
-                again or search with another keyword.
-              </Text>
-            </View>
+              Not Found
+            </Text>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "Regular",
+                fontSize: 16,
+                marginTop: 10,
+              }}
+            >
+              Sorry, the keyword you entered cannot be found, please check again
+              or search with another keyword.
+            </Text>
           </View>
-        )}
-      </ScrollView>
-    </View>
+        </View>
+      )}
+      <ModalPopup
+        ref={popup}
+        animationType="fade"
+        onTouchOutside={() => popup.current.close()}
+      >
+        <View
+          style={{
+            // paddingHorizontal: 16,
+            paddingVertical: 16,
+          }}
+        >
+          <Text style={{ fontSize: 28, fontFamily: "Black", marginBottom: 16 }}>
+            Search Filter
+          </Text>
+          <View
+            style={{
+              marginTop: 12,
+            }}
+          >
+            <Text>City *</Text>
+            <Dropdown
+              style={{
+                width: "100%",
+                marginTop: 8,
+                marginRight: -10,
+                borderWidth: 1,
+                padding: 16,
+                borderRadius: 4,
+                height: 50,
+                borderColor: Colors.black,
+              }}
+              placeholderStyle={{ color: Colors.gray900, fontSize: 14 }}
+              data={citiesList ? citiesList : []}
+              labelField="label"
+              valueField="label"
+              placeholder={"Select item"}
+              search
+              searchPlaceholder="Search..."
+              value={filter.city}
+              onChange={(item) => {
+                setFilter({ ...filter, city: item.label });
+                console.log(item.label);
+              }}
+            />
+          </View>
+        </View>
+      </ModalPopup>
+    </ScrollView>
   );
 }

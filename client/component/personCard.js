@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+import { StyleSheet, Image, Text, View, ImageBackground, Pressable } from "react-native";
 import { Colors } from "../styles/main";
 
 export default function PersonCard({
@@ -8,9 +8,10 @@ export default function PersonCard({
   rating,
   ratingcount,
   address,
+  onPress
 }) {
   return (
-    <View style={styles.ThemeLightComponentSongsCard}>
+    <Pressable onPress={onPress} style={styles.ThemeLightComponentSongsCard}>
       <Image
         style={styles.MaskGroup}
         source={{
@@ -37,7 +38,7 @@ export default function PersonCard({
           }}
         ></View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
