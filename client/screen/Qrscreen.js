@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { Colors } from "../styles/main";
+import Header from "../component/Header";
 
-export default function QrScreen() {
+export default function App({ navigation, navigation: { goBack } }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -17,10 +19,10 @@ export default function QrScreen() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(` Given Code contains ${data} `);
+    alert(data);
     setTimeout(() => {
       setScanned(false);
-    }, 3000);
+    }, 2000);
   };
 
   if (hasPermission === null) {
@@ -32,26 +34,39 @@ export default function QrScreen() {
 
   return (
     <View style={styles.container}>
-      <View>
+      <Header
+        headerText="QR Code"
+        onPressIcon={() => goBack()}
+        style={{
+          paddingHorizontal: 10,
+        }}
+        icon="arrow-left-line"
+      />
+      <Text>{hasPermission}</Text>
+      <View
+        style={{
+          marginTop: 5,
+          height: "80%",
+          width: "100%",
+        }}
+      >
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{
-            height: 700,
-          }}
+          style={StyleSheet.absoluteFillObject}
         />
+        <Text
+          style={{
+            color: "white",
+            marginLeft: 15,
+          }}
+        >
+          Please Scan a valid Qr Code of OnServic Pvt Ltd
+        </Text>
       </View>
-      {scanned && (
-        <Button
-          title={"Tap to Scan Again"}
-          style={{
-            top: 30,
-          }}
-          onPress={() => setScanned(false)}
-        />
-      )}
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

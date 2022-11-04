@@ -65,7 +65,7 @@ const HomeScreen = ({ navigation }) => {
       console.log("hello");
       let res = await axiosInstance.post("/categories?", {
         GIVEN_API_KEY: "AXCF",
-      });  
+      });
       let featuredOnHome = await axiosInstance.post(
         "/categories/featuredOnHome",
         {
@@ -109,7 +109,15 @@ const HomeScreen = ({ navigation }) => {
             )}
             <Text style={styles.userNeedHelp}>Need help?</Text>
           </View>
-          <Icon name="qr-scan-line" size={24} color="white" />
+          <Icon
+            onPress={() => navigation.navigate("QrScreen")}
+            name="qr-scan-line"
+            size={24}
+            style={{
+              padding: 10,
+            }}
+            color="white"
+          />
         </View>
         <View style={{ paddingHorizontal: 24 }}>
           <TouchableOpacity onPress={() => navigation.navigate("Search")}>

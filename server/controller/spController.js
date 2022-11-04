@@ -22,6 +22,7 @@ export const postSp = async (req, res) => {
     sp_location,
     sp_toc,
     sp_profileImage,
+    sp_media,
   } = req.body;
 
   if (GIVEN_API_KEY == API_KEY) {
