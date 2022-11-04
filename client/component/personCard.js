@@ -1,6 +1,14 @@
 import React from "react";
-import { StyleSheet, Image, Text, View, ImageBackground, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  Pressable,
+} from "react-native";
 import { Colors } from "../styles/main";
+import { useNavigation } from "@react-navigation/native";
 
 export default function PersonCard({
   name,
@@ -8,10 +16,20 @@ export default function PersonCard({
   rating,
   ratingcount,
   address,
-  onPress
+  onPress,
+  sp_contact,
 }) {
+  const navigation = useNavigation();
+
   return (
-    <Pressable onPress={onPress} style={styles.ThemeLightComponentSongsCard}>
+    <Pressable
+      style={styles.ThemeLightComponentSongsCard}
+      onPress={() => {
+        navigation.navigate("SPProfile", {
+          sp_contact: sp_contact,
+        });
+      }}
+    >
       <Image
         style={styles.MaskGroup}
         source={{

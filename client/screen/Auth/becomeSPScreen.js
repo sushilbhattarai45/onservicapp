@@ -27,7 +27,7 @@ import { axiosInstance } from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
 
-const BASE_OUR_API_URL = "http://192.168.18.7:3001";
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -575,7 +575,11 @@ const BecomeSPScreen = () => {
                     },
                   ]}
                   renderSelectedItem={(item, unselect) => (
-                    <SkillPill key={item.subCat_id.toString()} name={item.subCat_name} onPress={unselect} />
+                    <SkillPill
+                      key={item.subCat_id.toString()}
+                      name={item.subCat_name}
+                      onPress={unselect}
+                    />
                   )}
                 />
                 {!values.skills && touched.skills ? (
