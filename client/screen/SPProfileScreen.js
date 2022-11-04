@@ -101,20 +101,35 @@ const SkillPill = ({ name }) => {
 };
 const SPProfileScreen = ({ navigation, route }) => {
   const { sp } = route.params;
-  const [rating, setRating] = useState(sp.sp_rating ? sp.sp_rating : 5);
+  const [reviews, setReviews] = useState([]);
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
   const popup = createRef();
   const popupQr = createRef();
 
+  const postReview = async (user_contact, rating, review, sp_contact) => {
+    let res = await axiosInstance.post("/review/post", {
+      GIVEN_API_KEY: "AXCF",
+      user_contact: user_contact,
+      sp_contact: sp_contact,
+      review_bio: review,
+      review_stars: rating,
+    });
+    console.log(res.data);
+  };
   useEffect(() => {
-    const getReviews = async (id) => {
-      let res = await axiosInstance.post("/review/getSpreview", {  
-        GIVEN_API_KEY: "AXCF",  
-      }); 
-      console.log(res.data);
+    const getReviews = async () => {
+      let res = await axiosInstance.post("/review/getSpreview", {
+        sp_contact: "12345678",
+        GIVEN_API_KEY: "AXCF",
+      });
+      console.log(res.data.data);
+      setReviews(res.data.data);
     };
     getReviews();
-  });
-  return (  
+  }, []);
+
+  return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={{ flex: 1 }}>
         <Header
@@ -164,9 +179,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                 name="chat-1-line"
                 onPress={() => {
                   let url =
-                    "whatsapp://send?text=" +
-                    "Hello" +
-                    "&phone=+9779742993345"
+                    "whatsapp://send?text=" + "Hello" + "&phone=+9779742993345";
                   Linking.openURL(url)
                     .then((data) => {
                       console.log("WhatsApp Opened");
@@ -357,11 +370,11 @@ const SPProfileScreen = ({ navigation, route }) => {
           <FlatList
             style={{}}
             showsHorizontalScrollIndicator={false}
-            data={Persons}
+            data={reviews.splice(0, 5)}
             renderItem={({ item, index }) => {
-              return <ReviewCard />;
+              return <ReviewCard rating={item.review_stars} name={item.user_names} />;
             }}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => item._id}
           />
           {/* Services Near you */}
           <View>
@@ -549,11 +562,18 @@ const SPProfileScreen = ({ navigation, route }) => {
               backgroundColor: Colors.gray200,
             }}
             placeholder="Share your experience"
+            value={review}
+            onChangeText={setReview}
           />
         </View>
         {/* {errorpin ? <Text style={{ color: "red" }}>{errorpin}</Text> : null}  */}
         <View style={{ width: "100%", marginTop: 40 }}>
-          <Button label="Share Review" />
+          <Button
+            label="Share Review"
+            onPress={() => {
+              postReview("123456789", rating, review, sp.sp_contact);
+            }}
+          />
         </View>
       </ModalPopup>
       {/* <StatusBar backgroundColor="#000000"/> */}

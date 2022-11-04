@@ -42,6 +42,7 @@ export const getMyReview = async (req, res) => {
       sp_contact: sp_contact,
       user_contact: user_contact,
     });
+
     if (postData.length != 0) {
       return res.json({
         message: "Done",
@@ -63,26 +64,33 @@ export const getOneSpReview = async (req, res) => {
   const { GIVEN_API_KEY, id } = req.body;
 
   if (GIVEN_API_KEY == API_KEY) {
-    const postData = await ReviewSchema.find({
+    let postData = await ReviewSchema.find({
       sp_id: id,
     });
-    postData.map(async (item) => {
-      uid.push(item.user_contact);
-    });
-
-    uid.map(async (item) => {
-      const d = await userSchema.find({
-        user_contact: item,
-      });
-      udata.push(d);
-    });
-
-    if (postData.length != 0) {
+    const b = await Promise.all(
+      postData.map(async (review) => {
+        let disp = {};
+        let userData = await userSchema.findOne({
+          user_contact: review.user_contact,
+        });
+        disp._id = review._id;
+        disp.user_contact = review.user_contact ? review.user_contact : "";
+        disp.sp_contact = review.sp_contact;
+        disp.review_doc = review.review_doc;
+        disp.review_bio = review.review_bio;
+        disp.user_name = userData?.user_name ? userData.user_name : "";
+        disp.user_profile_image = userData?.user_profileImage
+          ? userData.user_profileImage
+          : "";
+        return disp;
+      })
+    );
+    console.log(b);
+    if (b.length != 0) {
       return res.json({
         message: "Done",
         statuscode: 201,
-        review_data: postData,
-        user_data: udata,
+        data: [...b],
       });
     } else {
       return res.json({
