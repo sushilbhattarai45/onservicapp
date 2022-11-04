@@ -26,7 +26,7 @@ import Icon from "../../component/Icon";
 import { axiosInstance } from "../../component/tools";
 import axios from "axios";
 
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
+const BASE_OUR_API_URL = "http://192.168.18.7:3001";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -88,10 +88,7 @@ const userValidationSchema = yup.object().shape({
     .number("Phone number must be Numeric")
     .min(10)
     .required("Please, provide your Phone Number!"),
-  officePhone: yup
-    .number("Phone number must be Numeric")
-    .min(10)
-    .required("Please, provide your Phone Number!"),
+  officePhone: yup.number("Phone number must be Numeric").min(10),
 
   accepted: yup.bool().oneOf([true], "Field must be checked"),
   gender: yup.string().required("Please, select your gender"),
@@ -103,13 +100,21 @@ const userValidationSchema = yup.object().shape({
     .min(6)
     .required("Please, provide your street!"),
   // image: yup.string().required(),
-  skills: yup.array().of(yup.string()).required(),
+  skills: yup
+    .array()
+    .of(yup.string().required())
+    .min(1, "required-field")
+    .required(),
+  photo: yup.array().min(1, "required-field").required(),
+  video: yup.string().required(),
 });
 
 const BecomeSPScreen = () => {
   const [citiesList, setCitiesList] = useState([]);
 
   const submit = async (values) => {
+    let img = await uploadImage(values.image);
+    let vdo = await uploadImage([values.video]);
     console.log(values);
     let response = await axiosInstance.post("/sp/postsp/", {
       GIVEN_API_KEY: "AXCF",
@@ -122,17 +127,19 @@ const BecomeSPScreen = () => {
       sp_city: values.city,
       sp_street: values.street,
       sp_gender: values.gender,
+      sp_media: {
+        photo: img,
+        video: vdo,
+      },
     });
     console.log(response.data);
   };
   const [file, setFile] = useState();
   const [imgFile, setImgFile] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [vdoFile, setVdoFile] = useState([]);
   const [vdoloading, setVdoLoading] = useState(false);
   // const mulFile = [];
   const [img, setImg] = useState(false);
-  const [vdo, setVdo] = useState(false);
 
   const selectFile = async () => {
     setLoading(true);
@@ -140,30 +147,16 @@ const BecomeSPScreen = () => {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsMultipleSelection: true,
 
-        mediaType: "video",
+        mediaType: "image",
       });
-
-      console.log(result);
-      console.log("okok" + file);
-      // result.selected.map((item) => {
-      //   mulFile.push(item);
-      // });
-      // uploadImage();
+      let files = {};
       if (!result.cancelled) {
-        console.log(result.selected);
-        setImgFile((prev) => {
-          setLoading(false);
-          if (result?.selected) {
-            return [...prev, ...result.selected];
-
-            setLoading(false);
-          } else return [...prev, result];
-        });
-        setImg(true);
+        files = result.selected
+          ? [...imgFile, ...result.selected.map((s) => s.uri)]
+          : [...imgFile, result.uri];
         setLoading(false);
-        // console.log("ok" + JSON.stringify(mulFile));
+        return files;
       } else {
-        setImg(true);
         setLoading(false);
       }
     } catch (e) {
@@ -177,29 +170,12 @@ const BecomeSPScreen = () => {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         mediaType: "video",
+        selectionLimit: 1,
       });
-
-      console.log(result);
-      console.log("okok" + file);
-      // result.selected.map((item) => {
-      //   mulFile.push(item);
-      // });
-      // uploadImage();
       if (!result.cancelled) {
-        console.log(result.selected);
-        setVdoFile((prev) => {
-          setVdoLoading(false);
-          if (result?.selected) {
-            return [...prev, ...result.selected];
-
-            setVdoLoading(false);
-          } else return [...prev, result];
-        });
-        setVdo(true);
         setVdoLoading(false);
-        // console.log("ok" + JSON.stringify(mulFile));
+        return result.uri;
       } else {
-        setVdo(false);
         setVdoLoading(false);
       }
     } catch (e) {
@@ -219,43 +195,46 @@ const BecomeSPScreen = () => {
         });
         return null;
       }
-      const finalData = [];
+      let finalData = [];
       // setError(false);
       // if not empty creating a form data to send to upload the image to the server
       // alert("ok");
-      file.map(async (item) => {
-        const imageToUpload = item;
-        const data = new FormData();
+      finalData = await Promise.all(
+        file.map(async (item) => {
+          const imageToUpload = item;
+          const data = new FormData();
 
-        data.append(
-          "profile",
-          {
-            uri: imageToUpload?.uri,
-            name: imageToUpload?.uri,
-            type: "image/jpg",
-          },
-          "myfile"
-        );
+          data.append(
+            "profile",
+            {
+              uri: imageToUpload?.uri,
+              name: imageToUpload?.uri,
+              type: "image/jpg",
+            },
+            "myfile"
+          );
 
-        const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-        // console.log("s" + serverUrl);
-        const response = await axios(serverUrl, {
-          method: "post",
-          data: data,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+          const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
+          const response = await axios(serverUrl, {
+            method: "post",
+            data: data,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
 
-        var url = response?.data?.fileName;
-        const filename = url.split("\\");
-        const finalname = filename[0] + "/" + filename[1];
-        setImg(true);
-        return finalname;
-      });
+          // console.log(response);
+          let url = response?.data?.fileName;
+          const filename = url.split("\\");
+          const finalname = filename[0] + "/" + filename[1];
+          setImg(true);
+          return finalname;
+        })
+      );
       console.log(finalData);
+      return finalData;
     } catch (e) {
-      alert("Error! Sorry");
+      alert(e);
     }
   };
 
@@ -281,8 +260,8 @@ const BecomeSPScreen = () => {
             accepted: false,
             // googlemaplink: "",
             skills: [],
-            // photos: [],
-            // video: [],
+            photo: [],
+            video: "",
           }}
           onSubmit={submit}
           validationSchema={userValidationSchema}
@@ -581,7 +560,7 @@ const BecomeSPScreen = () => {
                     <Icon name="add-line" size={16} color={Colors.black} />
                   )}
                   labelField="label"
-                  valueField="value"
+                  valueField="label"
                   placeholder="Enter your Skills"
                   searchPlaceholder="Search..."
                   value={values.skills}
@@ -589,7 +568,7 @@ const BecomeSPScreen = () => {
                   onBlur={() => setFieldTouched("skills")}
                   onChange={(item) => {
                     setFieldValue("skills", item);
-                    console.log(item);
+                    console.log(values.skills);
                   }}
                   style={[
                     styles.inputStyle,
@@ -621,75 +600,74 @@ const BecomeSPScreen = () => {
                     borderWidth: 0.8,
                     borderColor: Colors.gray900,
                     flexDirection: "row",
+                    borderColor: !touched.photo
+                      ? Colors.gray900
+                      : errors.photo
+                      ? "red"
+                      : Colors.primary,
                   }}
                 >
-                  {img
-                    ? imgFile?.map((item, index) => (
-                        <TouchableOpacity
-                          onPress={() => {
-                            // setImgFile((prev) => {
-                            //   prev.filter((item1, index1) => index1 != index);
-                            // });
-
-                            setImgFile((current) =>
-                              current.filter((file, idx) => idx !== index)
-                            );
+                  {values.photo?.map((item, index) => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setFieldValue(
+                          "photo",
+                          values.photo.filter((file, idx) => idx !== index)
+                        );
+                        console.log(imgFile);
+                      }}
+                    >
+                      <View
+                        style={{
+                          height: 60,
+                          width: 60,
+                          marginBottom: 6,
+                          marginRight: 4,
+                          position: "relative",
+                          flexWrap: "wrap",
+                          borderRadius: 10,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          alignContent: "center",
+                        }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: "white",
+                            borderRadius: 20,
+                            width: 20,
+                            height: 20,
+                            zIndex: 9,
+                            top: -1.5,
+                            right: -1.5,
+                            position: "absolute",
                           }}
                         >
-                          <View
-                            style={{
-                              height: 60,
-                              width: 60,
-                              marginBottom: 6,
-                              marginRight: 4,
-                              position: "relative",
-                              flexWrap: "wrap",
-                              borderRadius: 10,
-                              alignItems: "center",
-                              justifyContent: "center",
-                              alignContent: "center",
-                            }}
-                          >
-                            <View
-                              style={{
-                                backgroundColor: "white",
-                                borderRadius: 20,
-                                width: 20,
-                                height: 20,
-                                zIndex: 9,
-                                top: -1.5,
-                                right: -1.5,
-                                position: "absolute",
-                              }}
-                            >
-                              <Icon
-                                style={{}}
-                                name="close-circle-fill"
-                                size={20}
-                                color={Colors.gray900}
-                              />
-                            </View>
-                            <Image
-                              style={{
-                                alignSelf: "center",
-                                alignSelf: "center",
-                                height: "100%",
-                                borderRadius: 10,
-                                width: "95%",
-                              }}
-                              source={{
-                                uri: item?.uri
-                                  ? item.uri
-                                  : "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
-                                headers: {
-                                  Accept: "*/*",
-                                },
-                              }}
-                            />
-                          </View>
-                        </TouchableOpacity>
-                      ))
-                    : null}
+                          <Icon
+                            style={{}}
+                            name="close-circle-fill"
+                            size={20}
+                            color={Colors.gray900}
+                          />
+                        </View>
+                        <Image
+                          style={{
+                            alignSelf: "center",
+                            alignSelf: "center",
+                            height: "100%",
+                            borderRadius: 10,
+                            width: "95%",
+                          }}
+                          source={{
+                            uri: item,
+                            headers: {
+                              Accept: "*/*",
+                            },
+                          }}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  ))}
                   {loading ? (
                     <ActivityIndicator
                       size="large"
@@ -714,8 +692,11 @@ const BecomeSPScreen = () => {
                       }}
                     >
                       <Icon
-                        onPress={() => {
-                          selectFile();
+                        onPress={async () => {
+                          setFieldTouched("photo");
+                          let a = await selectFile();
+                          setFieldValue("photo", a);
+                          console.log(a);
                         }}
                         name="add-line"
                         size={24}
@@ -738,76 +719,70 @@ const BecomeSPScreen = () => {
                     borderWidth: 0.8,
                     borderColor: Colors.gray900,
                     flexDirection: "row",
+                    borderColor: !touched.video
+                      ? Colors.gray900
+                      : errors.video
+                      ? "red"
+                      : Colors.primary,
                   }}
                 >
-                  {vdo
-                    ? vdoFile?.map((item, index) => (
-                        <TouchableOpacity
-                          onPress={() => {
-                            // setImgFile((prev) => {
-                            //   prev.filter((item1, index1) => index1 != index);
-                            // });
-
-                            setVdoFile((current) =>
-                              current.filter((file, idx) => idx !== index)
-                            );
-                            setVdo(false);
+                  {values.video && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setFieldValue("video", "");
+                      }}
+                    >
+                      <View
+                        style={{
+                          height: 60,
+                          width: 60,
+                          marginBottom: 6,
+                          marginRight: 4,
+                          position: "relative",
+                          flexWrap: "wrap",
+                          borderRadius: 10,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          alignContent: "center",
+                        }}
+                      >
+                        <View
+                          style={{
+                            backgroundColor: "white",
+                            borderRadius: 20,
+                            width: 20,
+                            height: 20,
+                            zIndex: 9,
+                            top: -1.5,
+                            right: -1.5,
+                            position: "absolute",
                           }}
                         >
-                          <View
-                            style={{
-                              height: 60,
-                              width: 60,
-                              marginBottom: 6,
-                              marginRight: 4,
-                              position: "relative",
-                              flexWrap: "wrap",
-                              borderRadius: 10,
-                              alignItems: "center",
-                              justifyContent: "center",
-                              alignContent: "center",
-                            }}
-                          >
-                            <View
-                              style={{
-                                backgroundColor: "white",
-                                borderRadius: 20,
-                                width: 20,
-                                height: 20,
-                                zIndex: 9,
-                                top: -1.5,
-                                right: -1.5,
-                                position: "absolute",
-                              }}
-                            >
-                              <Icon
-                                style={{}}
-                                name="close-circle-fill"
-                                size={20}
-                                color={Colors.gray900}
-                              />
-                            </View>
-                            <Image
-                              style={{
-                                alignSelf: "center",
-                                alignSelf: "center",
-                                height: "100%",
-                                borderRadius: 10,
-                                width: "95%",
-                              }}
-                              source={{
-                                uri: item?.uri
-                                  ? item.uri
-                                  : "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
-                                headers: {
-                                  Accept: "*/*",
-                                },
-                              }}
-                            />
-                          </View>
-                        </TouchableOpacity>
-                      ))
-                    : null}
+                          <Icon
+                            style={{}}
+                            name="close-circle-fill"
+                            size={20}
+                            color={Colors.gray900}
+                          />
+                        </View>
+                        <Image
+                          style={{
+                            alignSelf: "center",
+                            alignSelf: "center",
+                            height: "100%",
+                            borderRadius: 10,
+                            width: "95%",
+                          }}
+                          source={{
+                            uri: values.video,
+                            headers: {
+                              Accept: "*/*",
+                            },
+                          }}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  )}
                   {vdoloading ? (
                     <ActivityIndicator
                       size="large"
@@ -816,7 +791,7 @@ const BecomeSPScreen = () => {
                       }}
                       color="#0000ff"
                     />
-                  ) : !vdo ? (
+                  ) : values.video == "" ? (
                     <View
                       style={{
                         height: 60,
@@ -832,8 +807,10 @@ const BecomeSPScreen = () => {
                       }}
                     >
                       <Icon
-                        onPress={() => {
-                          selectVideo();
+                        onPress={async () => {
+                          setFieldTouched("video");
+                          let a = await selectVideo();
+                          setFieldValue("video", a);
                         }}
                         name="add-line"
                         size={24}
@@ -874,7 +851,7 @@ const BecomeSPScreen = () => {
                       color: errors.accepted ? Colors.black : Colors.red,
                       fontSize: 12,
                     }}
-                    onPress={() => uploadImage(imgFile)}
+                    onPress={() => uploadImage(vdo)}
                   >
                     I agree to the{" "}
                     <Text
