@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   KeyboardAvoidingView,
   Pressable,
@@ -25,6 +25,7 @@ import Checkbox from "expo-checkbox";
 import Icon from "../../component/Icon";
 import { axiosInstance } from "../../component/tools";
 import axios from "axios";
+import AppContext from "../../component/appContext";
 
 const BASE_OUR_API_URL = "http://192.168.18.7:3001";
 
@@ -110,12 +111,14 @@ const userValidationSchema = yup.object().shape({
 });
 
 const BecomeSPScreen = () => {
+  const { subCategories } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
 
   const submit = async (values) => {
-    let img = await uploadImage(values.image);
-    let vdo = await uploadImage([values.video]);
-    console.log(values);
+    const img = await uploadImage(values.photo);
+    let [vdo] = await uploadImage([values.video]);
+    // console.log(img);
+    // console.log(vdo);
     let response = await axiosInstance.post("/sp/postsp/", {
       GIVEN_API_KEY: "AXCF",
       sp_name: values.name,
@@ -134,14 +137,11 @@ const BecomeSPScreen = () => {
     });
     console.log(response.data);
   };
-  const [file, setFile] = useState();
-  const [imgFile, setImgFile] = useState([]);
   const [loading, setLoading] = useState(false);
   const [vdoloading, setVdoLoading] = useState(false);
   // const mulFile = [];
-  const [img, setImg] = useState(false);
 
-  const selectFile = async () => {
+  const selectFile = async (images) => {
     setLoading(true);
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -149,11 +149,12 @@ const BecomeSPScreen = () => {
 
         mediaType: "image",
       });
+      console.log(result);
       let files = {};
       if (!result.cancelled) {
         files = result.selected
-          ? [...imgFile, ...result.selected.map((s) => s.uri)]
-          : [...imgFile, result.uri];
+          ? [...images, ...result.selected.map((s) => s.uri)]
+          : [...images, result.uri];
         setLoading(false);
         return files;
       } else {
@@ -183,12 +184,9 @@ const BecomeSPScreen = () => {
     }
   };
 
-  const uploadImage = async (file) => {
-    // console.log("the file you have choosed is ");
-    // console.log(file);
+  const uploadImage = async (files) => {
     try {
-      // checks if the file is empty
-      if (file === null) {
+      if (files === null) {
         setError({
           target: "image",
           message: "Sorry ,There is some error with the profile picture!!",
@@ -196,19 +194,15 @@ const BecomeSPScreen = () => {
         return null;
       }
       let finalData = [];
-      // setError(false);
-      // if not empty creating a form data to send to upload the image to the server
-      // alert("ok");
       finalData = await Promise.all(
-        file.map(async (item) => {
-          const imageToUpload = item;
+        files.map(async (item) => {
           const data = new FormData();
 
           data.append(
             "profile",
             {
-              uri: imageToUpload?.uri,
-              name: imageToUpload?.uri,
+              uri: item,
+              name: item,
               type: "image/jpg",
             },
             "myfile"
@@ -222,19 +216,19 @@ const BecomeSPScreen = () => {
               "Content-Type": "multipart/form-data",
             },
           });
-
-          // console.log(response);
+          // console.log(response.data.fileName);
           let url = response?.data?.fileName;
           const filename = url.split("\\");
-          const finalname = filename[0] + "/" + filename[1];
-          setImg(true);
+          const finalname =
+            BASE_OUR_API_URL + "/" + filename[0] + "/" + filename[1];
           return finalname;
         })
       );
-      console.log(finalData);
+      // console.log(finalData);
       return finalData;
     } catch (e) {
-      alert(e);
+      console.log(e);
+      // alert(e);
     }
   };
 
@@ -245,7 +239,7 @@ const BecomeSPScreen = () => {
     >
       <View style={styles.container}>
         <Header icon="arrow-left-line" />
-        <Text style={styles.heading}>BE OUR PARTNER{file}</Text>
+        <Text style={styles.heading}>BE OUR PARTNER</Text>
         {/* <KeyboardAvoidingView style={{ flex: 1 }}> */}
         <Formik
           initialValues={{
@@ -263,7 +257,7 @@ const BecomeSPScreen = () => {
             photo: [],
             video: "",
           }}
-          onSubmit={submit}
+          onSubmit={(values) => submit(values)}
           validationSchema={userValidationSchema}
         >
           {({
@@ -555,20 +549,20 @@ const BecomeSPScreen = () => {
                   inputSearchStyle={styles.inputSearchStyle}
                   iconStyle={styles.iconStyle}
                   search
-                  data={data}
+                  data={subCategories}
                   renderRightIcon={() => (
                     <Icon name="add-line" size={16} color={Colors.black} />
                   )}
-                  labelField="label"
-                  valueField="label"
+                  labelField="subCat_name"
+                  valueField="subCat_name"
                   placeholder="Enter your Skills"
                   searchPlaceholder="Search..."
                   value={values.skills}
                   containerStyle={{ marginTop: 24 }}
                   onBlur={() => setFieldTouched("skills")}
                   onChange={(item) => {
+                    console.log(item);
                     setFieldValue("skills", item);
-                    console.log(values.skills);
                   }}
                   style={[
                     styles.inputStyle,
@@ -581,7 +575,7 @@ const BecomeSPScreen = () => {
                     },
                   ]}
                   renderSelectedItem={(item, unselect) => (
-                    <SkillPill name={item.label} onPress={unselect} />
+                    <SkillPill key={item.subCat_id.toString()} name={item.subCat_name} onPress={unselect} />
                   )}
                 />
                 {!values.skills && touched.skills ? (
@@ -614,7 +608,6 @@ const BecomeSPScreen = () => {
                           "photo",
                           values.photo.filter((file, idx) => idx !== index)
                         );
-                        console.log(imgFile);
                       }}
                     >
                       <View
@@ -694,7 +687,7 @@ const BecomeSPScreen = () => {
                       <Icon
                         onPress={async () => {
                           setFieldTouched("photo");
-                          let a = await selectFile();
+                          let a = await selectFile(values.photo);
                           setFieldValue("photo", a);
                           console.log(a);
                         }}
@@ -851,7 +844,9 @@ const BecomeSPScreen = () => {
                       color: errors.accepted ? Colors.black : Colors.red,
                       fontSize: 12,
                     }}
-                    onPress={() => uploadImage(vdo)}
+                    onPress={async () =>
+                      console.log(await uploadImage(values.photo))
+                    }
                   >
                     I agree to the{" "}
                     <Text
