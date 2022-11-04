@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from "react";
+import React, { useState, createRef, useEffect, useContext } from "react";
 import {
   ScrollView,
   View,
@@ -23,6 +23,7 @@ import Button from "../component/buttonComponent";
 import ModalPopup from "../component/Modal";
 import ReviewCard from "../component/ReviewCard";
 import { axiosInstance } from "../component/tools";
+import AppContext from "../component/appContext";
 
 const ActionIcon = ({ name, onPress }) => {
   return (
@@ -57,6 +58,7 @@ const SkillPill = ({ name }) => {
 };
 const SPProfileScreen = ({ navigation, route }) => {
   const { sp } = route.params;
+  const { subCategories } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
@@ -273,7 +275,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               <StarRating
                 starSize={40}
                 onChange={() => null}
-                rating={sp.sp_rating}
+                rating={sp.sp_rating !== null ? sp.sp_rating : 0}
                 color={Colors.gold}
                 starStyle={{ marginLeft: -5 }}
                 animationConfig={{
@@ -326,7 +328,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           <FlatList
             style={{}}
             showsHorizontalScrollIndicator={false}
-            data={reviews.splice(0, 5)}
+            data={reviews}
             renderItem={({ item, index }) => {
               return (
                 <ReviewCard rating={item.review_stars} name={item.user_names} />
@@ -348,9 +350,9 @@ const SPProfileScreen = ({ navigation, route }) => {
               style={{ marginBottom: 32 }}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
-              data={Persons}
+              data={subCategories}
               renderItem={({ item, index }) => {
-                let isEnd = index === Persons.length - 1;
+                let isEnd = index === subCategories.length - 1;
                 return (
                   <CategoryCard
                     containerStyle={{

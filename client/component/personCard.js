@@ -22,14 +22,7 @@ export default function PersonCard({
   const navigation = useNavigation();
 
   return (
-    <Pressable
-      style={styles.ThemeLightComponentSongsCard}
-      onPress={() => {
-        navigation.navigate("Sp", {
-          sp_contact: sp_contact,
-        });
-      }}
-    >
+    <Pressable style={styles.ThemeLightComponentSongsCard} onPress={onPress}>
       <Image
         style={styles.MaskGroup}
         source={{

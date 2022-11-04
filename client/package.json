@@ -17,6 +17,7 @@
     "axios": "^0.27.2",
     "email-validator": "^2.0.4",
     "expo": "~46.0.9",
+    "expo-barcode-scanner": "^11.4.0",
     "expo-checkbox": "~2.2.0",
     "expo-constants": "~13.2.4",
     "expo-document-picker": "^10.3.0",

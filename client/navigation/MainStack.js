@@ -33,7 +33,6 @@ export default function AppStack() {
       <Stack.Screen name="Sp" component={SPProfileScreen} />
       <Stack.Screen name="CategoryCard" component={CategoryCard} />
       <Stack.Screen name="QrScreen" component={QrScreen} />
-
       <Stack.Screen
         name="CategoryPersonListing"
         component={CategoryPersonListingScreen}

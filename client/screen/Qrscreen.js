@@ -4,7 +4,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { Colors } from "../styles/main";
 import Header from "../component/Header";
 
-export default function App({ navigation, navigation: { goBack } }) {
+export default function QrScreen({ navigation, navigation: { goBack } }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
