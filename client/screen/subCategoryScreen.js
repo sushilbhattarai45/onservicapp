@@ -79,47 +79,54 @@ export default function SubCategoryScreen({
         />
 
         <View style={{ marginTop: 24 }}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View
-              style={{
-                width: "100%",
-                height: 180,
-                // backgroundColor: "red",
-              }}
-            >
-              <Image
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{
+              marginBottom: 20,
+            }}
+          >
+            <View>
+              <View
                 style={{
-                  alignSelf: "center",
-                  alignSelf: "center",
-                  height: "100%",
-                  width: "95%",
+                  width: "100%",
+                  height: 180,
+                  // backgroundColor: "red",
                 }}
-                source={{
-                  uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
-                  headers: {
-                    Accept: "*/*",
-                  },
+              >
+                <Image
+                  style={{
+                    alignSelf: "center",
+                    alignSelf: "center",
+                    height: "100%",
+                    width: "95%",
+                  }}
+                  source={{
+                    uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
+                    headers: {
+                      Accept: "*/*",
+                    },
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  marginTop: 24,
+                  marginBottom: 30,
                 }}
-              />
-            </View>
-
-            <View
-              style={{
-                marginTop: 24,
-              }}
-            >
-              {!emptydata
-                ? sData.map((subcategory) => {
-                    return (
-                      <SubCategory
-                        category_id={category_id}
-                        cat_name={cat_name}
-                        name={subcategory.subCat_name}
-                        image={subcategory.subCat_photo}
-                      />
-                    );
-                  })
-                : null}
+              >
+                {!emptydata
+                  ? sData.map((subcategory) => {
+                      return (
+                        <SubCategory
+                          category_id={category_id}
+                          cat_name={cat_name}
+                          name={subcategory.subCat_name}
+                          image={subcategory.subCat_photo}
+                        />
+                      );
+                    })
+                  : null}
+              </View>
             </View>
           </ScrollView>
         </View>

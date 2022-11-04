@@ -24,31 +24,8 @@ import { axiosInstance } from "../component/tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppContext from "../component/appContext";
 const wWidth = Dimensions.get("window").width;
-const NewlyAddedServices = ({ containerStyle, name, cat_id }) => {
-  return (
-    <View style={{ ...containerStyle }}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("SubCategory"),
-            {
-              category_id: cat_id,
-              cat_name: name,
-            };
-        }}
-      >
-        <Image
-          style={{ width: 100, borderRadius: 8, height: 100 }}
-          source={{
-            uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
-          }}
-        />
-        <Text style={{ fontFamily: "Regular", fontSize: 16, marginTop: 8 }}>
-          {name}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+
+import NewlyAddedServices from "../component/NewlyAddedServices";
 
 const HomeScreen = ({ navigation }) => {
   const { categories } = useContext(AppContext);
@@ -274,12 +251,12 @@ const HomeScreen = ({ navigation }) => {
                   >
                     <NewlyAddedServices
                       name={item.category_name}
-                      cat_id={item.category_id}
+                      cat_id={item._id}
                       navigation={navigation}
                     />
                     {categories[index + 1] && (
                       <NewlyAddedServices
-                        cat_id={item.category_id}
+                        cat_id={item._id}
                         navigation={navigation}
                         name={newaddons[index + 1]?.category_name}
                         containerStyle={{ marginTop: 24, marginRight: 24 }}
