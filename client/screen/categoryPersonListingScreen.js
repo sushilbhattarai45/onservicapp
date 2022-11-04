@@ -156,6 +156,7 @@ export default function CategoryPersonListingScreen({
                       }}
                     >
                       <PersonCard
+                        sp_contact={persons.sp_contact}
                         name={persons.sp_name}
                         image={persons.sp_profileImage}
                         address={persons.sp_city + " " + persons.sp_district}

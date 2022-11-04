@@ -24,50 +24,6 @@ import ModalPopup from "../component/Modal";
 import ReviewCard from "../component/ReviewCard";
 import { axiosInstance } from "../component/tools";
 
-const Persons = [
-  {
-    name: "Sushil Bhattarai",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Golpark",
-    number: "9742993345",
-
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-  {
-    name: "Sushil Bhattarai",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Golpark",
-    number: "9742993345",
-
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-  {
-    name: "Sushil Bhattarai",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Golpark",
-    number: "9742993345",
-
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-
-  {
-    name: "RamKumar",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Butwal",
-    number: "9742993345",
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-
-  {
-    name: "RamKumar",
-    works: "Ac Repair, Carpenter, Network Repair, Electrician",
-    address: "Butwal",
-    number: "9742993345",
-    img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-  },
-  //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
-];
-
 const ActionIcon = ({ name, onPress }) => {
   return (
     <Pressable style={styles.actionIcon} onPress={onPress}>
@@ -372,7 +328,9 @@ const SPProfileScreen = ({ navigation, route }) => {
             showsHorizontalScrollIndicator={false}
             data={reviews.splice(0, 5)}
             renderItem={({ item, index }) => {
-              return <ReviewCard rating={item.review_stars} name={item.user_names} />;
+              return (
+                <ReviewCard rating={item.review_stars} name={item.user_names} />
+              );
             }}
             keyExtractor={(item, index) => item._id}
           />
