@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 
+import QRCode from "react-native-qrcode-svg";
+
 import Header from "../component/Header";
 import Icon from "../component/Icon";
 import ImageSliderComponent from "../component/imageSlider";
@@ -464,10 +466,63 @@ const SPProfileScreen = ({ navigation, route }) => {
         <View
           style={{
             alignItems: "center",
-            paddingHorizontal: 16,
+            // paddingHorizontal: 16,
             paddingVertical: 16,
+            justifyContent: "center",
           }}
-        ></View>
+        >
+          <Text
+            style={{
+              color: Colors.black,
+              fontSize: 32,
+              fontFamily: "Black",
+              marginBottom: 24,
+            }}
+          >
+            Share Your Profile
+          </Text>
+          <View>
+            <QRCode
+              value={sp.sp_contact}
+              color={Colors.primary}
+              size={200}
+              // backgroundColor="black"
+            />
+            <Text
+              style={{
+                color: Colors.primary,
+                fontSize: 24,
+                fontFamily: "Black",
+                marginTop: 4,
+                textAlign: "center",
+              }}
+            >
+              OnServic
+            </Text>
+            <Text
+              style={{
+                color: Colors.black,
+                fontSize: 24,
+                fontFamily: "Black",
+                marginTop: 8,
+                textAlign: "center",
+              }}
+            >
+              {sp.sp_name}
+            </Text>
+            <Text
+              style={{
+                color: Colors.black,
+                fontSize: 16,
+                fontFamily: "Regular",
+                marginTop: 4,
+                textAlign: "center",
+              }}
+            >
+              {sp.sp_officeNumber ? sp.sp_officeNumber : sp.sp_contact}
+            </Text>
+          </View>
+        </View>
       </ModalPopup>
       <ModalPopup
         ref={popup}
