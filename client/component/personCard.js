@@ -24,11 +24,7 @@ export default function PersonCard({
   return (
     <Pressable
       style={styles.ThemeLightComponentSongsCard}
-      onPress={() => {
-        navigation.navigate("SPProfile", {
-          sp_contact: sp_contact,
-        });
-      }}
+      onPress={onPress}
     >
       <Image
         style={styles.MaskGroup}
