@@ -61,13 +61,12 @@ export default function SearchPersonListingScreen() {
     }
   };
   return (
-    <ScrollView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.gray200,
         marginTop: 40,
       }}
-      keyboardShouldPersistTaps="handled"
     >
       <View style={{ paddingHorizontal: 24 }}>
         <Search
@@ -85,115 +84,117 @@ export default function SearchPersonListingScreen() {
           }}
         />
       </View>
-      {/* Suggestions */}
-      {suggestionsActive && (
-        <View style={{ marginTop: 16, backgroundColor: Colors.white }}>
-          <ScrollView keyboardShouldPersistTaps={"handled"}>
-            {suggestions.map((item, index) => {
+      <ScrollView keyboardShouldPersistTaps="handled">
+        {/* Suggestions */}
+        {suggestionsActive && (
+          <View style={{ marginTop: 16, backgroundColor: Colors.white }}>
+            <ScrollView keyboardShouldPersistTaps={"handled"}>
+              {suggestions.map((item, index) => {
+                return (
+                  <Pressable
+                    style={{
+                      padding: 16,
+                      paddingHorizontal: 24,
+                      borderColor: Colors.gray500,
+                      borderBottomWidth: StyleSheet.hairlineWidth,
+                    }}
+                    key={index.toString()}
+                    onPress={() => {
+                      Keyboard.dismiss();
+                      setSuggestions([]);
+                      setValue(item.subCat_name);
+                      setSuggestionsActive(false);
+                      getPeopleList("", item.subCat_name);
+                    }}
+                  >
+                    <Text>{item.subCat_name}</Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+          </View>
+        )}
+        {/* PersonList */}
+        {searchData && !suggestionsActive && value.length > 0 && (
+          <ScrollView style={{ marginTop: 16, flex: 1 }}>
+            {searchData.map((person, index) => {
               return (
-                <Pressable
-                  style={{
-                    padding: 16,
-                    paddingHorizontal: 24,
-                    borderColor: Colors.gray500,
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                  }}
+                <View
                   key={index.toString()}
-                  onPress={() => {
-                    Keyboard.dismiss();
-                    setSuggestions([]);
-                    setValue(item.subCat_name);
-                    setSuggestionsActive(false);
-                    getPeopleList("", item.subCat_name);
+                  style={{
+                    marginTop: 2,
                   }}
                 >
-                  <Text>{item.subCat_name}</Text>
-                </Pressable>
+                  <PersonCard
+                    name={person.sp_name}
+                    image={
+                      "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg"
+                    }
+                    address={person.sp_city + person.sp_district}
+                    rating={5}
+                    ratingcount={5}
+                  />
+                </View>
               );
             })}
           </ScrollView>
-        </View>
-      )}
-      {/* PersonList */}
-      {searchData && !suggestionsActive && value.length > 0 && (
-        <ScrollView style={{ marginTop: 16, flex: 1 }}>
-          {searchData.map((person, index) => {
-            return (
-              <View
-                key={index.toString()}
-                style={{
-                  marginTop: 2,
-                }}
-              >
-                <PersonCard
-                  name={person.sp_name}
-                  image={
-                    "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg"
-                  }
-                  address={person.sp_city + person.sp_district}
-                  rating={5}
-                  ratingcount={5}
-                />
-              </View>
-            );
-          })}
-        </ScrollView>
-      )}
-      {/* notfound */}
-      {!searchData && !suggestionsActive && value.length > 1 && (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 100,
-          }}
-        >
-          <View>
-            <Image
-              source={{
-                uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/7c63n63o6t3-472%3A6676?alt=media&token=fe730173-04a9-40a8-8afd-1445f2a0ac78",
-                headers: {
-                  Accept: "*/*",
-                },
-              }}
-              style={{ width: "90%", aspectRatio: 1.5 }}
-              resizeMode="contain"
-            />
-          </View>
-
+        )}
+        {/* notfound */}
+        {!searchData && !suggestionsActive && value.length > 1 && (
           <View
             style={{
-              marginHorizontal: 20,
-              marginTop: 10,
+              flex: 1,
               justifyContent: "center",
               alignItems: "center",
+              marginTop: 100,
             }}
           >
-            <Text
+            <View>
+              <Image
+                source={{
+                  uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/7c63n63o6t3-472%3A6676?alt=media&token=fe730173-04a9-40a8-8afd-1445f2a0ac78",
+                  headers: {
+                    Accept: "*/*",
+                  },
+                }}
+                style={{ width: "90%", aspectRatio: 1.5 }}
+                resizeMode="contain"
+              />
+            </View>
+
+            <View
               style={{
-                textAlign: "center",
-                fontFamily: "Regular",
-                fontWeight: "700",
-                fontSize: 24,
-              }}
-            >
-              Not Found
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                fontFamily: "Regular",
-                fontSize: 16,
+                marginHorizontal: 20,
                 marginTop: 10,
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              Sorry, the keyword you entered cannot be found, please check again
-              or search with another keyword.
-            </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Regular",
+                  fontWeight: "700",
+                  fontSize: 24,
+                }}
+              >
+                Not Found
+              </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Regular",
+                  fontSize: 16,
+                  marginTop: 10,
+                }}
+              >
+                Sorry, the keyword you entered cannot be found, please check
+                again or search with another keyword.
+              </Text>
+            </View>
           </View>
-        </View>
-      )}
-    </ScrollView>
+        )}
+      </ScrollView>
+    </View>
   );
 }
