@@ -575,7 +575,11 @@ const BecomeSPScreen = () => {
                     },
                   ]}
                   renderSelectedItem={(item, unselect) => (
-                    <SkillPill key={item.subCat_id.toString()} name={item.subCat_name} onPress={unselect} />
+                    <SkillPill
+                      key={item.subCat_id.toString()}
+                      name={item.subCat_name}
+                      onPress={unselect}
+                    />
                   )}
                 />
                 {!values.skills && touched.skills ? (
@@ -670,11 +674,10 @@ const BecomeSPScreen = () => {
                       color="#0000ff"
                     />
                   ) : (
-                    <View
+                    <Pressable
                       style={{
                         height: 60,
                         width: 60,
-
                         borderRadius: 5,
                         marginBottom: 4,
                         marginLeft: 4,
@@ -683,19 +686,15 @@ const BecomeSPScreen = () => {
                         alignContent: "center",
                         backgroundColor: Colors.gray500,
                       }}
+                      onPress={async () => {
+                        setFieldTouched("photo");
+                        let a = await selectFile(values.photo);
+                        setFieldValue("photo", a);
+                        console.log(a);
+                      }}
                     >
-                      <Icon
-                        onPress={async () => {
-                          setFieldTouched("photo");
-                          let a = await selectFile(values.photo);
-                          setFieldValue("photo", a);
-                          console.log(a);
-                        }}
-                        name="add-line"
-                        size={24}
-                        color="white"
-                      />
-                    </View>
+                      <Icon name="add-line" size={24} color="white" />
+                    </Pressable>
                   )}
                 </View>
               </View>
@@ -719,7 +718,7 @@ const BecomeSPScreen = () => {
                       : Colors.primary,
                   }}
                 >
-                  {values.video && (
+                  {values.video == "" ? (
                     <TouchableOpacity
                       onPress={() => {
                         setFieldValue("video", "");
@@ -775,17 +774,8 @@ const BecomeSPScreen = () => {
                         />
                       </View>
                     </TouchableOpacity>
-                  )}
-                  {vdoloading ? (
-                    <ActivityIndicator
-                      size="large"
-                      style={{
-                        marginTop: 8,
-                      }}
-                      color="#0000ff"
-                    />
-                  ) : values.video == "" ? (
-                    <View
+                  ) : (
+                    <Pressable
                       style={{
                         height: 60,
                         width: 60,
@@ -798,19 +788,24 @@ const BecomeSPScreen = () => {
                         alignContent: "center",
                         backgroundColor: Colors.gray500,
                       }}
+                      onPress={async () => {
+                        setFieldTouched("video");
+                        let a = await selectVideo();
+                        setFieldValue("video", a);
+                      }}
                     >
-                      <Icon
-                        onPress={async () => {
-                          setFieldTouched("video");
-                          let a = await selectVideo();
-                          setFieldValue("video", a);
-                        }}
-                        name="add-line"
-                        size={24}
-                        color="white"
-                      />
-                    </View>
-                  ) : null}
+                      <Icon name="add-line" size={24} color="white" />
+                    </Pressable>
+                  )}
+                  {vdoloading && (
+                    <ActivityIndicator
+                      size="large"
+                      style={{
+                        marginTop: 8,
+                      }}
+                      color="#0000ff"
+                    />
+                  )}
                 </View>
               </View>
               {/* SCheckBox */}

@@ -507,7 +507,9 @@ const SPProfileScreen = ({ navigation, route }) => {
             paddingHorizontal: 16,
             paddingVertical: 16,
           }}
-        ></View>
+        >
+          
+        </View>
       </ModalPopup>
       <ModalPopup
         ref={popup}
