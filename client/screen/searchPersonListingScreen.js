@@ -139,6 +139,7 @@ export default function SearchPersonListingScreen({ navigation }) {
               >
                 <PersonCard
                   name={person.sp_name}
+                  sp_contact={person.sp_contact}
                   image={
                     "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg"
                   }
