@@ -24,7 +24,7 @@ import ModalPopup from "../component/Modal";
 import { Dropdown } from "react-native-element-dropdown";
 import { Districts } from "../component/district";
 
-export default function SearchPersonListingScreen({navigation}) {
+export default function SearchPersonListingScreen({ navigation }) {
   const { subCategories } = useContext(AppContext);
 
   const [suggestions, setSuggestions] = useState([]);
@@ -42,16 +42,16 @@ export default function SearchPersonListingScreen({navigation}) {
   // const [searching, setSearching] = useState(false);
 
   const getPeopleList = async (location, skill) => {
-    console.log(filter.city)
+    console.log(filter.city);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
       city: filter?.city,
       GIVEN_API_KEY: "AXCF",
     });
-    console.log(res.data)
+    console.log(res.data);
     if (res.data.data.length > 0) {
       setSearchData(res.data.data);
-      console.log(res.data.data)
+      console.log(res.data.data);
     } else {
       setSearchData(null);
     }
@@ -145,7 +145,7 @@ export default function SearchPersonListingScreen({navigation}) {
                   address={person.sp_city + person.sp_district}
                   rating={5}
                   ratingcount={5}
-                  onPress={()=> navigation.navigate('Sp',{sp:person})}
+                  onPress={() => navigation.navigate("Sp", { sp: person })}
                 />
               </View>
             );

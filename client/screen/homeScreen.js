@@ -113,7 +113,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <View style={{ paddingHorizontal: 24 }}>
           <TouchableOpacity onPress={() => navigation.navigate("Search")}>
-            <Search editable={false} />
+            <Search editable={false} style={{}} />
           </TouchableOpacity>
         </View>
 

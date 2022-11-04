@@ -1,4 +1,5 @@
 import ReviewSchema from "../model/reviewSchema.js";
+import UserSchema from "../model/userSchema.js";
 import {} from "dotenv/config";
 const API_KEY = process.env.API_KEY;
 import moment from "moment";
@@ -19,6 +20,14 @@ export const postReview = async (req, res) => {
       review_doc,
     });
     const postData = await data.save();
+    //  const setRatings = await ReviewSchema.find({
+    //       sp_contact: sp_contact,
+    //  });
+
+    // setRatings.data.map((item) => {
+
+    // })
+
     return res.json({ message: "Done", statuscode: 201, data: postData });
   } else {
     return res.json({ error: "Wrong Api Key", statuscode: 700 });

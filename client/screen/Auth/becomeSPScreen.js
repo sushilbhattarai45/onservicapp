@@ -128,16 +128,22 @@ const BecomeSPScreen = () => {
   const [file, setFile] = useState();
   const [imgFile, setImgFile] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [vdoFile, setVdoFile] = useState([]);
+  const [vdoloading, setVdoLoading] = useState(false);
   // const mulFile = [];
   const [img, setImg] = useState(false);
+  const [vdo, setVdo] = useState(false);
+
   const selectFile = async () => {
     setLoading(true);
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsMultipleSelection: true,
+
+        mediaType: "video",
       });
 
-      console.log(result.selected);
+      console.log(result);
       console.log("okok" + file);
       // result.selected.map((item) => {
       //   mulFile.push(item);
@@ -156,6 +162,45 @@ const BecomeSPScreen = () => {
         setImg(true);
         setLoading(false);
         // console.log("ok" + JSON.stringify(mulFile));
+      } else {
+        setImg(true);
+        setLoading(false);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const selectVideo = async () => {
+    setVdoLoading(true);
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaType: "video",
+      });
+
+      console.log(result);
+      console.log("okok" + file);
+      // result.selected.map((item) => {
+      //   mulFile.push(item);
+      // });
+      // uploadImage();
+      if (!result.cancelled) {
+        console.log(result.selected);
+        setVdoFile((prev) => {
+          setVdoLoading(false);
+          if (result?.selected) {
+            return [...prev, ...result.selected];
+
+            setVdoLoading(false);
+          } else return [...prev, result];
+        });
+        setVdo(true);
+        setVdoLoading(false);
+        // console.log("ok" + JSON.stringify(mulFile));
+      } else {
+        setVdo(false);
+        setVdoLoading(false);
       }
     } catch (e) {
       console.log(e);
@@ -174,6 +219,7 @@ const BecomeSPScreen = () => {
         });
         return null;
       }
+      const finalData = [];
       // setError(false);
       // if not empty creating a form data to send to upload the image to the server
       // alert("ok");
@@ -192,7 +238,7 @@ const BecomeSPScreen = () => {
         );
 
         const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-        console.log("s" + serverUrl);
+        // console.log("s" + serverUrl);
         const response = await axios(serverUrl, {
           method: "post",
           data: data,
@@ -207,6 +253,7 @@ const BecomeSPScreen = () => {
         setImg(true);
         return finalname;
       });
+      console.log(finalData);
     } catch (e) {
       alert("Error! Sorry");
     }
@@ -676,6 +723,124 @@ const BecomeSPScreen = () => {
                       />
                     </View>
                   )}
+                </View>
+              </View>
+
+              <View style={{ marginTop: 12 }}>
+                <Text>Upload Video of your work!</Text>
+                <View
+                  style={{
+                    display: "flex",
+                    marginTop: 8,
+                    flexWrap: "wrap",
+                    alignItems: "flex-start",
+                    padding: 10,
+                    borderWidth: 0.8,
+                    borderColor: Colors.gray900,
+                    flexDirection: "row",
+                  }}
+                >
+                  {vdo
+                    ? vdoFile?.map((item, index) => (
+                        <TouchableOpacity
+                          onPress={() => {
+                            // setImgFile((prev) => {
+                            //   prev.filter((item1, index1) => index1 != index);
+                            // });
+
+                            setVdoFile((current) =>
+                              current.filter((file, idx) => idx !== index)
+                            );
+                            setVdo(false);
+                          }}
+                        >
+                          <View
+                            style={{
+                              height: 60,
+                              width: 60,
+                              marginBottom: 6,
+                              marginRight: 4,
+                              position: "relative",
+                              flexWrap: "wrap",
+                              borderRadius: 10,
+                              alignItems: "center",
+                              justifyContent: "center",
+                              alignContent: "center",
+                            }}
+                          >
+                            <View
+                              style={{
+                                backgroundColor: "white",
+                                borderRadius: 20,
+                                width: 20,
+                                height: 20,
+                                zIndex: 9,
+                                top: -1.5,
+                                right: -1.5,
+                                position: "absolute",
+                              }}
+                            >
+                              <Icon
+                                style={{}}
+                                name="close-circle-fill"
+                                size={20}
+                                color={Colors.gray900}
+                              />
+                            </View>
+                            <Image
+                              style={{
+                                alignSelf: "center",
+                                alignSelf: "center",
+                                height: "100%",
+                                borderRadius: 10,
+                                width: "95%",
+                              }}
+                              source={{
+                                uri: item?.uri
+                                  ? item.uri
+                                  : "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
+                                headers: {
+                                  Accept: "*/*",
+                                },
+                              }}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      ))
+                    : null}
+                  {vdoloading ? (
+                    <ActivityIndicator
+                      size="large"
+                      style={{
+                        marginTop: 8,
+                      }}
+                      color="#0000ff"
+                    />
+                  ) : !vdo ? (
+                    <View
+                      style={{
+                        height: 60,
+                        width: 60,
+
+                        borderRadius: 5,
+                        marginBottom: 4,
+                        marginLeft: 4,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        backgroundColor: Colors.gray500,
+                      }}
+                    >
+                      <Icon
+                        onPress={() => {
+                          selectVideo();
+                        }}
+                        name="add-line"
+                        size={24}
+                        color="white"
+                      />
+                    </View>
+                  ) : null}
                 </View>
               </View>
               {/* SCheckBox */}
