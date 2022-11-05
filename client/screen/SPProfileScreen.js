@@ -68,6 +68,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const popupQr = createRef();
 
   const postReview = async (user_contact, rating, review, sp_contact) => {
+    console.log(rating);
     let res = await axiosInstance.post("/review/post", {
       GIVEN_API_KEY: "AXCF",
       user_contact: user_contact,
@@ -75,7 +76,6 @@ const SPProfileScreen = ({ navigation, route }) => {
       review_bio: review,
       review_stars: rating,
     });
-    console.log(res.data);
   };
   useEffect(() => {
     const getReviews = async () => {
@@ -332,8 +332,15 @@ const SPProfileScreen = ({ navigation, route }) => {
             showsHorizontalScrollIndicator={false}
             data={reviews}
             renderItem={({ item, index }) => {
+              console.log(item);
+
               return (
-                <ReviewCard rating={item.review_stars} name={item.user_names} />
+                <ReviewCard
+                  rating={item.review_stars}
+                  name={item.user_name}
+                  review={item.review_bio}
+                  time={item.review_doc.date}
+                />
               );
             }}
             keyExtractor={(item, index) => item._id}
@@ -461,7 +468,10 @@ const SPProfileScreen = ({ navigation, route }) => {
       <ModalPopup
         ref={popupQr}
         animationType="fade"
-        onTouchOutside={() => popupQr.current.close()}
+        onTouchOutside={() => {
+          setRating(0);
+          popupQr.current.close();
+        }}
       >
         <View
           style={{
@@ -586,7 +596,10 @@ const SPProfileScreen = ({ navigation, route }) => {
           <Button
             label="Share Review"
             onPress={() => {
-              postReview("123456789", rating, review, sp.sp_contact);
+              if (review !== "") {
+                console.log(review);
+                postReview("123456789", rating, review, sp.sp_contact);
+              }
             }}
           />
         </View>
