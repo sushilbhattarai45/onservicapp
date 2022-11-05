@@ -25,10 +25,15 @@ import ReviewCard from "../component/ReviewCard";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
 
-const ActionIcon = ({ name, onPress }) => {
+const ActionIcon = ({ name, onPress, color }) => {
   return (
     <Pressable style={styles.actionIcon} onPress={onPress}>
-      <Icon {...{ name }} {...{ onPress }} size={24} color={Colors.gray900} />
+      <Icon
+        {...{ name }}
+        {...{ onPress }}
+        size={24}
+        color={color ? color : Colors.gray900}
+      />
     </Pressable>
   );
 };
@@ -62,6 +67,8 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const [reviewError, setReviewError] = useState(false);
+  const [bookmarked, setBookmarked] = useState();
   const popup = createRef();
   const popupQr = createRef();
 
@@ -76,14 +83,26 @@ const SPProfileScreen = ({ navigation, route }) => {
     });
   };
   useEffect(() => {
+    const checkBookmarked = async () => {
+      let res = await axiosInstance.post("/bm/check", {
+        user_contact: "999999999",
+        sp_contact: sp.sp_contact,
+        GIVEN_API_KEY: "AXCF",
+      });
+      if (!res.error) {
+        setBookmarked(res.data.data);
+        console.log("Bookmarked:" + res.data.data);
+      }
+    };
+
     const getReviews = async () => {
       let res = await axiosInstance.post("/review/getSpreview", {
         sp_contact: "12345678",
         GIVEN_API_KEY: "AXCF",
       });
-      console.log(res.data.data);
       setReviews(res.data.data);
     };
+    checkBookmarked();
     getReviews();
   }, []);
 
@@ -148,7 +167,20 @@ const SPProfileScreen = ({ navigation, route }) => {
                 }}
               />
               <ActionIcon name="map-pin-line" />
-              <ActionIcon name="bookmark-2-line" />
+              <ActionIcon
+                color={bookmarked ? Colors.primary : Colors.gray900}
+                name={bookmarked ? "bookmark-2-fill" : "bookmark-2-line"}
+                onPress={async () => {
+                  console.log("hi");
+                  let url = bookmarked ? "/bm/delete" : "/bm/post";
+                  let res = await axiosInstance.post(url, {
+                    user_id: "999999999",
+                    sp_id: sp.sp_contact,
+                    GIVEN_API_KEY: "AXCF",
+                  });
+                  console.log(res.data);
+                }}
+              />
             </View>
           </View>
           {/* Name */}
@@ -268,14 +300,14 @@ const SPProfileScreen = ({ navigation, route }) => {
             }}
           >
             <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
-              {sp.sp_rating}
+              {sp.sp_rating ? sp.sp_rating : 0}
               <Text style={{ fontSize: 20, fontFamily: "Regular" }}>/5</Text>
             </Text>
             <View>
               <StarRating
                 starSize={40}
                 onChange={() => null}
-                rating={sp.sp_rating !== null ? sp.sp_rating : 0}
+                rating={sp.sp_rating ? sp.sp_rating : 0}
                 color={Colors.gold}
                 starStyle={{ marginLeft: -5 }}
                 animationConfig={{
@@ -328,16 +360,14 @@ const SPProfileScreen = ({ navigation, route }) => {
           <FlatList
             style={{}}
             showsHorizontalScrollIndicator={false}
-            data={reviews}
+            data={reviews.splice(0, 5)}
             renderItem={({ item, index }) => {
-              console.log(item);
-
               return (
                 <ReviewCard
                   rating={item.review_stars}
                   name={item.user_name}
                   review={item.review_bio}
-                  time={item.review_doc.date}
+                  doc={item.review_doc}
                 />
               );
             }}
@@ -467,7 +497,6 @@ const SPProfileScreen = ({ navigation, route }) => {
         ref={popupQr}
         animationType="fade"
         onTouchOutside={() => {
-          setRating(0);
           popupQr.current.close();
         }}
       >
@@ -571,10 +600,8 @@ const SPProfileScreen = ({ navigation, route }) => {
         <View style={{ width: "100%" }}>
           <Text>Review your Service Provider (max 100)</Text>
           <TextInput
-            maxLength={4}
             multiline={true}
             numberOfLines={4}
-            keyboardType={"numeric"}
             style={{
               width: "100%",
               marginTop: 8,
@@ -588,15 +615,27 @@ const SPProfileScreen = ({ navigation, route }) => {
             value={review}
             onChangeText={setReview}
           />
+          {reviewError ? (
+            <Text style={{ color: "red" }}>{reviewError}</Text>
+          ) : null}
         </View>
-        {/* {errorpin ? <Text style={{ color: "red" }}>{errorpin}</Text> : null}  */}
         <View style={{ width: "100%", marginTop: 40 }}>
           <Button
             label="Share Review"
             onPress={() => {
-              if (review !== "") {
-                console.log(review);
+              if (review.length > 0) {
+                console.log("no error");
+                setReviewError(false);
                 postReview("123456789", rating, review, sp.sp_contact);
+                setReview("");
+                setRating(0);
+                popup.current.close();
+              } else if (review.split(" ").length > 50) {
+                console.log(" error 1");
+
+                setReviewError("Max no of word is 50");
+              } else {
+                setReviewError("Minimum 4 charachets is rewuired");
               }
             }}
           />
