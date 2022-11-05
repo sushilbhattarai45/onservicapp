@@ -52,6 +52,7 @@ export default function SearchPersonListingScreen({ navigation }) {
   // }
   const getPeopleList = async (location, skill) => {
     console.log(filter.city);
+    alert("ok" + searchcity + skill);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
       city: searchcity,
@@ -261,7 +262,7 @@ export default function SearchPersonListingScreen({ navigation }) {
                 setFilter({ ...filter, city: item.label });
                 console.log("ok" + item.label);
                 setSearchedCity(item.label);
-                // getPeopleList(searchcity, value);
+                getPeopleList(searchcity, value);
                 setSuggestionsActive(false);
               }}
             />
