@@ -63,7 +63,7 @@ const SkillPill = ({ name }) => {
 };
 const SPProfileScreen = ({ navigation, route }) => {
   const { sp } = route.params;
-  const { subCategories } = useContext(AppContext);
+  const { subCategories, user } = useContext(AppContext);
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
@@ -76,7 +76,7 @@ const SPProfileScreen = ({ navigation, route }) => {
     console.log(rating);
     let res = await axiosInstance.post("/review/post", {
       GIVEN_API_KEY: "AXCF",
-      user_id: user_contact,
+      user_id: user,
       user_id: sp_contact,
       review_bio: review,
       review_stars: rating,
@@ -85,7 +85,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   useEffect(() => {
     const checkBookmarked = async () => {
       let res = await axiosInstance.post("/bm/check", {
-        user_id: "999999999",
+        user_id: user,
         sp_contact: sp.sp_contact,
         GIVEN_API_KEY: "AXCF",
       });

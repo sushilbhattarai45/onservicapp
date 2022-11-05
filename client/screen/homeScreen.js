@@ -42,17 +42,6 @@ const HomeScreen = ({ navigation }) => {
       //Put your Data loading function here instead of my loadData()
     });
     async function getData() {
-      // const number = await AsyncStorage.getItem("user_contact");
-
-      // if (number.length != 0) {
-      //   setLoggedIn(true);
-      //   let user = await axiosInstance.post("/user/getOneUser", {
-      //     GIVEN_API_KEY: "AXCF",
-      //     user_contact: number,
-      //   });
-      //   setUserData(user?.data.data);
-      // }
-
       console.log("hello");
       let res = await axiosInstance.post("/categories?", {
         GIVEN_API_KEY: "AXCF",

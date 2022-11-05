@@ -62,11 +62,11 @@ export const getAllSp = async (req, res) => {
 };
 
 export const getOneSp = async (req, res) => {
-  const { GIVEN_API_KEY } = req.body;
+  const { GIVEN_API_KEY, sp_contact } = req.body;
   if (GIVEN_API_KEY == API_KEY) {
     try {
       const spdata = await spSchema.findOne({
-        sp_contact: 9742993345,
+        sp_contact: sp_contact,
       });
       return res.json({ statuscode: 201, data: spdata });
     } catch (e) {

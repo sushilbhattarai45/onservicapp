@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Colors } from "../styles/main";
 import Header from "../component/Header";
+import { axiosInstance } from "../component/tools";
 
 export default function QrScreen({ navigation, navigation: { goBack } }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -19,7 +20,8 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(data);
+
+    getData(data);
     setTimeout(() => {
       setScanned(false);
     }, 2000);
@@ -30,6 +32,21 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
+  }
+  async function getData(num) {
+    const data = await axiosInstance.post("sp/getOneSp", {
+      GIVEN_API_KEY: "AXCF",
+      sp_contact: num,
+    });
+
+    // console.log("ok" + JSON.stringify(data.data));
+    if (data.data.data != null) {
+      navigation.navigate("Sp", {
+        sp: data.data.data,
+      });
+    } else {
+      alert(num);
+    }
   }
 
   return (
