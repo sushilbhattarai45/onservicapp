@@ -101,8 +101,8 @@ const SPProfileScreen = ({ navigation, route }) => {
     axiosInstance
       .post("/review/post", {
         GIVEN_API_KEY: "AXCF",
-        user_id: user,
-        sp_id: sp.sp_contact,
+        user_contact: user,
+        sp_contact: sp.sp_contact,
         review_bio: review,
         review_stars: rating,
       })
@@ -446,6 +446,7 @@ const SPProfileScreen = ({ navigation, route }) => {
             <View>
               {reviews !== [] && reviews ? (
                 reviews?.map((item, index) => {
+                  console.log(item);
                   return (
                     <ReviewCard
                       image={item.user_profileImage}

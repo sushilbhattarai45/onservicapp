@@ -37,7 +37,7 @@ export default function SearchPersonListingScreen({ navigation }) {
 
   const [citiesList, setCitiesList] = useState(Districts);
   const [filter, setFilter] = useState({ city: userData?.user_district });
-  
+
   const getPeopleList = async ({ skill = value, location = filter.city }) => {
     console.log(skill, location);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
