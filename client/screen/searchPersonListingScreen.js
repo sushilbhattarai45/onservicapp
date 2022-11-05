@@ -50,11 +50,11 @@ export default function SearchPersonListingScreen({ navigation }) {
   //     setSearchedCity(userData?.user_district);
   //   }
   // }
-  const getPeopleList = async (location, skill) => {
+  const getPeopleList = async (location = filter.city) => {
     console.log(filter.city);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
-      skill: skill,
-      city: searchcity,
+      skill: value,
+      city: location,
       GIVEN_API_KEY: "AXCF",
     });
     console.log(res.data);
@@ -102,8 +102,8 @@ export default function SearchPersonListingScreen({ navigation }) {
           onSubmitEditing={() => {
             console.log("hello");
             setSuggestions([]);
+            getPeopleList();
             setSuggestionsActive(false);
-            getPeopleList("", value);
           }}
         />
       </View>
@@ -260,8 +260,7 @@ export default function SearchPersonListingScreen({ navigation }) {
               onChange={(item) => {
                 setFilter({ ...filter, city: item.label });
                 console.log("ok" + item.label);
-                setSearchedCity(item.label);
-                // getPeopleList(searchcity, value);
+                getPeopleList(item.label);
                 setSuggestionsActive(false);
               }}
             />
