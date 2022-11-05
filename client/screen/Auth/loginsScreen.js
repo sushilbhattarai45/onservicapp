@@ -67,7 +67,6 @@ export default function LoginScreen({ navigation }) {
         await AsyncStorage.setItem("user_contact", num);
         setUser(num);
         setLogged("true");
-
         navigation.navigate("Home");
         alert("done");
       } else {
