@@ -2,8 +2,9 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 import { Colors } from "../styles/main";
+import moment from "moment";
 
-export default ReviewCard = ({ name, image, date, rating, review }) => {
+export default ReviewCard = ({ name, image, date, rating, review, time }) => {
   return (
     <View
       style={{
@@ -30,9 +31,9 @@ export default ReviewCard = ({ name, image, date, rating, review }) => {
             Tilganga Acharya
           </Text>
           <Text
-            style={{ fontSize: 12, color: Colors.black, fontFamily: "Regular" }}
+            style={{ fontSize: 12, color: Colors.black, fontFamily: "Regular", }}
           >
-            1 day ago
+            {time}
           </Text>
         </View>
         <View style={{ marginLeft: "auto" }}>
@@ -58,7 +59,7 @@ export default ReviewCard = ({ name, image, date, rating, review }) => {
           marginTop: 8,
         }}
       >
-        Hedfjkshafjhaesjkf
+        {review}
       </Text>
     </View>
   );

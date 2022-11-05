@@ -68,7 +68,7 @@ export const getOneSpReview = async (req, res) => {
       sp_id: id,
     });
     const b = await Promise.all(
-      postData.map(async (review) => {
+      postData.map(async (review) => {    
         let disp = {};
         let userData = await userSchema.findOne({
           user_contact: review.user_contact,
@@ -78,6 +78,7 @@ export const getOneSpReview = async (req, res) => {
         disp.sp_contact = review.sp_contact;
         disp.review_doc = review.review_doc;
         disp.review_bio = review.review_bio;
+        disp.review_stars = review.review_stars;
         disp.user_name = userData?.user_name ? userData.user_name : "";
         disp.user_profile_image = userData?.user_profileImage
           ? userData.user_profileImage
