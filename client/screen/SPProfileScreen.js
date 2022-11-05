@@ -16,6 +16,7 @@ import {
   Pressable,
   Linking,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 import QRCode from "react-native-qrcode-svg";
@@ -78,10 +79,23 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [review, setReview] = useState("");
   const [reviewError, setReviewError] = useState(false);
   const [bookmarked, setBookmarked] = useState();
-  const [videoStatus, setVideoStatus] = useState();
+  // const [videoStatus, setVideoStatus] = useState();
   const popup = createRef();
   const popupQr = createRef();
   const video = useRef(null);
+  const [videoMuted, setVideoMuted] = useState(true);
+
+  const onFullscreenUpdate = ({ fullscreenUpdate, status }) => {
+    console.log("Update" + fullscreenUpdate);
+    if (fullscreenUpdate == 3) {
+      setVideoMuted(true);
+    }
+  };
+  const showVideoInFullscreen = async () => {
+    setVideoMuted(false);
+    await video.current?.presentFullscreenPlayer();
+  };
+
   const postReview = async (user_contact, rating, review, sp_contact) => {
     console.log(rating);
     let res = await axiosInstance.post("/review/post", {
@@ -135,25 +149,26 @@ const SPProfileScreen = ({ navigation, route }) => {
           }
           color={Colors.white}
         />
-        <Pressable
-          onPress={() =>
-            videoStatus.isPlaying
-              ? video.current.pauseAsync()
-              : video.current.playAsync()
-          }
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{ backgroundColor: "red" }}
+          onPress={async () => {
+            showVideoInFullscreen();
+          }}
         >
           <Video
             ref={video}
             style={styles.video}
-            source={{
-              uri: sp.sp_media.video,
-            }}
-            // useNativeControls
+            source={{ uri: sp.sp_media.video }}
+            isMuted={videoMuted}
+            shouldPlay
             resizeMode="cover"
+            pointerEvents="none"
+            onFullscreenUpdate={onFullscreenUpdate}
             isLooping
-            onPlaybackStatusUpdate={(status) => setVideoStatus(() => status)}
           />
-        </Pressable>
+          
+        </TouchableOpacity>
         {/* <Text>Hello</Text> */}
         <View style={styles.profileContent}>
           <View
@@ -707,7 +722,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   video: {
-    height: 200,
+    height: 300,
     width: Dimensions.get("window").width,
   },
 });

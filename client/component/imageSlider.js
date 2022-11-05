@@ -5,7 +5,6 @@ import { Colors } from "../styles/main";
 
 export default function ImageSliderComponent({ style, data }) {
   let mappedData = data.map((image) => ({ img: image }));
-  console.log(mappedData);
   return (
     <ImageSlider
       preview={false}
