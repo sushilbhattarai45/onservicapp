@@ -37,12 +37,11 @@ export default function SearchPersonListingScreen({ navigation }) {
 
   const [citiesList, setCitiesList] = useState(Districts);
   const [filter, setFilter] = useState({ city: userData?.user_district });
-  useEffect(() => {
-  }, []);
-  const getPeopleList = async (location = filter.city) => {
-    console.log(filter.city);
+  
+  const getPeopleList = async ({ skill = value, location = filter.city }) => {
+    console.log(skill, location);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
-      skill: value,
+      skill: skill,
       city: location,
       GIVEN_API_KEY: "AXCF",
     });
@@ -91,7 +90,7 @@ export default function SearchPersonListingScreen({ navigation }) {
           onSubmitEditing={() => {
             console.log("hello");
             setSuggestions([]);
-            getPeopleList();
+            getPeopleList({});
             setSuggestionsActive(false);
           }}
         />
@@ -115,7 +114,7 @@ export default function SearchPersonListingScreen({ navigation }) {
                     setSuggestions([]);
                     setValue(item.subCat_name);
                     setSuggestionsActive(false);
-                    getPeopleList("", item.subCat_name);
+                    getPeopleList({ skill: item.subCat_name });
                   }}
                 >
                   <Text>{item.subCat_name}</Text>
@@ -249,7 +248,7 @@ export default function SearchPersonListingScreen({ navigation }) {
               onChange={(item) => {
                 setFilter({ ...filter, city: item.label });
                 console.log("ok" + item.label);
-                getPeopleList(item.label);
+                getPeopleList({ location: item.label });
                 setSuggestionsActive(false);
               }}
             />
