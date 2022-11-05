@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useState } from "react";
+import React, { createRef, useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -25,7 +25,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { Districts } from "../component/district";
 
 export default function SearchPersonListingScreen({ navigation }) {
-  const { subCategories } = useContext(AppContext);
+  const { subCategories, userData } = useContext(AppContext);
 
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionTouched, setSuggestionsTouched] = useState(false);
@@ -36,16 +36,25 @@ export default function SearchPersonListingScreen({ navigation }) {
   const popup = createRef();
 
   const [citiesList, setCitiesList] = useState(Districts);
-  const [filter, setFilter] = useState({ city: Districts[0].value });
-
+  const [filter, setFilter] = useState({ city: null });
+  const [searchcity, setSearchedCity] = useState(userData?.user_district);
   // const [searchText, setSearchText] = useState("");
   // const [searching, setSearching] = useState(false);
-
+  useEffect(() => {
+    // setCity();
+  }, []);
+  // async function setCity() {
+  //   if (filter?.city) {
+  //     setSearchedCity(filter?.city);
+  //   } else {
+  //     setSearchedCity(userData?.user_district);
+  //   }
+  // }
   const getPeopleList = async (location, skill) => {
     console.log(filter.city);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
-      city: filter?.city,
+      city: searchcity,
       GIVEN_API_KEY: "AXCF",
     });
     console.log(res.data);
@@ -81,6 +90,7 @@ export default function SearchPersonListingScreen({ navigation }) {
       keyboardShouldPersistTaps="handled"
     >
       <View style={{ paddingHorizontal: 24 }}>
+        <Text>{searchcity}</Text>
         <Search
           containerStyle={{ padding: 0 }}
           rightIcon={"equalizer-fill"}
@@ -249,7 +259,10 @@ export default function SearchPersonListingScreen({ navigation }) {
               value={filter.city}
               onChange={(item) => {
                 setFilter({ ...filter, city: item.label });
-                console.log(item.label);
+                console.log("ok" + item.label);
+                setSearchedCity(item.label);
+                // getPeopleList(searchcity, value);
+                setSuggestionsActive(false);
               }}
             />
           </View>

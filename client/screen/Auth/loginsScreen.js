@@ -15,12 +15,13 @@ import { Colors } from "../../styles/main";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../component/Header";
-import Search from "../../component/searchBar";
-import ImageSliderComponent from "../../component/imageSlider";
+import Constants from "expo-constants";
 import { number } from "yup";
 import AppContext from "../../component/appContext";
-export default function LoginScreen({ navigation }) {
-  const { user, logged, setLogged, setUser } = useContext(AppContext);
+import { axiosInstance } from "../../component/tools";
+export default function LoginScreen({ navigation, route, path }) {
+  const { user, logged, setLogged, setUser, setUserData } =
+    useContext(AppContext);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const [num, setNum] = useState();
@@ -31,6 +32,7 @@ export default function LoginScreen({ navigation }) {
   const [error1, setError1] = useState("");
   const [error2, setError2] = useState("");
 
+  const showHeader = path == "NotLoggedIn" ? false : true;
   async function checkLogin() {
     // alert(Number.isInteger(num));
     if (pin.length != 4 || num.length != 10) {
@@ -53,19 +55,22 @@ export default function LoginScreen({ navigation }) {
         setFocusColor1("red");
       }
     } else {
-      const res = await axios.post(
-        "http://192.168.100.11:3001/v1/api/user/login",
-        {
-          GIVEN_API_KEY: "AXCF",
-          user_num: num,
-          user_pass: pin,
-        }
-      );
+      const res = await axiosInstance.post("/user/login", {
+        GIVEN_API_KEY: "AXCF",
+        user_num: num,
+        user_pass: pin,
+      });
       const status = res?.data?.statuscode;
       console.log(res);
       if (status == 200 || status == 201) {
         await AsyncStorage.setItem("user_contact", num);
         setUser(num);
+        const setdata = await axiosInstance.post("/user/getOneUser", {
+          GIVEN_API_KEY: "AXCF",
+          user_contact: num,
+        });
+        alert(setdata?.data.data.user_name);
+        setUserData(setdata?.data?.data);
         setLogged("true");
         navigation.navigate("Home");
         alert("done");
@@ -78,11 +83,18 @@ export default function LoginScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Header
-        icon={"arrow-left-line"}
-        onPressIcon={() => navigation.navigate("Home")}
-      />
+    <View
+      style={[
+        styles.container,
+        { paddingTop: !showHeader ? Constants.statusBarHeight + 16 : 0 },
+      ]}
+    >
+      {showHeader && (
+        <Header
+          icon={"arrow-left-line"}
+          onPressIcon={() => navigation.goBack()}
+        />
+      )}
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : 0.1}>
         {/* <ImageSliderComponent/> */}
         <View style={{ marginTop: 24 }}>
@@ -100,7 +112,7 @@ export default function LoginScreen({ navigation }) {
               color: "#212121",
             }}
           >
-            LOGIN
+            {showHeader ? "Login" : "Please Login First"}
           </Text>
           <View
             style={{

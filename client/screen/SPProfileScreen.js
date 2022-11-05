@@ -1,4 +1,10 @@
-import React, { useState, createRef, useEffect, useContext } from "react";
+import React, {
+  useState,
+  createRef,
+  useEffect,
+  useContext,
+  useRef,
+} from "react";
 import {
   ScrollView,
   View,
@@ -9,7 +15,8 @@ import {
   TextInput,
   Pressable,
   Linking,
-  Alert,
+  Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 import QRCode from "react-native-qrcode-svg";
@@ -26,6 +33,8 @@ import ReviewCard from "../component/ReviewCard";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
 import BookMarkCard from "../component/bookmarkCard";
+
+import { Video, AVPlaybackStatus } from "expo-av";
 
 const ActionIcon = ({ name, onPress, color }) => {
   return (
@@ -71,9 +80,23 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [review, setReview] = useState("");
   const [reviewError, setReviewError] = useState(false);
   const [bookmarked, setBookmarked] = useState();
-  const [bookIcon, setBookIcon] = useState("false");
+  // const [videoStatus, setVideoStatus] = useState();
   const popup = createRef();
   const popupQr = createRef();
+  const video = useRef(null);
+  const [videoMuted, setVideoMuted] = useState(true);
+  const [bookIcon, setBookIcon] = useState("false");
+  const onFullscreenUpdate = ({ fullscreenUpdate, status }) => {
+    console.log("Update" + fullscreenUpdate);
+    if (fullscreenUpdate == 3) {
+      setVideoMuted(true);
+    }
+  };
+  const showVideoInFullscreen = async () => {
+    setVideoMuted(false);
+    await video.current?.presentFullscreenPlayer();
+  };
+
   const postReview = async (user_contact, rating, review, sp_contact) => {
     console.log(rating);
     let res = await axiosInstance.post("/review/post", {
@@ -137,8 +160,25 @@ const SPProfileScreen = ({ navigation, route }) => {
           }
           color={Colors.white}
         />
-
-        <ImageSliderComponent />
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{ backgroundColor: "red" }}
+          onPress={async () => {
+            showVideoInFullscreen();
+          }}
+        >
+          <Video
+            ref={video}
+            style={styles.video}
+            source={{ uri: sp.sp_media.video }}
+            isMuted={videoMuted}
+            shouldPlay
+            resizeMode="cover"
+            pointerEvents="none"
+            onFullscreenUpdate={onFullscreenUpdate}
+            isLooping
+          />
+        </TouchableOpacity>
         {/* <Text>Hello</Text> */}
         <View style={styles.profileContent}>
           <View
@@ -324,7 +364,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           </>
           {/* Slider */}
           <View style={{ marginTop: 24 }}>
-            <ImageSliderComponent />
+            <ImageSliderComponent data={sp.sp_media.photo} />
           </View>
           <View
             style={{
@@ -698,7 +738,7 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     borderRadius: 20,
-    marginTop: -65,
+    marginTop: -40,
   },
   actionIcon: {
     padding: 8,
@@ -712,6 +752,10 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     fontFamily: "SemiBold",
     fontSize: 16,
+  },
+  video: {
+    height: 300,
+    width: Dimensions.get("window").width,
   },
 });
 

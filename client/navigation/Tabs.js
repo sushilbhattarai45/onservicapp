@@ -1,3 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "../component/Icon";
 import BookMarkScreen from "../screen/bookmarkScreen";
@@ -8,10 +10,11 @@ import { Colors } from "../styles/main";
 import AppContext from "../component/appContext";
 const Tab = createBottomTabNavigator();
 import { useContext } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoginScreen from "../screen/Auth/loginsScreen";
 export default function MyTabs() {
   const { logged } = useContext(AppContext);
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -48,13 +51,21 @@ export default function MyTabs() {
       <Tab.Screen
         options={{ headerShown: false }}
         name="Bookmarks"
-        component={logged == "true" ? BookMarkScreen : LoginScreen}
+        component={
+          logged == "true"
+            ? BookMarkScreen
+            : () => <LoginScreen path="NotLoggedIn" />
+        }
       />
 
       <Tab.Screen
         options={{ headerShown: false }}
         name="Profile"
-        component={logged == "true" ? UserProfileScreen : LoginScreen}
+        component={
+          logged == "true"
+            ? UserProfileScreen
+            : () => <LoginScreen path="NotLoggedIn" />
+        }
       />
     </Tab.Navigator>
   );

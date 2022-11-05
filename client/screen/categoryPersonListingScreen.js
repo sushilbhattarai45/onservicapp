@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -14,6 +14,7 @@ import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
 import Header from "../component/Header";
 import axios from "axios";
+import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
 export default function CategoryPersonListingScreen({
   route,
@@ -21,6 +22,7 @@ export default function CategoryPersonListingScreen({
   navigation: { goBack },
 }) {
   const [rating, setRating] = useState(3);
+  const { userData, logged } = useContext(AppContext);
 
   const { category_id, cat_name, sub_name } = route.params;
 
@@ -33,7 +35,7 @@ export default function CategoryPersonListingScreen({
     async function getSpData() {
       const data = await axiosInstance.post("sp/getSearchedSp", {
         GIVEN_API_KEY: "AXCF",
-        city: "ram",
+        city: userData?.user_district,
         skill: sub_name,
       });
       setSpData(data.data.data);
@@ -91,6 +93,26 @@ export default function CategoryPersonListingScreen({
             />
           </View>
           <View style={{ marginTop: 20 }}>
+            {logged == "true" ? (
+              <Text
+                style={{
+                  marginHorizontal: 15,
+                }}
+              >
+                This Data contains the list of the service provider from
+                District {userData.user_district}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  marginHorizontal: 15,
+                }}
+              >
+                {" "}
+                This Data contains the list of the service provider from All
+                Over Nepal
+              </Text>
+            )}
             {hasData
               ? spData.map((persons) => {
                   return (
