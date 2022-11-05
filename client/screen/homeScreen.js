@@ -42,16 +42,6 @@ const HomeScreen = ({ navigation }) => {
       //Put your Data loading function here instead of my loadData()
     });
     async function getData() {
-      // const number = await AsyncStorage.getItem("user_contact");
-
-      // if (number.length != 0) {
-      //   setLoggedIn(true);
-      //   let user = await axiosInstance.post("/user/getOneUser", {
-      //     GIVEN_API_KEY: "AXCF",
-      //     user_contact: number,
-      //   });
-      //   setUserData(user?.data.data);
-      // }
 
       console.log("hello");
       let res = await axiosInstance.post("/categories?", {
@@ -67,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
         GIVEN_API_KEY: "AXCF",
       });
 
-      // console.log(newaddons.data);
+      console.log(newaddons.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
 
@@ -93,13 +83,9 @@ const HomeScreen = ({ navigation }) => {
         >
           <View>
             {loggedIn ? (
-              <Text style={styles.userName}>
-                {logged} {userData?.user_name}!
-              </Text>
+              <Text style={styles.userName}>{userData?.user_name}</Text>
             ) : (
-              <Text style={styles.userName}>
-                {logged} {user}!
-              </Text>
+              <Text style={styles.userName}>Hello User!</Text>
             )}
             <Text style={styles.userNeedHelp}>Need help?</Text>
           </View>

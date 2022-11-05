@@ -81,6 +81,15 @@ const SPProfileScreen = ({ navigation, route }) => {
       review_bio: review,
       review_stars: rating,
     });
+    console.log(res.data.data);
+    setReview((prev) => [res.data.data, ...prev]);
+  };
+  const getReviews = async () => {
+    let res = await axiosInstance.post("/review/getSpreview", {
+      sp_id: "12345678",
+      GIVEN_API_KEY: "AXCF",
+    });
+    setReviews(res.data.data);
   };
   useEffect(() => {
     const checkBookmarked = async () => {
@@ -95,13 +104,6 @@ const SPProfileScreen = ({ navigation, route }) => {
       }
     };
 
-    const getReviews = async () => {
-      let res = await axiosInstance.post("/review/getSpreview", {
-        sp_id: "12345678",
-        GIVEN_API_KEY: "AXCF",
-      });
-      setReviews(res.data.data);
-    };
     checkBookmarked();
     getReviews();
   }, []);
@@ -631,8 +633,6 @@ const SPProfileScreen = ({ navigation, route }) => {
                 setRating(0);
                 popup.current.close();
               } else if (review.split(" ").length > 50) {
-                console.log(" error 1");
-
                 setReviewError("Max no of word is 50");
               } else {
                 setReviewError("Minimum 4 charachets is rewuired");
