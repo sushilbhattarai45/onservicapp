@@ -15,7 +15,11 @@ import { Colors } from "../styles/main";
 import Header from "../component/Header";
 import axios from "axios";
 import { axiosInstance } from "../component/tools";
-export default function CategoryPersonListingScreen({ route, navigation }) {
+export default function CategoryPersonListingScreen({
+  route,
+  navigation,
+  navigation: { goBack },
+}) {
   const [rating, setRating] = useState(3);
 
   const { category_id, cat_name, sub_name } = route.params;
@@ -54,7 +58,7 @@ export default function CategoryPersonListingScreen({ route, navigation }) {
     >
       <Header
         headerText={sub_name}
-        onPressIcon={() => navigation.goBack}
+        onPressIcon={() => goBack()}
         style={{ paddingHorizontal: 10 }}
         icon="arrow-left-line"
       />
@@ -102,7 +106,6 @@ export default function CategoryPersonListingScreen({ route, navigation }) {
                         address={persons.sp_city + " " + persons.sp_district}
                         rating={persons.rating}
                         ratingcount={persons.ratingcount}
-                        onPress={()=>navigation.navigate("Sp", { sp: persons })}
                       />
                     </View>
                   );

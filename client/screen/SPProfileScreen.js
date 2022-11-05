@@ -11,9 +11,7 @@ import {
   Linking,
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
-
 import QRCode from "react-native-qrcode-svg";
-
 import Header from "../component/Header";
 import Icon from "../component/Icon";
 import ImageSliderComponent from "../component/imageSlider";
