@@ -20,7 +20,7 @@ export const getBm = async (req, res) => {
         });
         let i = 0;
         bm_spidData.map(async (item) => {
-          const spData = await spSchema.find({ _id: item });
+          const spData = await spSchema.find({ sp_contact: item });
           spData.map((i) => {
             bm_spData.push(i);
           });

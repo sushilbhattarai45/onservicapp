@@ -67,7 +67,7 @@ export const ContextProvider = ({ children }) => {
     getCategories();
     getSubCategories();
     getUser();
-    console.log(userData)
+    console.log(userData);
   }, []);
 
   return (
@@ -79,6 +79,7 @@ export const ContextProvider = ({ children }) => {
         user,
         categories,
         subCategories,
+        setUserData,
         userData,
       }}
     >

@@ -5,6 +5,7 @@ import {
   Text,
   View,
   ImageBackground,
+  TouchableOpacity,
   ScrollView,
   Alert,
 } from "react-native";
@@ -21,6 +22,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function BookMarkScreen({ navigation }) {
   const { logged, user } = useContext(AppContext);
   useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getBm();
+      //Put your Data loading function here instead of my loadData()
+    });
+
     async function getBm() {
       const num = await AsyncStorage.getItem("user_contact");
       const data = await axiosInstance.post("bm/get", {
@@ -39,7 +45,6 @@ export default function BookMarkScreen({ navigation }) {
       }
       // console.log(data.data);
     }
-    getBm();
   }, []);
   const [num, setNum] = useState("");
   const [boomarked, setBookmarked] = useState(false);
@@ -76,13 +81,16 @@ export default function BookMarkScreen({ navigation }) {
                         marginBottom: 2,
                       }}
                     >
-                      <BookMarkCard
-                        name={persons.sp_name}
-                        image={persons.sp_profileImage}
-                        address={persons.sp_district + " " + persons.sp_city}
-                        rating={persons.rating}
-                        ratingcount={persons.ratingcount}
-                      />
+                      <TouchableOpacity>
+                        <BookMarkCard
+                          id={persons.sp_contact}
+                          name={persons.sp_name}
+                          image={persons.sp_profileImage}
+                          address={persons.sp_district + " " + persons.sp_city}
+                          rating={persons.rating}
+                          ratingcount={persons.ratingcount}
+                        />
+                      </TouchableOpacity>
                     </View>
                   );
                 })

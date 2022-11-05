@@ -20,7 +20,8 @@ import { number } from "yup";
 import AppContext from "../../component/appContext";
 import { axiosInstance } from "../../component/tools";
 export default function LoginScreen({ navigation, route, path }) {
-  const { user, logged, setLogged, setUser } = useContext(AppContext);
+  const { user, logged, setLogged, setUser, setUserData } =
+    useContext(AppContext);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const [num, setNum] = useState();
@@ -64,6 +65,12 @@ export default function LoginScreen({ navigation, route, path }) {
       if (status == 200 || status == 201) {
         await AsyncStorage.setItem("user_contact", num);
         setUser(num);
+        const setdata = await axiosInstance.post("/user/getOneUser", {
+          GIVEN_API_KEY: "AXCF",
+          user_contact: num,
+        });
+        alert(setdata?.data.data.user_name);
+        setUserData(setdata?.data?.data);
         setLogged("true");
         navigation.navigate("Home");
         alert("done");

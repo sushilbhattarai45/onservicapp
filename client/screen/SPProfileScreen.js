@@ -32,6 +32,7 @@ import ModalPopup from "../component/Modal";
 import ReviewCard from "../component/ReviewCard";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
+import BookMarkCard from "../component/bookmarkCard";
 
 import { Video, AVPlaybackStatus } from "expo-av";
 
@@ -84,7 +85,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const popupQr = createRef();
   const video = useRef(null);
   const [videoMuted, setVideoMuted] = useState(true);
-
+  const [bookIcon, setBookIcon] = useState("false");
   const onFullscreenUpdate = ({ fullscreenUpdate, status }) => {
     console.log("Update" + fullscreenUpdate);
     if (fullscreenUpdate == 3) {
@@ -119,20 +120,30 @@ const SPProfileScreen = ({ navigation, route }) => {
     console.log("Hello");
   };
   useEffect(() => {
-    const checkBookmarked = async () => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      checkBookmarked();
+      getReviews();
+      //Put your Data loading function here instead of my loadData()
+    });
+    async function checkBookmarked() {
       let res = await axiosInstance.post("/bm/check", {
         user_id: user,
-        sp_contact: sp.sp_contact,
+        sp_id: sp.sp_contact,
         GIVEN_API_KEY: "AXCF",
       });
       if (!res.error) {
-        setBookmarked(res.data.data);
-        console.log("Bookmarked:" + res.data.data);
+        // alert(sp.sp_contact + user);
+        // alert(res.data.statuscode);
+        if (res.data.statuscode == 201) {
+          setBookmarked(res.data);
+          setBookIcon("true");
+        } else {
+          setBookmarked(null);
+          setBookIcon("false");
+        }
+        // console.log("Bookmarked:" + res.data.data);
       }
-    };
-
-    checkBookmarked();
-    getReviews();
+    }
   }, []);
 
   return (
@@ -215,24 +226,45 @@ const SPProfileScreen = ({ navigation, route }) => {
                     });
                 }}
               />
+
               <ActionIcon name="map-pin-line" />
-              <ActionIcon
-                color={bookmarked ? Colors.primary : Colors.gray900}
-                name={bookmarked ? "bookmark-2-fill" : "bookmark-2-line"}
-                onPress={async () => {
-                  console.log("hi");
-                  let url = bookmarked ? "/bm/delete" : "/bm/post";
-                  let res = await axiosInstance.post(url, {
-                    user_id: "999999999",
-                    sp_id: sp.sp_contact,
-                    GIVEN_API_KEY: "AXCF",
-                  });
-                  console.log(res.data);
-                }}
-              />
+              {bookIcon == "true" ? (
+                <ActionIcon
+                  name="bookmark-2-fill"
+                  color={Colors.primary}
+                  onPress={async () => {
+                    const deleteBm = await axiosInstance.post("/bm/delete", {
+                      GIVEN_API_KEY: "AXCF",
+                      user_id: user,
+                      sp_id: sp.sp_contact,
+                    });
+                    alert(deleteBm.data.statuscode);
+                    setBookIcon("false");
+                    setBookmarked(null);
+                  }}
+                />
+              ) : (
+                <ActionIcon
+                  name="bookmark-2-line"
+                  color={Colors.gray900}
+                  onPress={async () => {
+                    const postBm = await axiosInstance.post("/bm/post", {
+                      GIVEN_API_KEY: "AXCF",
+                      user_id: user,
+                      sp_id: sp.sp_contact,
+                    });
+                    alert(postBm.data.statuscode);
+                    setBookIcon("true");
+
+                    setBookmarked(postBm.data);
+                  }}
+                />
+              )}
             </View>
           </View>
-          {/* Name */}
+          {/* N
+          ame */}
+
           <Text
             style={{
               marginTop: 12,
@@ -243,6 +275,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               paddingHorizontal: 24,
             }}
           >
+            {" "}
             {sp.sp_name}{" "}
             {sp.sp_sp_verified && (
               <Icon

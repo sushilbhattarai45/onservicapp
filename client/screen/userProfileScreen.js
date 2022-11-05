@@ -21,7 +21,7 @@ import AppContext from "../component/appContext";
 import Icon from "../component/Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function UserProfileScreen({ navigation }) {
-  const { setUser, setLogged, userData } = useContext(AppContext);
+  const { setUser, setLogged, userData, setUserData } = useContext(AppContext);
   return (
     <ScrollView>
       <View
@@ -51,6 +51,8 @@ export default function UserProfileScreen({ navigation }) {
                 await AsyncStorage.removeItem("user_contact");
                 setUser(null);
                 setLogged("false");
+                setUserData(null);
+
                 navigation.navigate("Home");
               }}
             >

@@ -1,16 +1,25 @@
-import React from "react";
-import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
-
+import React, { useContext } from "react";
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
+import { axiosInstance } from "./tools";
 import Icon from "../component/Icon";
 import { Colors } from "../styles/main";
-
+import AppContext from "./appContext";
 export default function BookMarkCard({
   name,
   image,
   rating,
   ratingcount,
   address,
+  sp_contact,
 }) {
+  const { user } = useContext(AppContext);
   return (
     <View style={styles.ThemeLightComponentSongsCard}>
       <Image
@@ -40,6 +49,14 @@ export default function BookMarkCard({
           }}
         >
           <Icon
+            onPress={async () => {
+              const deleteBm = await axiosInstance.post("/bm/delete", {
+                GIVEN_API_KEY: "AXCF",
+                user_id: user,
+                sp_id: sp_contact,
+              });
+              console.log(deleteBm.data);
+            }}
             style={{
               alignSelf: "center",
             }}
