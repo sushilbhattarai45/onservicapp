@@ -36,8 +36,7 @@ export default function SearchPersonListingScreen({ navigation }) {
   const popup = createRef();
 
   const [citiesList, setCitiesList] = useState(Districts);
-  const [filter, setFilter] = useState({ city: null });
-  const [searchcity, setSearchedCity] = useState(userData?.user_district);
+  const [filter, setFilter] = useState({ city: userData?.user_district });
   // const [searchText, setSearchText] = useState("");
   // const [searching, setSearching] = useState(false);
   useEffect(() => {
@@ -50,12 +49,10 @@ export default function SearchPersonListingScreen({ navigation }) {
   //     setSearchedCity(userData?.user_district);
   //   }
   // }
-  const getPeopleList = async (location, skill) => {
-    console.log(filter.city);
-    alert("ok" + searchcity + skill);
+  const getPeopleList = async (location = filter.city) => {
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
-      skill: skill,
-      city: searchcity,
+      skill: value,
+      city: location,
       GIVEN_API_KEY: "AXCF",
     });
     console.log(res.data);
@@ -91,7 +88,7 @@ export default function SearchPersonListingScreen({ navigation }) {
       keyboardShouldPersistTaps="handled"
     >
       <View style={{ paddingHorizontal: 24 }}>
-        <Text>{searchcity}</Text>
+        <Text>Ok</Text>
         <Search
           containerStyle={{ padding: 0 }}
           rightIcon={"equalizer-fill"}
@@ -103,8 +100,8 @@ export default function SearchPersonListingScreen({ navigation }) {
           onSubmitEditing={() => {
             console.log("hello");
             setSuggestions([]);
+            getPeopleList();
             setSuggestionsActive(false);
-            getPeopleList("", value);
           }}
         />
       </View>
@@ -261,8 +258,7 @@ export default function SearchPersonListingScreen({ navigation }) {
               onChange={(item) => {
                 setFilter({ ...filter, city: item.label });
                 console.log("ok" + item.label);
-                setSearchedCity(item.label);
-                getPeopleList(searchcity, value);
+                getPeopleList(item.label);
                 setSuggestionsActive(false);
               }}
             />
