@@ -74,7 +74,7 @@ const SkillPill = ({ name }) => {
 const SPProfileScreen = ({ navigation, route }) => {
   const { sp } = route.params;
   const { subCategories, user } = useContext(AppContext);
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [reviewError, setReviewError] = useState(false);
@@ -96,24 +96,27 @@ const SPProfileScreen = ({ navigation, route }) => {
     await video.current?.presentFullscreenPlayer();
   };
 
-  const postReview = async (user_contact, rating, review, sp_contact) => {
-    console.log(rating);
-    let res = await axiosInstance.post("/review/post", {
-      GIVEN_API_KEY: "AXCF",
-      user_id: user,
-      user_id: sp_contact,
-      review_bio: review,
-      review_stars: rating,
-    });
-    console.log(res.data.data);
-    setReview((prev) => [res.data.data, ...prev]);
+  const postReview = (rating, review) => {
+    axiosInstance
+      .post("/review/post", {
+        GIVEN_API_KEY: "AXCF",
+        user_id: user,
+        sp_id: sp.sp_contact,
+        review_bio: review,
+        review_stars: rating,
+      })
+      .then(() => {
+        getReviews();
+      });
   };
   const getReviews = async () => {
     let res = await axiosInstance.post("/review/getSpreview", {
-      sp_id: "12345678",
+      sp_id: sp.sp_contact,
       GIVEN_API_KEY: "AXCF",
     });
-    setReviews(res.data.data);
+    let d = res.data.data.splice(0, 5);
+    setReviews(d);
+    console.log("Hello");
   };
   useEffect(() => {
     const checkBookmarked = async () => {
@@ -167,7 +170,6 @@ const SPProfileScreen = ({ navigation, route }) => {
             onFullscreenUpdate={onFullscreenUpdate}
             isLooping
           />
-          
         </TouchableOpacity>
         {/* <Text>Hello</Text> */}
         <View style={styles.profileContent}>
@@ -200,7 +202,10 @@ const SPProfileScreen = ({ navigation, route }) => {
                 name="chat-1-line"
                 onPress={() => {
                   let url =
-                    "whatsapp://send?text=" + "Hello" + "&phone=+9779742993345";
+                    "whatsapp://send?text=" +
+                    "Hello" +
+                    "&phone=+977" +
+                    sp.sp_officeNumber;
                   Linking.openURL(url)
                     .then((data) => {
                       console.log("WhatsApp Opened");
@@ -370,53 +375,78 @@ const SPProfileScreen = ({ navigation, route }) => {
               <Button label="Rate Us" onPress={() => popup.current.show()} />
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingHorizontal: 24,
-              marginTop: 32,
-              marginBottom: 16,
-            }}
-          >
-            <Text
+          <>
+            <View
               style={{
-                fontSize: 16,
-                fontFamily: "SemiBold",
-                color: Colors.black,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingHorizontal: 24,
+                marginTop: 32,
+                marginBottom: 16,
               }}
             >
-              User Reviews
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontFamily: "Regular",
-                color: Colors.primary,
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-              }}
-            >
-              View All
-            </Text>
-          </View>
-          <FlatList
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontFamily: "SemiBold",
+                  color: Colors.black,
+                }}
+              >
+                User Reviews
+              </Text>
+              {reviews !== [] && reviews && (
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontFamily: "Regular",
+                    color: Colors.primary,
+                    paddingHorizontal: 8,
+                    paddingVertical: 4,
+                  }}
+                >
+                  View All
+                </Text>
+              )}
+            </View>
+            <View>
+              {reviews !== [] && reviews ? (
+                reviews?.map((item, index) => {
+                  return (
+                    <ReviewCard
+                      rating={item.review_stars}
+                      name={item.user_name}
+                      review={item.review_bio}
+                      doc={item.review_doc}
+                    />
+                  );
+                })
+              ) : (
+                <Text
+                  style={{
+                    marginVertical: 24,
+                    color: Colors.black,
+                    textAlign: "center",
+                    fontFamily: "Regular",
+                  }}
+                >
+                  No Reviews Yet
+                </Text>
+              )}
+            </View>
+          </>
+
+          {/* <FlatList
             style={{}}
             showsHorizontalScrollIndicator={false}
             data={reviews.splice(0, 5)}
             renderItem={({ item, index }) => {
               return (
-                <ReviewCard
-                  rating={item.review_stars}
-                  name={item.user_name}
-                  review={item.review_bio}
-                  doc={item.review_doc}
-                />
+               
               );
             }}
             keyExtractor={(item, index) => item._id}
-          />
+          /> */}
           {/* Services Near you */}
           <View>
             <Text
@@ -667,17 +697,17 @@ const SPProfileScreen = ({ navigation, route }) => {
           <Button
             label="Share Review"
             onPress={() => {
-              if (review.length > 0) {
-                console.log("no error");
-                setReviewError(false);
-                postReview("123456789", rating, review, sp.sp_contact);
-                setReview("");
-                setRating(0);
-                popup.current.close();
+              if (review.length < 4) {
+                setReviewError("Minimum 4 charachets is rewuired");
               } else if (review.split(" ").length > 50) {
                 setReviewError("Max no of word is 50");
               } else {
-                setReviewError("Minimum 4 charachets is rewuired");
+                console.log("no error");
+                setReviewError(false);
+                postReview(rating, review);
+                setRating(0);
+                setReview("");
+                popup.current.close();
               }
             }}
           />
