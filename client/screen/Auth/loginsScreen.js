@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import {
   StyleSheet,
   Image,
@@ -18,7 +18,9 @@ import Header from "../../component/Header";
 import Search from "../../component/searchBar";
 import ImageSliderComponent from "../../component/imageSlider";
 import { number } from "yup";
+import AppContext from "../../component/appContext";
 export default function LoginScreen({ navigation }) {
+  const { user, logged, setLogged, setUser } = useContext(AppContext);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const [num, setNum] = useState();
@@ -61,8 +63,11 @@ export default function LoginScreen({ navigation }) {
       );
       const status = res?.data?.statuscode;
       console.log(res);
-      if (status == 200) {
+      if (status == 200 || status == 201) {
         await AsyncStorage.setItem("user_contact", num);
+        setUser(num);
+        setLogged("true");
+
         navigation.navigate("Home");
         alert("done");
       } else {
@@ -75,7 +80,10 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header icon={"arrow-left-line"} />
+      <Header
+        icon={"arrow-left-line"}
+        onPressIcon={() => navigation.navigate("Home")}
+      />
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : 0.1}>
         {/* <ImageSliderComponent/> */}
         <View style={{ marginTop: 24 }}>

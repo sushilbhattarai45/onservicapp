@@ -28,7 +28,7 @@ const wWidth = Dimensions.get("window").width;
 import NewlyAddedServices from "../component/NewlyAddedServices";
 
 const HomeScreen = ({ navigation }) => {
-  const { categories } = useContext(AppContext);
+  const { categories, user, logged } = useContext(AppContext);
   console.log(categories);
   // const [categories, setCategories] = useState([]);
   const [newaddons, setNewaddons] = useState();
@@ -37,6 +37,10 @@ const HomeScreen = ({ navigation }) => {
   const [categoriesOpen, setCategoriesOpen] = useState();
   const [userData, setUserData] = useState();
   useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getData();
+      //Put your Data loading function here instead of my loadData()
+    });
     async function getData() {
       // const number = await AsyncStorage.getItem("user_contact");
 
@@ -73,7 +77,6 @@ const HomeScreen = ({ navigation }) => {
         console.error(newaddons?.error);
       }
     }
-    getData();
   }, []);
 
   return (
@@ -90,9 +93,13 @@ const HomeScreen = ({ navigation }) => {
         >
           <View>
             {loggedIn ? (
-              <Text style={styles.userName}>Hey {userData?.user_name}!</Text>
+              <Text style={styles.userName}>
+                {logged} {userData?.user_name}!
+              </Text>
             ) : (
-              <Text style={styles.userName}>Hey User!</Text>
+              <Text style={styles.userName}>
+                {logged} {user}!
+              </Text>
             )}
             <Text style={styles.userNeedHelp}>Need help?</Text>
           </View>

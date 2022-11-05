@@ -105,6 +105,9 @@ export default function CategoryPersonListingScreen({
                         image={persons.sp_profileImage}
                         address={persons.sp_city + " " + persons.sp_district}
                         rating={persons.rating}
+                        onPress={() =>
+                          navigation.navigate("Sp", { sp: persons })
+                        }
                         ratingcount={persons.ratingcount}
                       />
                     </View>

@@ -1,15 +1,30 @@
 import React, { createContext, useEffect, useState } from "react";
 import { axiosInstance } from "./tools";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AppContext = createContext({});
 
 export const ContextProvider = ({ children }) => {
-  const [user, setUser] = useState({});
-
+  const [user, setUser] = useState("");
+  const [logged, setLogged] = useState("false");
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const loggedUser = await AsyncStorage.getItem("user_contact");
+        if (loggedUser) {
+          setLogged("true");
+          setUser(loggedUser);
+        } else {
+          setLogged("false");
+        }
+      } catch (e) {
+        console.log(error);
+      }
+    };
+
     const getCategories = () => {
       try {
         axiosInstance
@@ -22,7 +37,7 @@ export const ContextProvider = ({ children }) => {
           });
       } catch (e) {
         console.log(error);
-      } 
+      }
     };
     const getSubCategories = () => {
       try {
@@ -35,6 +50,7 @@ export const ContextProvider = ({ children }) => {
         console.log(error);
       }
     };
+    getUser();
     getCategories();
     getSubCategories();
   }, []);
@@ -42,6 +58,10 @@ export const ContextProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        logged,
+        setUser,
+        setLogged,
+        user,
         categories,
         subCategories,
       }}

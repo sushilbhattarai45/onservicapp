@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   Image,
@@ -17,10 +17,17 @@ import PeopleNearYou from "../component/peopleNearYou";
 import { axiosInstance } from "../component/tools";
 import Constants from "expo-constants";
 import axios from "axios";
+import AppContext from "../component/appContext";
 import Icon from "../component/Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function UserProfileScreen({ navigation }) {
+  const { user, logged, setUser, setLogged } = useContext(AppContext);
   useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getData();
+      //Put your Data loading function here instead of my loadData()
+    });
+
     async function getData() {
       const user_data = await AsyncStorage.getItem("user_contact");
       if (user_data) {
@@ -29,7 +36,7 @@ export default function UserProfileScreen({ navigation }) {
           user_contact: user_data,
         });
         if (!res.error) {
-          setUser(res.data);
+          setUserData(res.data);
           console.log(user);
         } else {
           console.error(res.error);
@@ -38,35 +45,9 @@ export default function UserProfileScreen({ navigation }) {
         navigation.navigate("Login");
       }
     }
-    getData();
   }, []);
 
-  const Persons = [
-    {
-      name: "Sushil Bhattarai",
-      works: "Ac Repair, Carpenter, Network Repair, Electrician",
-      address: "Golpark",
-      number: "9742993345",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      works: "Ac Repair, Carpenter, Network Repair, Electrician",
-      address: "Butwal",
-      number: "9742993345",
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      works: "Ac Repair, Carpenter, Network Repair, Electrician",
-      address: "Butwal",
-      number: "9742993345",
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
-  ];
-  const [user, setUser] = useState();
+  const [userData, setUserData] = useState();
   return (
     <ScrollView>
       <View
@@ -92,6 +73,12 @@ export default function UserProfileScreen({ navigation }) {
                 letterSpacing: -0.02,
                 color: Colors.white,
               }}
+              onPress={async () => {
+                await AsyncStorage.removeItem("user_contact");
+                setUser(null);
+                setLogged("false");
+                navigation.navigate("Home");
+              }}
             >
               Profile
             </Text>
@@ -113,7 +100,7 @@ export default function UserProfileScreen({ navigation }) {
                   }}
                   source={{
                     // uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
-                    uri: user?.data.user_profileImage,
+                    uri: userData?.data.user_profileImage,
                   }}
                 />
                 <Icon
@@ -138,7 +125,7 @@ export default function UserProfileScreen({ navigation }) {
                     marginLeft: 24,
                   }}
                 >
-                  {user?.data.user_name}{" "}
+                  {userData?.data.user_name}{" "}
                 </Text>
                 <Text
                   style={{
@@ -157,7 +144,7 @@ export default function UserProfileScreen({ navigation }) {
                     style={{}}
                     color="white"
                   />{" "}
-                  {user?.data.user_city + " " + user?.data.user_street}{" "}
+                  {userData?.data.user_city + " " + userData?.data.user_street}{" "}
                 </Text>
 
                 <Text
@@ -173,7 +160,7 @@ export default function UserProfileScreen({ navigation }) {
                   {"  "}
                   <FontAwesome name="phone" size={20} color="white" />
                   {"  "}
-                  {user?.data.user_contact}
+                  {userData?.data.user_contact}
                   {"  "}
                 </Text>
               </View>
@@ -236,7 +223,7 @@ export default function UserProfileScreen({ navigation }) {
 
                     fontSize: 15,
                   }}
-                  value={user?.data.user_contact}
+                  value={userData?.data.user_contact}
                   read
                 />
                 {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
@@ -270,7 +257,7 @@ export default function UserProfileScreen({ navigation }) {
                     fontSize: 15,
                     color: Colors.black,
                   }}
-                  value={user?.data.user_city}
+                  value={userData?.data.user_city}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
@@ -305,7 +292,7 @@ export default function UserProfileScreen({ navigation }) {
                     fontSize: 15,
                     color: Colors.black,
                   }}
-                  value={user?.data.user_street}
+                  value={userData?.data.user_street}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
@@ -339,7 +326,7 @@ export default function UserProfileScreen({ navigation }) {
                     height: 35,
                     fontSize: 15,
                   }}
-                  value={user?.data.user_gender}
+                  value={userData?.data.user_gender}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
@@ -366,7 +353,7 @@ export default function UserProfileScreen({ navigation }) {
                 People Near You{" "}
               </Text>
               <View>
-                <FlatList
+                {/* <FlatList
                   style={{
                     marginTop: 12,
                   }}
@@ -394,7 +381,7 @@ export default function UserProfileScreen({ navigation }) {
                     );
                   }}
                   keyExtractor={(item, index) => index.toString()}
-                />
+                /> */}
               </View>
             </View>
           </View>

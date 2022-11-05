@@ -31,7 +31,7 @@ export default ReviewCard = ({ name, image, date, rating, review, time }) => {
             Tilganga Acharya
           </Text>
           <Text
-            style={{ fontSize: 12, color: Colors.black, fontFamily: "Regular", }}
+            style={{ fontSize: 12, color: Colors.black, fontFamily: "Regular" }}
           >
             {time}
           </Text>

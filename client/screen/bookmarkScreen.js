@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   Image,
@@ -6,6 +6,7 @@ import {
   View,
   ImageBackground,
   ScrollView,
+  Alert,
 } from "react-native";
 import BookMarkCard from "../component/bookmarkCard";
 import Header from "../component/Header";
@@ -13,13 +14,18 @@ import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "../styles/main";
 import axios from "axios";
+import AppContext from "../component/appContext";
+
 import { axiosInstance } from "../component/tools";
-export default function BookMarkScreen() {
+import AsyncStorage from "@react-native-async-storage/async-storage";
+export default function BookMarkScreen({ navigation }) {
+  const { logged, user } = useContext(AppContext);
   useEffect(() => {
     async function getBm() {
+      const num = await AsyncStorage.getItem("user_contact");
       const data = await axiosInstance.post("bm/get", {
         GIVEN_API_KEY: "AXCF",
-        user_id: 9846761072,
+        user_id: num,
       });
       if (data.data.statuscode == 201) {
         // console.log(data.data.message);
@@ -33,107 +39,10 @@ export default function BookMarkScreen() {
       }
       // console.log(data.data);
     }
-    getBm();
-    console.log("ok" + BmPersons);
   }, []);
-
+  const [num, setNum] = useState("");
   const [boomarked, setBookmarked] = useState(false);
   const [BmPersons, setBmPersons] = useState();
-  const Persons = [
-    {
-      name: "Sushil Bhattarai",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Golpark",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    {
-      name: "RamKumar",
-      rating: "4.3",
-      ratingcount: "300",
-      address: "Butwal",
-
-      img: "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg",
-    },
-
-    //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
-  ];
 
   return (
     <ScrollView style={{ backgroundColor: Colors.gray200 }}>

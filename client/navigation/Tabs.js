@@ -5,10 +5,13 @@ import HomeScreen from "../screen/homeScreen";
 import SearchPersonListingScreen from "../screen/searchPersonListingScreen";
 import UserProfileScreen from "../screen/userProfileScreen";
 import { Colors } from "../styles/main";
-
+import AppContext from "../component/appContext";
 const Tab = createBottomTabNavigator();
-
+import { useContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import LoginScreen from "../screen/Auth/loginsScreen";
 export default function MyTabs() {
+  const { logged } = useContext(AppContext);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -45,12 +48,13 @@ export default function MyTabs() {
       <Tab.Screen
         options={{ headerShown: false }}
         name="Bookmarks"
-        component={BookMarkScreen}
+        component={logged ? BookMarkScreen : LoginScreen}
       />
+
       <Tab.Screen
         options={{ headerShown: false }}
         name="Profile"
-        component={UserProfileScreen}
+        component={logged ? UserProfileScreen : LoginScreen}
       />
     </Tab.Navigator>
   );
