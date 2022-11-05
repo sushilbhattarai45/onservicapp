@@ -34,6 +34,8 @@ export default function SearchPersonListingScreen({ navigation }) {
 
   const [searchData, setSearchData] = useState(null);
   const popup = createRef();
+  const [searchedCity, setSearchedCity] = useState(userData?.user_district);
+  const [searchedSkill, setSearchedSkill] = useState("");
 
   const [citiesList, setCitiesList] = useState(Districts);
   const [filter, setFilter] = useState({ city: userData?.user_district });
@@ -49,10 +51,10 @@ export default function SearchPersonListingScreen({ navigation }) {
   //     setSearchedCity(userData?.user_district);
   //   }
   // }
-  const getPeopleList = async (location = filter.city) => {
+  const getPeopleList = async (location, skill) => {
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
-      skill: value,
-      city: location,
+      skill: searchedSkill,
+      city: searchedCity,
       GIVEN_API_KEY: "AXCF",
     });
     console.log(res.data);
@@ -88,7 +90,10 @@ export default function SearchPersonListingScreen({ navigation }) {
       keyboardShouldPersistTaps="handled"
     >
       <View style={{ paddingHorizontal: 24 }}>
-        <Text>Ok</Text>
+        <Text>
+          Ok {searchedSkill}
+          {setSearchedCity}
+        </Text>
         <Search
           containerStyle={{ padding: 0 }}
           rightIcon={"equalizer-fill"}
@@ -100,7 +105,7 @@ export default function SearchPersonListingScreen({ navigation }) {
           onSubmitEditing={() => {
             console.log("hello");
             setSuggestions([]);
-            getPeopleList();
+            getPeopleList(searchedCity, value);
             setSuggestionsActive(false);
           }}
         />
@@ -123,8 +128,9 @@ export default function SearchPersonListingScreen({ navigation }) {
                     Keyboard.dismiss();
                     setSuggestions([]);
                     setValue(item.subCat_name);
+                    setSearchedSkill(item.subCat_name);
                     setSuggestionsActive(false);
-                    getPeopleList("", item.subCat_name);
+                    getPeopleList(searchedCity, searchedSkill);
                   }}
                 >
                   <Text>{item.subCat_name}</Text>
@@ -257,8 +263,8 @@ export default function SearchPersonListingScreen({ navigation }) {
               value={filter.city}
               onChange={(item) => {
                 setFilter({ ...filter, city: item.label });
-                console.log("ok" + item.label);
-                getPeopleList(item.label);
+                setSearchedCity(item.label);
+                getPeopleList(item.label, searchedSkill);
                 setSuggestionsActive(false);
               }}
             />
