@@ -36,8 +36,7 @@ export default function SearchPersonListingScreen({ navigation }) {
   const popup = createRef();
 
   const [citiesList, setCitiesList] = useState(Districts);
-  const [filter, setFilter] = useState({ city: null });
-  const [searchcity, setSearchedCity] = useState(userData?.user_district);
+  const [filter, setFilter] = useState({ city: userData?.user_district });
   // const [searchText, setSearchText] = useState("");
   // const [searching, setSearching] = useState(false);
   useEffect(() => {
@@ -90,7 +89,7 @@ export default function SearchPersonListingScreen({ navigation }) {
       keyboardShouldPersistTaps="handled"
     >
       <View style={{ paddingHorizontal: 24 }}>
-        <Text>{searchcity}</Text>
+        <Text>{filter.city}</Text>
         <Search
           containerStyle={{ padding: 0 }}
           rightIcon={"equalizer-fill"}
