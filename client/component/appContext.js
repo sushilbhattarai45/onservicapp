@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { axiosInstance } from "./tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const AppContext = createContext({});
 
@@ -9,7 +10,6 @@ export const ContextProvider = ({ children }) => {
   const [logged, setLogged] = useState("false");
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -17,6 +17,10 @@ export const ContextProvider = ({ children }) => {
         if (loggedUser) {
           setLogged("true");
           setUser(loggedUser);
+          // let res = axiosInstance.post("user/getOneUser", {
+          //   GIVEN_API_KEY: "AXCF",
+          //   user_contact: user,
+          // });
         } else {
           setLogged("false");
         }
@@ -50,9 +54,9 @@ export const ContextProvider = ({ children }) => {
         console.log(error);
       }
     };
-    getUser();
     getCategories();
     getSubCategories();
+    getUser();
   }, []);
 
   return (

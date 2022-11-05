@@ -42,10 +42,10 @@ const HomeScreen = ({ navigation }) => {
       //Put your Data loading function here instead of my loadData()
     });
     async function getData() {
-      console.log("hello");
       let res = await axiosInstance.post("/categories?", {
         GIVEN_API_KEY: "AXCF",
       });
+
       let featuredOnHome = await axiosInstance.post(
         "/categories/featuredOnHome",
         {
@@ -56,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
         GIVEN_API_KEY: "AXCF",
       });
 
-      // console.log(newaddons.data);
+      console.log(newaddons.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
 
@@ -81,14 +81,13 @@ const HomeScreen = ({ navigation }) => {
           }}
         >
           <View>
-            {loggedIn ? (
+            {logged == "true" ? (
               <Text style={styles.userName}>
-                {logged} {userData?.user_name}!
+                {logged}
+                {userData?.user_name}
               </Text>
             ) : (
-              <Text style={styles.userName}>
-                {logged} {user}!
-              </Text>
+              <Text style={styles.userName}>Hello User!</Text>
             )}
             <Text style={styles.userNeedHelp}>Need help?</Text>
           </View>
