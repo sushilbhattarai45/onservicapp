@@ -76,8 +76,8 @@ const SPProfileScreen = ({ navigation, route }) => {
     console.log(rating);
     let res = await axiosInstance.post("/review/post", {
       GIVEN_API_KEY: "AXCF",
-      user_contact: user_contact,
-      sp_contact: sp_contact,
+      user_id: user_contact,
+      user_id: sp_contact,
       review_bio: review,
       review_stars: rating,
     });
@@ -85,7 +85,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   useEffect(() => {
     const checkBookmarked = async () => {
       let res = await axiosInstance.post("/bm/check", {
-        user_contact: "999999999",
+        user_id: "999999999",
         sp_contact: sp.sp_contact,
         GIVEN_API_KEY: "AXCF",
       });
@@ -97,7 +97,7 @@ const SPProfileScreen = ({ navigation, route }) => {
 
     const getReviews = async () => {
       let res = await axiosInstance.post("/review/getSpreview", {
-        sp_contact: "12345678",
+        sp_id: "12345678",
         GIVEN_API_KEY: "AXCF",
       });
       setReviews(res.data.data);
