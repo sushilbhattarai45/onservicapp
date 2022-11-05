@@ -48,13 +48,13 @@ export default function MyTabs() {
       <Tab.Screen
         options={{ headerShown: false }}
         name="Bookmarks"
-        component={logged ? BookMarkScreen : LoginScreen}
+        component={logged == "true" ? BookMarkScreen : LoginScreen}
       />
 
       <Tab.Screen
         options={{ headerShown: false }}
         name="Profile"
-        component={logged ? UserProfileScreen : LoginScreen}
+        component={logged == "true" ? UserProfileScreen : LoginScreen}
       />
     </Tab.Navigator>
   );

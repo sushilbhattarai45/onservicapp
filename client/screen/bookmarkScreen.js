@@ -39,6 +39,7 @@ export default function BookMarkScreen({ navigation }) {
       }
       // console.log(data.data);
     }
+    getBm();
   }, []);
   const [num, setNum] = useState("");
   const [boomarked, setBookmarked] = useState(false);
