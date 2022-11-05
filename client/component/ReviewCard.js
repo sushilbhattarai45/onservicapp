@@ -4,7 +4,7 @@ import StarRating from "react-native-star-rating-widget";
 import { Colors } from "../styles/main";
 import moment from "moment";
 
-export default ReviewCard = ({ name, image, date, rating, review, time }) => {
+export default ReviewCard = ({ name, image, date, rating, review, doc }) => {
   return (
     <View
       style={{
@@ -31,9 +31,9 @@ export default ReviewCard = ({ name, image, date, rating, review, time }) => {
             Tilganga Acharya
           </Text>
           <Text
-            style={{ fontSize: 12, color: Colors.black, fontFamily: "Regular", }}
+            style={{ fontSize: 12, color: Colors.black, fontFamily: "Regular" }}
           >
-            {time}
+            {doc.date + " " + doc.time}
           </Text>
         </View>
         <View style={{ marginLeft: "auto" }}>

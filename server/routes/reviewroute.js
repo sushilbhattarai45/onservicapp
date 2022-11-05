@@ -12,4 +12,4 @@ router.route("/getSpReview").post(getOneSpReview);
 router.route("/getMyReview").post(getMyReview);
 router.route("/deleteAllReview").post(deleteAllReviews);
 
-export default router;
+export default router;  

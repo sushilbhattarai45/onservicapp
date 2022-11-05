@@ -36,7 +36,7 @@ export default function SearchPersonListingScreen({ navigation }) {
   const popup = createRef();
 
   const [citiesList, setCitiesList] = useState(Districts);
-  const [filter, setFilter] = useState({ city: "" });
+  const [filter, setFilter] = useState({ city: Districts[0].value });
 
   // const [searchText, setSearchText] = useState("");
   // const [searching, setSearching] = useState(false);
