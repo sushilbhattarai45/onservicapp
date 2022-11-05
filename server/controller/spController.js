@@ -84,21 +84,12 @@ export const getSearchedSp = async (req, res) => {
   if (GIVEN_API_KEY == API_KEY) {
     try {
       console.log(city);
-      if (city !== "" || !city) {
-        const spdata = await spSchema.find({
-          sp_skills: skill,
-        });
-        console.log(spdata);
-
-        return res.json({ statuscode: 201, data: spdata });
-      } else {
-        const spdata = await spSchema.find({
-          sp_district: city,
-          sp_skills: skill,
-        });
-        console.log(spdata);
-        return res.json({ statuscode: 201, data: spdata });
-      }
+      const spdata = await spSchema.find({
+        sp_district: city,
+        sp_skills: skill,
+      });
+      console.log(spdata);
+      return res.json({ statuscode: 201, data: spdata });
     } catch (e) {
       return res.json({
         error: "Sry there is some error in our side",

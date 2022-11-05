@@ -37,18 +37,8 @@ export default function SearchPersonListingScreen({ navigation }) {
 
   const [citiesList, setCitiesList] = useState(Districts);
   const [filter, setFilter] = useState({ city: userData?.user_district });
-  // const [searchText, setSearchText] = useState("");
-  // const [searching, setSearching] = useState(false);
   useEffect(() => {
-    // setCity();
   }, []);
-  // async function setCity() {
-  //   if (filter?.city) {
-  //     setSearchedCity(filter?.city);
-  //   } else {
-  //     setSearchedCity(userData?.user_district);
-  //   }
-  // }
   const getPeopleList = async (location = filter.city) => {
     console.log(filter.city);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
