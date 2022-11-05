@@ -21,33 +21,7 @@ import AppContext from "../component/appContext";
 import Icon from "../component/Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function UserProfileScreen({ navigation }) {
-  const { user, logged, setUser, setLogged } = useContext(AppContext);
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      getData();
-      //Put your Data loading function here instead of my loadData()
-    });
-
-    async function getData() {
-      const user_data = await AsyncStorage.getItem("user_contact");
-      if (user_data) {
-        let res = await axiosInstance.post("/user/getOneUser", {
-          GIVEN_API_KEY: "AXCF",
-          user_contact: user_data,
-        });
-        if (!res.error) {
-          setUserData(res.data);
-          console.log(user);
-        } else {
-          console.error(res.error);
-        }
-      } else {
-        navigation.navigate("Login");
-      }
-    }
-  }, []);
-
-  const [userData, setUserData] = useState();
+  const { setUser, setLogged, userData } = useContext(AppContext);
   return (
     <ScrollView>
       <View
@@ -100,7 +74,7 @@ export default function UserProfileScreen({ navigation }) {
                   }}
                   source={{
                     // uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
-                    uri: userData?.data.user_profileImage,
+                    uri: userData?.user_profileImage,
                   }}
                 />
                 <Icon
@@ -125,7 +99,7 @@ export default function UserProfileScreen({ navigation }) {
                     marginLeft: 24,
                   }}
                 >
-                  {userData?.data.user_name}{" "}
+                  {userData?.user_name}{" "}
                 </Text>
                 <Text
                   style={{
@@ -144,7 +118,7 @@ export default function UserProfileScreen({ navigation }) {
                     style={{}}
                     color="white"
                   />{" "}
-                  {userData?.data.user_city + " " + userData?.data.user_street}{" "}
+                  {userData?.user_city + " " + userData?.user_street}{" "}
                 </Text>
 
                 <Text
@@ -160,7 +134,7 @@ export default function UserProfileScreen({ navigation }) {
                   {"  "}
                   <FontAwesome name="phone" size={20} color="white" />
                   {"  "}
-                  {userData?.data.user_contact}
+                  {userData?.user_contact}
                   {"  "}
                 </Text>
               </View>
@@ -223,7 +197,7 @@ export default function UserProfileScreen({ navigation }) {
 
                     fontSize: 15,
                   }}
-                  value={userData?.data.user_contact}
+                  value={userData?.user_contact}
                   read
                 />
                 {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
@@ -257,7 +231,7 @@ export default function UserProfileScreen({ navigation }) {
                     fontSize: 15,
                     color: Colors.black,
                   }}
-                  value={userData?.data.user_city}
+                  value={userData?.user_city}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
@@ -292,7 +266,7 @@ export default function UserProfileScreen({ navigation }) {
                     fontSize: 15,
                     color: Colors.black,
                   }}
-                  value={userData?.data.user_street}
+                  value={userData?.user_street}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />
@@ -326,7 +300,7 @@ export default function UserProfileScreen({ navigation }) {
                     height: 35,
                     fontSize: 15,
                   }}
-                  value={userData?.data.user_gender}
+                  value={userData?.user_gender}
                   read
                   // placeholder="Re-Enter Your PIN"
                 />

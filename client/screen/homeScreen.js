@@ -28,14 +28,12 @@ const wWidth = Dimensions.get("window").width;
 import NewlyAddedServices from "../component/NewlyAddedServices";
 
 const HomeScreen = ({ navigation }) => {
-  const { categories, user, logged } = useContext(AppContext);
-  console.log(categories);
-  // const [categories, setCategories] = useState([]);
+  const { categories, user, logged, userData } = useContext(AppContext);
+  console.log(userData);
   const [newaddons, setNewaddons] = useState();
   const [featured, setFeatured] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState();
-  const [userData, setUserData] = useState();
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       getData();
@@ -56,7 +54,6 @@ const HomeScreen = ({ navigation }) => {
         GIVEN_API_KEY: "AXCF",
       });
 
-      console.log(newaddons.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
 
@@ -83,8 +80,8 @@ const HomeScreen = ({ navigation }) => {
           <View>
             {logged == "true" ? (
               <Text style={styles.userName}>
-                {logged}
-                {userData?.user_name}
+                Hi {userData?.user_name ? userData.user_name.split(" ")[0] : ""}
+                !{/* {userData?.user_name} */}
               </Text>
             ) : (
               <Text style={styles.userName}>Hello User!</Text>
@@ -211,7 +208,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
         {/* Add */}
-        <ImageSliderComponent />
+        <ImageSliderComponent data={[]} />
 
         {/* New Addons */}
         <View
@@ -265,7 +262,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
         {/* Add */}
-        <ImageSliderComponent />
+        <ImageSliderComponent data={[]} />
 
         {/* Services Near you */}
         <View>

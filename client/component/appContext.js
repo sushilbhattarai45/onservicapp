@@ -7,25 +7,35 @@ const AppContext = createContext({});
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState("");
+  const [userData, setUserData] = useState({});
   const [logged, setLogged] = useState("false");
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   useEffect(() => {
+    const getUserData = async (contact) => {
+      let res = await axiosInstance.post("/user/getOneUser", {
+        GIVEN_API_KEY: "AXCF",
+        user_contact: contact,
+      });
+      if (!res.error) {
+        setUserData(res.data.data);
+      } else {
+        console.error(res.error);
+      }
+    };
     const getUser = async () => {
       try {
         const loggedUser = await AsyncStorage.getItem("user_contact");
+        console.log("h" + loggedUser);
         if (loggedUser) {
           setLogged("true");
           setUser(loggedUser);
-          // let res = axiosInstance.post("user/getOneUser", {
-          //   GIVEN_API_KEY: "AXCF",
-          //   user_contact: user,
-          // });
+          getUserData(loggedUser);
         } else {
           setLogged("false");
         }
       } catch (e) {
-        console.log(error);
+        console.log(e);
       }
     };
 
@@ -57,6 +67,7 @@ export const ContextProvider = ({ children }) => {
     getCategories();
     getSubCategories();
     getUser();
+    console.log(userData)
   }, []);
 
   return (
@@ -68,6 +79,7 @@ export const ContextProvider = ({ children }) => {
         user,
         categories,
         subCategories,
+        userData,
       }}
     >
       {children}

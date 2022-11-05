@@ -29,7 +29,7 @@ const sp = new mongoose.Schema({
     type: String,
   },
   sp_skills: {
-    type: Array,
+    type: [String],
   },
   sp_profileImage: {
     type: String,

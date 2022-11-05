@@ -1,4 +1,10 @@
-import React, { useState, createRef, useEffect, useContext } from "react";
+import React, {
+  useState,
+  createRef,
+  useEffect,
+  useContext,
+  useRef,
+} from "react";
 import {
   ScrollView,
   View,
@@ -9,6 +15,7 @@ import {
   TextInput,
   Pressable,
   Linking,
+  Dimensions,
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 import QRCode from "react-native-qrcode-svg";
@@ -24,6 +31,8 @@ import ModalPopup from "../component/Modal";
 import ReviewCard from "../component/ReviewCard";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
+
+import { Video, AVPlaybackStatus } from "expo-av";
 
 const ActionIcon = ({ name, onPress, color }) => {
   return (
@@ -69,9 +78,10 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [review, setReview] = useState("");
   const [reviewError, setReviewError] = useState(false);
   const [bookmarked, setBookmarked] = useState();
+  const [videoStatus, setVideoStatus] = useState();
   const popup = createRef();
   const popupQr = createRef();
-
+  const video = useRef(null);
   const postReview = async (user_contact, rating, review, sp_contact) => {
     console.log(rating);
     let res = await axiosInstance.post("/review/post", {
@@ -125,8 +135,25 @@ const SPProfileScreen = ({ navigation, route }) => {
           }
           color={Colors.white}
         />
-
-        <ImageSliderComponent />
+        <Pressable
+          onPress={() =>
+            videoStatus.isPlaying
+              ? video.current.pauseAsync()
+              : video.current.playAsync()
+          }
+        >
+          <Video
+            ref={video}
+            style={styles.video}
+            source={{
+              uri: sp.sp_media.video,
+            }}
+            // useNativeControls
+            resizeMode="cover"
+            isLooping
+            onPlaybackStatusUpdate={(status) => setVideoStatus(() => status)}
+          />
+        </Pressable>
         {/* <Text>Hello</Text> */}
         <View style={styles.profileContent}>
           <View
@@ -290,7 +317,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           </>
           {/* Slider */}
           <View style={{ marginTop: 24 }}>
-            <ImageSliderComponent />
+            <ImageSliderComponent data={sp.sp_media.photo} />
           </View>
           <View
             style={{
@@ -664,7 +691,7 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     borderRadius: 20,
-    marginTop: -65,
+    marginTop: -40,
   },
   actionIcon: {
     padding: 8,
@@ -678,6 +705,10 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     fontFamily: "SemiBold",
     fontSize: 16,
+  },
+  video: {
+    height: 200,
+    width: Dimensions.get("window").width,
   },
 });
 

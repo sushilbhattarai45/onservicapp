@@ -33,7 +33,7 @@ export default function CategoryPersonListingScreen({
     async function getSpData() {
       const data = await axiosInstance.post("sp/getSearchedSp", {
         GIVEN_API_KEY: "AXCF",
-        city: "ram",
+        city: "Achham",
         skill: sub_name,
       });
       setSpData(data.data.data);
