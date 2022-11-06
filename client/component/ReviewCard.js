@@ -18,7 +18,7 @@ export default ReviewCard = ({ name, image, date, rating, review, doc }) => {
         <Image
           style={{ width: 40, height: 40, borderRadius: 12 }}
           source={{
-            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU",
+            uri: image,
             headers: {
               Accept: "*/*",
             },
@@ -28,7 +28,7 @@ export default ReviewCard = ({ name, image, date, rating, review, doc }) => {
           <Text
             style={{ fontSize: 14, color: Colors.black, fontFamily: "Regular" }}
           >
-            Tilganga Acharya
+            {name}
           </Text>
           <Text
             style={{ fontSize: 12, color: Colors.black, fontFamily: "Regular" }}

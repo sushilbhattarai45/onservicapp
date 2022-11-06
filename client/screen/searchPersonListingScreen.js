@@ -34,27 +34,15 @@ export default function SearchPersonListingScreen({ navigation }) {
 
   const [searchData, setSearchData] = useState(null);
   const popup = createRef();
-  const [searchedCity, setSearchedCity] = useState(userData?.user_district);
-  const [searchedSkill, setSearchedSkill] = useState("");
 
   const [citiesList, setCitiesList] = useState(Districts);
   const [filter, setFilter] = useState({ city: userData?.user_district });
-  // const [searchText, setSearchText] = useState("");
-  // const [searching, setSearching] = useState(false);
-  useEffect(() => {
-    // setCity();
-  }, []);
-  // async function setCity() {
-  //   if (filter?.city) {
-  //     setSearchedCity(filter?.city);
-  //   } else {
-  //     setSearchedCity(userData?.user_district);
-  //   }
-  // }
-  const getPeopleList = async (location, skill) => {
+
+  const getPeopleList = async ({ skill = value, location = filter.city }) => {
+    console.log(skill, location);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
-      skill: searchedSkill,
-      city: searchedCity,
+      skill: skill,
+      city: location,
       GIVEN_API_KEY: "AXCF",
     });
     console.log(res.data);
@@ -90,10 +78,7 @@ export default function SearchPersonListingScreen({ navigation }) {
       keyboardShouldPersistTaps="handled"
     >
       <View style={{ paddingHorizontal: 24 }}>
-        <Text>
-          Ok {searchedSkill}
-          {setSearchedCity}
-        </Text>
+        <Text>{filter.city}</Text>
         <Search
           containerStyle={{ padding: 0 }}
           rightIcon={"equalizer-fill"}
@@ -105,7 +90,7 @@ export default function SearchPersonListingScreen({ navigation }) {
           onSubmitEditing={() => {
             console.log("hello");
             setSuggestions([]);
-            getPeopleList(searchedCity, value);
+            getPeopleList({});
             setSuggestionsActive(false);
           }}
         />
@@ -128,9 +113,8 @@ export default function SearchPersonListingScreen({ navigation }) {
                     Keyboard.dismiss();
                     setSuggestions([]);
                     setValue(item.subCat_name);
-                    setSearchedSkill(item.subCat_name);
                     setSuggestionsActive(false);
-                    getPeopleList(searchedCity, searchedSkill);
+                    getPeopleList({ skill: item.subCat_name });
                   }}
                 >
                   <Text>{item.subCat_name}</Text>
@@ -263,8 +247,8 @@ export default function SearchPersonListingScreen({ navigation }) {
               value={filter.city}
               onChange={(item) => {
                 setFilter({ ...filter, city: item.label });
-                setSearchedCity(item.label);
-                getPeopleList(item.label, searchedSkill);
+                console.log("ok" + item.label);
+                getPeopleList({ location: item.label });
                 setSuggestionsActive(false);
               }}
             />

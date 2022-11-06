@@ -7,6 +7,7 @@ import {
   registerUser,
   loginUser,
   getOneUser,
+  updateUser,
 } from "../controller/userController.js";
 import { connectDB } from "../db/connectDb.js";
 import multer from "multer";
@@ -18,6 +19,7 @@ router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/getAllUser").post(getAllUser);
 router.route("/getOneUser").post(getOneUser);
+router.route("/updateUser").post(updateUser);
 
 const storage = multer.diskStorage({
   filename: function (req, file, cb) {

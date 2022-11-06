@@ -2,7 +2,53 @@ import userSchema from "../model/userSchema.js";
 import multer from "multer";
 import {} from "dotenv/config";
 const API_KEY = process.env.API_KEY;
-import saltHash from "password-salt-and-hash";
+
+export const updateUser = async (req, res) => {
+  const {
+    user_name,
+    user_email,
+    user_contact,
+    user_district,
+    user_city,
+    user_street,
+    user_gender,
+    user_password,
+    user_status,
+    user_toc,
+    user_profileImage,
+  } = req.body;
+  try {
+    const exists = await userSchema.findOne({ user_contact: user_contact });
+    if (!exists || exists?.length == 0) {
+      return res.json({ statuscode: 600, message: "User Doesnot exists" });
+    } else {
+      const userData = await userSchema.findOneAndUpdate(
+        { user_contact: user_contact },
+        {
+          user_name: user_name,
+          user_email: user_email,
+          user_contact: user_contact,
+          user_status: user_status,
+          user_district: user_district,
+          user_city: user_city,
+          user_street: user_street,
+          user_gender: user_gender,
+          user_password: user_password,
+          user_profileImage: user_profileImage,
+        }
+      );
+      const updatedData = await userSchema.find({
+        user_contact: user_contact,
+      });
+      return res.json({ statuscode: 201, user: updatedData });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({
+      error: "Sry there is some error in our side",
+    });
+  }
+};
 
 export const registerUser = async (req, res) => {
   const {

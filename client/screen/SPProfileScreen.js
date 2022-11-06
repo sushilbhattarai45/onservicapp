@@ -195,7 +195,7 @@ const SPProfileScreen = ({ navigation, route }) => {
             <Image
               style={styles.profileImage}
               source={{
-                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU",
+                uri: sp.sp_profileImage,
                 headers: {
                   Accept: "*/*",
                 },
@@ -372,7 +372,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           <View style={{ marginTop: 24 }}>
             <ImageSliderComponent data={sp.sp_media.photo} />
           </View>
-          <View
+          <Pressable
             style={{
               flex: 1,
               flexDirection: "column",
@@ -380,6 +380,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               alignItems: "center",
               marginTop: 32,
             }}
+            onPress={() => popup.current.show()}
           >
             <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
               {sp.sp_rating ? sp.sp_rating : 0}
@@ -407,7 +408,7 @@ const SPProfileScreen = ({ navigation, route }) => {
             <View style={{ marginTop: 24 }}>
               <Button label="Rate Us" onPress={() => popup.current.show()} />
             </View>
-          </View>
+          </Pressable>
           <>
             <View
               style={{
@@ -447,6 +448,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                 reviews?.map((item, index) => {
                   return (
                     <ReviewCard
+                      image={item.user_profileImage}
                       rating={item.review_stars}
                       name={item.user_name}
                       review={item.review_bio}

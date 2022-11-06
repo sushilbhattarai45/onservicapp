@@ -40,16 +40,12 @@ const HomeScreen = ({ navigation }) => {
       //Put your Data loading function here instead of my loadData()
     });
     async function getData() {
-      let res = await axiosInstance.post("/categories?", {
-        GIVEN_API_KEY: "AXCF",
-      });
-
       let featuredOnHome = await axiosInstance.post(
         "/categories/featuredOnHome",
         {
           GIVEN_API_KEY: "AXCF",
         }
-      );
+      );  
       let newaddons = await axiosInstance.post("/categories/newaddons", {
         GIVEN_API_KEY: "AXCF",
       });
