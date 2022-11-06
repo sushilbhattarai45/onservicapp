@@ -61,16 +61,16 @@ export const getMyReview = async (req, res) => {
 };
 
 export const getOneSpReview = async (req, res) => {
-  const { GIVEN_API_KEY, id } = req.body;
+  const { GIVEN_API_KEY, sp_id } = req.body;
 
   if (GIVEN_API_KEY == API_KEY) {
     let postData = await ReviewSchema.find({
-      sp_id: id,
+      sp_contact: sp_id,
     }).sort({ _id: -1 });
     const b = await Promise.all(
       postData.map(async (review) => {
         let disp = {};
-        console.log(review.user_contact)
+        console.log(review.user_contact);
         let userData = await userSchema.findOne({
           user_contact: review.user_contact,
         });
