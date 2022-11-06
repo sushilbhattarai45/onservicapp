@@ -39,25 +39,56 @@ export default function UserProfileScreen({ navigation }) {
               marginLeft: 30,
             }}
           >
-            <Text
+            <View
               style={{
-                fontFamily: "Regular",
-                fontSize: 24,
-                fontWeight: "800",
-                letterSpacing: -0.02,
-                color: Colors.white,
-              }}
-              onPress={async () => {
-                await AsyncStorage.removeItem("user_contact");
-                setUser(null);
-                setLogged("false");
-                setUserData(null);
-
-                navigation.navigate("Home");
+                display: "flex",
+                flexDirection: "row",
               }}
             >
-              Profile
-            </Text>
+              <View>
+                <Text
+                  style={{
+                    fontFamily: "Regular",
+                    fontSize: 24,
+                    fontWeight: "800",
+                    letterSpacing: -0.02,
+                    color: Colors.white,
+                  }}
+                  onPress={async () => {
+                    await AsyncStorage.removeItem("user_contact");
+                    setUser(null);
+                    setLogged("false");
+                    setUserData(null);
+
+                    navigation.navigate("Home");
+                  }}
+                >
+                  Profile
+                </Text>
+              </View>
+              <View
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  marginRight: 20,
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: 2,
+                }}
+              >
+                <Icon
+                  onPress={() => navigation.navigate("UpdateUser")}
+                  style={{
+                    marginRight: 20,
+                  }}
+                  name="pencil-fill"
+                  size={24}
+                  color="white"
+                />
+                <Icon name="shield-user-fill" size={24} color="white" />
+              </View>
+            </View>
+
             <View
               style={{
                 marginTop: 24,
@@ -75,11 +106,11 @@ export default function UserProfileScreen({ navigation }) {
                     height: 120,
                   }}
                   source={{
-                    uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
-                    // uri: userData?.user_profileImage,
+                    // uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
+                    uri: userData?.user_profileImage,
                   }}
                 />
-                <Icon
+                {/* <Icon
                   onPress={() => {}}
                   style={{
                     position: "absolute",
@@ -89,7 +120,7 @@ export default function UserProfileScreen({ navigation }) {
                   name="add-circle-fill"
                   size={28}
                   color="white"
-                />
+                /> */}
               </View>
 
               <View>

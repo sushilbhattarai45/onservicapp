@@ -59,7 +59,7 @@ const userValidationSchema = yup.object().shape({
     .label("confirm password")
     .required("Please, Reenter your PIN!")
     .oneOf([yup.ref("password"), null], "PIN must match"),
-  image: yup.string().required(),
+  image: yup.string().required("Please Choose an Image"),
 });
 
 export default registerUser = ({ navigation }) => {
