@@ -111,6 +111,7 @@ const SPProfileScreen = ({ navigation, route }) => {
       });
   };
   const getReviews = async () => {
+    alert(sp.sp_contact);
     let res = await axiosInstance.post("/review/getSpreview", {
       sp_id: sp.sp_contact,
       GIVEN_API_KEY: "AXCF",
@@ -449,7 +450,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                   console.log(item);
                   return (
                     <ReviewCard
-                      image={item.user_profileImage}
+                      image={item.user_profile_image}
                       rating={item.review_stars}
                       name={item.user_name}
                       review={item.review_bio}
