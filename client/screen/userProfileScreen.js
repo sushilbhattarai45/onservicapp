@@ -75,8 +75,8 @@ export default function UserProfileScreen({ navigation }) {
                     height: 120,
                   }}
                   source={{
-                    // uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
-                    uri: userData?.user_profileImage,
+                    uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
+                    // uri: userData?.user_profileImage,
                   }}
                 />
                 <Icon
@@ -99,6 +99,11 @@ export default function UserProfileScreen({ navigation }) {
                     fontSize: 20,
                     fontFamily: "Bold",
                     marginLeft: 24,
+                  }}
+                  onPress={() => {
+                    navigation.navigate("UpdateUser", {
+                      data: userData,
+                    });
                   }}
                 >
                   {userData?.user_name}{" "}
