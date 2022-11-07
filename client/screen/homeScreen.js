@@ -28,7 +28,8 @@ const wWidth = Dimensions.get("window").width;
 import NewlyAddedServices from "../component/NewlyAddedServices";
 
 const HomeScreen = ({ navigation }) => {
-  const { categories, user, logged, userData } = useContext(AppContext);
+  const { categories, user, logged, userData, isitsp, setIsitSp } =
+    useContext(AppContext);
   console.log(userData);
   const [newaddons, setNewaddons] = useState();
   const [featured, setFeatured] = useState();
@@ -45,7 +46,7 @@ const HomeScreen = ({ navigation }) => {
         {
           GIVEN_API_KEY: "AXCF",
         }
-      );  
+      );
       let newaddons = await axiosInstance.post("/categories/newaddons", {
         GIVEN_API_KEY: "AXCF",
       });

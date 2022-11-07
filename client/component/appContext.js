@@ -7,6 +7,8 @@ const AppContext = createContext({});
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState("");
+  const [isitsp, setIsitSp] = useState("false");
+
   const [userData, setUserData] = useState({});
   const [logged, setLogged] = useState("false");
   const [categories, setCategories] = useState([]);
@@ -26,7 +28,7 @@ export const ContextProvider = ({ children }) => {
     const getUser = async () => {
       try {
         const loggedUser = await AsyncStorage.getItem("user_contact");
-        console.log("h" + loggedUser);
+        // console.log("h" + loggedUser);
         if (loggedUser) {
           setLogged("true");
           setUser(loggedUser);
@@ -38,7 +40,23 @@ export const ContextProvider = ({ children }) => {
         console.log(e);
       }
     };
-
+    async function isSp() {
+      try {
+        const spcheck = await axiosInstance.post("/sp/getOneSp", {
+          GIVEN_API_KEY: "AXCF",
+          sp_contact: user,
+        });
+        if (spcheck?.data.statuscode == 201) {
+          console.log("Yes");
+          setIsitSp("true");
+        } else {
+          console.log("No");
+          setIsitSp("false");
+        }
+      } catch (e) {
+        console.log(error);
+      }
+    }
     const getCategories = () => {
       try {
         axiosInstance
@@ -67,6 +85,7 @@ export const ContextProvider = ({ children }) => {
     getCategories();
     getSubCategories();
     getUser();
+    isSp();
     console.log(userData);
   }, []);
 
@@ -77,6 +96,8 @@ export const ContextProvider = ({ children }) => {
         setUser,
         setLogged,
         user,
+        isitsp,
+        setIsitSp,
         categories,
         subCategories,
         setUserData,
