@@ -156,3 +156,30 @@ export const getSearchedSp = async (req, res) => {
     return res.json({ statuscode: 700, message: "Wrong Api Key" });
   }
 };
+export const updateSettings = async (req, res) => {
+  const { GIVEN_API_KEY, sp_contact, sp_status, sp_showReview } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const updateSettings = await spSchema.findOneAndUpdate(
+        {
+          sp_contact: sp_contact,
+        },
+        {
+          sp_status: sp_status,
+          sp_showReview: sp_showReview,
+        }
+      );
+      return res.json({
+        statuscode: 200,
+        message: "sucessfully Updated the data",
+      });
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
+      error: "WrongApi Key",
+    });
+  }
+};

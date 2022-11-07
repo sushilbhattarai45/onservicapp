@@ -50,7 +50,10 @@ const sp = new mongoose.Schema({
     type: String,
     default: "Onservic Service Provider",
   },
-
+  sp_showReview: {
+    type: Boolean,
+    default: true,
+  },
   sp_toc: {
     date: { type: String },
     time: { type: String },
