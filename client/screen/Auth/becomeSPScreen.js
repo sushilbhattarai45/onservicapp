@@ -27,7 +27,6 @@ import { axiosInstance } from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
 
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -110,15 +109,14 @@ const userValidationSchema = yup.object().shape({
   video: yup.string().required(),
 });
 
-const BecomeSPScreen = () => {
+const BecomeSPScreen = ({ navigation }) => {
   const { subCategories, userData } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
-
+  const { setIsitSp } = useContext(AppContext);
   const submit = async (values) => {
     const img = await uploadImage(values.photo);
+    console.log(img);
     let [vdo] = await uploadImage([values.video]);
-    // console.log(img);
-    // console.log(vdo);
     let response = await axiosInstance.post("/sp/postsp/", {
       GIVEN_API_KEY: "AXCF",
       sp_name: values.name,
@@ -135,7 +133,9 @@ const BecomeSPScreen = () => {
         video: vdo,
       },
     });
-    console.log(response.data);
+    console.log(response.data.sp);
+    setIsitSp(response.data.sp);
+    navigation.navigate("Home");
   };
   const [loading, setLoading] = useState(false);
   const [vdoloading, setVdoLoading] = useState(false);
@@ -208,15 +208,21 @@ const BecomeSPScreen = () => {
             "myfile"
           );
 
-          const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-          const response = await axios(serverUrl, {
+          const response = await axiosInstance("/user/uploadImage", {
             method: "post",
             data: data,
             headers: {
               "Content-Type": "multipart/form-data",
             },
           });
-          // console.log(response.data.fileName);
+          // const response = await axios(serverUrl, {
+          //   method: "post",
+          //   data: data,
+          //   headers: {
+          //     "Content-Type": "multipart/form-data",
+          //   },
+          // });
+          console.log(response.data);
           let url = response?.data?.fileName;
           const filename = url.split("\\");
           const finalname =
@@ -781,7 +787,6 @@ const BecomeSPScreen = () => {
                       style={{
                         height: 60,
                         width: 60,
-
                         borderRadius: 5,
                         marginBottom: 4,
                         marginLeft: 4,

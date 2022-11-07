@@ -27,8 +27,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import App from "../../App";
 // import ModalPopup from "../../component/Modal";
 
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
-
 const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },
@@ -101,9 +99,7 @@ export default UpdateUser = ({ navigation }) => {
         "myfile"
       );
 
-      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-      console.log("s" + serverUrl);
-      const response = await axios(serverUrl, {
+      const response = await axiosInstance("/user/uploadImage", {
         method: "post",
         data: data,
         headers: {

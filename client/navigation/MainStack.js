@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator();
 export default function AppStack() {
   return (
     <Stack.Navigator
-      initialRouteName="BecomeSp"
+      initialRouteName="HomeTabs"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="HomeTabs" component={MyTabs} />

@@ -21,7 +21,8 @@ import AppContext from "../component/appContext";
 import Icon from "../component/Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function UserProfileScreen({ navigation }) {
-  const { setUser, setLogged, userData, setUserData } = useContext(AppContext);
+  const { setUser, setLogged, userData, setUserData, isitsp } =
+    useContext(AppContext);
   return (
     <ScrollView>
       <View
@@ -86,7 +87,14 @@ export default function UserProfileScreen({ navigation }) {
                   color="white"
                 />
                 <Icon
-                  onPress={() => navigation.navigate("BecomeSP")}
+                  onPress={async () => {
+                    if (isitsp) {
+                      navigation.navigate("Sp", { sp: isitsp });
+                    } else {
+                      console.log("hi");
+                      navigation.navigate("BecomeSP");
+                    }
+                  }}
                   name="shield-user-fill"
                   size={24}
                   color="white"

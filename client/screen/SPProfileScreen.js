@@ -17,6 +17,7 @@ import {
   Linking,
   Dimensions,
   TouchableOpacity,
+  Switch,
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 import QRCode from "react-native-qrcode-svg";
@@ -74,6 +75,7 @@ const SkillPill = ({ name }) => {
 };
 const SPProfileScreen = ({ navigation, route }) => {
   const { sp } = route.params;
+  const { isitsp } = useContext(AppContext);
   console.log(sp);
   const { subCategories, user } = useContext(AppContext);
   const [reviews, setReviews] = useState(null);
@@ -81,8 +83,11 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [review, setReview] = useState("");
   const [reviewError, setReviewError] = useState(false);
   const [bookmarked, setBookmarked] = useState();
+  const [showReviews, setShowReviews] = useState(sp.sp_showReviews);
+  const [spStatus, setSpStatus] = useState(sp.sp_status);
   const popup = createRef();
   const popupQr = createRef();
+  const popupSettings = createRef();
   const video = useRef(null);
   const [videoMuted, setVideoMuted] = useState(true);
   const [bookIcon, setBookIcon] = useState("false");
@@ -153,14 +158,42 @@ const SPProfileScreen = ({ navigation, route }) => {
         <Header
           style={{ position: "absolute", zIndex: 10, paddingHorizontal: 24 }}
           icon="arrow-left-line"
+          onPressIcon={() => navigation.goBack()}
           right={
-            <Icon
-              name="qr-code-line"
-              size={24}
-              style={styles.icon}
-              color={Colors.white}
-              onPress={() => popupQr.current.show()}
-            />
+            isitsp ? (
+              <View style={{ flexDirection: "row" }}>
+                <Icon
+                  onPress={() => navigation.navigate("UpdateSP", { sp: sp })}
+                  style={{
+                    marginRight: 12,
+                  }}
+                  name="pencil-fill"
+                  size={24}
+                  color="white"
+                />
+                <Icon
+                  name="qr-code-line"
+                  size={24}
+                  style={{ marginRight: 12 }}
+                  color={Colors.white}
+                  onPress={() => popupQr.current.show()}
+                />
+                <Icon
+                  onPress={() => popupSettings.current.show()}
+                  name="settings-line"
+                  size={24}
+                  color="white"
+                />
+              </View>
+            ) : (
+              <Icon
+                name="qr-code-line"
+                size={24}
+                style={styles.icon}
+                color={Colors.white}
+                onPress={() => popupQr.current.show()}
+              />
+            )
           }
           color={Colors.white}
         />
@@ -671,6 +704,68 @@ const SPProfileScreen = ({ navigation, route }) => {
               }}
             >
               {sp.sp_officeNumber ? sp.sp_officeNumber : sp.sp_contact}
+            </Text>
+          </View>
+        </View>
+      </ModalPopup>
+      <ModalPopup
+        ref={popupSettings}
+        animationType="fade"
+        onTouchOutside={() => {
+          popupSettings.current.close();
+        }}
+      >
+        <View
+          style={{
+            alignItems: "center",
+            // paddingHorizontal: 16,
+            paddingVertical: 16,
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: Colors.black,
+              fontSize: 32,
+              fontFamily: "Black",
+              marginBottom: 24,
+            }}
+          >
+            Settings
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 8,
+              // backgroundColor:'red'
+            }}
+          >
+            <Text style={{ color: Colors.black, fontFamily: "Regular" }}>
+              Show Reviews
+            </Text>
+            <Switch
+              trackColor={{ false: Colors.gray500, true: Colors.gray500 }}
+              thumbColor={showReviews ? Colors.primary : Colors.gray900}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={setShowReviews}
+              value={showReviews}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={{ color: Colors.black, fontFamily: "Regular" }}>
+              Expiry Date
+            </Text>
+            <Text style={{ color: Colors.black, fontFamily: "Regular" }}>
+              stg date
             </Text>
           </View>
         </View>

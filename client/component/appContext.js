@@ -7,7 +7,7 @@ const AppContext = createContext({});
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState("");
-  const [isitsp, setIsitSp] = useState("false");
+  const [isitsp, setIsitSp] = useState(null);
 
   const [userData, setUserData] = useState({});
   const [logged, setLogged] = useState("false");
@@ -28,11 +28,11 @@ export const ContextProvider = ({ children }) => {
     const getUser = async () => {
       try {
         const loggedUser = await AsyncStorage.getItem("user_contact");
-        // console.log("h" + loggedUser);
         if (loggedUser) {
           setLogged("true");
           setUser(loggedUser);
           getUserData(loggedUser);
+          isSp(loggedUser);
         } else {
           setLogged("false");
         }
@@ -40,18 +40,20 @@ export const ContextProvider = ({ children }) => {
         console.log(e);
       }
     };
-    async function isSp() {
+    async function isSp(d) {
       try {
-        const spcheck = await axiosInstance.post("/sp/getOneSp", {
-          GIVEN_API_KEY: "AXCF",
-          sp_contact: user,
-        });
-        if (spcheck?.data.statuscode == 201) {
-          console.log("Yes");
-          setIsitSp("true");
-        } else {
-          console.log("No");
-          setIsitSp("false");
+        if (d) {
+          const spcheck = await axiosInstance.post("/sp/getOneSp", {
+            GIVEN_API_KEY: "AXCF",
+            sp_contact: d,
+          });
+          console.log(spcheck.data);
+          if (spcheck?.data?.statuscode == 201) {
+            setIsitSp(spcheck.data.data);
+          } else {
+            console.log("No");
+            setIsitSp(false);
+          }
         }
       } catch (e) {
         console.log(error);
@@ -82,11 +84,9 @@ export const ContextProvider = ({ children }) => {
         console.log(error);
       }
     };
+    getUser();
     getCategories();
     getSubCategories();
-    getUser();
-    isSp();
-    console.log(userData);
   }, []);
 
   return (

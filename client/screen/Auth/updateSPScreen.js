@@ -26,8 +26,7 @@ import Icon from "../../component/Icon";
 import { axiosInstance } from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
-
-const BASE_OUR_API_URL = "http://192.168.18.7:3001";
+import { Video } from "expo-av";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -97,6 +96,7 @@ const userValidationSchema = yup.object().shape({
 
 const UpdateSpScreen = ({ route, navigation }) => {
   let { sp } = route.params;
+  console.log(sp.sp_media.video);
   const { subCategories } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
 
@@ -120,7 +120,6 @@ const UpdateSpScreen = ({ route, navigation }) => {
         video: vdo,
       },
     });
-    console.log(response.data);
     navigation.navigate("Profile");
   };
   const [loading, setLoading] = useState(false);
@@ -194,8 +193,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
             "myfile"
           );
 
-          const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-          const response = await axios(serverUrl, {
+          const response = await axiosInstance("/user/uploadImage", {
             method: "post",
             data: data,
             headers: {
@@ -231,7 +229,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
     >
       <View style={styles.container}>
         <Header icon="arrow-left-line" />
-        <Text style={styles.heading}>BE OUR PARTNER</Text>
+        <Text style={styles.heading}>Edit Your Profile</Text>
         {/* <KeyboardAvoidingView style={{ flex: 1 }}> */}
         <Formik
           initialValues={{
@@ -685,15 +683,11 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   }}
                 >
                   {values.video ? (
-                    <TouchableOpacity
-                      onPress={() => {
-                        setFieldValue("video", "");
-                      }}
-                    >
+                    <TouchableOpacity style={{ flex: 1 }}>
                       <View
                         style={{
-                          height: 60,
-                          width: 60,
+                          flex: 1,
+
                           marginBottom: 6,
                           marginRight: 4,
                           position: "relative",
@@ -717,26 +711,22 @@ const UpdateSpScreen = ({ route, navigation }) => {
                           }}
                         >
                           <Icon
+                            onPress={() => {
+                              setFieldValue("video", "");
+                            }}
                             style={{}}
                             name="close-circle-fill"
                             size={20}
                             color={Colors.gray900}
                           />
                         </View>
-                        <Image
-                          style={{
-                            alignSelf: "center",
-                            alignSelf: "center",
-                            height: "100%",
-                            borderRadius: 10,
-                            width: "95%",
-                          }}
-                          source={{
-                            uri: values.video,
-                            headers: {
-                              Accept: "*/*",
-                            },
-                          }}
+                        <Video
+                          style={styles.video}
+                          source={{ uri: values.video }}
+                          resizeMode="cover"
+                          pointerEvents="none"
+                          useNativeControls
+                          isLooping
                         />
                       </View>
                     </TouchableOpacity>
@@ -885,6 +875,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     height: 50,
     outline: "none",
+  },
+  video: {
+    height: 200,
+    width: "100%",
   },
 });
 
