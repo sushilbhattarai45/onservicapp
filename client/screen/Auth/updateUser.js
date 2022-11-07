@@ -182,7 +182,7 @@ export default UpdateUser = ({ navigation }) => {
         setUserData(finaldata[0]);
         console.log(finaldata);
         await storeData(data);
-        // navigation.navigate("Home");
+        navigation.navigate("Home");
       } else if (status == 600) {
         setFieldError("phone", "Phone Number already exists");
       } else {

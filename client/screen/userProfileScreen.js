@@ -85,7 +85,12 @@ export default function UserProfileScreen({ navigation }) {
                   size={24}
                   color="white"
                 />
-                <Icon name="shield-user-fill" size={24} color="white" />
+                <Icon
+                  onPress={() => navigation.navigate("BecomeSP")}
+                  name="shield-user-fill"
+                  size={24}
+                  color="white"
+                />
               </View>
             </View>
 
@@ -131,11 +136,6 @@ export default function UserProfileScreen({ navigation }) {
                     fontFamily: "Bold",
                     marginLeft: 24,
                   }}
-                  onPress={() => {
-                    navigation.navigate("UpdateUser", {
-                      data: userData,
-                    });
-                  }}
                 >
                   {userData?.user_name}{" "}
                 </Text>
@@ -149,7 +149,6 @@ export default function UserProfileScreen({ navigation }) {
                     color: Colors.white,
                   }}
                 >
-                  {" "}
                   <Ionicons
                     name="ios-location-sharp"
                     size={20}

@@ -49,6 +49,7 @@ export default function SearchPersonListingScreen({ navigation }) {
     // } else {
     //   alert("true");
     // }
+
     return unsubscribe;
   }, [navigation]);
   async function getData() {
