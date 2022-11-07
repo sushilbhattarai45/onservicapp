@@ -23,6 +23,7 @@ import { axiosInstance } from "../component/tools";
 import ModalPopup from "../component/Modal";
 import { Dropdown } from "react-native-element-dropdown";
 import { Districts } from "../component/district";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SearchPersonListingScreen({ navigation }) {
   const { subCategories, userData } = useContext(AppContext);
@@ -37,7 +38,27 @@ export default function SearchPersonListingScreen({ navigation }) {
 
   const [citiesList, setCitiesList] = useState(Districts);
   const [filter, setFilter] = useState({ city: userData?.user_district });
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      getData();
+      //Put your Data loading function here instead of my loadData()
+    });
 
+    // if (logged == "false") {
+    //   alert("false");
+    // } else {
+    //   alert("true");
+    // }
+    return unsubscribe;
+  }, [navigation]);
+  async function getData() {
+    const num = await AsyncStorage.getItem("user_contact");
+    if (num == null) {
+      setFilter({ city: null });
+    } else {
+      setFilter({ city: userData?.user_district });
+    }
+  }
   const getPeopleList = async ({ skill = value, location = filter.city }) => {
     console.log(skill, location);
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
@@ -78,7 +99,7 @@ export default function SearchPersonListingScreen({ navigation }) {
       keyboardShouldPersistTaps="handled"
     >
       <View style={{ paddingHorizontal: 24 }}>
-        <Text>{filter.city}</Text>
+        <Text>{filter?.city}</Text>
         <Search
           containerStyle={{ padding: 0 }}
           rightIcon={"equalizer-fill"}
