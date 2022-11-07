@@ -82,7 +82,10 @@ export default function CreateNewPinScreen({ navigation, route }) {
           marginLeft: 24,
         }}
       >
-        <Header icon={"arrow-left-line"} />
+        <Header
+          icon={"arrow-left-line"}
+          onPressIcon={() => navigation.goBack()}
+        />
       </View>
       <View
         style={{

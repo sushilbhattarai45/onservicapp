@@ -96,7 +96,7 @@ export default function OtpScreen({ navigation, route }) {
       </Text>
       <View>
         <Text style={{ color: Colors.gray900, fontFamily: "Regular" }}>
-          We have sent an OTP to the number +977-9800000000
+          We have sent an OTP to the number {num}
         </Text>
       </View>
       <View style={{ flex: 1 }}>
