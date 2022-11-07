@@ -230,6 +230,7 @@ export default function LoginScreen({ navigation, route, path }) {
             </Text>
             <Text
               style={{ position: "absolute", fontFamily: "Regular", right: 12 }}
+              onPress={() => nav.navigate("ForgotPin")}
             >
               Forgot PIN?
             </Text>

@@ -147,15 +147,43 @@ export const getAllUser = async (req, res) => {
     return res.json({ error: "error" });
   }
 };
+export const forgetPin = async (req, res) => {
+  const { GIVEN_API_KEY, user_contact, user_password } = req.body;
+  if (API_KEY == GIVEN_API_KEY) {
+    try {
+      const updated = await userSchema.findOneAndUpdate(
+        { user_contact: user_contact },
+        {
+          user_password: user_password,
+        }
+      );
+      return res.json({ statuscode: 201, data: updated });
+    } catch (e) {
+      return res.json({ error: e, statuscode: 400 });
+    }
+  } else {
+    return res.json({ error: "error" });
+  }
+};
 
 export const getOneUser = async (req, res) => {
   const { GIVEN_API_KEY, user_contact } = req.body;
   if (API_KEY == GIVEN_API_KEY) {
     try {
-      const getOneUser = await userSchema.findOne({
+      console.log(user_contact);
+      const getUser = await userSchema.findOne({
         user_contact: user_contact,
       });
-      return res.json({ data: getOneUser });
+
+      if (getUser) {
+        return res.json({
+          message: "user found",
+          statuscode: 201,
+          data: getUser,
+        });
+      } else {
+        return res.json({ message: "user not found", statuscode: 400 });
+      }
     } catch (e) {
       return res.json({ error: e });
     }

@@ -11,10 +11,46 @@ import {
   Pressable,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-
+import { axiosInstance } from "../../component/tools";
 import { Colors } from "../../styles/main";
 import Header from "../../component/Header";
+import { useNavigation } from "@react-navigation/native";
 export default function ForgetPinScreen() {
+  const navigation = useNavigation();
+  async function forget() {
+    if (num.length == 10) {
+      const check = await axiosInstance.post("/user/getOneUser", {
+        GIVEN_API_KEY: "AXCF",
+        user_contact: num,
+      });
+      if (check?.data.statuscode == 201) {
+        // const otp = Math.floor(Math.random() * 10000);
+        let genOtp = getOtp();
+        console.log(genOtp);
+        navigation.navigate("OtpScreen", {
+          num: num,
+          otp: genOtp,
+        });
+      } else {
+        alert("User Not Found");
+      }
+    } else {
+      alert("Invalid Number");
+    }
+  }
+  function getOtp() {
+    let pin = Math.round(Math.random() * 10000);
+    let pinStr = pin + "";
+
+    // make sure that number is 4 digit
+    if (pinStr.length == 4) {
+      return pinStr;
+    } else {
+      return getPin();
+    }
+  }
+
+  const [num, setNum] = useState();
   return (
     <View>
       <View
@@ -22,7 +58,10 @@ export default function ForgetPinScreen() {
           marginLeft: 24,
         }}
       >
-        <Header icon={"arrow-left-line"} />
+        <Header
+          icon={"arrow-left-line"}
+          onPressIcon={() => navigation.goBack()}
+        />
       </View>
       <View
         style={{
@@ -47,7 +86,7 @@ export default function ForgetPinScreen() {
             Forgot PIN?{" "}
           </Text>
           <View>
-            <Text style={{ color: Colors.gray500, fontFamily: "Regular" }}>
+            <Text style={{ color: Colors.gray900, fontFamily: "Regular" }}>
               Enter your regestered number below to get an one time password{" "}
             </Text>
           </View>
@@ -82,6 +121,12 @@ export default function ForgetPinScreen() {
                     borderColor: Colors.black,
                     borderRadius: 4,
                     height: 50,
+                  }}
+                  onEndEditing={(value) => {
+                    setNum(value);
+                  }}
+                  onChangeText={(value) => {
+                    setNum(value);
                   }}
                   placeholder="Enter your Mobile Number"
                 />
@@ -130,6 +175,7 @@ export default function ForgetPinScreen() {
               height: 50,
               marginTop: 24,
             }}
+            onPress={async () => await forget()}
           >
             <Text
               style={{
