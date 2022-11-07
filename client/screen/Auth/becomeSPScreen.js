@@ -111,7 +111,7 @@ const userValidationSchema = yup.object().shape({
 });
 
 const BecomeSPScreen = () => {
-  const { subCategories } = useContext(AppContext);
+  const { subCategories, userData } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
 
   const submit = async (values) => {
@@ -243,14 +243,14 @@ const BecomeSPScreen = () => {
         {/* <KeyboardAvoidingView style={{ flex: 1 }}> */}
         <Formik
           initialValues={{
-            name: "",
-            email: "",
-            phone: "",
+            name: userData?.user_name,
+            email: userData?.user_email,
+            phone: userData?.user_contact,
             officePhone: "",
             district: "",
-            gender: "",
+            gender: userData?.user_gender,
             city: "",
-            street: "",
+            street: userData?.user_street,
             accepted: false,
             // googlemaplink: "",
             skills: [],
@@ -333,6 +333,8 @@ const BecomeSPScreen = () => {
               >
                 <Text>Phone Number *</Text>
                 <TextInput
+                  editable={false}
+                  color="black"
                   keyboardType="numeric"
                   maxLength={10}
                   style={[
@@ -360,7 +362,7 @@ const BecomeSPScreen = () => {
                   marginTop: 12,
                 }}
               >
-                <Text>Office Phone Number *</Text>
+                <Text>Office Phone Number </Text>
                 <TextInput
                   keyboardType="numeric"
                   maxLength={10}

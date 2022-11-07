@@ -113,7 +113,9 @@ export const getOneSp = async (req, res) => {
       const spdata = await spSchema.findOne({
         sp_contact: sp_contact,
       });
-      return res.json({ statuscode: 201, data: spdata });
+      if (spdata) {
+        return res.json({ statuscode: 201, data: spdata, message: "True" });
+      } else return res.json({ statuscode: 400, message: "False" });
     } catch (e) {
       return res.json({
         error: "Sry there is some error in our side",

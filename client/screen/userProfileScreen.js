@@ -39,25 +39,61 @@ export default function UserProfileScreen({ navigation }) {
               marginLeft: 30,
             }}
           >
-            <Text
+            <View
               style={{
-                fontFamily: "Regular",
-                fontSize: 24,
-                fontWeight: "800",
-                letterSpacing: -0.02,
-                color: Colors.white,
-              }}
-              onPress={async () => {
-                await AsyncStorage.removeItem("user_contact");
-                setUser(null);
-                setLogged("false");
-                setUserData(null);
-
-                navigation.navigate("Home");
+                display: "flex",
+                flexDirection: "row",
               }}
             >
-              Profile
-            </Text>
+              <View>
+                <Text
+                  style={{
+                    fontFamily: "Regular",
+                    fontSize: 24,
+                    fontWeight: "800",
+                    letterSpacing: -0.02,
+                    color: Colors.white,
+                  }}
+                  onPress={async () => {
+                    await AsyncStorage.removeItem("user_contact");
+                    setUser(null);
+                    setLogged("false");
+                    setUserData(null);
+
+                    navigation.navigate("Home");
+                  }}
+                >
+                  Profile
+                </Text>
+              </View>
+              <View
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  marginRight: 20,
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: 2,
+                }}
+              >
+                <Icon
+                  onPress={() => navigation.navigate("UpdateUser")}
+                  style={{
+                    marginRight: 20,
+                  }}
+                  name="pencil-fill"
+                  size={24}
+                  color="white"
+                />
+                <Icon
+                  onPress={() => navigation.navigate("BecomeSP")}
+                  name="shield-user-fill"
+                  size={24}
+                  color="white"
+                />
+              </View>
+            </View>
+
             <View
               style={{
                 marginTop: 24,
@@ -79,7 +115,7 @@ export default function UserProfileScreen({ navigation }) {
                     uri: userData?.user_profileImage,
                   }}
                 />
-                <Icon
+                {/* <Icon
                   onPress={() => {}}
                   style={{
                     position: "absolute",
@@ -89,7 +125,7 @@ export default function UserProfileScreen({ navigation }) {
                   name="add-circle-fill"
                   size={28}
                   color="white"
-                />
+                /> */}
               </View>
 
               <View>
@@ -113,7 +149,6 @@ export default function UserProfileScreen({ navigation }) {
                     color: Colors.white,
                   }}
                 >
-                  {" "}
                   <Ionicons
                     name="ios-location-sharp"
                     size={20}

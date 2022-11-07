@@ -16,10 +16,13 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../component/Header";
 import Constants from "expo-constants";
+import { useNavigation } from "@react-navigation/native";
+
 import { number } from "yup";
 import AppContext from "../../component/appContext";
 import { axiosInstance } from "../../component/tools";
 export default function LoginScreen({ navigation, route, path }) {
+  const nav = useNavigation();
   const { user, logged, setLogged, setUser, setUserData } =
     useContext(AppContext);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
@@ -227,6 +230,7 @@ export default function LoginScreen({ navigation, route, path }) {
             </Text>
             <Text
               style={{ position: "absolute", fontFamily: "Regular", right: 12 }}
+              onPress={() => nav.navigate("ForgotPin")}
             >
               Forgot PIN?
             </Text>
@@ -260,6 +264,7 @@ export default function LoginScreen({ navigation, route, path }) {
           >
             Dont Have an account?
             <Text
+              onPress={() => nav.navigate("Signup")}
               style={{
                 color: Colors.primary,
               }}

@@ -81,7 +81,20 @@ export default function BookMarkScreen({ navigation }) {
                         marginBottom: 2,
                       }}
                     >
-                      <TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={async () => {
+                          const SpData = await axiosInstance.post(
+                            "sp/getOneSp",
+                            {
+                              GIVEN_API_KEY: "AXCF",
+                              sp_contact: persons.sp_contact,
+                            }
+                          );
+                          navigation.navigate("Sp", {
+                            sp: SpData?.data.data,
+                          });
+                        }}
+                      >
                         <BookMarkCard
                           id={persons.sp_contact}
                           name={persons.sp_name}

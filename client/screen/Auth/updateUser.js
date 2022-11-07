@@ -1,6 +1,6 @@
 // App.js
 
-import React, { createRef, useContext, useState } from "react";
+import React, { createRef, useContext, useEffect, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -15,6 +15,7 @@ import {
 import CheckBox from "expo-checkbox";
 import { Dropdown } from "react-native-element-dropdown";
 import moment from "moment";
+import AppContext from "../../component/appContext";
 import { Districts } from "../../component/district";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
@@ -23,9 +24,9 @@ import { Field, Formik } from "formik";
 import Header from "../../component/Header";
 import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import App from "../../App";
 // import ModalPopup from "../../component/Modal";
-import AppContext from "../../component/appContext";
-import { axiosInstance } from "../../component/tools";
+
 const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 const gendersList = [
@@ -59,12 +60,11 @@ const userValidationSchema = yup.object().shape({
     .label("confirm password")
     .required("Please, Reenter your PIN!")
     .oneOf([yup.ref("password"), null], "PIN must match"),
-  image: yup.string().required("Please Choose an Image"),
+  image: yup.string().required(),
 });
 
-export default registerUser = ({ navigation }) => {
-  const { userData, logged, user, setUserData, setLogged, setUser } =
-    useContext(AppContext);
+export default UpdateUser = ({ navigation }) => {
+  const { userData, setUserData } = useContext(AppContext);
   // const [district, setDistrict] = useState();
   const [data, setData] = useState();
   let popupRef = createRef();
@@ -141,10 +141,23 @@ export default registerUser = ({ navigation }) => {
       return;
     }
   };
+  useEffect(() => {
+    Districts.map((item) => {
+      if (userData?.user_district == item.label) {
+        setCitiesList(item.cities);
+      }
+    });
+  });
   async function postData(values, { setSubmitting, setFieldError }) {
     uploadImage(file).then(async (res) => {
+      let img;
+      if (res != null) {
+        img = BASE_OUR_API_URL + "/" + res;
+      } else {
+        img = values.image;
+      }
       let response = await axios.post(
-        BASE_OUR_API_URL + "/v1/api/user/register",
+        BASE_OUR_API_URL + "/v1/api/user/updateUser",
         {
           API_KEY: "AXCF",
           user_name: values.name,
@@ -155,7 +168,7 @@ export default registerUser = ({ navigation }) => {
           user_street: values.street,
           user_gender: values.gender,
           user_password: values.password,
-          user_profileImage: BASE_OUR_API_URL + "/" + res,
+          user_profileImage: img,
           user_toc: {
             date: moment().format("ll"),
             time: moment().format("LT"),
@@ -166,11 +179,9 @@ export default registerUser = ({ navigation }) => {
       if (status == 201) {
         const finaldata = response?.data?.user;
         setData(finaldata);
-        setUserData(finaldata);
-        setLogged("true");
-        setUser(values.phone);
-        await storeData(values.phone);
-
+        setUserData(finaldata[0]);
+        console.log(finaldata);
+        await storeData(data);
         navigation.navigate("Home");
       } else if (status == 600) {
         setFieldError("phone", "Phone Number already exists");
@@ -183,7 +194,8 @@ export default registerUser = ({ navigation }) => {
   }
   const storeData = async (value) => {
     try {
-      await AsyncStorage.setItem("user_contact", value);
+      console.log(value);
+      await AsyncStorage.setItem("user_contact", value?.user_contact);
     } catch (e) {}
   };
   const selectFile = async () => {
@@ -232,17 +244,17 @@ export default registerUser = ({ navigation }) => {
 
           <Formik
             initialValues={{
-              name: "",
-              email: "",
-              password: "",
+              name: userData?.user_name,
+              email: userData?.user_email,
+              password: userData?.user_password,
               confirm: "",
-              phone: "",
-              district: "",
-              gender: "",
-              city: "",
-              street: "",
+              phone: userData?.user_contact,
+              district: userData?.user_district,
+              gender: userData?.user_gender,
+              city: userData?.user_city,
+              street: userData?.user_street,
               accepted: false,
-              image: null,
+              image: userData?.user_profileImage,
             }}
             onSubmit={postData}
             validationSchema={() => userValidationSchema}
@@ -260,7 +272,7 @@ export default registerUser = ({ navigation }) => {
               <View>
                 <View
                   style={{
-                    marginTop: 8,
+                    marginTop: 2,
                     flexDirection: "row",
                     alignItems: "center",
                   }}
@@ -270,14 +282,14 @@ export default registerUser = ({ navigation }) => {
                       flex: 5,
                       fontStyle: "normal",
                       fontWeight: "800",
-                      fontSize: 32,
+                      fontSize: 20,
                       lineHeight: 38,
                       display: "flex",
                       alignItems: "flex-end",
                       letterspacing: -0.02,
                     }}
                   >
-                    Register
+                    Update Your Profile
                   </Text>
 
                   <View
@@ -384,6 +396,8 @@ export default registerUser = ({ navigation }) => {
                   >
                     <Text>Phone Number *</Text>
                     <TextInput
+                      editable={false}
+                      color="black"
                       keyboardType="numeric"
                       maxLength={10}
                       style={[
@@ -483,6 +497,7 @@ export default registerUser = ({ navigation }) => {
                       value={values.district}
                       onChange={(item) => {
                         setFieldValue("district", item.label);
+                        console.log(item.cities);
                         setCitiesList(item.cities);
                       }}
                     />
@@ -563,6 +578,7 @@ export default registerUser = ({ navigation }) => {
                   >
                     <Text>Password *</Text>
                     <TextInput
+                      secureTextEntry={true}
                       keyboardType="numeric"
                       maxLength={4}
                       style={[
@@ -591,6 +607,7 @@ export default registerUser = ({ navigation }) => {
                   >
                     <Text>Confirm Password *</Text>
                     <TextInput
+                      secureTextEntry={true}
                       keyboardType="numeric"
                       maxLength={4}
                       style={[
@@ -700,7 +717,6 @@ export default registerUser = ({ navigation }) => {
                   >
                     Already Have an Account?{" "}
                     <Text
-                      onPress={() => navigation.navigate("Login")}
                       style={{
                         textAlign: "center",
                         fontSize: 15,
@@ -730,7 +746,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginTop: 10,
     position: "relative",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   inputStyle: {
     width: "100%",

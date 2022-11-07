@@ -1,4 +1,4 @@
-import { useRef, React, useState, createRef } from "react";
+import { useRef, React, useState, createRef, useEffect } from "react";
 
 import {
   StyleSheet,
@@ -13,13 +13,13 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import ModalPopup from "../../component/Modal";
 import Header from "../../component/Header";
 import { Colors } from "../../styles/main";
-export default function OtpScreen() {
+export default function OtpScreen({ navigation, route }) {
   const secondTextInputRef = useRef(null);
   const thirdTextInputRef = useRef(null);
   const fourthTextInputRef = useRef(null);
   const max = 1;
   const popup = createRef();
-
+  const { otp, num } = route.params;
   const firstTextInputRef = useRef(null);
   const [secondTextInputValue, setSecondTextInputValue] = useState(null);
   const [firstTextInputValue, setFirstTextInputValue] = useState(null);
@@ -38,7 +38,9 @@ export default function OtpScreen() {
     setFocusColor1(Colors.primary);
     if (id == 4) setFocusColor4(Colors.primary);
   };
-
+  useEffect(() => {
+    console.log(otp);
+  });
   const deFocus = (id) => {
     if (id == 1) setFocusColor1(Colors.black);
     if (id == 2) setFocusColor2(Colors.black);
@@ -54,8 +56,15 @@ export default function OtpScreen() {
       thirdTextInputValue +
       fourthTextInputValue;
     // alert(givenotp);
-
-    popup.current.show();
+    if (givenotp == otp) {
+      alert("Valid otp");
+      navigation.navigate("CreateNewPin", {
+        num: num,
+      });
+      // popup.current.show();
+    } else {
+      alert("Invalid Otp");
+    }
   };
   return (
     <View style={{ margin: 24 }}>
@@ -64,7 +73,10 @@ export default function OtpScreen() {
           marginLeft: 0,
         }}
       >
-        <Header icon={"arrow-left-line"} />
+        <Header
+          icon={"arrow-left-line"}
+          onPressIcon={() => navigation.goBack()}
+        />
       </View>
       <Text
         style={{
@@ -83,8 +95,8 @@ export default function OtpScreen() {
         Enter Your OTP
       </Text>
       <View>
-        <Text style={{ color: Colors.gray500, fontFamily: "Regular" }}>
-          We have sent an OTP to the number +977-9800000000
+        <Text style={{ color: Colors.gray900, fontFamily: "Regular" }}>
+          We have sent an OTP to the number {num}
         </Text>
       </View>
       <View style={{ flex: 1 }}>
@@ -97,7 +109,7 @@ export default function OtpScreen() {
           }}
         >
           <View>
-            <ModalPopup
+            {/* <ModalPopup
               ref={popup}
               animationType="fade"
               onTouchOutside={() => popup.current.close()}
@@ -112,15 +124,15 @@ export default function OtpScreen() {
                 <View style={styles.popuptext}>
                   <Text style={styles.popupmaintext}>Verified</Text>
                   <Text style={styles.popupsecondarytext}>
-                    You have successfully verified your account
+                    You have successfully Changed your account
                   </Text>
-                </View>
-                <View style={styles.Button}>
+                </View> */}
+            {/* <View style={styles.Button}>
                   <Text style={styles.Txt566}>BE OUR PARTNER</Text>
-                </View>
-                <Text style={styles.popupskip}>Skip for now</Text>
+                </View> */}
+            {/* <Text style={styles.popupskip}>Skip for now</Text>
               </View>
-            </ModalPopup>
+            </ModalPopup> */}
 
             <TextInput
               ref={(ref) => (firstTextInputRef.current = ref)}

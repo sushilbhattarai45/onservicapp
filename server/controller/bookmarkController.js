@@ -115,3 +115,19 @@ export const deleteBm = async (req, res) => {
     return res.json({ statuscode: 700, error: "Wrong Api Key" });
   }
 };
+export const deleteAllBm = async (req, res) => {
+  const { GIVEN_API_KEY, sp_id, user_id } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const data = await bookmarkSchema.remove();
+      return res.json({
+        message: "Deleted",
+        statuscode: 201,
+      });
+    } catch (e) {
+      return res.json({ error: " Server side error" });
+    }
+  } else {
+    return res.json({ statuscode: 700, error: "Wrong Api Key" });
+  }
+};

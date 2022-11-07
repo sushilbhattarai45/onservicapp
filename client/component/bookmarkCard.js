@@ -11,14 +11,16 @@ import { axiosInstance } from "./tools";
 import Icon from "../component/Icon";
 import { Colors } from "../styles/main";
 import AppContext from "./appContext";
+import { useNavigation } from "@react-navigation/native";
 export default function BookMarkCard({
   name,
   image,
   rating,
   ratingcount,
   address,
-  sp_contact,
+  id,
 }) {
+  const navigation = useNavigation();
   const { user } = useContext(AppContext);
   return (
     <View style={styles.ThemeLightComponentSongsCard}>
@@ -48,22 +50,34 @@ export default function BookMarkCard({
             alignItems: "center",
           }}
         >
-          <Icon
-            onPress={async () => {
-              const deleteBm = await axiosInstance.post("/bm/delete", {
-                GIVEN_API_KEY: "AXCF",
-                user_id: user,
-                sp_id: sp_contact,
-              });
-              console.log(deleteBm.data);
-            }}
+          <TouchableOpacity
             style={{
-              alignSelf: "center",
+              height: 90,
+              width: 50,
             }}
-            name="bookmark-2-fill"
-            size={24}
-            color={Colors.primary}
-          />
+          >
+            <Icon
+              onPress={async () => {
+                alert("ok");
+                const deleteBm = await axiosInstance.post("/bm/delete", {
+                  GIVEN_API_KEY: "AXCF",
+                  user_id: user,
+                  sp_id: id,
+                });
+                if (deleteBm?.data.statuscode == 201) {
+                  alert("Deleted Successfully");
+                  navigation.navigate("Home");
+                }
+                console.log(deleteBm.data);
+              }}
+              style={{
+                alignSelf: "center",
+              }}
+              name="bookmark-2-fill"
+              size={24}
+              color={Colors.primary}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
