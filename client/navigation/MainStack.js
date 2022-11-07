@@ -14,11 +14,12 @@ import BookMarkScreen from "../screen/bookmarkScreen";
 import CategoryCard from "../component/categoryCard";
 import SearchPersonListingScreen from "../screen/searchPersonListingScreen";
 import QrScreen from "../screen/Qrscreen.js";
+import UpdateSpScreen from "../screen/Auth/updateSPScreen";
 const Stack = createNativeStackNavigator();
 export default function AppStack() {
   return (
     <Stack.Navigator
-      initialRouteName="HomeTabs"
+      initialRouteName="BecomeSp"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="HomeTabs" component={MyTabs} />
@@ -33,6 +34,7 @@ export default function AppStack() {
       <Stack.Screen name="Sp" component={SPProfileScreen} />
       <Stack.Screen name="CategoryCard" component={CategoryCard} />
       <Stack.Screen name="QrScreen" component={QrScreen} />
+      <Stack.Screen name="UpdateSP" component={UpdateSpScreen} />
       <Stack.Screen
         name="CategoryPersonListing"
         component={CategoryPersonListingScreen}

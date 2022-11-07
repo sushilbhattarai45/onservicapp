@@ -74,13 +74,13 @@ const SkillPill = ({ name }) => {
 };
 const SPProfileScreen = ({ navigation, route }) => {
   const { sp } = route.params;
+  console.log(sp);
   const { subCategories, user } = useContext(AppContext);
   const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [reviewError, setReviewError] = useState(false);
   const [bookmarked, setBookmarked] = useState();
-  // const [videoStatus, setVideoStatus] = useState();
   const popup = createRef();
   const popupQr = createRef();
   const video = useRef(null);
@@ -227,7 +227,10 @@ const SPProfileScreen = ({ navigation, route }) => {
                 }}
               />
 
-              <ActionIcon name="map-pin-line" />
+              <ActionIcon
+                name="map-pin-line"
+                onPress={() => navigation.navigate("UpdateSP", { sp: sp })}
+              />
               {bookIcon == "true" ? (
                 <ActionIcon
                   name="bookmark-2-fill"

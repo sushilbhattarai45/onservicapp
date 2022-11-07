@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Pressable,
@@ -27,23 +27,12 @@ import { axiosInstance } from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
 
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
+const BASE_OUR_API_URL = "http://192.168.18.7:3001";
 
 const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },
   { value: "Other", label: "Other" },
-];
-
-const data = [
-  { label: "Item 1", value: "1" },
-  { label: "Item 2", value: "2" },
-  { label: "Item 3", value: "3" },
-  { label: "Item 4", value: "4" },
-  { label: "Item 5", value: "5" },
-  { label: "Item 6", value: "6" },
-  { label: "Item 7", value: "7" },
-  { label: "Item 8", value: "8" },
 ];
 
 const SkillPill = ({ name, onPress }) => {
@@ -81,10 +70,6 @@ const SkillPill = ({ name, onPress }) => {
 
 const userValidationSchema = yup.object().shape({
   name: yup.string().min(6).required("Please, provide your name!"),
-  email: yup
-    .string()
-    .email("Please, provide a valid email!")
-    .required("Please, provide your email!"),
   phone: yup
     .number("Phone number must be Numeric")
     .min(10)
@@ -110,7 +95,8 @@ const userValidationSchema = yup.object().shape({
   video: yup.string().required(),
 });
 
-const BecomeSPScreen = () => {
+const UpdateSpScreen = ({ route, navigation }) => {
+  let { sp } = route.params;
   const { subCategories } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
 
@@ -119,10 +105,9 @@ const BecomeSPScreen = () => {
     let [vdo] = await uploadImage([values.video]);
     // console.log(img);
     // console.log(vdo);
-    let response = await axiosInstance.post("/sp/postsp/", {
+    let response = await axiosInstance.post("/sp/updateSp/", {
       GIVEN_API_KEY: "AXCF",
       sp_name: values.name,
-      sp_email: values.email,
       sp_contact: values.phone,
       sp_district: values.district,
       sp_officenumber: values.officePhone,
@@ -136,6 +121,7 @@ const BecomeSPScreen = () => {
       },
     });
     console.log(response.data);
+    navigation.navigate("Profile");
   };
   const [loading, setLoading] = useState(false);
   const [vdoloading, setVdoLoading] = useState(false);
@@ -197,7 +183,7 @@ const BecomeSPScreen = () => {
       finalData = await Promise.all(
         files.map(async (item) => {
           const data = new FormData();
-
+          console.log(item);
           data.append(
             "profile",
             {
@@ -216,7 +202,7 @@ const BecomeSPScreen = () => {
               "Content-Type": "multipart/form-data",
             },
           });
-          // console.log(response.data.fileName);
+          console.log(response);
           let url = response?.data?.fileName;
           const filename = url.split("\\");
           const finalname =
@@ -224,14 +210,20 @@ const BecomeSPScreen = () => {
           return finalname;
         })
       );
-      // console.log(finalData);
+      console.log(finalData);
       return finalData;
     } catch (e) {
       console.log(e);
       // alert(e);
     }
   };
-
+  useEffect(() => {
+    Districts.map((item) => {
+      if (sp?.sp_district == item.label) {
+        setCitiesList(item.cities);
+      }
+    });
+  });
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: Colors.gray200 }}
@@ -243,19 +235,18 @@ const BecomeSPScreen = () => {
         {/* <KeyboardAvoidingView style={{ flex: 1 }}> */}
         <Formik
           initialValues={{
-            name: "",
-            email: "",
-            phone: "",
-            officePhone: "",
-            district: "",
-            gender: "",
-            city: "",
-            street: "",
+            name: sp?.sp_name,
+            phone: sp?.sp_contact,
+            officePhone: sp?.sp_officeNumber,
+            district: sp?.sp_district,
+            gender: sp?.sp_gender,
+            city: sp?.sp_city,
+            street: sp?.sp_street,
             accepted: false,
             // googlemaplink: "",
-            skills: [],
-            photo: [],
-            video: "",
+            skills: sp?.sp_skills,
+            photo: sp?.sp_media.photo,
+            video: sp?.sp_media.video,
           }}
           onSubmit={(values) => submit(values)}
           validationSchema={userValidationSchema}
@@ -299,33 +290,7 @@ const BecomeSPScreen = () => {
                 )}
                 {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
               </View>
-              <View
-                style={{
-                  marginTop: 12,
-                }}
-              >
-                <Text>Email Address *</Text>
-                <TextInput
-                  style={[
-                    styles.inputStyle,
-                    {
-                      borderColor: !touched.email
-                        ? Colors.gray900
-                        : errors.email
-                        ? "red"
-                        : Colors.primary,
-                    },
-                  ]}
-                  value={values.email}
-                  onChangeText={handleChange("email")}
-                  onBlur={() => setFieldTouched("email")}
-                  placeholder="Email"
-                  placeholderTextColor={Colors.gray900}
-                />
-                {touched.email && errors.email && (
-                  <Text style={{ color: "red" }}>{errors.email}</Text>
-                )}
-              </View>
+
               <View
                 style={{
                   marginTop: 12,
@@ -335,6 +300,7 @@ const BecomeSPScreen = () => {
                 <TextInput
                   keyboardType="numeric"
                   maxLength={10}
+                  editable={false}
                   style={[
                     styles.inputStyle,
                     {
@@ -922,4 +888,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BecomeSPScreen;
+export default UpdateSpScreen;
