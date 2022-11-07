@@ -111,7 +111,6 @@ const SPProfileScreen = ({ navigation, route }) => {
       });
   };
   const getReviews = async () => {
-    alert(sp.sp_contact);
     let res = await axiosInstance.post("/review/getSpreview", {
       sp_id: sp.sp_contact,
       GIVEN_API_KEY: "AXCF",
@@ -239,7 +238,6 @@ const SPProfileScreen = ({ navigation, route }) => {
                       user_id: user,
                       sp_id: sp.sp_contact,
                     });
-                    alert(deleteBm.data.statuscode);
                     setBookIcon("false");
                     setBookmarked(null);
                   }}
@@ -254,7 +252,6 @@ const SPProfileScreen = ({ navigation, route }) => {
                       user_id: user,
                       sp_id: sp.sp_contact,
                     });
-                    alert(postBm.data.statuscode);
                     setBookIcon("true");
 
                     setBookmarked(postBm.data);
