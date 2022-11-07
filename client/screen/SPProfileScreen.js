@@ -76,15 +76,17 @@ const SkillPill = ({ name }) => {
 const SPProfileScreen = ({ navigation, route }) => {
   const { sp } = route.params;
   const { isitsp } = useContext(AppContext);
-  console.log(sp);
+  console.log(sp.sp_status, sp.sp_showReview);
   const { subCategories, user } = useContext(AppContext);
   const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [reviewError, setReviewError] = useState(false);
   const [bookmarked, setBookmarked] = useState();
-  const [showReviews, setShowReviews] = useState(sp.sp_showReviews);
-  const [spStatus, setSpStatus] = useState(sp.sp_status);
+  const [showReviews, setShowReviews] = useState(sp.sp_showReview);
+  const [spStatus, setSpStatus] = useState(
+    sp.sp_status == "Active" ? true : false
+  );
   const popup = createRef();
   const popupQr = createRef();
   const popupSettings = createRef();
@@ -311,7 +313,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           >
             {" "}
             {sp.sp_name}{" "}
-            {sp.sp_sp_verified && (
+            {sp.sp_verified && (
               <Icon
                 name="checkbox-circle-fill"
                 color="#2A65FD"
@@ -443,69 +445,70 @@ const SPProfileScreen = ({ navigation, route }) => {
               <Button label="Rate Us" onPress={() => popup.current.show()} />
             </View>
           </Pressable>
-          <>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                paddingHorizontal: 24,
-                marginTop: 32,
-                marginBottom: 16,
-              }}
-            >
-              <Text
+          {sp.sp_contact != isitsp?.sp_contact && showReviews && (
+            <>
+              <View
                 style={{
-                  fontSize: 16,
-                  fontFamily: "SemiBold",
-                  color: Colors.black,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  paddingHorizontal: 24,
+                  marginTop: 32,
+                  marginBottom: 16,
                 }}
               >
-                User Reviews
-              </Text>
-              {reviews !== [] && reviews && (
                 <Text
                   style={{
-                    fontSize: 12,
-                    fontFamily: "Regular",
-                    color: Colors.primary,
-                    paddingHorizontal: 8,
-                    paddingVertical: 4,
-                  }}
-                >
-                  View All
-                </Text>
-              )}
-            </View>
-            <View>
-              {reviews !== [] && reviews ? (
-                reviews?.map((item, index) => {
-                  console.log(item);
-                  return (
-                    <ReviewCard
-                      image={item.user_profile_image}
-                      rating={item.review_stars}
-                      name={item.user_name}
-                      review={item.review_bio}
-                      doc={item.review_doc}
-                    />
-                  );
-                })
-              ) : (
-                <Text
-                  style={{
-                    marginVertical: 24,
+                    fontSize: 16,
+                    fontFamily: "SemiBold",
                     color: Colors.black,
-                    textAlign: "center",
-                    fontFamily: "Regular",
                   }}
                 >
-                  No Reviews Yet
+                  User Reviews
                 </Text>
-              )}
-            </View>
-          </>
-
+                {reviews !== [] && reviews && (
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontFamily: "Regular",
+                      color: Colors.primary,
+                      paddingHorizontal: 8,
+                      paddingVertical: 4,
+                    }}
+                  >
+                    View All
+                  </Text>
+                )}
+              </View>
+              <View>
+                {reviews !== [] && reviews ? (
+                  reviews?.map((item, index) => {
+                    console.log(item);
+                    return (
+                      <ReviewCard
+                        image={item.user_profile_image}
+                        rating={item.review_stars}
+                        name={item.user_name}
+                        review={item.review_bio}
+                        doc={item.review_doc}
+                      />
+                    );
+                  })
+                ) : (
+                  <Text
+                    style={{
+                      marginVertical: 24,
+                      color: Colors.black,
+                      textAlign: "center",
+                      fontFamily: "Regular",
+                    }}
+                  >
+                    No Reviews Yet
+                  </Text>
+                )}
+              </View>
+            </>
+          )}
           {/* <FlatList
             style={{}}
             showsHorizontalScrollIndicator={false}
@@ -747,8 +750,51 @@ const SPProfileScreen = ({ navigation, route }) => {
               trackColor={{ false: Colors.gray500, true: Colors.gray500 }}
               thumbColor={showReviews ? Colors.primary : Colors.gray900}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={setShowReviews}
+              onValueChange={async (value) => {
+                console.log(value);
+                let res = axiosInstance
+                  .post("/sp/updateSettings", {
+                    GIVEN_API_KEY: "AXCF",
+                    sp_status: spStatus,
+                    sp_contact: sp.sp_contact,
+                    sp_showReview: value,
+                  })
+                  .then(() => setShowReviews(value));
+                console.log(res.data);
+              }}
               value={showReviews}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 8,
+              // backgroundColor:'red'
+            }}
+          >
+            <Text style={{ color: Colors.black, fontFamily: "Regular" }}>
+              Active
+            </Text>
+            <Switch
+              trackColor={{ false: Colors.gray500, true: Colors.gray500 }}
+              thumbColor={spStatus ? Colors.primary : Colors.gray900}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={async (value) => {
+                console.log(value);
+                let res = axiosInstance
+                  .post("/sp/updateSettings", {
+                    GIVEN_API_KEY: "AXCF",
+                    sp_status: value,
+                    sp_contact: sp.sp_contact,
+                    sp_showReview: showReviews,
+                  })
+                  .then(() => setSpStatus(value));
+                console.log(res.data);
+              }}
+              value={spStatus}
             />
           </View>
           <View

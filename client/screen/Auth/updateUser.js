@@ -27,6 +27,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import App from "../../App";
 // import ModalPopup from "../../component/Modal";
 
+const BASE_OUR_API_URL = "http://192.168.18.7:3001";
+
 const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },

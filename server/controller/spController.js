@@ -169,9 +169,12 @@ export const updateSettings = async (req, res) => {
           sp_showReview: sp_showReview,
         }
       );
+      console.log(sp_showReview, sp_status, sp_contact);
+      // const newData = await spSchema.find({ sp_contact: sp_contact });
       return res.json({
         statuscode: 200,
         message: "sucessfully Updated the data",
+        // data: newData,
       });
     } catch (e) {
       return res.json({ error: e });
