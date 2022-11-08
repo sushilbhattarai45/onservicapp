@@ -85,7 +85,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [bookmarked, setBookmarked] = useState();
   const [showReviews, setShowReviews] = useState(sp.sp_showReview);
   const [spStatus, setSpStatus] = useState(
-    sp.sp_status == "Active" ? true : false
+    sp.sp_status == "ACTIVE" ? true : false
   );
   const popup = createRef();
   const popupQr = createRef();
@@ -122,7 +122,7 @@ const SPProfileScreen = ({ navigation, route }) => {
       sp_id: sp.sp_contact,
       GIVEN_API_KEY: "AXCF",
     });
-    let d = res.data.data.splice(0, 5);
+    let d = res?.data?.data.splice(0, 5);
     setReviews(d);
     console.log("Hello");
   };
@@ -408,43 +408,45 @@ const SPProfileScreen = ({ navigation, route }) => {
           <View style={{ marginTop: 24 }}>
             <ImageSliderComponent data={sp.sp_media.photo} />
           </View>
-          <Pressable
-            style={{
-              flex: 1,
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 32,
-            }}
-            onPress={() => popup.current.show()}
-          >
-            <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
-              {sp.sp_rating ? sp.sp_rating : 0}
-              <Text style={{ fontSize: 20, fontFamily: "Regular" }}>/5</Text>
-            </Text>
-            <View>
-              <StarRating
-                starSize={40}
-                onChange={() => null}
-                rating={sp.sp_rating ? sp.sp_rating : 0}
-                color={Colors.gold}
-                starStyle={{ marginLeft: -5 }}
-                animationConfig={{
-                  scale: 1,
-                  duration: 0,
-                  delay: 0,
-                }}
-              />
-            </View>
-            <Text
-              style={{ fontSize: 12, fontFamily: "Regular", marginTop: 12 }}
+          {user != sp.sp_contact ? (
+            <Pressable
+              style={{
+                flex: 1,
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: 32,
+              }}
+              onPress={() => popup.current.show()}
             >
-              2000 Reviews
-            </Text>
-            <View style={{ marginTop: 24 }}>
-              <Button label="Rate Us" onPress={() => popup.current.show()} />
-            </View>
-          </Pressable>
+              <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
+                {sp.sp_rating ? sp.sp_rating : 0}
+                <Text style={{ fontSize: 20, fontFamily: "Regular" }}>/5</Text>
+              </Text>
+              <View>
+                <StarRating
+                  starSize={40}
+                  onChange={() => null}
+                  rating={sp.sp_rating ? sp.sp_rating : 0}
+                  color={Colors.gold}
+                  starStyle={{ marginLeft: -5 }}
+                  animationConfig={{
+                    scale: 1,
+                    duration: 0,
+                    delay: 0,
+                  }}
+                />
+              </View>
+              <Text
+                style={{ fontSize: 12, fontFamily: "Regular", marginTop: 12 }}
+              >
+                2000 Reviews
+              </Text>
+              <View style={{ marginTop: 24 }}>
+                <Button label="Rate Us" onPress={() => popup.current.show()} />
+              </View>
+            </Pressable>
+          ) : null}
           {sp.sp_contact != isitsp?.sp_contact && showReviews && (
             <>
               <View
@@ -787,7 +789,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                 let res = axiosInstance
                   .post("/sp/updateSettings", {
                     GIVEN_API_KEY: "AXCF",
-                    sp_status: value,
+                    sp_status: value ? "ACTIVE" : "INACTIVE",
                     sp_contact: sp.sp_contact,
                     sp_showReview: showReviews,
                   })

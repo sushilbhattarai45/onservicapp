@@ -27,7 +27,6 @@ import { axiosInstance } from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
 
-
 const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },
@@ -132,6 +131,7 @@ const BecomeSPScreen = ({ navigation }) => {
         photo: img,
         video: vdo,
       },
+      sp_profileImage: userData?.user_profileImage,
     });
     console.log(response.data.sp);
     setIsitSp(response.data.sp);
@@ -208,25 +208,31 @@ const BecomeSPScreen = ({ navigation }) => {
             "myfile"
           );
 
-          const response = await axiosInstance("/user/uploadImage", {
-            method: "post",
-            data: data,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          // const response = await axios(serverUrl, {
+          // const response = await axiosInstance("/user/uploadImage", {
           //   method: "post",
           //   data: data,
           //   headers: {
           //     "Content-Type": "multipart/form-data",
           //   },
           // });
+          const serverUrl =
+            "http://192.168.100.11:3001/v1/api/user/uploadImage";
+          const response = await axios(serverUrl, {
+            method: "post",
+            data: data,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
           console.log(response.data);
           let url = response?.data?.fileName;
           const filename = url.split("\\");
           const finalname =
-            BASE_OUR_API_URL + "/" + filename[0] + "/" + filename[1];
+            "http://192.168.100.11:3001" +
+            "/" +
+            filename[0] +
+            "/" +
+            filename[1];
           return finalname;
         })
       );
