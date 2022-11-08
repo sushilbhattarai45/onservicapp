@@ -4,7 +4,7 @@ import { ImageSlider } from "react-native-image-slider-banner";
 import { Colors } from "../styles/main";
 
 export default function ImageSliderComponent({ style, data }) {
-  let mappedData = data.map((image) => ({ img: image }));
+  let mappedData = data?.map((image) => ({ img: image }));
   return (
     <ImageSlider
       preview={false}

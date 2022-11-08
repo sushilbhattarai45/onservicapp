@@ -93,6 +93,7 @@ const userValidationSchema = yup.object().shape({
   photo: yup.array().min(1, "required-field").required(),
   video: yup.string().required(),
 });
+const BASE_OUR_API_URL = "http://192.168.18.7:3001";
 
 const UpdateSpScreen = ({ route, navigation }) => {
   let { sp } = route.params;
@@ -103,24 +104,28 @@ const UpdateSpScreen = ({ route, navigation }) => {
   const submit = async (values) => {
     const img = await uploadImage(values.photo);
     let [vdo] = await uploadImage([values.video]);
-    // console.log(img);
-    // console.log(vdo);
-    let response = await axiosInstance.post("/sp/updateSp/", {
-      GIVEN_API_KEY: "AXCF",
-      sp_name: values.name,
-      sp_contact: values.phone,
-      sp_district: values.district,
-      sp_officenumber: values.officePhone,
-      sp_skills: values.skills,
-      sp_city: values.city,
-      sp_street: values.street,
-      sp_gender: values.gender,
-      sp_media: {
-        photo: img,
-        video: vdo,
-      },
-    });
-    navigation.navigate("Profile");
+    console.log(img);
+    console.log(vdo);
+    let response = axiosInstance
+      .post("/sp/updateSp/", {
+        GIVEN_API_KEY: "AXCF",
+        sp_name: values.name,
+        sp_contact: values.phone,
+        sp_district: values.district,
+        sp_officenumber: values.officePhone,
+        sp_skills: values.skills,
+        sp_city: values.city,
+        sp_street: values.street,
+        sp_gender: values.gender,
+        sp_media: {
+          photo: img,
+          video: vdo,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        navigation.navigate("Sp", { sp: response?.data?.sp[0] });
+      });
   };
   const [loading, setLoading] = useState(false);
   const [vdoloading, setVdoLoading] = useState(false);
