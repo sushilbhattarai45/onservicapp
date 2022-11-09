@@ -233,8 +233,7 @@ const BecomeSPScreen = ({ navigation }) => {
           let url = response?.data?.fileName;
           alert(url);
           const filename = url.split("\\");
-          const finalname =
-            BASE_OUR_API_URL + "/" + filename[0] + "/" + filename[1];
+          const finalname = BASE_OUR_API_URL + "/" + filename[0];
           return finalname;
         })
       );
