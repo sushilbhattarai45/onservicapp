@@ -128,7 +128,7 @@ export default function CategoryPersonListingScreen({
                         address={persons.sp_city + " " + persons.sp_district}
                         rating={persons.rating}
                         onPress={() =>
-                          navigation.navigate("Sp", { sproute: persons })
+                          navigation.navigate("Sp", { sp: persons })
                         }
                         ratingcount={persons.ratingcount}
                       />

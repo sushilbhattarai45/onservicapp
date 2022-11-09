@@ -75,18 +75,21 @@ const SkillPill = ({ name }) => {
 };
 const SPProfileScreen = ({ navigation, route }) => {
   const { sp } = route.params;
+  console.log(sp);
   const { isitsp } = useContext(AppContext);
-  console.log(sp.sp_status, sp.sp_showReview);
-  const { subCategories, user } = useContext(AppContext);
+  console.log(sp?.sp_status, sp?.sp_showReview);
+  const { subCategories, user, userData } = useContext(AppContext);
   const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [reviewError, setReviewError] = useState(false);
   const [bookmarked, setBookmarked] = useState();
-  const [showReviews, setShowReviews] = useState(sp.sp_showReview);
+  const [showReviews, setShowReviews] = useState(sp?.sp_showReview);
   const [spStatus, setSpStatus] = useState(
-    sp.sp_status == "ACTIVE" ? true : false
+    sp?.sp_status == "Active" ? true : false
   );
+  const [sp_rated, setSp_Rated] = useState();
+
   const popup = createRef();
   const popupQr = createRef();
   const popupSettings = createRef();
@@ -109,7 +112,7 @@ const SPProfileScreen = ({ navigation, route }) => {
       .post("/review/post", {
         GIVEN_API_KEY: "AXCF",
         user_contact: user,
-        sp_contact: sp.sp_contact,
+        sp_contact: sp?.sp_contact,
         review_bio: review,
         review_stars: rating,
       })
@@ -119,12 +122,17 @@ const SPProfileScreen = ({ navigation, route }) => {
   };
   const getReviews = async () => {
     let res = await axiosInstance.post("/review/getSpreview", {
-      sp_id: sp.sp_contact,
+      sp_id: sp?.sp_contact,
       GIVEN_API_KEY: "AXCF",
     });
+
     let d = res?.data?.data.splice(0, 5);
     setReviews(d);
-    console.log("Hello");
+    let sum = 0;
+    d?.map((item) => {
+      sum += item.review_stars;
+    });
+    setSp_Rated(sum / d?.length);
   };
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -135,11 +143,11 @@ const SPProfileScreen = ({ navigation, route }) => {
     async function checkBookmarked() {
       let res = await axiosInstance.post("/bm/check", {
         user_id: user,
-        sp_id: sp.sp_contact,
+        sp_id: sp?.sp_contact,
         GIVEN_API_KEY: "AXCF",
       });
       if (!res.error) {
-        // alert(sp.sp_contact + user);
+        // alert(sp?.sp_contact + user);
         // alert(res.data.statuscode);
         if (res.data.statuscode == 201) {
           setBookmarked(res.data);
@@ -163,28 +171,34 @@ const SPProfileScreen = ({ navigation, route }) => {
           right={
             isitsp ? (
               <View style={{ flexDirection: "row" }}>
-                <Icon
-                  onPress={() => navigation.navigate("UpdateSP", { sp: sp })}
-                  style={{
-                    marginRight: 12,
-                  }}
-                  name="pencil-fill"
-                  size={24}
-                  color="white"
-                />
-                <Icon
-                  name="qr-code-line"
-                  size={24}
-                  style={{ marginRight: 12 }}
-                  color={Colors.white}
-                  onPress={() => popupQr.current.show()}
-                />
-                <Icon
-                  onPress={() => popupSettings.current.show()}
-                  name="settings-line"
-                  size={24}
-                  color="white"
-                />
+                {isitsp.sp_contact == sp?.sp_contact && (
+                  <Icon
+                    onPress={() => navigation.navigate("UpdateSP", { sp: sp })}
+                    style={{
+                      marginRight: 12,
+                    }}
+                    name="pencil-fill"
+                    size={24}
+                    color="white"
+                  />
+                )}
+                {sp?.sp_contact == user ? (
+                  <Icon
+                    name="qr-code-line"
+                    size={24}
+                    style={{ marginRight: 12 }}
+                    color={Colors.white}
+                    onPress={() => popupQr.current.show()}
+                  />
+                ) : null}
+                {isitsp.sp_contact == sp?.sp_contact && (
+                  <Icon
+                    onPress={() => popupSettings.current.show()}
+                    name="settings-line"
+                    size={24}
+                    color="white"
+                  />
+                )}
               </View>
             ) : (
               <Icon
@@ -208,7 +222,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           <Video
             ref={video}
             style={styles.video}
-            source={{ uri: sp.sp_media.video }}
+            source={{ uri: sp?.sp_media?.video }}
             isMuted={videoMuted}
             shouldPlay
             resizeMode="cover"
@@ -230,7 +244,7 @@ const SPProfileScreen = ({ navigation, route }) => {
             <Image
               style={styles.profileImage}
               source={{
-                uri: sp.sp_profileImage,
+                uri: sp?.sp_profileImage,
                 headers: {
                   Accept: "*/*",
                 },
@@ -241,9 +255,10 @@ const SPProfileScreen = ({ navigation, route }) => {
               <ActionIcon
                 name="phone-line"
                 onPress={() => {
-                  Linking.openURL(`tel:${sp.sp_officeNumber}`);
+                  Linking.openURL(`tel:${sp?.sp_officeNumber}`);
                 }}
               />
+              <Text>{sp?.user_profileImage}</Text>
               <ActionIcon
                 name="chat-1-line"
                 onPress={() => {
@@ -251,7 +266,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                     "whatsapp://send?text=" +
                     "Hello" +
                     "&phone=+977" +
-                    sp.sp_officeNumber;
+                    sp?.sp_officeNumber;
                   Linking.openURL(url)
                     .then((data) => {
                       console.log("WhatsApp Opened");
@@ -274,7 +289,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                     const deleteBm = await axiosInstance.post("/bm/delete", {
                       GIVEN_API_KEY: "AXCF",
                       user_id: user,
-                      sp_id: sp.sp_contact,
+                      sp_id: sp?.sp_contact,
                     });
                     setBookIcon("false");
                     setBookmarked(null);
@@ -288,7 +303,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                     const postBm = await axiosInstance.post("/bm/post", {
                       GIVEN_API_KEY: "AXCF",
                       user_id: user,
-                      sp_id: sp.sp_contact,
+                      sp_id: sp?.sp_contact,
                     });
                     setBookIcon("true");
 
@@ -312,8 +327,8 @@ const SPProfileScreen = ({ navigation, route }) => {
             }}
           >
             {" "}
-            {sp.sp_name}{" "}
-            {sp.sp_verified && (
+            {sp?.sp_name}{" "}
+            {sp?.sp_verified && (
               <Icon
                 name="checkbox-circle-fill"
                 color="#2A65FD"
@@ -340,7 +355,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                   marginLeft: 4,
                 }}
               >
-                {sp.sp_street + " " + sp.sp_city}
+                {sp?.sp_street + " " + sp?.sp_city}
               </Text>
             </View>
             <View
@@ -360,7 +375,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                   marginLeft: 4,
                 }}
               >
-                Joined on 2073-04-01
+                {sp?.sp_toc?.date}
               </Text>
             </View>
           </View>
@@ -373,7 +388,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               paddingHorizontal: 24,
             }}
           >
-            {sp.sp_skills.map((name) => (
+            {sp?.sp_skills?.map((name) => (
               <SkillPill name={name} />
             ))}
           </View>
@@ -401,12 +416,12 @@ const SPProfileScreen = ({ navigation, route }) => {
                 letterSpacing: 0.2,
               }}
             >
-              {sp.sp_bio}
+              {sp?.sp_bio}
             </Text>
           </>
           {/* Slider */}
           <View style={{ marginTop: 24 }}>
-            <ImageSliderComponent data={sp.sp_media.photo} />
+            <ImageSliderComponent data={sp?.sp_media?.photo} />
           </View>
           {user != sp.sp_contact ? (
             <Pressable
@@ -420,14 +435,14 @@ const SPProfileScreen = ({ navigation, route }) => {
               onPress={() => popup.current.show()}
             >
               <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
-                {sp.sp_rating ? sp.sp_rating : 0}
+                {sp_rated ? sp_rated : 0}
                 <Text style={{ fontSize: 20, fontFamily: "Regular" }}>/5</Text>
               </Text>
               <View>
                 <StarRating
                   starSize={40}
                   onChange={() => null}
-                  rating={sp.sp_rating ? sp.sp_rating : 0}
+                  rating={sp_rated ? sp_rated : 4}
                   color={Colors.gold}
                   starStyle={{ marginLeft: -5 }}
                   animationConfig={{
@@ -440,11 +455,16 @@ const SPProfileScreen = ({ navigation, route }) => {
               <Text
                 style={{ fontSize: 12, fontFamily: "Regular", marginTop: 12 }}
               >
-                2000 Reviews
+                {reviews?.length} Reviews
               </Text>
-              <View style={{ marginTop: 24 }}>
-                <Button label="Rate Us" onPress={() => popup.current.show()} />
-              </View>
+              {user ? (
+                <View style={{ marginTop: 24 }}>
+                  <Button
+                    label="Rate Us"
+                    onPress={() => popup.current.show()}
+                  />
+                </View>
+              ) : null}
             </Pressable>
           ) : null}
           {sp.sp_contact != isitsp?.sp_contact && showReviews && (
@@ -669,7 +689,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           </Text>
           <View>
             <QRCode
-              value={sp.sp_contact}
+              value={sp?.sp_contact}
               color={Colors.primary}
               size={200}
               // backgroundColor="black"
@@ -694,7 +714,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                 textAlign: "center",
               }}
             >
-              {sp.sp_name}
+              {sp?.sp_name}
             </Text>
             <Text
               style={{
@@ -705,7 +725,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                 textAlign: "center",
               }}
             >
-              {sp.sp_officeNumber ? sp.sp_officeNumber : sp.sp_contact}
+              {sp?.sp_officeNumber ? sp?.sp_officeNumber : sp?.sp_contact}
             </Text>
           </View>
         </View>
@@ -758,7 +778,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                   .post("/sp/updateSettings", {
                     GIVEN_API_KEY: "AXCF",
                     sp_status: spStatus,
-                    sp_contact: sp.sp_contact,
+                    sp_contact: sp?.sp_contact,
                     sp_showReview: value,
                   })
                   .then(() => setShowReviews(value));

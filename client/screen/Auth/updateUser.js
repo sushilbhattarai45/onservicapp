@@ -26,7 +26,7 @@ import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import App from "../../App";
 // import ModalPopup from "../../component/Modal";
-
+import { axiosInstance } from "../../component/tools";
 const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 const gendersList = [
@@ -101,7 +101,7 @@ export default UpdateUser = ({ navigation }) => {
         "myfile"
       );
 
-      const response = await axiosInstance("/user/uploadImage", {
+      const response = await axiosInstance("user/uploadImage", {
         method: "post",
         data: data,
         headers: {
@@ -109,6 +109,7 @@ export default UpdateUser = ({ navigation }) => {
         },
       });
       var url = response?.data?.fileName;
+
       const filename = url.split("\\");
       const finalname = filename[0] + "/" + filename[1];
       return finalname;
@@ -186,8 +187,6 @@ export default UpdateUser = ({ navigation }) => {
       } else {
         alert("no");
       }
-
-      alert(status);
     });
   }
   const storeData = async (value) => {

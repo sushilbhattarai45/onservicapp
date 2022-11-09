@@ -21,7 +21,7 @@ import AppContext from "../component/appContext";
 import Icon from "../component/Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function UserProfileScreen({ navigation }) {
-  const { setUser, setLogged, userData, setUserData, isitsp } =
+  const { setUser, setLogged, userData, user, setUserData, isitsp } =
     useContext(AppContext);
   return (
     <ScrollView>
@@ -89,7 +89,11 @@ export default function UserProfileScreen({ navigation }) {
                 <Icon
                   onPress={async () => {
                     if (isitsp) {
-                      navigation.navigate("Sp", { sp: isitsp });
+                      const res = await axiosInstance.post("sp/getOneSp", {
+                        GIVEN_API_KEY: "AXCF",
+                        sp_contact: user,
+                      });
+                      navigation.navigate("Sp", { sp: res?.data.data });
                     } else {
                       console.log("hi");
                       navigation.navigate("BecomeSP");
