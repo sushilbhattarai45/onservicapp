@@ -93,7 +93,7 @@ const userValidationSchema = yup.object().shape({
   photo: yup.array().min(1, "required-field").required(),
   video: yup.string().required(),
 });
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
+const BASE_OUR_API_URL = "http://192.168.18.7:3001";
 
 const UpdateSpScreen = ({ route, navigation }) => {
   let { sp } = route.params;
