@@ -69,7 +69,8 @@ export default registerUser = ({ navigation }) => {
   let popupRef = createRef();
   const [citiesList, setCitiesList] = useState([]);
   const [file, setFile] = useState(null);
-  const [image, setImage] = useState("");
+  const [load, setLoad] = useState(false);
+
   const uploadImage = async (file) => {
     // console.log("the file you have choosed is ");
     // console.log(file);
@@ -138,6 +139,7 @@ export default registerUser = ({ navigation }) => {
     }
   };
   async function postData(values, { setSubmitting, setFieldError }) {
+    setLoad(true);
     uploadImage(file).then(async (res) => {
       let response = await axios.post(
         BASE_OUR_API_URL + "/v1/api/user/register",
@@ -160,6 +162,7 @@ export default registerUser = ({ navigation }) => {
       );
       const status = response?.data?.statuscode;
       if (status == 201) {
+        setLoad(false);
         const finaldata = response?.data?.user;
         setData(finaldata);
         setUserData(finaldata);
@@ -170,11 +173,12 @@ export default registerUser = ({ navigation }) => {
 
         navigation.navigate("Home");
       } else if (status == 600) {
+        setLoad(false);
         setFieldError("phone", "Phone Number already exists");
       } else {
+        setLoad(false);
         alert("no");
       }
-
       alert(status);
     });
   }
@@ -685,20 +689,30 @@ export default registerUser = ({ navigation }) => {
                       height: 50,
                       marginTop: 24,
                     }}
+                    disabled={load}
                     onPress={handleSubmit}
                   >
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        fontSize: 20,
-                        fontWeight: "bold",
-                        color: Colors.primary,
-                        fontFamily: "Urbanist",
-                        textAlignVertical: "center",
-                      }}
-                    >
-                      CREATE
-                    </Text>
+                    {load ? (
+                      <ActivityIndicator
+                        size="large"
+                        style={{
+                          marginTop: 8,
+                        }}
+                        color={Colors.primary}
+                      />
+                    ) : (
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          fontSize: 20,
+                          fontFamily: "Bold",
+                          color: Colors.primary,
+                          textAlignVertical: "center",
+                        }}
+                      >
+                        CREATE
+                      </Text>
+                    )}
                   </Pressable>
                   <Text
                     style={{

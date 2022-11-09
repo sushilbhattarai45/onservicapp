@@ -111,8 +111,10 @@ const userValidationSchema = yup.object().shape({
 const BecomeSPScreen = ({ navigation }) => {
   const { subCategories, userData } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
+  const [load, setLoad] = useState(false);
   const { setIsitSp } = useContext(AppContext);
   const submit = async (values) => {
+    setLoad(true);
     const img = await uploadImage(values.photo);
     console.log(img);
     let [vdo] = await uploadImage([values.video]);
@@ -137,6 +139,7 @@ const BecomeSPScreen = ({ navigation }) => {
       },
       sp_profileImage: userData?.user_profileImage,
     });
+    setLoad(false);
     console.log(response.data.sp);
     setIsitSp(response.data.sp);
     navigation.navigate("Home");
@@ -880,19 +883,30 @@ const BecomeSPScreen = ({ navigation }) => {
                   marginTop: 24,
                   marginBottom: 24,
                 }}
+                disabled={load}
                 onPress={handleSubmit}
               >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 20,
-                    fontFamily: "Bold",
-                    color: Colors.primary,
-                    textAlignVertical: "center",
-                  }}
-                >
-                  CREATE
-                </Text>
+                {load ? (
+                  <ActivityIndicator
+                    size="large"
+                    style={{
+                      marginTop: 8,
+                    }}
+                    color={Colors.primary}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      fontFamily: "Bold",
+                      color: Colors.primary,
+                      textAlignVertical: "center",
+                    }}
+                  >
+                    CREATE
+                  </Text>
+                )}
               </Pressable>
             </View>
           )}

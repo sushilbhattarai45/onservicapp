@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Image,
   KeyboardAvoidingView,
+  ActivityIndicator
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Dropdown } from "react-native-element-dropdown";
@@ -69,7 +70,7 @@ export default UpdateUser = ({ navigation }) => {
   let popupRef = createRef();
   const [citiesList, setCitiesList] = useState([]);
   const [file, setFile] = useState(null);
-  const [image, setImage] = useState("");
+  const [load, setLoad] = useState(false);
 
   const uploadImage = async (file) => {
     // console.log("the file you have choosed is ");
@@ -148,6 +149,7 @@ export default UpdateUser = ({ navigation }) => {
     });
   });
   async function postData(values, { setSubmitting, setFieldError }) {
+    setLoad(true)
     uploadImage(file).then(async (res) => {
       let img;
       // alert(res);
@@ -178,14 +180,17 @@ export default UpdateUser = ({ navigation }) => {
       const status = response?.data?.statuscode;
       if (status == 201) {
         const finaldata = response?.data?.user;
+        setLoad(false)
         setData(finaldata);
         setUserData(finaldata[0]);
         console.log(finaldata);
         await storeData(data);
-        // navigation.navigate("Home");
+        navigation.navigate("Home");
       } else if (status == 600) {
+        setLoad(false)
         setFieldError("phone", "Phone Number already exists");
       } else {
+        setLoad(false)
         alert("no");
       }
     });
@@ -681,28 +686,39 @@ export default UpdateUser = ({ navigation }) => {
                   </View>
 
                   <Pressable
+                style={{
+                  borderColor: Colors.primary,
+                  borderWidth: 1,
+                  justifyContent: "center",
+                  height: 50,
+                  marginTop: 24,
+                  marginBottom: 24,
+                }}
+                disabled={load}
+                onPress={handleSubmit}
+              >
+                {load ? (
+                  <ActivityIndicator
+                    size="large"
                     style={{
-                      borderColor: Colors.primary,
-                      borderWidth: 1,
-                      justifyContent: "center",
-                      height: 50,
-                      marginTop: 24,
+                      marginTop: 8,
                     }}
-                    onPress={handleSubmit}
+                    color={Colors.primary}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      fontFamily: "Bold",
+                      color: Colors.primary,
+                      textAlignVertical: "center",
+                    }}
                   >
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        fontSize: 20,
-                        fontWeight: "bold",
-                        color: Colors.primary,
-                        fontFamily: "Urbanist",
-                        textAlignVertical: "center",
-                      }}
-                    >
-                      CREATE
-                    </Text>
-                  </Pressable>
+                    CREATE
+                  </Text>
+                )}
+              </Pressable>
                   <Text
                     style={{
                       textAlign: "center",

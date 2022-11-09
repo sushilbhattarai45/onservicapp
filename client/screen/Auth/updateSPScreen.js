@@ -98,8 +98,10 @@ const UpdateSpScreen = ({ route, navigation }) => {
   console.log(sp.sp_media.video);
   const { subCategories, setIsitSp } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
+  const [load, setLoad] = useState(false);
 
   const submit = async (values) => {
+    setLoad(true)
     const img = await uploadImage(values.photo);
     let [vdo] = await uploadImage([values.video]);
     console.log(img);
@@ -125,6 +127,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         console.log(response.data);
         navigation.navigate("Sp", { sp: response?.data?.sp[0] });
       });
+      setLoad(false)
   };
   const [loading, setLoading] = useState(false);
   const [vdoloading, setVdoLoading] = useState(false);
@@ -825,28 +828,38 @@ const UpdateSpScreen = ({ route, navigation }) => {
               </View>
               {/* Submit Button */}
               <Pressable
-                style={{
-                  borderColor: Colors.primary,
-                  borderWidth: 1,
-                  justifyContent: "center",
-                  height: 50,
-                  marginTop: 24,
-                  marginBottom: 24,
-                }}
-                onPress={handleSubmit}
-              >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 20,
-                    fontFamily: "Bold",
-                    color: Colors.primary,
-                    textAlignVertical: "center",
-                  }}
-                >
-                  CREATE
-                </Text>
-              </Pressable>
+                    style={{
+                      borderColor: Colors.primary,
+                      borderWidth: 1,
+                      justifyContent: "center",
+                      height: 50,
+                      marginTop: 24,
+                    }}
+                    disabled={load}
+                    onPress={handleSubmit}
+                  >
+                    {load ? (
+                      <ActivityIndicator
+                        size="large"
+                        style={{
+                          marginTop: 8,
+                        }}
+                        color={Colors.primary}
+                      />
+                    ) : (
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          fontSize: 20,
+                          fontFamily: "Bold",
+                          color: Colors.primary,
+                          textAlignVertical: "center",
+                        }}
+                      >
+                        CREATE
+                      </Text>
+                    )}
+                  </Pressable>
             </View>
           )}
         </Formik>
