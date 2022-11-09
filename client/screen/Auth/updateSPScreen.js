@@ -97,6 +97,7 @@ const BASE_OUR_API_URL = "http://192.168.18.7:3001";
 
 const UpdateSpScreen = ({ route, navigation }) => {
   let { sp } = route.params;
+  const {userData} = useContext(AppContext)
   console.log(sp.sp_media.video);
   const { subCategories, setIsitSp } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
@@ -121,6 +122,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
           photo: img,
           video: vdo,
         },
+        sp_profileImage:userData?.user_profileImage
       })
       .then((response) => {
         console.log(response.data);
@@ -209,7 +211,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
           let url = response?.data?.fileName;
           const filename = url.split("\\");
           const finalname =
-            "http://192.168.100.11:3001" +
+            BASE_OUR_API_URL +
             "/" +
             filename[0] +
             "/" +

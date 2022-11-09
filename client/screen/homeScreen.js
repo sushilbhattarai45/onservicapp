@@ -50,7 +50,7 @@ const HomeScreen = ({ navigation }) => {
       let newaddons = await axiosInstance.post("/categories/newaddons", {
         GIVEN_API_KEY: "AXCF",
       });
-
+      console.log(featuredOnHome.data)
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
 
@@ -60,6 +60,7 @@ const HomeScreen = ({ navigation }) => {
         console.error(newaddons?.error);
       }
     }
+    
   }, []);
 
   return (
