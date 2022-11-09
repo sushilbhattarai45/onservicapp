@@ -22,7 +22,7 @@ import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import { Districts } from "../../component/district";
 import Checkbox from "expo-checkbox";
 import Icon from "../../component/Icon";
-import { axiosInstance } from "../../component/tools";
+import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
 
@@ -220,8 +220,7 @@ const BecomeSPScreen = ({ navigation }) => {
           // });
           alert(serverUrl);
 
-          const serverUrl =
-            "http://192.168.100.11:3001/v1/api/user/uploadImage";
+          const serverUrl = BASE_OUR_API_URL + "/v1/api/user/uploadImage";
           const response = await axios(serverUrl, {
             method: "post",
             data: data,
@@ -233,12 +232,7 @@ const BecomeSPScreen = ({ navigation }) => {
           let url = response?.data?.fileName;
           alert(url);
           const filename = url.split("\\");
-          const finalname =
-            "http://192.168.100.11:3001" +
-            "/" +
-            filename[0] +
-            "/" +
-            filename[1];
+          const finalname = BASE_OUR_API_URL + "/" + filename[0];
           return finalname;
         })
       );

@@ -108,9 +108,10 @@ export default UpdateUser = ({ navigation }) => {
         },
       });
       var url = response?.data?.fileName;
-
+      alert(url);
       const filename = url.split("\\");
-      const finalname = filename[0] + "/" + filename[1];
+      const finalname = filename[0];
+      // alert(finalname);
       return finalname;
     } catch (e) {
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
@@ -149,7 +150,7 @@ export default UpdateUser = ({ navigation }) => {
   async function postData(values, { setSubmitting, setFieldError }) {
     uploadImage(file).then(async (res) => {
       let img;
-      alert(res);
+      // alert(res);
       if (res != null) {
         img = BASE_OUR_API_URL + "/" + res;
       } else {
@@ -181,7 +182,7 @@ export default UpdateUser = ({ navigation }) => {
         setUserData(finaldata[0]);
         console.log(finaldata);
         await storeData(data);
-        navigation.navigate("Home");
+        // navigation.navigate("Home");
       } else if (status == 600) {
         setFieldError("phone", "Phone Number already exists");
       } else {

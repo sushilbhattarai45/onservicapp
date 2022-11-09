@@ -108,7 +108,7 @@ export default registerUser = ({ navigation }) => {
       });
       var url = response?.data?.fileName;
       const filename = url.split("\\");
-      const finalname = filename[0] + "/" + filename[1];
+      const finalname = filename[0];
       return finalname;
     } catch (e) {
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
