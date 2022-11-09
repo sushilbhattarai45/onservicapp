@@ -20,8 +20,8 @@ function deg2rad(deg) {
 }
 
 export const axiosInstance = axios.create({
-  // baseURL: "http:/192.168.18.7:3001/v1/api/",
-  baseURL: "http://192.168.100.11:3001/v1/api/",
+  baseURL: "http:/192.168.18.7:3001/v1/api/",
+  // baseURL: "http://192.168.100.11:3001/v1/api/",
 
   // baseURL: URL,
   headers: { "Content-Type": "application/json" },
