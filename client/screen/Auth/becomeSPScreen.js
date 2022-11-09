@@ -219,7 +219,6 @@ const BecomeSPScreen = ({ navigation }) => {
           //     "Content-Type": "multipart/form-data",
           //   },
           // });
-          alert(serverUrl);
 
           const serverUrl = BASE_OUR_API_URL + "/v1/api/user/uploadImage";
           const response = await axios(serverUrl, {
