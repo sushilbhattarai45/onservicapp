@@ -70,7 +70,7 @@ export default registerUser = ({ navigation }) => {
   const [citiesList, setCitiesList] = useState([]);
   const [file, setFile] = useState(null);
   const [image, setImage] = useState("");
-  const BASE_OUR_API_URL = "http://192.168.100.11:3001";
+  const BASE_OUR_API_URL = "http:/192.168.18.7:3001";
   const uploadImage = async (file) => {
     // console.log("the file you have choosed is ");
     // console.log(file);

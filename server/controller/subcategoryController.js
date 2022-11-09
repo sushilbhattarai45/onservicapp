@@ -116,7 +116,7 @@ export const getFilteredSubCat = async (req, res) => {
         category_id: category_id,
         subCat_status: true,
       });
-
+      console.log("ok" + category_id);
       return res.json({
         status: 200,
         data: data,

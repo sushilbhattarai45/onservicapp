@@ -281,6 +281,7 @@ const HomeScreen = ({ navigation }) => {
               return (
                 <CategoryCard
                   key={item._id}
+                  category_id={item._id}
                   name={item.category_name}
                   containerStyle={{
                     marginLeft: index === 0 ? 24 : 0,
