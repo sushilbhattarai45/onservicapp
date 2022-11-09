@@ -15,7 +15,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 
 import * as yup from "yup";
-
+import moment from "moment";
 import { Colors } from "../../styles/main";
 import Header from "../../component/Header";
 import { Formik } from "formik";
@@ -130,6 +130,10 @@ const BecomeSPScreen = ({ navigation }) => {
       sp_media: {
         photo: img,
         video: vdo,
+      },
+      sp_toc: {
+        date: moment().format("ll"),
+        time: moment().format("LT"),
       },
       sp_profileImage: userData?.user_profileImage,
     });

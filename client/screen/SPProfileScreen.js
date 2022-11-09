@@ -78,7 +78,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   console.log(sp);
   const { isitsp } = useContext(AppContext);
   console.log(sp?.sp_status, sp?.sp_showReview);
-  const { subCategories, user } = useContext(AppContext);
+  const { subCategories, user, userData } = useContext(AppContext);
   const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
@@ -88,6 +88,8 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [spStatus, setSpStatus] = useState(
     sp?.sp_status == "Active" ? true : false
   );
+  const [sp_rated, setSp_Rated] = useState();
+
   const popup = createRef();
   const popupQr = createRef();
   const popupSettings = createRef();
@@ -123,9 +125,14 @@ const SPProfileScreen = ({ navigation, route }) => {
       sp_id: sp?.sp_contact,
       GIVEN_API_KEY: "AXCF",
     });
+
     let d = res?.data?.data.splice(0, 5);
     setReviews(d);
-    console.log("Hello");
+    let sum = 0;
+    d?.map((item) => {
+      sum += item.review_stars;
+    });
+    setSp_Rated(sum / d?.length);
   };
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -175,13 +182,15 @@ const SPProfileScreen = ({ navigation, route }) => {
                     color="white"
                   />
                 )}
-                <Icon
-                  name="qr-code-line"
-                  size={24}
-                  style={{ marginRight: 12 }}
-                  color={Colors.white}
-                  onPress={() => popupQr.current.show()}
-                />
+                {sp?.sp_contact == user ? (
+                  <Icon
+                    name="qr-code-line"
+                    size={24}
+                    style={{ marginRight: 12 }}
+                    color={Colors.white}
+                    onPress={() => popupQr.current.show()}
+                  />
+                ) : null}
                 {isitsp.sp_contact == sp?.sp_contact && (
                   <Icon
                     onPress={() => popupSettings.current.show()}
@@ -249,6 +258,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                   Linking.openURL(`tel:${sp?.sp_officeNumber}`);
                 }}
               />
+              <Text>{sp?.user_profileImage}</Text>
               <ActionIcon
                 name="chat-1-line"
                 onPress={() => {
@@ -365,7 +375,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                   marginLeft: 4,
                 }}
               >
-                Joined on 2073-04-01
+                {sp?.sp_toc?.date}
               </Text>
             </View>
           </View>
@@ -425,14 +435,14 @@ const SPProfileScreen = ({ navigation, route }) => {
               onPress={() => popup.current.show()}
             >
               <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
-                {sp.sp_rating ? sp.sp_rating : 0}
+                {sp_rated ? sp_rated : 0}
                 <Text style={{ fontSize: 20, fontFamily: "Regular" }}>/5</Text>
               </Text>
               <View>
                 <StarRating
                   starSize={40}
                   onChange={() => null}
-                  rating={sp.sp_rating ? sp.sp_rating : 0}
+                  rating={sp_rated ? sp_rated : 4}
                   color={Colors.gold}
                   starStyle={{ marginLeft: -5 }}
                   animationConfig={{
@@ -445,11 +455,16 @@ const SPProfileScreen = ({ navigation, route }) => {
               <Text
                 style={{ fontSize: 12, fontFamily: "Regular", marginTop: 12 }}
               >
-                2000 Reviews
+                {reviews?.length} Reviews
               </Text>
-              <View style={{ marginTop: 24 }}>
-                <Button label="Rate Us" onPress={() => popup.current.show()} />
-              </View>
+              {user ? (
+                <View style={{ marginTop: 24 }}>
+                  <Button
+                    label="Rate Us"
+                    onPress={() => popup.current.show()}
+                  />
+                </View>
+              ) : null}
             </Pressable>
           ) : null}
           {sp.sp_contact != isitsp?.sp_contact && showReviews && (

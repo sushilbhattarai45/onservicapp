@@ -62,7 +62,7 @@ const userValidationSchema = yup.object().shape({
 });
 
 export default registerUser = ({ navigation }) => {
-  const { userData, logged, user, setUserData, setLogged, setUser } =
+  const { userData, logged, user, setUserData, setLogged, setUser, setIsitSp } =
     useContext(AppContext);
   // const [district, setDistrict] = useState();
   const [data, setData] = useState();
@@ -70,7 +70,7 @@ export default registerUser = ({ navigation }) => {
   const [citiesList, setCitiesList] = useState([]);
   const [file, setFile] = useState(null);
   const [image, setImage] = useState("");
-
+  const BASE_OUR_API_URL = "http://192.168.100.11:3001";
   const uploadImage = async (file) => {
     // console.log("the file you have choosed is ");
     // console.log(file);
@@ -165,6 +165,7 @@ export default registerUser = ({ navigation }) => {
         setData(finaldata);
         setUserData(finaldata);
         setLogged("true");
+        setIsitSp(null);
         setUser(values.phone);
         await storeData(values.phone);
 
@@ -292,22 +293,37 @@ export default registerUser = ({ navigation }) => {
                         setFieldValue("image", img);
                       }}
                     >
-                      <Image
-                        source={{
-                          uri: values.image
-                            ? values.image
-                            : "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
-                        }}
-                        style={{
-                          alignSelf: "center",
-                          right: 0,
-                          height: 75,
-                          width: 75,
-                          borderRadius: 24,
-                          borderWidth: StyleSheet.hairlineWidth,
-                          objectFit: "contain",
-                        }}
-                      />
+                      {!values.image ? (
+                        <Image
+                          style={{
+                            alignSelf: "center",
+                            right: 0,
+                            height: 75,
+                            width: 75,
+                            borderRadius: 24,
+                            borderWidth: StyleSheet.hairlineWidth,
+                            objectFit: "contain",
+                          }}
+                          source={require("../../assets/images/profile.png")}
+                        />
+                      ) : (
+                        <Image
+                          source={{
+                            uri: values.image
+                              ? values.image
+                              : "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
+                          }}
+                          style={{
+                            alignSelf: "center",
+                            right: 0,
+                            height: 75,
+                            width: 75,
+                            borderRadius: 24,
+                            borderWidth: StyleSheet.hairlineWidth,
+                            objectFit: "contain",
+                          }}
+                        />
+                      )}
                       <Text
                         style={{
                           marginTop: 10,

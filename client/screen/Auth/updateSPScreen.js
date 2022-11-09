@@ -93,12 +93,12 @@ const userValidationSchema = yup.object().shape({
   photo: yup.array().min(1, "required-field").required(),
   video: yup.string().required(),
 });
-const BASE_OUR_API_URL = "http://192.168.18.7:3001";
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 const UpdateSpScreen = ({ route, navigation }) => {
   let { sp } = route.params;
   console.log(sp.sp_media.video);
-  const { subCategories } = useContext(AppContext);
+  const { subCategories, setIsitSp } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
 
   const submit = async (values) => {
@@ -209,7 +209,11 @@ const UpdateSpScreen = ({ route, navigation }) => {
           let url = response?.data?.fileName;
           const filename = url.split("\\");
           const finalname =
-            BASE_OUR_API_URL + "/" + filename[0] + "/" + filename[1];
+            "http://192.168.100.11:3001" +
+            "/" +
+            filename[0] +
+            "/" +
+            filename[1];
           return finalname;
         })
       );
