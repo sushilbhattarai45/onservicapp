@@ -423,7 +423,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           <View style={{ marginTop: 24 }}>
             <ImageSliderComponent data={sp?.sp_media?.photo} />
           </View>
-          {user != sp.sp_contact ? (
+          {user && user != sp.sp_contact ? (
             <Pressable
               style={{
                 flex: 1,
@@ -467,7 +467,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               ) : null}
             </Pressable>
           ) : null}
-          {sp.sp_contact != isitsp?.sp_contact && showReviews && (
+          {showReviews && (
             <>
               <View
                 style={{

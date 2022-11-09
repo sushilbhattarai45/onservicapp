@@ -21,7 +21,7 @@ import AppContext from "../component/appContext";
 import Icon from "../component/Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function UserProfileScreen({ navigation }) {
-  const { setUser, setLogged, userData, user, setUserData, isitsp } =
+  const { setUser, setLogged, userData, user, setUserData, isitsp, setIsitSp } =
     useContext(AppContext);
   return (
     <ScrollView style={{ backgroundColor: Colors.gray200 }}>
