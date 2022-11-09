@@ -18,10 +18,12 @@ export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
+// export const BASE_OUR_API_URL = "https://onservic-server.onrender.com";
+export const BASE_OUR_API_URL = "http://172.105.253.132:3001";
+// export const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
-export const BASE_OUR_API_URL = "http://192.168.18.7:3001";
 export const axiosInstance = axios.create({
-  baseURL: "http://192.168.18.7:3001/v1/api/",
+  baseURL: BASE_OUR_API_URL + "/v1/api/",
   // baseURL: "http://192.168.100.11:3001/v1/api/",
   // baseURL: URL,
   headers: { "Content-Type": "application/json" },

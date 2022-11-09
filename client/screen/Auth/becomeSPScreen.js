@@ -13,7 +13,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-
 import * as yup from "yup";
 import moment from "moment";
 import { Colors } from "../../styles/main";
@@ -23,9 +22,10 @@ import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import { Districts } from "../../component/district";
 import Checkbox from "expo-checkbox";
 import Icon from "../../component/Icon";
-import { axiosInstance } from "../../component/tools";
+import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
+import { Video } from "expo-av";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -219,9 +219,9 @@ const BecomeSPScreen = ({ navigation }) => {
           //     "Content-Type": "multipart/form-data",
           //   },
           // });
+          alert(serverUrl);
 
-          const serverUrl =
-            "https://onservic-server.onrender.com/v1/api/user/uploadImage";
+          const serverUrl = BASE_OUR_API_URL + "/v1/api/user/uploadImage";
           const response = await axios(serverUrl, {
             method: "post",
             data: data,
@@ -231,13 +231,10 @@ const BecomeSPScreen = ({ navigation }) => {
           });
           console.log(response.data);
           let url = response?.data?.fileName;
+          alert(url);
           const filename = url.split("\\");
           const finalname =
-            "https://onservic-server.onrender.com" +
-            "/" +
-            filename[0] +
-            "/" +
-            filename[1];
+            BASE_OUR_API_URL + "/" + filename[0] + "/" + filename[1];
           return finalname;
         })
       );
@@ -738,15 +735,11 @@ const BecomeSPScreen = ({ navigation }) => {
                   }}
                 >
                   {values.video ? (
-                    <TouchableOpacity
-                      onPress={() => {
-                        setFieldValue("video", "");
-                      }}
-                    >
+                    <TouchableOpacity style={{ flex: 1 }}>
                       <View
                         style={{
-                          height: 60,
-                          width: 60,
+                          flex: 1,
+
                           marginBottom: 6,
                           marginRight: 4,
                           position: "relative",
@@ -770,26 +763,22 @@ const BecomeSPScreen = ({ navigation }) => {
                           }}
                         >
                           <Icon
+                            onPress={() => {
+                              setFieldValue("video", "");
+                            }}
                             style={{}}
                             name="close-circle-fill"
                             size={20}
                             color={Colors.gray900}
                           />
                         </View>
-                        <Image
-                          style={{
-                            alignSelf: "center",
-                            alignSelf: "center",
-                            height: "100%",
-                            borderRadius: 10,
-                            width: "95%",
-                          }}
-                          source={{
-                            uri: values.video,
-                            headers: {
-                              Accept: "*/*",
-                            },
-                          }}
+                        <Video
+                          style={styles.video}
+                          source={{ uri: values.video }}
+                          resizeMode="cover"
+                          pointerEvents="none"
+                          useNativeControls
+                          isLooping
                         />
                       </View>
                     </TouchableOpacity>
@@ -798,6 +787,7 @@ const BecomeSPScreen = ({ navigation }) => {
                       style={{
                         height: 60,
                         width: 60,
+
                         borderRadius: 5,
                         marginBottom: 4,
                         marginLeft: 4,
@@ -937,6 +927,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     height: 50,
     outline: "none",
+  },
+  video: {
+    height: 200,
+    width: "100%",
   },
 });
 

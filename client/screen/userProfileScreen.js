@@ -24,7 +24,7 @@ export default function UserProfileScreen({ navigation }) {
   const { setUser, setLogged, userData, user, setUserData, isitsp } =
     useContext(AppContext);
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: Colors.gray200 }}>
       <View
         style={{
           flex: 1,
@@ -202,6 +202,7 @@ export default function UserProfileScreen({ navigation }) {
         <View
           style={{
             display: "flex",
+            flex: 1,
             backgroundColor: Colors.gray200,
             borderTopEndRadius: 20,
             borderTopLeftRadius: 20,
