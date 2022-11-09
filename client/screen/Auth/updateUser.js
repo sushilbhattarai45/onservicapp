@@ -26,8 +26,7 @@ import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import App from "../../App";
 // import ModalPopup from "../../component/Modal";
-import { axiosInstance } from "../../component/tools";
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
+import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
 
 const gendersList = [
   { value: "Male", label: "Male" },

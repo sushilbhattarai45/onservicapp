@@ -221,7 +221,7 @@ const BecomeSPScreen = ({ navigation }) => {
           // });
 
           const serverUrl =
-          "http:/192.168.18.7:3001/v1/api/user/uploadImage";
+            "https://onservic-server.onrender.com/v1/api/user/uploadImage";
           const response = await axios(serverUrl, {
             method: "post",
             data: data,
@@ -233,7 +233,7 @@ const BecomeSPScreen = ({ navigation }) => {
           let url = response?.data?.fileName;
           const filename = url.split("\\");
           const finalname =
-            "http:/192.168.18.7:3001" +
+            "https://onservic-server.onrender.com" +
             "/" +
             filename[0] +
             "/" +

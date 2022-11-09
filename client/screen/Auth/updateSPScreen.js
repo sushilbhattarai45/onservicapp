@@ -23,11 +23,10 @@ import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import { Districts } from "../../component/district";
 import Checkbox from "expo-checkbox";
 import Icon from "../../component/Icon";
-import { axiosInstance } from "../../component/tools";
+import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
 import { Video } from "expo-av";
-
 const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },
@@ -93,7 +92,6 @@ const userValidationSchema = yup.object().shape({
   photo: yup.array().min(1, "required-field").required(),
   video: yup.string().required(),
 });
-const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 const UpdateSpScreen = ({ route, navigation }) => {
   let { sp } = route.params;
