@@ -208,8 +208,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
           console.log(response);
           let url = response?.data?.fileName;
           const filename = url.split("\\");
-          const finalname =
-            BASE_OUR_API_URL + "/" + filename[0] + "/" + filename[1];
+          const finalname = BASE_OUR_API_URL + "/" + filename[0];
           return finalname;
         })
       );
