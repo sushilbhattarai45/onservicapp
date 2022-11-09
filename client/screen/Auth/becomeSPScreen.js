@@ -13,7 +13,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-
 import * as yup from "yup";
 import moment from "moment";
 import { Colors } from "../../styles/main";
@@ -219,9 +218,10 @@ const BecomeSPScreen = ({ navigation }) => {
           //     "Content-Type": "multipart/form-data",
           //   },
           // });
+          alert(serverUrl);
 
           const serverUrl =
-            "https://onservic-server.onrender.com/v1/api/user/uploadImage";
+            "http://192.168.100.11:3001/v1/api/user/uploadImage";
           const response = await axios(serverUrl, {
             method: "post",
             data: data,
@@ -231,9 +231,10 @@ const BecomeSPScreen = ({ navigation }) => {
           });
           console.log(response.data);
           let url = response?.data?.fileName;
+          alert(url);
           const filename = url.split("\\");
           const finalname =
-            "https://onservic-server.onrender.com" +
+            "http://192.168.100.11:3001" +
             "/" +
             filename[0] +
             "/" +

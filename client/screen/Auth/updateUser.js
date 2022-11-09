@@ -149,6 +149,7 @@ export default UpdateUser = ({ navigation }) => {
   async function postData(values, { setSubmitting, setFieldError }) {
     uploadImage(file).then(async (res) => {
       let img;
+      alert(res);
       if (res != null) {
         img = BASE_OUR_API_URL + "/" + res;
       } else {
