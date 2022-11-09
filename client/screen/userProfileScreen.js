@@ -55,14 +55,6 @@ export default function UserProfileScreen({ navigation }) {
                     letterSpacing: -0.02,
                     color: Colors.white,
                   }}
-                  onPress={async () => {
-                    await AsyncStorage.removeItem("user_contact");
-                    setUser(null);
-                    setLogged("false");
-                    setUserData(null);
-
-                    navigation.navigate("Home");
-                  }}
                 >
                   Profile
                 </Text>
@@ -87,6 +79,9 @@ export default function UserProfileScreen({ navigation }) {
                   color="white"
                 />
                 <Icon
+                  style={{
+                    marginRight: 20,
+                  }}
                   onPress={async () => {
                     if (isitsp) {
                       const res = await axiosInstance.post("sp/getOneSp", {
@@ -100,6 +95,20 @@ export default function UserProfileScreen({ navigation }) {
                     }
                   }}
                   name="shield-user-fill"
+                  size={24}
+                  color="white"
+                />
+                <Icon
+                  onPress={async () => {
+                    await AsyncStorage.removeItem("user_contact");
+                    setUser(null);
+                    setLogged("false");
+                    setUserData(null);
+                    setIsitSp(null);
+
+                    navigation.navigate("Home");
+                  }}
+                  name="logout-box-r-line"
                   size={24}
                   color="white"
                 />
