@@ -112,7 +112,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         sp_name: values.name,
         sp_contact: values.phone,
         sp_district: values.district,
-        sp_officenumber: values.officePhone,
+        sp_officeNumber: values.officePhone,
         sp_skills: values.skills,
         sp_city: values.city,
         sp_street: values.street,

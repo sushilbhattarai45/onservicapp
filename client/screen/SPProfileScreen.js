@@ -93,6 +93,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const popup = createRef();
   const popupQr = createRef();
   const popupSettings = createRef();
+  const popupNumber = createRef();
   const video = useRef(null);
   const [videoMuted, setVideoMuted] = useState(true);
   const [bookIcon, setBookIcon] = useState("false");
@@ -255,7 +256,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               <ActionIcon
                 name="phone-line"
                 onPress={() => {
-                  Linking.openURL(`tel:${sp?.sp_officeNumber}`);
+                  popupNumber.current.show();
                 }}
               />
               <Text>{sp?.user_profileImage}</Text>
@@ -833,6 +834,67 @@ const SPProfileScreen = ({ navigation, route }) => {
               stg date
             </Text>
           </View>
+        </View>
+      </ModalPopup>
+      <ModalPopup
+        ref={popupNumber}
+        animationType="fade"
+        onTouchOutside={() => {
+          popupNumber.current.close();
+        }}
+      >
+        <View
+          style={{
+            alignItems: "center",
+            // paddingHorizontal: 16,
+            paddingVertical: 16,
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: Colors.black,
+              fontSize: 24,
+              fontFamily: "Black",
+              marginBottom: 24,
+            }}
+          >
+            Phone Number
+          </Text>
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingVertical: 12,
+
+              // backgroundColor:'red'
+            }}
+            onPress={() => Linking.openURL(`tel:${sp?.sp_officeNumber}`)}
+          >
+            <Text style={{ color: Colors.black, fontFamily: "Regular" }}>
+              {sp?.sp_officeNumber}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              borderTopColor: Colors.gray500,
+              borderTopWidth: 1,
+              backgroundColor: Colors.white,
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingVertical: 12,
+              // backgroundColor:'red'
+            }}
+            onPress={() => Linking.openURL(`tel:${sp?.sp_contact}`)}
+          >
+            <Text style={{ color: Colors.black, fontFamily: "Regular" }}>
+              {sp?.sp_contact}
+            </Text>
+          </TouchableOpacity>
         </View>
       </ModalPopup>
       <ModalPopup
