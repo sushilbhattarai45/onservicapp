@@ -25,7 +25,7 @@ import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import ModalPopup from "../../component/Modal";
 import AppContext from "../../component/appContext";
-import { axiosInstance } from "../../component/tools";
+import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -70,7 +70,6 @@ export default registerUser = ({ navigation }) => {
   const [citiesList, setCitiesList] = useState([]);
   const [file, setFile] = useState(null);
   const [image, setImage] = useState("");
-  const BASE_OUR_API_URL = "http://192.168.18.7:3001";
   const uploadImage = async (file) => {
     // console.log("the file you have choosed is ");
     // console.log(file);

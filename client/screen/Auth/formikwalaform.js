@@ -16,7 +16,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import moment from "moment";
 import { Districts } from "../../component/district";
 import * as ImagePicker from "expo-image-picker";
-const BASE_OUR_API_URL = "http:/192.168.18.7:3001";
+import { BASE_OUR_API_URL } from "../../component/tools";
 import axios from "axios";
 import * as yup from "yup";
 import { Field, Formik } from "formik";

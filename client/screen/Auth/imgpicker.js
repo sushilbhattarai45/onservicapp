@@ -26,9 +26,7 @@ const gender = [
   { value: "Female", label: "Female" },
   { value: "Other", label: "Other" },
 ];
-
-// const BASE_OUR_API_URL = "http://192.168.16.101:3001";
-const BASE_OUR_API_URL = "http:/192.168.18.7:3001";
+import { BASE_OUR_API_URL } from "../../component/tools";
 
 export default function ImagePickerExample() {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
