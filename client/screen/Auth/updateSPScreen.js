@@ -24,7 +24,6 @@ import { Districts } from "../../component/district";
 import Checkbox from "expo-checkbox";
 import Icon from "../../component/Icon";
 import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
-import axios from "axios";
 import AppContext from "../../component/appContext";
 import { Video } from "expo-av";
 const gendersList = [
