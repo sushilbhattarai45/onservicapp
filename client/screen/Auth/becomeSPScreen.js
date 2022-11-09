@@ -219,8 +219,9 @@ const BecomeSPScreen = ({ navigation }) => {
           //     "Content-Type": "multipart/form-data",
           //   },
           // });
+
           const serverUrl =
-            "http://192.168.100.11:3001/v1/api/user/uploadImage";
+          "http:/192.168.18.7:3001/v1/api/user/uploadImage";
           const response = await axios(serverUrl, {
             method: "post",
             data: data,
@@ -232,7 +233,7 @@ const BecomeSPScreen = ({ navigation }) => {
           let url = response?.data?.fileName;
           const filename = url.split("\\");
           const finalname =
-            "http://192.168.100.11:3001" +
+            "http:/192.168.18.7:3001" +
             "/" +
             filename[0] +
             "/" +

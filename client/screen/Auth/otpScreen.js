@@ -20,6 +20,7 @@ export default function OtpScreen({ navigation, route }) {
   const max = 1;
   const popup = createRef();
   const { otp, num } = route.params;
+  console.log(otp)
   const firstTextInputRef = useRef(null);
   const [secondTextInputValue, setSecondTextInputValue] = useState(null);
   const [firstTextInputValue, setFirstTextInputValue] = useState(null);

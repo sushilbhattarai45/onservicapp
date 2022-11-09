@@ -27,7 +27,7 @@ const gender = [
   { value: "Other", label: "Other" },
 ];
 
-const BASE_OUR_API_URL = "http://192.168.100.111:3001";
+const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 // const BASE_OUR_API_URL = "https://onservic-server.onrender.com";
 
 export default function ImagePickerExample() {

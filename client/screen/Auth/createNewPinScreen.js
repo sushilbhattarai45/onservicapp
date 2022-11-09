@@ -72,7 +72,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
               onPress={() => navigation.navigate("Home")}
               style={styles.Txt566}
             >
-              Go To Home
+              ok
             </Text>
           </View>
         </View>
