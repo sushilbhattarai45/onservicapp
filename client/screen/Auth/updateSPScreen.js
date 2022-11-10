@@ -23,7 +23,7 @@ import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import { Districts } from "../../component/district";
 import Checkbox from "expo-checkbox";
 import Icon from "../../component/Icon";
-import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
+import { axiosInstance, BASE_OUR_API_URL, uploadImage } from "../../component/tools";
 import AppContext from "../../component/appContext";
 import { Video } from "expo-av";
 const gendersList = [
@@ -101,7 +101,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
   const [load, setLoad] = useState(false);
 
   const submit = async (values) => {
-    setLoad(true)
+    setLoad(true);
     const img = await uploadImage(values.photo);
     let [vdo] = await uploadImage([values.video]);
     console.log(img);
@@ -125,9 +125,11 @@ const UpdateSpScreen = ({ route, navigation }) => {
       })
       .then((response) => {
         console.log(response.data);
+        setLoad(false);
+
         navigation.navigate("Sp", { sp: response?.data?.sp[0] });
       });
-      setLoad(false)
+    setLoad(false);
   };
   const [loading, setLoading] = useState(false);
   const [vdoloading, setVdoLoading] = useState(false);
@@ -176,51 +178,6 @@ const UpdateSpScreen = ({ route, navigation }) => {
     }
   };
 
-  const uploadImage = async (files) => {
-    try {
-      if (files === null) {
-        setError({
-          target: "image",
-          message: "Sorry ,There is some error with the profile picture!!",
-        });
-        return null;
-      }
-      let finalData = [];
-      finalData = await Promise.all(
-        files.map(async (item) => {
-          const data = new FormData();
-          console.log(item);
-          data.append(
-            "profile",
-            {
-              uri: item,
-              name: item,
-              type: "image/jpg",
-            },
-            "myfile"
-          );
-
-          const response = await axiosInstance("/user/uploadImage", {
-            method: "post",
-            data: data,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          console.log(response);
-          let url = response?.data?.fileName;
-          const filename = url.split("\\");
-          const finalname = BASE_OUR_API_URL + "/" + filename[0];
-          return finalname;
-        })
-      );
-      console.log(finalData);
-      return finalData;
-    } catch (e) {
-      console.log(e);
-      // alert(e);
-    }
-  };
   useEffect(() => {
     Districts.map((item) => {
       if (sp?.sp_district == item.label) {
@@ -828,38 +785,38 @@ const UpdateSpScreen = ({ route, navigation }) => {
               </View>
               {/* Submit Button */}
               <Pressable
+                style={{
+                  borderColor: Colors.primary,
+                  borderWidth: 1,
+                  justifyContent: "center",
+                  height: 50,
+                  marginTop: 24,
+                }}
+                disabled={load}
+                onPress={handleSubmit}
+              >
+                {load ? (
+                  <ActivityIndicator
+                    size="large"
                     style={{
-                      borderColor: Colors.primary,
-                      borderWidth: 1,
-                      justifyContent: "center",
-                      height: 50,
-                      marginTop: 24,
+                      marginTop: 8,
                     }}
-                    disabled={load}
-                    onPress={handleSubmit}
+                    color={Colors.primary}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      fontFamily: "Bold",
+                      color: Colors.primary,
+                      textAlignVertical: "center",
+                    }}
                   >
-                    {load ? (
-                      <ActivityIndicator
-                        size="large"
-                        style={{
-                          marginTop: 8,
-                        }}
-                        color={Colors.primary}
-                      />
-                    ) : (
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          fontSize: 20,
-                          fontFamily: "Bold",
-                          color: Colors.primary,
-                          textAlignVertical: "center",
-                        }}
-                      >
-                        CREATE
-                      </Text>
-                    )}
-                  </Pressable>
+                    CREATE
+                  </Text>
+                )}
+              </Pressable>
             </View>
           )}
         </Formik>

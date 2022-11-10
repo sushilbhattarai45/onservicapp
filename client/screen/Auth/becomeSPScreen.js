@@ -22,7 +22,7 @@ import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import { Districts } from "../../component/district";
 import Checkbox from "expo-checkbox";
 import Icon from "../../component/Icon";
-import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
+import { axiosInstance, BASE_OUR_API_URL, uploadImage } from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
 import { Video } from "expo-av";
@@ -190,62 +190,7 @@ const BecomeSPScreen = ({ navigation }) => {
     }
   };
 
-  const uploadImage = async (files) => {
-    try {
-      if (files === null) {
-        setError({
-          target: "image",
-          message: "Sorry ,There is some error with the profile picture!!",
-        });
-        return null;
-      }
-      let finalData = [];
-      finalData = await Promise.all(
-        files.map(async (item) => {
-          const data = new FormData();
-
-          data.append(
-            "profile",
-            {
-              uri: item,
-              name: item,
-              type: "image/jpg",
-            },
-            "myfile"
-          );
-
-          // const response = await axiosInstance("/user/uploadImage", {
-          //   method: "post",
-          //   data: data,
-          //   headers: {
-          //     "Content-Type": "multipart/form-data",
-          //   },
-          // });
-
-          const serverUrl = BASE_OUR_API_URL + "/v1/api/user/uploadImage";
-          const response = await axios(serverUrl, {
-            method: "post",
-            data: data,
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          console.log(response.data);
-          let url = response?.data?.fileName;
-          alert(url);
-          const filename = url.split("\\");
-          const finalname = BASE_OUR_API_URL + "/" + filename[0];
-          return finalname;
-        })
-      );
-      // console.log(finalData);
-      return finalData;
-    } catch (e) {
-      console.log(e);
-      // alert(e);
-    }
-  };
-
+ 
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: Colors.gray200 }}

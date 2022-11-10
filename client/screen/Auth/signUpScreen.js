@@ -26,7 +26,7 @@ import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import ModalPopup from "../../component/Modal";
 import AppContext from "../../component/appContext";
-import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
+import { BASE_OUR_API_URL, uploadImage } from "../../component/tools";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -72,116 +72,49 @@ export default registerUser = ({ navigation }) => {
   const [file, setFile] = useState(null);
   const [load, setLoad] = useState(false);
 
-  const uploadImage = async (file) => {
-    // console.log("the file you have choosed is ");
-    // console.log(file);
-    try {
-      // checks if the file is empty
-      if (file === null) {
-        setError({
-          target: "image",
-          message: "Sorry ,There is some error with the profile picture!!",
-        });
-        return null;
-      }
-      // setError(false);
-      // if not empty creating a form data to send to upload the image to the server
-      // alert("ok");
-
-      const imageToUpload = file;
-      const data = new FormData();
-
-      data.append(
-        "profile",
-        {
-          uri: imageToUpload?.uri,
-          name: imageToUpload?.uri,
-          type: "image/jpg",
-        },
-        "myfile"
-      );
-
-      const response = await axiosInstance("/user/uploadImage", {
-        method: "post",
-        data: data,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      var url = response?.data?.fileName;
-      const filename = url.split("\\");
-      const finalname = filename[0];
-      return finalname;
-    } catch (e) {
-      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-
-      console.log("trying again " + serverUrl);
-
-      axios(serverUrl, {
-        method: "post",
-        data: data,
-
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log("second error");
-          console.log(error);
-        });
-      // setError({
-      //   target: "image",
-      //   message: "Sry, we are having trouble uploading the Profile ",
-      // });
-      return;
-    }
-  };
   async function postData(values, { setSubmitting, setFieldError }) {
     setLoad(true);
-    uploadImage(file).then(async (res) => {
-      let response = await axios.post(
-        BASE_OUR_API_URL + "/v1/api/user/register",
-        {
-          API_KEY: "AXCF",
-          user_name: values.name,
-          user_email: values.email,
-          user_contact: values.phone,
-          user_district: values.district,
-          user_city: values.city,
-          user_street: values.street,
-          user_gender: values.gender,
-          user_password: values.password,
-          user_profileImage: BASE_OUR_API_URL + "/" + res,
-          user_toc: {
-            date: moment().format("ll"),
-            time: moment().format("LT"),
-          },
-        }
-      );
-      const status = response?.data?.statuscode;
-      if (status == 201) {
-        setLoad(false);
-        const finaldata = response?.data?.user;
-        setData(finaldata);
-        setUserData(finaldata);
-        setLogged("true");
-        setIsitSp(null);
-        setUser(values.phone);
-        await storeData(values.phone);
-
-        navigation.navigate("Home");
-      } else if (status == 600) {
-        setLoad(false);
-        setFieldError("phone", "Phone Number already exists");
-      } else {
-        setLoad(false);
-        alert("no");
+    const [img] = await uploadImage([values.image]);
+    console.log("a " + img);
+    let response = await axios.post(
+      BASE_OUR_API_URL + "/v1/api/user/register",
+      {
+        API_KEY: "AXCF",
+        user_name: values.name,
+        user_email: values.email,
+        user_contact: values.phone,
+        user_district: values.district,
+        user_city: values.city,
+        user_street: values.street,
+        user_gender: values.gender,
+        user_password: values.password,
+        user_profileImage: img,
+        user_toc: {
+          date: moment().format("ll"),
+          time: moment().format("LT"),
+        },
       }
-      alert(status);
-    });
+    );
+    const status = response?.data?.statuscode;
+    if (status == 201) {
+      setLoad(false);
+      const finaldata = response?.data?.user;
+      setData(finaldata);
+      setUserData(finaldata);
+      setLogged("true");
+      setIsitSp(null);
+      setUser(values.phone);
+      await storeData(values.phone);
+
+      navigation.navigate("Home");
+    } else if (status == 600) {
+      setLoad(false);
+      setFieldError("phone", "Phone Number already exists");
+    } else {
+      setLoad(false);
+      alert("no");
+    }
+    alert(status);
   }
   const storeData = async (value) => {
     try {
