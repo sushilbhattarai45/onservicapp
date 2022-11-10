@@ -10,14 +10,18 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
   const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    };
+    setScanned(false);
+    const unsubscribe = navigation.addListener("focus", () => {
+      getBarCodeScannerPermissions();
 
-    getBarCodeScannerPermissions();
-  }, []);
-
+      getBarCodeScannerPermissions(); //Put your Data loading function here instead of my loadData()
+    });
+    return unsubscribe;
+  }, [navigation]);
+  const getBarCodeScannerPermissions = async () => {
+    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    setHasPermission(status === "granted");
+  };
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
 
@@ -34,6 +38,7 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
     return <Text>No access to camera</Text>;
   }
   async function getData(num) {
+    setScanned(false);
     const data = await axiosInstance.post("sp/getOneSp", {
       GIVEN_API_KEY: "AXCF",
       sp_contact: num,
@@ -59,7 +64,6 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
         }}
         icon="arrow-left-line"
       />
-      <Text>{hasPermission}</Text>
       <View
         style={{
           marginTop: 5,

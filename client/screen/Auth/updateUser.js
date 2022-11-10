@@ -27,7 +27,11 @@ import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import App from "../../App";
 // import ModalPopup from "../../component/Modal";
-import { axiosInstance, BASE_OUR_API_URL } from "../../component/tools";
+import {
+  axiosInstance,
+  BASE_OUR_API_URL,
+  uploadImage,
+} from "../../component/tools";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -72,75 +76,75 @@ export default UpdateUser = ({ navigation }) => {
   const [file, setFile] = useState(null);
   const [load, setLoad] = useState(false);
 
-  const uploadImage = async (file) => {
-    // console.log("the file you have choosed is ");
-    // console.log(file);
-    try {
-      // checks if the file is empty
-      if (file === null) {
-        setError({
-          target: "image",
-          message: "Sorry ,There is some error with the profile picture!!",
-        });
-        return null;
-      }
-      // setError(false);
-      // if not empty creating a form data to send to upload the image to the server
-      // alert("ok");
+  // const uploadImage = async (file) => {
+  //   // console.log("the file you have choosed is ");
+  //   // console.log(file);
+  //   try {
+  //     // checks if the file is empty
+  //     if (file === null) {
+  //       setError({
+  //         target: "image",
+  //         message: "Sorry ,There is some error with the profile picture!!",
+  //       });
+  //       return null;
+  //     }
+  //     // setError(false);
+  //     // if not empty creating a form data to send to upload the image to the server
+  //     // alert("ok");
 
-      const imageToUpload = file;
-      const data = new FormData();
+  //     const imageToUpload = file;
+  //     const data = new FormData();
 
-      data.append(
-        "profile",
-        {
-          uri: imageToUpload?.uri,
-          name: imageToUpload?.uri,
-          type: "image/jpg",
-        },
-        "myfile"
-      );
+  //     data.append(
+  //       "profile",
+  //       {
+  //         uri: imageToUpload?.uri,
+  //         name: imageToUpload?.uri,
+  //         type: "image/jpg",
+  //       },
+  //       "myfile"
+  //     );
 
-      const response = await axiosInstance("user/uploadImage", {
-        method: "post",
-        data: data,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      var url = response?.data?.fileName;
-      alert(url);
-      const filename = url.split("\\");
-      const finalname = filename[0];
-      alert(finalname);
-      return finalname;
-    } catch (e) {
-      const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
+  //     const response = await axiosInstance("user/uploadImage", {
+  //       method: "post",
+  //       data: data,
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     });
+  //     var url = response?.data?.fileName;
+  //     alert(url);
+  //     const filename = url.split("\\");
+  //     const finalname = filename[0];
+  //     // alert(finalname);
+  //     return finalname;
+  //   } catch (e) {
+  //     const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
 
-      console.log("trying again " + serverUrl);
+  //     console.log("trying again " + serverUrl);
 
-      axios(serverUrl, {
-        method: "post",
-        data: data,
+  //     axios(serverUrl, {
+  //       method: "post",
+  //       data: data,
 
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.log("second error");
-          console.log(error);
-        });
-      // setError({
-      //   target: "image",
-      //   message: "Sry, we are having trouble uploading the Profile ",
-      // });
-      return;
-    }
-  };
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     })
+  //       .then((res) => {
+  //         console.log(res);
+  //       })
+  //       .catch((error) => {
+  //         console.log("second error");
+  //         console.log(error);
+  //       });
+  //     // setError({
+  //     //   target: "image",
+  //     //   message: "Sry, we are having trouble uploading the Profile ",
+  //     // });
+  //     return;
+  //   }
+  // };
   useEffect(() => {
     Districts.map((item) => {
       if (userData?.user_district == item.label) {
@@ -150,50 +154,43 @@ export default UpdateUser = ({ navigation }) => {
   });
   async function postData(values, { setSubmitting, setFieldError }) {
     setLoad(true);
-    uploadImage(file).then(async (res) => {
-      let img;
-      // alert(res);
-      if (res != null) {
-        img = BASE_OUR_API_URL + "/" + res;
-      } else {
-        img = values.image;
+    const [img] = await uploadImage([values.image]);
+    console.log("a " + img);
+    let response = await axios.post(
+      BASE_OUR_API_URL + "/v1/api/user/updateUser",
+      {
+        API_KEY: "AXCF",
+        user_name: values.name,
+        user_email: values.email,
+        user_contact: values.phone,
+        user_district: values.district,
+        user_city: values.city,
+        user_street: values.street,
+        user_gender: values.gender,
+        user_password: values.password,
+        user_profileImage: img,
+        user_toc: {
+          date: moment().format("ll"),
+          time: moment().format("LT"),
+        },
       }
-      let response = await axios.post(
-        BASE_OUR_API_URL + "/v1/api/user/updateUser",
-        {
-          API_KEY: "AXCF",
-          user_name: values.name,
-          user_email: values.email,
-          user_contact: values.phone,
-          user_district: values.district,
-          user_city: values.city,
-          user_street: values.street,
-          user_gender: values.gender,
-          user_password: values.password,
-          user_profileImage: img,
-          user_toc: {
-            date: moment().format("ll"),
-            time: moment().format("LT"),
-          },
-        }
-      );
-      const status = response?.data?.statuscode;
-      if (status == 201) {
-        const finaldata = response?.data?.user;
-        setLoad(false);
-        setData(finaldata);
-        setUserData(finaldata[0]);
-        console.log(finaldata);
-        await storeData(data);
-        // navigation.navigate("Home");
-      } else if (status == 600) {
-        setLoad(false);
-        setFieldError("phone", "Phone Number already exists");
-      } else {
-        setLoad(false);
-        alert("no");
-      }
-    });
+    );
+    const status = response?.data?.statuscode;
+    if (status == 201) {
+      const finaldata = response?.data?.user;
+      setLoad(false);
+      setData(finaldata);
+      setUserData(finaldata[0]);
+      console.log(finaldata);
+      await storeData(data);
+      navigation.navigate("Home");
+    } else if (status == 600) {
+      setLoad(false);
+      setFieldError("phone", "Phone Number already exists");
+    } else {
+      setLoad(false);
+      alert("no");
+    }
   }
   const storeData = async (value) => {
     try {

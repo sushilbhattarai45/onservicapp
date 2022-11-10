@@ -15,6 +15,11 @@
     ],
     "android": {
       "package": "com.onservic.app"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "081edec8-831f-4d01-90f6-520d425a5f99"
+      }
     }
   }
 }

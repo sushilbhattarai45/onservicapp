@@ -25,7 +25,7 @@ router.route("/forgetPin").post(forgetPin);
 
 const storage = multer.diskStorage({
   filename: function (req, file, cb) {
-    cb(null, uuid() + file.originalname);
+    cb(null, Date.now() + "." + file.originalname.split(".")[1]);
   },
   destination: function (req, file, cb) {
     cb(null, "./uploads/");

@@ -14,7 +14,52 @@ export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var d = R * c; // Distance in km
   return d;
 }
+export const uploadImage = async (files) => {
+  try {
+    if (files === null) {
+      setError({
+        target: "image",
+        message: "Sorry ,There is some error with the profile picture!!",
+      });
+      return null;
+    }
+    let finalData = [];
+    finalData = await Promise.all(
+      files.map(async (item) => {
+        const data = new FormData();
+        console.log(item);
+        data.append(
+          "profile",
+          {
+            uri: item,
+            name: item,
+            type: "image/jpg",
+          },
+          "myfile"
+        );
 
+        const response = await axiosInstance("/user/uploadImage", {
+          method: "post",
+          data: data,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log(response?.data);
+        let url = response?.data?.fileName;
+        const filename = url.split("\\");
+        const finalname =
+          BASE_OUR_API_URL + "/" + filename[0] + "/" + filename[1];
+        return finalname;
+      })
+    );
+    console.log(finalData);
+    return finalData;
+  } catch (e) {
+    console.log(e);
+    // alert(e);
+  }
+};
 function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
