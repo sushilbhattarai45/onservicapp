@@ -11,7 +11,7 @@ import {
   StyleSheet,
   Image,
   KeyboardAvoidingView,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Dropdown } from "react-native-element-dropdown";
@@ -112,7 +112,7 @@ export default UpdateUser = ({ navigation }) => {
       alert(url);
       const filename = url.split("\\");
       const finalname = filename[0];
-      // alert(finalname);
+      alert(finalname);
       return finalname;
     } catch (e) {
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
@@ -149,7 +149,7 @@ export default UpdateUser = ({ navigation }) => {
     });
   });
   async function postData(values, { setSubmitting, setFieldError }) {
-    setLoad(true)
+    setLoad(true);
     uploadImage(file).then(async (res) => {
       let img;
       // alert(res);
@@ -180,17 +180,17 @@ export default UpdateUser = ({ navigation }) => {
       const status = response?.data?.statuscode;
       if (status == 201) {
         const finaldata = response?.data?.user;
-        setLoad(false)
+        setLoad(false);
         setData(finaldata);
         setUserData(finaldata[0]);
         console.log(finaldata);
         await storeData(data);
-        navigation.navigate("Home");
+        // navigation.navigate("Home");
       } else if (status == 600) {
-        setLoad(false)
+        setLoad(false);
         setFieldError("phone", "Phone Number already exists");
       } else {
-        setLoad(false)
+        setLoad(false);
         alert("no");
       }
     });
@@ -686,39 +686,39 @@ export default UpdateUser = ({ navigation }) => {
                   </View>
 
                   <Pressable
-                style={{
-                  borderColor: Colors.primary,
-                  borderWidth: 1,
-                  justifyContent: "center",
-                  height: 50,
-                  marginTop: 24,
-                  marginBottom: 24,
-                }}
-                disabled={load}
-                onPress={handleSubmit}
-              >
-                {load ? (
-                  <ActivityIndicator
-                    size="large"
                     style={{
-                      marginTop: 8,
+                      borderColor: Colors.primary,
+                      borderWidth: 1,
+                      justifyContent: "center",
+                      height: 50,
+                      marginTop: 24,
+                      marginBottom: 24,
                     }}
-                    color={Colors.primary}
-                  />
-                ) : (
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 20,
-                      fontFamily: "Bold",
-                      color: Colors.primary,
-                      textAlignVertical: "center",
-                    }}
+                    disabled={load}
+                    onPress={handleSubmit}
                   >
-                    CREATE
-                  </Text>
-                )}
-              </Pressable>
+                    {load ? (
+                      <ActivityIndicator
+                        size="large"
+                        style={{
+                          marginTop: 8,
+                        }}
+                        color={Colors.primary}
+                      />
+                    ) : (
+                      <Text
+                        style={{
+                          textAlign: "center",
+                          fontSize: 20,
+                          fontFamily: "Bold",
+                          color: Colors.primary,
+                          textAlignVertical: "center",
+                        }}
+                      >
+                        CREATE
+                      </Text>
+                    )}
+                  </Pressable>
                   <Text
                     style={{
                       textAlign: "center",
