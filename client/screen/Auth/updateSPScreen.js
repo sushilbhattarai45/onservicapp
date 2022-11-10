@@ -101,7 +101,8 @@ const UpdateSpScreen = ({ route, navigation }) => {
   const [load, setLoad] = useState(false);
 
   const submit = async (values) => {
-    setLoad(true)
+    setLoad(true);
+
     const img = await uploadImage(values.photo);
     let [vdo] = await uploadImage([values.video]);
     console.log(img);
@@ -127,7 +128,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         console.log(response.data);
         navigation.navigate("Sp", { sp: response?.data?.sp[0] });
       });
-      setLoad(false)
+    setLoad(false);
   };
   const [loading, setLoading] = useState(false);
   const [vdoloading, setVdoLoading] = useState(false);
@@ -828,38 +829,38 @@ const UpdateSpScreen = ({ route, navigation }) => {
               </View>
               {/* Submit Button */}
               <Pressable
+                style={{
+                  borderColor: Colors.primary,
+                  borderWidth: 1,
+                  justifyContent: "center",
+                  height: 50,
+                  marginTop: 24,
+                }}
+                disabled={load}
+                onPress={handleSubmit}
+              >
+                {load ? (
+                  <ActivityIndicator
+                    size="large"
                     style={{
-                      borderColor: Colors.primary,
-                      borderWidth: 1,
-                      justifyContent: "center",
-                      height: 50,
-                      marginTop: 24,
+                      marginTop: 8,
                     }}
-                    disabled={load}
-                    onPress={handleSubmit}
+                    color={Colors.primary}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      fontFamily: "Bold",
+                      color: Colors.primary,
+                      textAlignVertical: "center",
+                    }}
                   >
-                    {load ? (
-                      <ActivityIndicator
-                        size="large"
-                        style={{
-                          marginTop: 8,
-                        }}
-                        color={Colors.primary}
-                      />
-                    ) : (
-                      <Text
-                        style={{
-                          textAlign: "center",
-                          fontSize: 20,
-                          fontFamily: "Bold",
-                          color: Colors.primary,
-                          textAlignVertical: "center",
-                        }}
-                      >
-                        CREATE
-                      </Text>
-                    )}
-                  </Pressable>
+                    CREATE
+                  </Text>
+                )}
+              </Pressable>
             </View>
           )}
         </Formik>
@@ -873,6 +874,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // marginTop: Constants.statusBarHeight + 16,
+    marginBottom: 20,
     backgroundColor: Colors.gray200,
     paddingHorizontal: 24,
   },
