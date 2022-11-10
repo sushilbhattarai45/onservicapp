@@ -830,6 +830,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // marginTop: Constants.statusBarHeight + 16,
+    marginBottom: 20,
     backgroundColor: Colors.gray200,
     paddingHorizontal: 24,
   },

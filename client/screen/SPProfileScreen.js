@@ -86,7 +86,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [bookmarked, setBookmarked] = useState();
   const [showReviews, setShowReviews] = useState(sp?.sp_showReview);
   const [spStatus, setSpStatus] = useState(
-    sp?.sp_status == "Active" ? true : false
+    sp?.sp_status == "ACTIVE" ? true : false
   );
   const [sp_rated, setSp_Rated] = useState();
 
