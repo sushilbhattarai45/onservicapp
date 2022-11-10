@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Image,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Dropdown } from "react-native-element-dropdown";
@@ -19,7 +20,7 @@ import { Districts } from "../../component/district";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 import * as yup from "yup";
-import { Field, Formik } from "formik";
+import { Formik } from "formik";
 import Header from "../../component/Header";
 import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";

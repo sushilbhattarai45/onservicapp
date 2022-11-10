@@ -109,10 +109,9 @@ const userValidationSchema = yup.object().shape({
 });
 
 const BecomeSPScreen = ({ navigation }) => {
-  const { subCategories, userData } = useContext(AppContext);
+  const { subCategories, userData, setIsitSp } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
   const [load, setLoad] = useState(false);
-  const { setIsitSp } = useContext(AppContext);
   const submit = async (values) => {
     setLoad(true);
     const img = await uploadImage(values.photo);
