@@ -462,20 +462,48 @@ export const Districts = [
     province: "Province No. 5",
     label: "Dang",
     cities: [
-      "Bhaluwang",
-      "Ghoraha",
-      "Hapur",
-      "Hekuli",
-      "Jangrahawa",
-      "Jumlepani",
-      "Koilabas",
-      "Lamahi",
-      "Manpur",
-      "Panchakule",
-      "Rampur",
-      "Shantinagar",
-      "Tulsipur",
-      "Urahari",
+      {
+        label: "Bhaluwang",
+      },
+      {
+        label: "Ghoraha",
+      },
+      {
+        label: "Hapur",
+      },
+      {
+        label: "Hekuli",
+      },
+      {
+        label: "Jangrahawa",
+      },
+      {
+        label: "Jumlepani",
+      },
+      {
+        label: "Koilabas",
+      },
+      {
+        label: "Lamahi",
+      },
+      {
+        label: "Manpur",
+      },
+      {
+        label: "Panchakule",
+      },
+      {
+        label: "Rampur",
+      },
+      {
+        label: "Shantinagar",
+      },
+      {
+        label: "Tulsipur",
+      },
+      {
+        label: "Urahari",
+      },
     ],
     value: "Dang",
   },
@@ -489,20 +517,48 @@ export const Districts = [
     province: "Province No. 5",
     label: "Gulmi",
     cities: [
-      "Arje",
-      "Bharse",
-      "Birabas",
-      "Chandrakot",
-      "Dhurkot",
-      "Ismadohali",
-      "Majuwa",
-      "Manabhak",
-      "Pipaldanda",
-      "Purkotadha",
-      "Purtighat",
-      "Ridi",
-      "Sringa",
-      "Wami",
+      {
+        label: "Arje",
+      },
+      {
+        label: "Bharse",
+      },
+      {
+        label: "Birabas",
+      },
+      {
+        label: "Chandrakot",
+      },
+      {
+        label: "Dhurkot",
+      },
+      {
+        label: "Ismadohali",
+      },
+      {
+        label: "Majuwa",
+      },
+      {
+        label: "Manabhak",
+      },
+      {
+        label: "Pipaldanda",
+      },
+      {
+        label: "Purkotadha",
+      },
+      {
+        label: "Purtighat",
+      },
+      {
+        label: "Ridi",
+      },
+      {
+        label: "Sringa",
+      },
+      {
+        label: "Wami",
+      },
     ],
     value: "Gulmi",
   },
@@ -516,19 +572,45 @@ export const Districts = [
     province: "Province No. 5",
     label: "Palpa",
     cities: [
-      "Argali",
-      "Aryabhanjyang",
-      "Baldengadi",
-      "Chhahara",
-      "Hungi",
-      "Jalpa",
-      "Jhadewa",
-      "Khasyauli",
-      "Madanpokhara",
-      "Palungmainadi",
-      "Rampur",
-      "Sahalkot",
-      "Tahu",
+      {
+        label: "Argali",
+      },
+      {
+        label: "Aryabhanjyang",
+      },
+      {
+        label: "Baldengadi",
+      },
+      {
+        label: "Chhahara",
+      },
+      {
+        label: "Hungi",
+      },
+      {
+        label: "Jalpa",
+      },
+      {
+        label: "Jhadewa",
+      },
+      {
+        label: "Khasyauli",
+      },
+      {
+        label: "Madanpokhara",
+      },
+      {
+        label: "Palungmainadi",
+      },
+      {
+        label: "Rampur",
+      },
+      {
+        label: "Sahalkot",
+      },
+      {
+        label: "Tahu",
+      },
     ],
     value: "Palpa",
   },
@@ -542,16 +624,36 @@ export const Districts = [
     province: "Province No. 5",
     label: "Pyuthan",
     cities: [
-      "Baraula",
-      "Bhingri",
-      "Bijuwar",
-      "Dakhaquadi",
-      "Lungbahane",
-      "Machchhi",
-      "Majuwa",
-      "Naya Gaun",
-      "Thulabesi",
-      "Wangesal",
+      {
+        label: "Baraula",
+      },
+      {
+        label: "Bhingri",
+      },
+      {
+        label: "Bijuwar",
+      },
+      {
+        label: "Dakhaquadi",
+      },
+      {
+        label: "Lungbahane",
+      },
+      {
+        label: "Machchhi",
+      },
+      {
+        label: "Majuwa",
+      },
+      {
+        label: "Naya Gaun",
+      },
+      {
+        label: "Thulabesi",
+      },
+      {
+        label: "Wangesal",
+      },
     ],
     value: "Pyuthan",
   },
@@ -559,15 +661,33 @@ export const Districts = [
     province: "Province No. 5",
     label: "Rolpa",
     cities: [
-      "Dahaban",
-      "Ghartigaun",
-      "Himtakura",
-      "Jhenam (Holeri)",
-      "Khungri",
-      "Nerpa",
-      "Shulichaur",
-      "Sirpa",
-      "Thawang",
+      {
+        label: "Dahaban",
+      },
+      {
+        label: "Ghartigaun",
+      },
+      {
+        label: "Himtakura",
+      },
+      {
+        label: "Jhenam (Holeri)",
+      },
+      {
+        label: "Khungri",
+      },
+      {
+        label: "Nerpa",
+      },
+      {
+        label: "Shulichaur",
+      },
+      {
+        label: "Sirpa",
+      },
+      {
+        label: "Thawang",
+      },
     ],
     value: "Rolpa",
   },
@@ -575,21 +695,51 @@ export const Districts = [
     province: "Province No. 5",
     label: "Rupandehi",
     cities: [
-      "Amuwa",
-      "Betkuiya",
-      "Butwal",
-      "Dhakadhai",
-      "Kotihawa",
-      "Lumbini",
-      "Mahadehiya",
-      "Manigram",
-      "Parroha",
-      "Saljhandi",
-      "Sauraha Pharsa",
-      "Siktahan",
-      "Suryapura",
-      "Tenuhawa",
-      "Thutipipal",
+      {
+        label: "Amuwa",
+      },
+      {
+        label: "Betkuiya",
+      },
+      {
+        label: "Butwal",
+      },
+      {
+        label: "Dhakadhai",
+      },
+      {
+        label: "Kotihawa",
+      },
+      {
+        label: "Lumbini",
+      },
+      {
+        label: "Mahadehiya",
+      },
+      {
+        label: "Manigram",
+      },
+      {
+        label: "Parroha",
+      },
+      {
+        label: "Saljhandi",
+      },
+      {
+        label: "Sauraha Pharsa",
+      },
+      {
+        label: "Siktahan",
+      },
+      {
+        label: "Suryapura",
+      },
+      {
+        label: "Tenuhawa",
+      },
+      {
+        label: "Thutipipal",
+      },
     ],
     value: "Rupandehi",
   },
@@ -597,19 +747,45 @@ export const Districts = [
     province: "Gandaki",
     label: "Baglung",
     cities: [
-      "Arnakot",
-      "Balewa Payupata",
-      "Bereng",
-      "Bihukot",
-      "Bongadovan",
-      "Galkot",
-      "Harichaur",
-      "Jaidi Belbagar",
-      "Jhimpa",
-      "Khrwang",
-      "Kusmi Shera",
-      "Pala",
-      "Pandavkhani",
+      {
+        label: "Arnakot",
+      },
+      {
+        label: "Balewa Payupata",
+      },
+      {
+        label: "Bereng",
+      },
+      {
+        label: "Bihukot",
+      },
+      {
+        label: "Bongadovan",
+      },
+      {
+        label: "Galkot",
+      },
+      {
+        label: "Harichaur",
+      },
+      {
+        label: "Jaidi Belbagar",
+      },
+      {
+        label: "Jhimpa",
+      },
+      {
+        label: "Khrwang",
+      },
+      {
+        label: "Kusmi Shera",
+      },
+      {
+        label: "Pala",
+      },
+      {
+        label: "Pandavkhani",
+      },
     ],
     value: "Baglung",
   },
@@ -617,18 +793,42 @@ export const Districts = [
     province: "Gandaki",
     label: "Gorkha",
     cities: [
-      "Aarughat",
-      "Anapipal",
-      "Batase",
-      "Bhachchek",
-      "Bungkot",
-      "Ghyampesal",
-      "Gumda",
-      "Jaubari",
-      "Luintel",
-      "Manakamana",
-      "Saurpani",
-      "Sirdibash",
+      {
+        label: "Aarughat",
+      },
+      {
+        label: "Anapipal",
+      },
+      {
+        label: "Batase",
+      },
+      {
+        label: "Bhachchek",
+      },
+      {
+        label: "Bungkot",
+      },
+      {
+        label: "Ghyampesal",
+      },
+      {
+        label: "Gumda",
+      },
+      {
+        label: "Jaubari",
+      },
+      {
+        label: "Luintel",
+      },
+      {
+        label: "Manakamana",
+      },
+      {
+        label: "Saurpani",
+      },
+      {
+        label: "Sirdibash",
+      },
     ],
     value: "Gorkha",
   },
@@ -636,19 +836,45 @@ export const Districts = [
     province: "Gandaki",
     label: "Kaski",
     cities: [
-      "Bhalam",
-      "Birethanti",
-      "Chapakot",
-      "Gagan Gaunda",
-      "Ghachok",
-      "Majhathana",
-      "Makaikhola",
-      "Naudanda",
-      "Nirmalpokhari",
-      "Pardibandh",
-      "Purunchaur",
-      "Rupakot",
-      "Sildujure",
+      {
+        label: "Bhalam",
+      },
+      {
+        label: "Birethanti",
+      },
+      {
+        label: "Chapakot",
+      },
+      {
+        label: "Gagan Gaunda",
+      },
+      {
+        label: "Ghachok",
+      },
+      {
+        label: "Majhathana",
+      },
+      {
+        label: "Makaikhola",
+      },
+      {
+        label: "Naudanda",
+      },
+      {
+        label: "Nirmalpokhari",
+      },
+      {
+        label: "Pardibandh",
+      },
+      {
+        label: "Purunchaur",
+      },
+      {
+        label: "Rupakot",
+      },
+      {
+        label: "Sildujure",
+      },
     ],
     value: "Kaski",
   },
@@ -656,37 +882,89 @@ export const Districts = [
     province: "Gandaki",
     label: "Lamjung",
     cities: [
-      "Bharate",
-      "Gaunda",
-      "Gilung",
-      "Khudi",
-      "Kunchha",
-      "Maling",
-      "Phaliyasanghu",
-      "Sotipasal",
-      "Sundar Bazar",
-      "Tarkughat",
+      {
+        label: "Bharate",
+      },
+      {
+        label: "Gaunda",
+      },
+      {
+        label: "Gilung",
+      },
+      {
+        label: "Khudi",
+      },
+      {
+        label: "Kunchha",
+      },
+      {
+        label: "Maling",
+      },
+      {
+        label: "Phaliyasanghu",
+      },
+      {
+        label: "Sotipasal",
+      },
+      {
+        label: "Sundar Bazar",
+      },
+      {
+        label: "Tarkughat",
+      },
     ],
     value: "Lamjung",
   },
   {
     province: "Gandaki",
     label: "Manang",
-    cities: ["Bhakra", "Dharapani", "Mathillo Manang", "Nar", "Pisang"],
+    cities: [
+      {
+        label: "Bhakra",
+      },
+      {
+        label: "Dharapani",
+      },
+      {
+        label: "Mathillo Manang",
+      },
+      {
+        label: "Nar",
+      },
+      {
+        label: "Pisang",
+      },
+    ],
     value: "Manang",
   },
   {
     province: "Gandaki",
     label: "Mustang",
     cities: [
-      "Charang",
-      "Chhoser",
-      "Kagbeni",
-      "Lete",
-      "Marpha",
-      "Muktinath",
-      "Mustang",
-      "Thak Tukuche",
+      {
+        label: "Charang",
+      },
+      {
+        label: "Chhoser",
+      },
+      {
+        label: "Kagbeni",
+      },
+      {
+        label: "Lete",
+      },
+      {
+        label: "Marpha",
+      },
+      {
+        label: "Muktinath",
+      },
+      {
+        label: "Mustang",
+      },
+      {
+        label: "Thak Tukuche",
+      },
     ],
     value: "Mustang",
   },
@@ -694,16 +972,36 @@ export const Districts = [
     province: "Gandaki",
     label: "Myagdi",
     cities: [
-      "Babiyachaur",
-      "Dana",
-      "Darbang",
-      "Galeswor",
-      "Lulang",
-      "Pakhapani",
-      "Rakhu Bhagawati",
-      "Sikha",
-      "Takam",
-      "Xyamarukot",
+      {
+        label: "Babiyachaur",
+      },
+      {
+        label: "Dana",
+      },
+      {
+        label: "Darbang",
+      },
+      {
+        label: "Galeswor",
+      },
+      {
+        label: "Lulang",
+      },
+      {
+        label: "Pakhapani",
+      },
+      {
+        label: "Rakhu Bhagawati",
+      },
+      {
+        label: "Sikha",
+      },
+      {
+        label: "Takam",
+      },
+      {
+        label: "Xyamarukot",
+      },
     ],
     value: "Myagdi",
   },
@@ -717,17 +1015,39 @@ export const Districts = [
     province: "Gandaki",
     label: "Parbat",
     cities: [
-      "Bachchha",
-      "Deurali",
-      "Devisthan",
-      "Hubas",
-      "Karkineta",
-      "Khor Pokhara",
-      "Khurkot",
-      "Lankhudeurali",
-      "Salija",
-      "Setibeni",
-      "Thulipokhari",
+      {
+        label: "Bachchha",
+      },
+      {
+        label: "Deurali",
+      },
+      {
+        label: "Devisthan",
+      },
+      {
+        label: "Hubas",
+      },
+      {
+        label: "Karkineta",
+      },
+      {
+        label: "Khor Pokhara",
+      },
+      {
+        label: "Khurkot",
+      },
+      {
+        label: "Lankhudeurali",
+      },
+      {
+        label: "Salija",
+      },
+      {
+        label: "Setibeni",
+      },
+      {
+        label: "Thulipokhari",
+      },
     ],
     value: "Parbat",
   },
@@ -741,20 +1061,48 @@ export const Districts = [
     province: "Gandaki",
     label: "Tanahun",
     cities: [
-      "Aanbu Khaireni",
-      "Baidi",
-      "Bandipur",
-      "Bhimad",
-      "Devaghat",
-      "Dumre",
-      "Ghiring Sundhara",
-      "Kahunshivapur",
-      "Khairenitar",
-      "Lamagaun",
-      "Manechauka",
-      "Rising Ranipokhari",
-      "Shisha Ghat",
-      "Tuhure Pasal",
+      {
+        label: "Aanbu Khaireni",
+      },
+      {
+        label: "Baidi",
+      },
+      {
+        label: "Bandipur",
+      },
+      {
+        label: "Bhimad",
+      },
+      {
+        label: "Devaghat",
+      },
+      {
+        label: "Dumre",
+      },
+      {
+        label: "Ghiring Sundhara",
+      },
+      {
+        label: "Kahunshivapur",
+      },
+      {
+        label: "Khairenitar",
+      },
+      {
+        label: "Lamagaun",
+      },
+      {
+        label: "Manechauka",
+      },
+      {
+        label: "Rising Ranipokhari",
+      },
+      {
+        label: "Shisha Ghat",
+      },
+      {
+        label: "Tuhure Pasal",
+      },
     ],
     value: "Tanahun",
   },
@@ -762,19 +1110,45 @@ export const Districts = [
     province: "Province No. 2",
     label: "Bara",
     cities: [
-      "Amalekhgunj",
-      "Bariyarpur",
-      "Basantapur",
-      "Dumarwana",
-      "Jeetpur (Bhavanipur)",
-      "Kabahigoth",
-      "Mahendra Adarsha",
-      "Nijgadh",
-      "Parsoni",
-      "Pipradhigoth",
-      "Simara",
-      "Simraungadh",
-      "Umjan",
+      {
+        label: "Amalekhgunj",
+      },
+      {
+        label: "Bariyarpur",
+      },
+      {
+        label: "Basantapur",
+      },
+      {
+        label: "Dumarwana",
+      },
+      {
+        label: "Jeetpur (Bhavanipur)",
+      },
+      {
+        label: "Kabahigoth",
+      },
+      {
+        label: "Mahendra Adarsha",
+      },
+      {
+        label: "Nijgadh",
+      },
+      {
+        label: "Parsoni",
+      },
+      {
+        label: "Pipradhigoth",
+      },
+      {
+        label: "Simara",
+      },
+      {
+        label: "Simraungadh",
+      },
+      {
+        label: "Umjan",
+      },
     ],
     value: "Bara",
   },
@@ -782,19 +1156,45 @@ export const Districts = [
     province: "Province No. 2",
     label: "Dhanusha",
     cities: [
-      "Bagachauda",
-      "Chakkar",
-      "Dhalkebar",
-      "Dhanushadham",
-      "Duhabi",
-      "Godar Chisapani",
-      "Jatahi",
-      "Khajuri",
-      "Phulgama",
-      "Raghunathpur",
-      "Sankhuwa Mahendranagar",
-      "Tinkoriya",
-      "Yadukuha",
+      {
+        label: "Bagachauda",
+      },
+      {
+        label: "Chakkar",
+      },
+      {
+        label: "Dhalkebar",
+      },
+      {
+        label: "Dhanushadham",
+      },
+      {
+        label: "Duhabi",
+      },
+      {
+        label: "Godar Chisapani",
+      },
+      {
+        label: "Jatahi",
+      },
+      {
+        label: "Khajuri",
+      },
+      {
+        label: "Phulgama",
+      },
+      {
+        label: "Raghunathpur",
+      },
+      {
+        label: "Sankhuwa Mahendranagar",
+      },
+      {
+        label: "Tinkoriya",
+      },
+      {
+        label: "Yadukuha",
+      },
     ],
     value: "Dhanusha",
   },
@@ -802,18 +1202,42 @@ export const Districts = [
     province: "Province No. 2",
     label: "Mahottari",
     cities: [
-      "Balawa",
-      "Bardibash",
-      "Bhangaha",
-      "Gaushala",
-      "Laxminiya",
-      "Loharpatti",
-      "Manara",
-      "Matihani",
-      "Pipara",
-      "Ramgopalpur",
-      "Samsi",
-      "Shreepur",
+      {
+        label: "Balawa",
+      },
+      {
+        label: "Bardibash",
+      },
+      {
+        label: "Bhangaha",
+      },
+      {
+        label: "Gaushala",
+      },
+      {
+        label: "Laxminiya",
+      },
+      {
+        label: "Loharpatti",
+      },
+      {
+        label: "Manara",
+      },
+      {
+        label: "Matihani",
+      },
+      {
+        label: "Pipara",
+      },
+      {
+        label: "Ramgopalpur",
+      },
+      {
+        label: "Samsi",
+      },
+      {
+        label: "Shreepur",
+      },
     ],
     value: "Mahottari",
   },
@@ -821,20 +1245,48 @@ export const Districts = [
     province: "Province No. 2",
     label: "Parsa",
     cities: [
-      "Aadarshanagar",
-      "Bahuari Pidari",
-      "Bindabasini",
-      "Biruwaguthi",
-      "Janakitol",
-      "Jeetpur",
-      "Pakahamainpur",
-      "Parbanipur",
-      "Paterwa Sugauli",
-      "Phokhariya",
-      "Ranigunj",
-      "Shirsiya Khalwatola",
-      "Thori",
-      "Viswa",
+      {
+        label: "Aadarshanagar",
+      },
+      {
+        label: "Bahuari Pidari",
+      },
+      {
+        label: "Bindabasini",
+      },
+      {
+        label: "Biruwaguthi",
+      },
+      {
+        label: "Janakitol",
+      },
+      {
+        label: "Jeetpur",
+      },
+      {
+        label: "Pakahamainpur",
+      },
+      {
+        label: "Parbanipur",
+      },
+      {
+        label: "Paterwa Sugauli",
+      },
+      {
+        label: "Phokhariya",
+      },
+      {
+        label: "Ranigunj",
+      },
+      {
+        label: "Shirsiya Khalwatola",
+      },
+      {
+        label: "Thori",
+      },
+      {
+        label: "Viswa",
+      },
     ],
     value: "Parsa",
   },
@@ -842,17 +1294,39 @@ export const Districts = [
     province: "Province No. 2",
     label: "Rautahat",
     cities: [
-      "Chandra Nigahapur",
-      "Katahariya",
-      "Laxminiya",
-      "Madhopur",
-      "Patharabudhram",
-      "Pipra bazar",
-      "Rajpurpharahadawa",
-      "Samanpur",
-      "Saruatha",
-      "Shivanagar",
-      "Sitalpur",
+      {
+        label: "Chandra Nigahapur",
+      },
+      {
+        label: "Katahariya",
+      },
+      {
+        label: "Laxminiya",
+      },
+      {
+        label: "Madhopur",
+      },
+      {
+        label: "Patharabudhram",
+      },
+      {
+        label: "Pipra bazar",
+      },
+      {
+        label: "Rajpurpharahadawa",
+      },
+      {
+        label: "Samanpur",
+      },
+      {
+        label: "Saruatha",
+      },
+      {
+        label: "Shivanagar",
+      },
+      {
+        label: "Sitalpur",
+      },
     ],
     value: "Rautahat",
   },
@@ -860,23 +1334,57 @@ export const Districts = [
     province: "Province No. 2",
     label: "Saptari",
     cities: [
-      "Arnaha",
-      "Bairaba",
-      "Bhagawatpur",
-      "Bhardaha",
-      "Bishnupur",
-      "Bodebarsain",
-      "Chhinnamasta",
-      "Hanuman Nagar",
-      "Kadarwona",
-      "Kalyanpur",
-      "Kanchanpur",
-      "Koiladi",
-      "Pato",
-      "Phattepur",
-      "Praswani",
-      "Rupani",
-      "Sisawa",
+      {
+        label: "Arnaha",
+      },
+      {
+        label: "Bairaba",
+      },
+      {
+        label: "Bhagawatpur",
+      },
+      {
+        label: "Bhardaha",
+      },
+      {
+        label: "Bishnupur",
+      },
+      {
+        label: "Bodebarsain",
+      },
+      {
+        label: "Chhinnamasta",
+      },
+      {
+        label: "Hanuman Nagar",
+      },
+      {
+        label: "Kadarwona",
+      },
+      {
+        label: "Kalyanpur",
+      },
+      {
+        label: "Kanchanpur",
+      },
+      {
+        label: "Koiladi",
+      },
+      {
+        label: "Pato",
+      },
+      {
+        label: "Phattepur",
+      },
+      {
+        label: "Praswani",
+      },
+      {
+        label: "Rupani",
+      },
+      {
+        label: "Sisawa",
+      },
     ],
     value: "Saptari",
   },
@@ -884,20 +1392,48 @@ export const Districts = [
     province: "Province No. 2",
     label: "Sarlahi",
     cities: [
-      "Barahathawa",
-      "Bayalbas",
-      "Brahmapuri",
-      "Chhatauna",
-      "Dumariya",
-      "Hariaun",
-      "Haripur",
-      "Haripurwa",
-      "Harkathawa",
-      "Karmaiya",
-      "Kaudena",
-      "Lalbandi",
-      "Ramnagar(Bahuarwa)",
-      "Sundarpur",
+      {
+        label: "Barahathawa",
+      },
+      {
+        label: "Bayalbas",
+      },
+      {
+        label: "Brahmapuri",
+      },
+      {
+        label: "Chhatauna",
+      },
+      {
+        label: "Dumariya",
+      },
+      {
+        label: "Hariaun",
+      },
+      {
+        label: "Haripur",
+      },
+      {
+        label: "Haripurwa",
+      },
+      {
+        label: "Harkathawa",
+      },
+      {
+        label: "Karmaiya",
+      },
+      {
+        label: "Kaudena",
+      },
+      {
+        label: "Lalbandi",
+      },
+      {
+        label: "Ramnagar(Bahuarwa)",
+      },
+      {
+        label: "Sundarpur",
+      },
     ],
     value: "Sarlahi",
   },
@@ -905,20 +1441,48 @@ export const Districts = [
     province: "Province No. 2",
     label: "Siraha",
     cities: [
-      "Bandipur",
-      "Bariyarpatti",
-      "Bastipur",
-      "Belha",
-      "Bhagawanpur",
-      "Bishnupur",
-      "Dhanagadhi",
-      "Golbazar (Asanpur)",
-      "Kalyanpur",
-      "Lahan",
-      "Madar",
-      "Maheshpur patari",
-      "Mirchaiya",
-      "Sukhipur",
+      {
+        label: "Bandipur",
+      },
+      {
+        label: "Bariyarpatti",
+      },
+      {
+        label: "Bastipur",
+      },
+      {
+        label: "Belha",
+      },
+      {
+        label: "Bhagawanpur",
+      },
+      {
+        label: "Bishnupur",
+      },
+      {
+        label: "Dhanagadhi",
+      },
+      {
+        label: "Golbazar (Asanpur)",
+      },
+      {
+        label: "Kalyanpur",
+      },
+      {
+        label: "Lahan",
+      },
+      {
+        label: "Madar",
+      },
+      {
+        label: "Maheshpur patari",
+      },
+      {
+        label: "Mirchaiya",
+      },
+      {
+        label: "Sukhipur",
+      },
     ],
     value: "Siraha",
   },
@@ -926,39 +1490,95 @@ export const Districts = [
     province: "Province No. 3",
     label: "Bhaktapur",
     cities: [
-      "Dibyashwori",
-      "Dubakot",
-      "Gamcha",
-      "Jorpati",
-      "Kharipati",
-      "Nagarkot",
-      "Tathali",
-      "Thimi",
+      {
+        label: "Dibyashwori",
+      },
+      {
+        label: "Dubakot",
+      },
+      {
+        label: "Gamcha",
+      },
+      {
+        label: "Jorpati",
+      },
+      {
+        label: "Kharipati",
+      },
+      {
+        label: "Nagarkot",
+      },
+      {
+        label: "Tathali",
+      },
+      {
+        label: "Thimi",
+      },
     ],
     value: "Bhaktapur",
   },
   {
     province: "Province No. 3",
     label: "Chitwan",
-    cities: ["Jutpani", "Khairahani", "Meghauli", "Patihani", "Phulbari"],
+    cities: [
+      {
+        label: "Jutpani",
+      },
+      {
+        label: "Khairahani",
+      },
+      {
+        label: "Meghauli",
+      },
+      {
+        label: "Patihani",
+      },
+      {
+        label: "Phulbari",
+      },
+    ],
     value: "Chitwan",
   },
   {
     province: "Province No. 3",
     label: "Dhading",
     cities: [
-      "Bhumisthan",
-      "Gajuri",
-      "Katunje",
-      "Khanikhola",
-      "Lapa",
-      "Maidi",
-      "Malekhu",
-      "Phulkharka",
-      "Sertung",
-      "Sunaulabazar",
-      "Sunkhani",
-      "Tripureshwor",
+      {
+        label: "Bhumisthan",
+      },
+      {
+        label: "Gajuri",
+      },
+      {
+        label: "Katunje",
+      },
+      {
+        label: "Khanikhola",
+      },
+      {
+        label: "Lapa",
+      },
+      {
+        label: "Maidi",
+      },
+      {
+        label: "Malekhu",
+      },
+      {
+        label: "Phulkharka",
+      },
+      {
+        label: "Sertung",
+      },
+      {
+        label: "Sunaulabazar",
+      },
+      {
+        label: "Sunkhani",
+      },
+      {
+        label: "Tripureshwor",
+      },
     ],
     value: "Dhading",
   },
@@ -966,16 +1586,36 @@ export const Districts = [
     province: "Province No. 3",
     label: "Dolakha",
     cities: [
-      "Bhusapheda",
-      "Chitre",
-      "Japhekalapani",
-      "Jiri",
-      "Khahare",
-      "Khopachangu",
-      "Lamabagar",
-      "Melung",
-      "Namdu",
-      "Sunkhani",
+      {
+        label: "Bhusapheda",
+      },
+      {
+        label: "Chitre",
+      },
+      {
+        label: "Japhekalapani",
+      },
+      {
+        label: "Jiri",
+      },
+      {
+        label: "Khahare",
+      },
+      {
+        label: "Khopachangu",
+      },
+      {
+        label: "Lamabagar",
+      },
+      {
+        label: "Melung",
+      },
+      {
+        label: "Namdu",
+      },
+      {
+        label: "Sunkhani",
+      },
     ],
     value: "Dolakha",
   },
@@ -983,26 +1623,66 @@ export const Districts = [
     province: "Province No. 3",
     label: "Kathmandu",
     cities: [
-      "Balaju",
-      "Baluwatar",
-      "Bansbari",
-      "Budhanilkantha",
-      "Chabahil",
-      "Dillibazar",
-      "Gauchar",
-      "Kalimati",
-      "Kirtipur",
-      "Manmaiju",
-      "Pashupati",
-      "Pharping",
-      "Sachibalaya",
-      "Sankhu",
-      "Sarbochcha Adalat",
-      "Sundarijal",
-      "Swayambhu",
-      "Thankot",
-      "Tokha Saraswati",
-      "Tribhuvan University",
+      {
+        label: "Balaju",
+      },
+      {
+        label: "Baluwatar",
+      },
+      {
+        label: "Bansbari",
+      },
+      {
+        label: "Budhanilkantha",
+      },
+      {
+        label: "Chabahil",
+      },
+      {
+        label: "Dillibazar",
+      },
+      {
+        label: "Gauchar",
+      },
+      {
+        label: "Kalimati",
+      },
+      {
+        label: "Kirtipur",
+      },
+      {
+        label: "Manmaiju",
+      },
+      {
+        label: "Pashupati",
+      },
+      {
+        label: "Pharping",
+      },
+      {
+        label: "Sachibalaya",
+      },
+      {
+        label: "Sankhu",
+      },
+      {
+        label: "Sarbochcha Adalat",
+      },
+      {
+        label: "Sundarijal",
+      },
+      {
+        label: "Swayambhu",
+      },
+      {
+        label: "Thankot",
+      },
+      {
+        label: "Tokha Saraswati",
+      },
+      {
+        label: "Tribhuvan University",
+      },
     ],
     value: "Kathmandu",
   },
@@ -1010,14 +1690,30 @@ export const Districts = [
     province: "Province No. 3",
     label: "Kavrepalanchok",
     cities: [
-      "Banepa",
-      "Dapcha",
-      "Dolal Ghat",
-      "Ghartichhap",
-      "Mangaltar",
-      "Panauti",
-      "Panchkhal",
-      "Phalante",
+      {
+        label: "Banepa",
+      },
+      {
+        label: "Dapcha",
+      },
+      {
+        label: "Dolal Ghat",
+      },
+      {
+        label: "Ghartichhap",
+      },
+      {
+        label: "Mangaltar",
+      },
+      {
+        label: "Panauti",
+      },
+      {
+        label: "Panchkhal",
+      },
+      {
+        label: "Phalante",
+      },
     ],
     value: "Kavrepalanchok",
   },
@@ -1025,15 +1721,33 @@ export const Districts = [
     province: "Province No. 3",
     label: "Lalitpur",
     cities: [
-      "Bhattedanda",
-      "Chapagaun",
-      "Darabartole",
-      "Dhapakhel",
-      "Godawari",
-      "Gotikhel",
-      "Imadol",
-      "Lubhu",
-      "Pyutar",
+      {
+        label: "Bhattedanda",
+      },
+      {
+        label: "Chapagaun",
+      },
+      {
+        label: "Darabartole",
+      },
+      {
+        label: "Dhapakhel",
+      },
+      {
+        label: "Godawari",
+      },
+      {
+        label: "Gotikhel",
+      },
+      {
+        label: "Imadol",
+      },
+      {
+        label: "Lubhu",
+      },
+      {
+        label: "Pyutar",
+      },
     ],
     value: "Lalitpur",
   },
@@ -1047,19 +1761,45 @@ export const Districts = [
     province: "Province No. 3",
     label: "Nuwakot",
     cities: [
-      "Bhadratar",
-      "Chokade",
-      "Deurali",
-      "Devighat",
-      "Kahule",
-      "Kharanitar",
-      "Nuwakot",
-      "Pokharichapadanda",
-      "Ramabati",
-      "Ranipauwa",
-      "Rautbesi",
-      "Taruka",
-      "Thansingh",
+      {
+        label: "Bhadratar",
+      },
+      {
+        label: "Chokade",
+      },
+      {
+        label: "Deurali",
+      },
+      {
+        label: "Devighat",
+      },
+      {
+        label: "Kahule",
+      },
+      {
+        label: "Kharanitar",
+      },
+      {
+        label: "Nuwakot",
+      },
+      {
+        label: "Pokharichapadanda",
+      },
+      {
+        label: "Ramabati",
+      },
+      {
+        label: "Ranipauwa",
+      },
+      {
+        label: "Rautbesi",
+      },
+      {
+        label: "Taruka",
+      },
+      {
+        label: "Thansingh",
+      },
     ],
     value: "Nuwakot",
   },
@@ -1067,41 +1807,98 @@ export const Districts = [
     province: "Province No. 3",
     label: "Ramechhap",
     cities: [
-      "Betali",
-      "Bhirpani",
-      "Doramba",
-      "Duragaun",
-      "Hiledevi",
-      "Kathjor",
-      "Khimti",
-      "Puranagaun",
-      "Saghutar",
-      "Those",
+      {
+        label: "Betali",
+      },
+      {
+        label: "Bhirpani",
+      },
+      {
+        label: "Doramba",
+      },
+      {
+        label: "Duragaun",
+      },
+      {
+        label: "Hiledevi",
+      },
+      {
+        label: "Kathjor",
+      },
+      {
+        label: "Khimti",
+      },
+      {
+        label: "Puranagaun",
+      },
+      {
+        label: "Saghutar",
+      },
+      {
+        label: "Those",
+      },
     ],
     value: "Ramechhap",
   },
   {
     province: "Province No. 3",
     label: "Rasuwa",
-    cities: ["Dhaibung", "Ramkali", "Rasuwa", "Syaphru Besi"],
+    cities: [
+      {
+        label: "Dhaibung",
+      },
+      {
+        label: "Ramkali",
+      },
+      {
+        label: "Rasuwa",
+      },
+      {
+        label: "Syaphru Besi",
+      },
+    ],
     value: "Rasuwa",
   },
   {
     province: "Province No. 3",
     label: "Sindhuli",
     cities: [
-      "Bahun Tilpung",
-      "Belghari",
-      "Bhiman",
-      "Dakaha",
-      "Dudhauli",
-      "Gwaltar",
-      "Jhanga Jholi",
-      "Kapilakot",
-      "Khurkot",
-      "Netrakali",
-      "Pipalmadhiratanpur",
-      "Solpa",
+      {
+        label: "Bahun Tilpung",
+      },
+      {
+        label: "Belghari",
+      },
+      {
+        label: "Bhiman",
+      },
+      {
+        label: "Dakaha",
+      },
+      {
+        label: "Dudhauli",
+      },
+      {
+        label: "Gwaltar",
+      },
+      {
+        label: "Jhanga Jholi",
+      },
+      {
+        label: "Kapilakot",
+      },
+      {
+        label: "Khurkot",
+      },
+      {
+        label: "Netrakali",
+      },
+      {
+        label: "Pipalmadhiratanpur",
+      },
+      {
+        label: "Solpa",
+      },
     ],
     value: "Sindhuli",
   },
@@ -1109,19 +1906,45 @@ export const Districts = [
     province: "Province No. 3",
     label: "Sindhupalchok",
     cities: [
-      "Atarpur",
-      "Balephi",
-      "Barabise",
-      "Bhotsipa",
-      "Dubachaur",
-      "Gyalthum",
-      "Jalbire",
-      "Kodari",
-      "Lamosanghu",
-      "Melamchi Bahunepati",
-      "Nawalpur",
-      "Pangtang",
-      "Thangapaldhap",
+      {
+        label: "Atarpur",
+      },
+      {
+        label: "Balephi",
+      },
+      {
+        label: "Barabise",
+      },
+      {
+        label: "Bhotsipa",
+      },
+      {
+        label: "Dubachaur",
+      },
+      {
+        label: "Gyalthum",
+      },
+      {
+        label: "Jalbire",
+      },
+      {
+        label: "Kodari",
+      },
+      {
+        label: "Lamosanghu",
+      },
+      {
+        label: "Melamchi Bahunepati",
+      },
+      {
+        label: "Nawalpur",
+      },
+      {
+        label: "Pangtang",
+      },
+      {
+        label: "Thangapaldhap",
+      },
     ],
     value: "Sindhupalchok",
   },
@@ -1129,20 +1952,48 @@ export const Districts = [
     province: "Province No. 1",
     label: "Bhojpur",
     cities: [
-      "Baikunthe",
-      "Bastim",
-      "Bhulke",
-      "Deurali",
-      "Dilpa Annapurna",
-      "Dingla",
-      "Dobhane",
-      "Kulung Agrakhe",
-      "Pyauli",
-      "Ranibas",
-      "Timma",
-      "Tiwari Bhanjyang",
-      "Walangkha",
-      "Yaku",
+      {
+        label: "Baikunthe",
+      },
+      {
+        label: "Bastim",
+      },
+      {
+        label: "Bhulke",
+      },
+      {
+        label: "Deurali",
+      },
+      {
+        label: "Dilpa Annapurna",
+      },
+      {
+        label: "Dingla",
+      },
+      {
+        label: "Dobhane",
+      },
+      {
+        label: "Kulung Agrakhe",
+      },
+      {
+        label: "Pyauli",
+      },
+      {
+        label: "Ranibas",
+      },
+      {
+        label: "Timma",
+      },
+      {
+        label: "Tiwari Bhanjyang",
+      },
+      {
+        label: "Walangkha",
+      },
+      {
+        label: "Yaku",
+      },
     ],
     value: "Bhojpur",
   },
@@ -1150,20 +2001,48 @@ export const Districts = [
     province: "Province No. 1",
     label: "Dhankuta",
     cities: [
-      "Ankhisalla",
-      "Arknaule",
-      "Bhedetar",
-      "Chungmang",
-      "Dandabazar",
-      "Dhankuta",
-      "Hile",
-      "Leguwa",
-      "Mare Katahare",
-      "Mudhebash",
-      "Muga",
-      "Pakhribash",
-      "Rajarani",
-      "Teliya",
+      {
+        label: "Ankhisalla",
+      },
+      {
+        label: "Arknaule",
+      },
+      {
+        label: "Bhedetar",
+      },
+      {
+        label: "Chungmang",
+      },
+      {
+        label: "Dandabazar",
+      },
+      {
+        label: "Dhankuta",
+      },
+      {
+        label: "Hile",
+      },
+      {
+        label: "Leguwa",
+      },
+      {
+        label: "Mare Katahare",
+      },
+      {
+        label: "Mudhebash",
+      },
+      {
+        label: "Muga",
+      },
+      {
+        label: "Pakhribash",
+      },
+      {
+        label: "Rajarani",
+      },
+      {
+        label: "Teliya",
+      },
     ],
     value: "Dhankuta",
   },
@@ -1171,17 +2050,39 @@ export const Districts = [
     province: "Province No. 1",
     label: "Ilam",
     cities: [
-      "Aaitabare",
-      "Cheesa Pani Panchami",
-      "Gajurmukhi",
-      "Gitpur",
-      "Harkatebazar",
-      "Jamuna",
-      "Mangal Bare",
-      "Nayabazar",
-      "Nepaltar",
-      "Pashupatinagar",
-      "Phikal",
+      {
+        label: "Aaitabare",
+      },
+      {
+        label: "Cheesa Pani Panchami",
+      },
+      {
+        label: "Gajurmukhi",
+      },
+      {
+        label: "Gitpur",
+      },
+      {
+        label: "Harkatebazar",
+      },
+      {
+        label: "Jamuna",
+      },
+      {
+        label: "Mangal Bare",
+      },
+      {
+        label: "Nayabazar",
+      },
+      {
+        label: "Nepaltar",
+      },
+      {
+        label: "Pashupatinagar",
+      },
+      {
+        label: "Phikal",
+      },
     ],
     value: "Ilam",
   },
@@ -1189,23 +2090,57 @@ export const Districts = [
     province: "Province No. 1",
     label: "Jhapa",
     cities: [
-      "Baniyani",
-      "Birtamod",
-      "Budhabare",
-      "Chandragadhi",
-      "Damak",
-      "Dhulabari",
-      "Dudhe",
-      "Durgapur",
-      "Gauradaha",
-      "Gaurigunj",
-      "Goldhap",
-      "Jhapa",
-      "Kankarbhitta",
-      "Rajgadh",
-      "Sanishchare",
-      "Shivagunj",
-      "Topagachhi",
+      {
+        label: "Baniyani",
+      },
+      {
+        label: "Birtamod",
+      },
+      {
+        label: "Budhabare",
+      },
+      {
+        label: "Chandragadhi",
+      },
+      {
+        label: "Damak",
+      },
+      {
+        label: "Dhulabari",
+      },
+      {
+        label: "Dudhe",
+      },
+      {
+        label: "Durgapur",
+      },
+      {
+        label: "Gauradaha",
+      },
+      {
+        label: "Gaurigunj",
+      },
+      {
+        label: "Goldhap",
+      },
+      {
+        label: "Jhapa",
+      },
+      {
+        label: "Kankarbhitta",
+      },
+      {
+        label: "Rajgadh",
+      },
+      {
+        label: "Sanishchare",
+      },
+      {
+        label: "Shivagunj",
+      },
+      {
+        label: "Topagachhi",
+      },
     ],
     value: "Jhapa",
   },
@@ -1213,17 +2148,39 @@ export const Districts = [
     province: "Province No. 1",
     label: "Khotang",
     cities: [
-      "Aiselukharka",
-      "Buipa",
-      "Chisapani",
-      "Halesi mahadevasthan",
-      "Jalpa",
-      "Khotang",
-      "Lamidanda",
-      "Manebhanjyang",
-      "Sapteshworichhitapokhari",
-      "Simpani",
-      "Wakshila",
+      {
+        label: "Aiselukharka",
+      },
+      {
+        label: "Buipa",
+      },
+      {
+        label: "Chisapani",
+      },
+      {
+        label: "Halesi mahadevasthan",
+      },
+      {
+        label: "Jalpa",
+      },
+      {
+        label: "Khotang",
+      },
+      {
+        label: "Lamidanda",
+      },
+      {
+        label: "Manebhanjyang",
+      },
+      {
+        label: "Sapteshworichhitapokhari",
+      },
+      {
+        label: "Simpani",
+      },
+      {
+        label: "Wakshila",
+      },
     ],
     value: "Khotang",
   },
@@ -1231,23 +2188,57 @@ export const Districts = [
     province: "Province No. 1",
     label: "Morang",
     cities: [
-      "Banigama",
-      "Bansbari",
-      "Bayarban",
-      "Bhaudaha",
-      "Biratnagar Bazar",
-      "Chunimari",
-      "Dadarberiya",
-      "Haraincha",
-      "Jhorahat",
-      "Kerabari",
-      "Letang",
-      "Madhumalla",
-      "Rangeli",
-      "Rani Sikiyahi",
-      "Sanischare",
-      "Sorabhag",
-      "Urlabari",
+      {
+        label: "Banigama",
+      },
+      {
+        label: "Bansbari",
+      },
+      {
+        label: "Bayarban",
+      },
+      {
+        label: "Bhaudaha",
+      },
+      {
+        label: "Biratnagar Bazar",
+      },
+      {
+        label: "Chunimari",
+      },
+      {
+        label: "Dadarberiya",
+      },
+      {
+        label: "Haraincha",
+      },
+      {
+        label: "Jhorahat",
+      },
+      {
+        label: "Kerabari",
+      },
+      {
+        label: "Letang",
+      },
+      {
+        label: "Madhumalla",
+      },
+      {
+        label: "Rangeli",
+      },
+      {
+        label: "Rani Sikiyahi",
+      },
+      {
+        label: "Sanischare",
+      },
+      {
+        label: "Sorabhag",
+      },
+      {
+        label: "Urlabari",
+      },
     ],
     value: "Morang",
   },
@@ -1255,17 +2246,39 @@ export const Districts = [
     province: "Province No. 1",
     label: "Okhaldhunga",
     cities: [
-      "Bigutar",
-      "Chyanam",
-      "Gamanangtar",
-      "Ghorakhori",
-      "Khani Bhanjyang",
-      "Khiji Phalate",
-      "Mane Bhanjyang",
-      "Moli",
-      "Ragani",
-      "Rampur",
-      "Rumjatar",
+      {
+        label: "Bigutar",
+      },
+      {
+        label: "Chyanam",
+      },
+      {
+        label: "Gamanangtar",
+      },
+      {
+        label: "Ghorakhori",
+      },
+      {
+        label: "Khani Bhanjyang",
+      },
+      {
+        label: "Khiji Phalate",
+      },
+      {
+        label: "Mane Bhanjyang",
+      },
+      {
+        label: "Moli",
+      },
+      {
+        label: "Ragani",
+      },
+      {
+        label: "Rampur",
+      },
+      {
+        label: "Rumjatar",
+      },
     ],
     value: "Okhaldhunga",
   },
@@ -1273,17 +2286,39 @@ export const Districts = [
     province: "Province No. 1",
     label: "Panchthar",
     cities: [
-      "Ambarpur",
-      "Chyangthapu",
-      "Limba",
-      "Mauwa",
-      "Medibung",
-      "Mehelbote",
-      "Namluwa",
-      "Nawamidanda",
-      "Rabi",
-      "Yangnam",
-      "Yasok",
+      {
+        label: "Ambarpur",
+      },
+      {
+        label: "Chyangthapu",
+      },
+      {
+        label: "Limba",
+      },
+      {
+        label: "Mauwa",
+      },
+      {
+        label: "Medibung",
+      },
+      {
+        label: "Mehelbote",
+      },
+      {
+        label: "Namluwa",
+      },
+      {
+        label: "Nawamidanda",
+      },
+      {
+        label: "Rabi",
+      },
+      {
+        label: "Yangnam",
+      },
+      {
+        label: "Yasok",
+      },
     ],
     value: "Panchthar",
   },
@@ -1291,19 +2326,45 @@ export const Districts = [
     province: "Province No. 1",
     label: "Sankhuwasabha",
     cities: [
-      "Ankhibhui",
-      "Bahrabishe",
-      "Chainpur",
-      "Chandanpur",
-      "Hatiya",
-      "Hedangana",
-      "Madi",
-      "Mamling",
-      "Manebhanjyang",
-      "Shidhakali",
-      "Tamku",
-      "Tumlingtar",
-      "Wana",
+      {
+        label: "Ankhibhui",
+      },
+      {
+        label: "Bahrabishe",
+      },
+      {
+        label: "Chainpur",
+      },
+      {
+        label: "Chandanpur",
+      },
+      {
+        label: "Hatiya",
+      },
+      {
+        label: "Hedangana",
+      },
+      {
+        label: "Madi",
+      },
+      {
+        label: "Mamling",
+      },
+      {
+        label: "Manebhanjyang",
+      },
+      {
+        label: "Shidhakali",
+      },
+      {
+        label: "Tamku",
+      },
+      {
+        label: "Tumlingtar",
+      },
+      {
+        label: "Wana",
+      },
     ],
     value: "Sankhuwasabha",
   },
@@ -1311,14 +2372,30 @@ export const Districts = [
     province: "Province No. 1",
     label: "Solukhumbu",
     cities: [
-      "Himaganga",
-      "Jubu",
-      "Lukla",
-      "Namche Bazar",
-      "Necha",
-      "Nele",
-      "Shishakhola",
-      "Sotang",
+      {
+        label: "Himaganga",
+      },
+      {
+        label: "Jubu",
+      },
+      {
+        label: "Lukla",
+      },
+      {
+        label: "Namche Bazar",
+      },
+      {
+        label: "Necha",
+      },
+      {
+        label: "Nele",
+      },
+      {
+        label: "Shishakhola",
+      },
+      {
+        label: "Sotang",
+      },
     ],
     value: "Solukhumbu",
   },
@@ -1326,23 +2403,57 @@ export const Districts = [
     province: "Province No. 1",
     label: "Sunsari",
     cities: [
-      "Aurabari",
-      "Bakalauri",
-      "Bhutaha",
-      "Chatara",
-      "Chhitaha",
-      "Chimadi",
-      "Dewangunj",
-      "Dharan",
-      "Duhabi",
-      "Inarauwa",
-      "Itahari",
-      "Jhumka",
-      "Laukahee",
-      "Madhuvan",
-      "Mahendra Nagar",
-      "Mangalbare",
-      "Simariya",
+      {
+        label: "Aurabari",
+      },
+      {
+        label: "Bakalauri",
+      },
+      {
+        label: "Bhutaha",
+      },
+      {
+        label: "Chatara",
+      },
+      {
+        label: "Chhitaha",
+      },
+      {
+        label: "Chimadi",
+      },
+      {
+        label: "Dewangunj",
+      },
+      {
+        label: "Dharan",
+      },
+      {
+        label: "Duhabi",
+      },
+      {
+        label: "Inarauwa",
+      },
+      {
+        label: "Itahari",
+      },
+      {
+        label: "Jhumka",
+      },
+      {
+        label: "Laukahee",
+      },
+      {
+        label: "Madhuvan",
+      },
+      {
+        label: "Mahendra Nagar",
+      },
+      {
+        label: "Mangalbare",
+      },
+      {
+        label: "Simariya",
+      },
     ],
     value: "Sunsari",
   },
@@ -1350,18 +2461,42 @@ export const Districts = [
     province: "Province No. 1",
     label: "Taplejung",
     cities: [
-      "Change",
-      "Dobhan",
-      "Hangpang",
-      "Khokling",
-      "Olangchunggola",
-      "Pedang",
-      "Sadeba",
-      "Sinam",
-      "Siwang",
-      "Taplejung",
-      "Thechambu",
-      "Thokimba",
+      {
+        label: "Change",
+      },
+      {
+        label: "Dobhan",
+      },
+      {
+        label: "Hangpang",
+      },
+      {
+        label: "Khokling",
+      },
+      {
+        label: "Olangchunggola",
+      },
+      {
+        label: "Pedang",
+      },
+      {
+        label: "Sadeba",
+      },
+      {
+        label: "Sinam",
+      },
+      {
+        label: "Siwang",
+      },
+      {
+        label: "Taplejung",
+      },
+      {
+        label: "Thechambu",
+      },
+      {
+        label: "Thokimba",
+      },
     ],
     value: "Taplejung",
   },
@@ -1369,15 +2504,33 @@ export const Districts = [
     province: "Province No. 1",
     label: "Terhathum",
     cities: [
-      "Basantapur",
-      "Hamarjung",
-      "Iwa",
-      "Jirikhimti",
-      "Morahang",
-      "Mulpani",
-      "Pokalawang",
-      "Sudap",
-      "Tinjure",
+      {
+        label: "Basantapur",
+      },
+      {
+        label: "Hamarjung",
+      },
+      {
+        label: "Iwa",
+      },
+      {
+        label: "Jirikhimti",
+      },
+      {
+        label: "Morahang",
+      },
+      {
+        label: "Mulpani",
+      },
+      {
+        label: "Pokalawang",
+      },
+      {
+        label: "Sudap",
+      },
+      {
+        label: "Tinjure",
+      },
     ],
     value: "Terhathum",
   },
@@ -1385,17 +2538,39 @@ export const Districts = [
     province: "Province No. 1",
     label: "Udayapur",
     cities: [
-      "Baraha",
-      "Beltar",
-      "Bhutar",
-      "Hadiya",
-      "Katari",
-      "Pokhari",
-      "Rampur Jhilke",
-      "Ratapani (Thoksila)",
-      "Rauta Murkuchi",
-      "Sorung Chhabise",
-      "Udayapur Gadhi",
+      {
+        label: "Baraha",
+      },
+      {
+        label: "Beltar",
+      },
+      {
+        label: "Bhutar",
+      },
+      {
+        label: "Hadiya",
+      },
+      {
+        label: "Katari",
+      },
+      {
+        label: "Pokhari",
+      },
+      {
+        label: "Rampur Jhilke",
+      },
+      {
+        label: "Ratapani (Thoksila)",
+      },
+      {
+        label: "Rauta Murkuchi",
+      },
+      {
+        label: "Sorung Chhabise",
+      },
+      {
+        label: "Udayapur Gadhi",
+      },
     ],
     value: "Udayapur",
   },
@@ -1403,14 +2578,30 @@ export const Districts = [
     province: "Karnali",
     label: "Dailekh",
     cities: [
-      "Byastada",
-      "Dhungeshwor",
-      "Dullu",
-      "Gaidabaj",
-      "Jambu Kandha",
-      "Malika",
-      "Naumule",
-      "Rakam Karnali",
+      {
+        label: "Byastada",
+      },
+      {
+        label: "Dhungeshwor",
+      },
+      {
+        label: "Dullu",
+      },
+      {
+        label: "Gaidabaj",
+      },
+      {
+        label: "Jambu Kandha",
+      },
+      {
+        label: "Malika",
+      },
+      {
+        label: "Naumule",
+      },
+      {
+        label: "Rakam Karnali",
+      },
     ],
     value: "Dailekh",
   },
@@ -1418,34 +2609,80 @@ export const Districts = [
     province: "Karnali",
     label: "Dolpa",
     cities: [
-      "Foksundo",
-      "Juphal",
-      "Kaigaun",
-      "Liku",
-      "Namdo",
-      "Sarmi",
-      "Tripurakot",
+      {
+        label: "Foksundo",
+      },
+      {
+        label: "Juphal",
+      },
+      {
+        label: "Kaigaun",
+      },
+      {
+        label: "Liku",
+      },
+      {
+        label: "Namdo",
+      },
+      {
+        label: "Sarmi",
+      },
+      {
+        label: "Tripurakot",
+      },
     ],
     value: "Dolpa",
   },
   {
     province: "Karnali",
     label: "Humla",
-    cities: ["Darma", "Lali", "Muchu", "Sarkegadh", "Srinagar"],
+    cities: [
+      {
+        label: "Darma",
+      },
+      {
+        label: "Lali",
+      },
+      {
+        label: "Muchu",
+      },
+      {
+        label: "Sarkegadh",
+      },
+      {
+        label: "Srinagar",
+      },
+    ],
     value: "Humla",
   },
   {
     province: "Karnali",
     label: "Jajarkot",
     cities: [
-      "Dalli",
-      "Dashera",
-      "Dhime",
-      "Garkhakot",
-      "Karkigaun",
-      "Ragda",
-      "Rokaya gaun (Limsa)",
-      "Thalaraikar",
+      {
+        label: "Dalli",
+      },
+      {
+        label: "Dashera",
+      },
+      {
+        label: "Dhime",
+      },
+      {
+        label: "Garkhakot",
+      },
+      {
+        label: "Karkigaun",
+      },
+      {
+        label: "Ragda",
+      },
+      {
+        label: "Rokaya gaun (Limsa)",
+      },
+      {
+        label: "Thalaraikar",
+      },
     ],
     value: "Jajarkot",
   },
@@ -1453,13 +2690,27 @@ export const Districts = [
     province: "Karnali",
     label: "Jumla",
     cities: [
-      "Chautha",
-      "Dillichaur",
-      "Hatsinja",
-      "Kalikakhetu",
-      "Malikathata",
-      "Narakot",
-      "Tatopani",
+      {
+        label: "Chautha",
+      },
+      {
+        label: "Dillichaur",
+      },
+      {
+        label: "Hatsinja",
+      },
+      {
+        label: "Kalikakhetu",
+      },
+      {
+        label: "Malikathata",
+      },
+      {
+        label: "Narakot",
+      },
+      {
+        label: "Tatopani",
+      },
     ],
     value: "Jumla",
   },
@@ -1467,13 +2718,27 @@ export const Districts = [
     province: "Karnali",
     label: "Kalikot",
     cities: [
-      "Jubitha",
-      "Kalikot",
-      "Kotbada",
-      "Mehalmudi",
-      "Padamghat",
-      "Sanniraskot",
-      "Thirpu",
+      {
+        label: "Jubitha",
+      },
+      {
+        label: "Kalikot",
+      },
+      {
+        label: "Kotbada",
+      },
+      {
+        label: "Mehalmudi",
+      },
+      {
+        label: "Padamghat",
+      },
+      {
+        label: "Sanniraskot",
+      },
+      {
+        label: "Thirpu",
+      },
     ],
     value: "Kalikot",
   },
@@ -1481,13 +2746,27 @@ export const Districts = [
     province: "Karnali",
     label: "Mugu",
     cities: [
-      "Dhainkot",
-      "Gumtha",
-      "Pulu",
-      "Rara",
-      "Rowa",
-      "Sorubarma",
-      "Sukhadhik",
+      {
+        label: "Dhainkot",
+      },
+      {
+        label: "Gumtha",
+      },
+      {
+        label: "Pulu",
+      },
+      {
+        label: "Rara",
+      },
+      {
+        label: "Rowa",
+      },
+      {
+        label: "Sorubarma",
+      },
+      {
+        label: "Sukhadhik",
+      },
     ],
     value: "Mugu",
   },
@@ -1495,15 +2774,33 @@ export const Districts = [
     province: "Karnali",
     label: "Salyan",
     cities: [
-      "Bhalchaur",
-      "Dhanbang",
-      "Kalimati Kalche",
-      "Luham",
-      "Mahaneta",
-      "Maidu",
-      "Malneta",
-      "Ragechour",
-      "Tharmare",
+      {
+        label: "Bhalchaur",
+      },
+      {
+        label: "Dhanbang",
+      },
+      {
+        label: "Kalimati Kalche",
+      },
+      {
+        label: "Luham",
+      },
+      {
+        label: "Mahaneta",
+      },
+      {
+        label: "Maidu",
+      },
+      {
+        label: "Malneta",
+      },
+      {
+        label: "Ragechour",
+      },
+      {
+        label: "Tharmare",
+      },
     ],
     value: "Salyan",
   },
@@ -1511,16 +2808,36 @@ export const Districts = [
     province: "Karnali",
     label: "Surkhet",
     cities: [
-      "Babiyachaur",
-      "Bheriganga",
-      "Chhinchu",
-      "Garpan",
-      "Gumi",
-      "Gutu",
-      "Kunathari",
-      "Matela",
-      "Ramghat",
-      "Sahare",
+      {
+        label: "Babiyachaur",
+      },
+      {
+        label: "Bheriganga",
+      },
+      {
+        label: "Chhinchu",
+      },
+      {
+        label: "Garpan",
+      },
+      {
+        label: "Gumi",
+      },
+      {
+        label: "Gutu",
+      },
+      {
+        label: "Kunathari",
+      },
+      {
+        label: "Matela",
+      },
+      {
+        label: "Ramghat",
+      },
+      {
+        label: "Sahare",
+      },
     ],
     value: "Surkhet",
   },
