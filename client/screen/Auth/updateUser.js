@@ -71,8 +71,9 @@ export default UpdateUser = ({ navigation }) => {
   const { userData, setUserData } = useContext(AppContext);
   // const [district, setDistrict] = useState();
   const [data, setData] = useState();
-  let popupRef = createRef();
-  const [citiesList, setCitiesList] = useState([]);
+  const [citiesList, setCitiesList] = useState(
+    Districts.filter((item) => item.label == userData?.user_district)[0].cities
+  );
   const [file, setFile] = useState(null);
   const [load, setLoad] = useState(false);
 
@@ -144,14 +145,9 @@ export default UpdateUser = ({ navigation }) => {
   //     // });
   //     return;
   //   }
+
   // };
-  useEffect(() => {
-    Districts.map((item) => {
-      if (userData?.user_district == item.label) {
-        setCitiesList(item.cities);
-      }
-    });
-  });
+
   async function postData(values, { setSubmitting, setFieldError }) {
     setLoad(true);
     const [img] = await uploadImage([values.image]);
