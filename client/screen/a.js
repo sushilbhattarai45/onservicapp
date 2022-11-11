@@ -75,7 +75,6 @@ const SPProfileScreen = ({ navigation, route }) => {
   const popup = createRef();
   const popupQr = createRef();
   const postReview = async (user_contact, rating, review, sp_contact) => {
-    console.log(rating);
     let res = await axiosInstance.post("/review/post", {
       GIVEN_API_KEY: "AXCF",
       user_id: user,

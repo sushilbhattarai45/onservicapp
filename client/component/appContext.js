@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { axiosInstance } from "./tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import * as Location from "expo-location";
 
 const AppContext = createContext({});
 
@@ -13,7 +14,49 @@ export const ContextProvider = ({ children }) => {
   const [logged, setLogged] = useState("false");
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [location, setLocation] = useState(null);
+  const [livedistrict, setLiveDistrict] = useState("");
+  const [coords, setCoords] = useState({
+    latitude: "",
+    longitude: "",
+  });
+  const [errorMsg, setErrorMsg] = useState(null);
+
   useEffect(() => {
+    async function getLocation() {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+
+      let text = "Waiting..";
+      if (errorMsg) {
+        text = errorMsg;
+      } else if (location) {
+        setCoords({
+          latitude: location?.coords?.latitude,
+          longitude: location?.coords?.longitude,
+        });
+        text = location?.coords?.latitude;
+        let url =
+          "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+          location?.coords?.longitude +
+          "," +
+          location?.coords?.latitude +
+          ".json?country=np&limit=1&types=district&access_token=pk.eyJ1Ijoib25zZXJ2aWMwMSIsImEiOiJjbGFjbGYycGIwYmljM3ZtaXFkbGFjZTcxIn0.sRocgrMGOjXS98-r7t1G_g";
+
+        let res = await axios.get(url);
+        if (res) {
+          let district = res?.data?.features[0].text;
+          console.log(district);
+          setLiveDistrict(district);
+        }
+        console.log(url);
+      }
+    }
     const getUserData = async (contact) => {
       let res = await axiosInstance.post("/user/getOneUser", {
         GIVEN_API_KEY: "AXCF",
@@ -47,11 +90,9 @@ export const ContextProvider = ({ children }) => {
             GIVEN_API_KEY: "AXCF",
             sp_contact: d,
           });
-          console.log(spcheck.data);
           if (spcheck?.data?.statuscode == 201) {
             setIsitSp(spcheck.data.data);
           } else {
-            console.log("No");
             setIsitSp(false);
           }
         }
@@ -84,7 +125,9 @@ export const ContextProvider = ({ children }) => {
         console.log(error);
       }
     };
+
     getUser();
+    getLocation();
     getCategories();
     getSubCategories();
   }, []);
@@ -93,6 +136,10 @@ export const ContextProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         logged,
+        coords,
+        livedistrict,
+        setLiveDistrict,
+        setCoords,
         setUser,
         setLogged,
         user,

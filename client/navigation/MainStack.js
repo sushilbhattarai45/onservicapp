@@ -16,6 +16,8 @@ import SearchPersonListingScreen from "../screen/searchPersonListingScreen";
 import QrScreen from "../screen/Qrscreen.js";
 import UpdateSpScreen from "../screen/Auth/updateSPScreen";
 import UpdateUser from "../screen/Auth/updateUser";
+import LocationScreen from "../screen/location";
+
 const Stack = createNativeStackNavigator();
 export default function AppStack() {
   return (
@@ -37,6 +39,7 @@ export default function AppStack() {
       <Stack.Screen name="QrScreen" component={QrScreen} />
       <Stack.Screen name="UpdateSP" component={UpdateSpScreen} />
       <Stack.Screen name="UpdateUser" component={UpdateUser} />
+      <Stack.Screen name="LocationScreen" component={LocationScreen} />
 
       <Stack.Screen
         name="CategoryPersonListing"

@@ -26,7 +26,7 @@ import { Districts } from "../component/district";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SearchPersonListingScreen({ navigation }) {
-  const { subCategories, userData } = useContext(AppContext);
+  const { subCategories, userData, livedistrict } = useContext(AppContext);
 
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionTouched, setSuggestionsTouched] = useState(false);

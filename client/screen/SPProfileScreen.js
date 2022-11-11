@@ -94,6 +94,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const popupQr = createRef();
   const popupSettings = createRef();
   const popupNumber = createRef();
+  const popupWNumber = createRef();
   const video = useRef(null);
   const [videoMuted, setVideoMuted] = useState(true);
   const [bookIcon, setBookIcon] = useState("false");
@@ -262,20 +263,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               <Text>{sp?.user_profileImage}</Text>
               <ActionIcon
                 name="chat-1-line"
-                onPress={() => {
-                  let url =
-                    "whatsapp://send?text=" +
-                    "Hello" +
-                    "&phone=+977" +
-                    sp?.sp_officeNumber;
-                  Linking.openURL(url)
-                    .then((data) => {
-                      console.log("WhatsApp Opened");
-                    })
-                    .catch(() => {
-                      alert("Make sure Whatsapp installed on your device");
-                    });
-                }}
+                onPress={() => popupWNumber.current.show()}
               />
 
               <ActionIcon
@@ -861,40 +849,165 @@ const SPProfileScreen = ({ navigation, route }) => {
           >
             Phone Number
           </Text>
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              width: "100%",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingVertical: 12,
 
-              // backgroundColor:'red'
-            }}
-            onPress={() => Linking.openURL(`tel:${sp?.sp_officeNumber}`)}
-          >
-            <Text style={{ color: Colors.black, fontFamily: "Regular" }}>
-              {sp?.sp_officeNumber}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          {sp?.sp_officeNumber && (
+            <TouchableOpacity
+              style={{
+                borderBottomColor: Colors.gray500,
+                borderBottomWidth: 1,
+                backgroundColor: Colors.white,
+                flexDirection: "row",
+                width: "100%",
+                alignItems: "center",
+                paddingVertical: 12,
+                // backgroundColor:'red'
+              }}
+              onPress={() => Linking.openURL(`tel:${sp?.sp_contact}`)}
+            >
+              <Icon name="phone-fill" color={Colors.gray900} size={20} />
+              <Text
+                style={{
+                  color: Colors.black,
+                  fontFamily: "Regular",
+                  textAlignVertical: "center",
+                  marginLeft: 12,
+                }}
+              >
+                {sp?.sp_officeNumber}
+              </Text>
+            </TouchableOpacity>
+          )}
+          {sp?.sp_contact && (
+            <TouchableOpacity
+              style={{
+                backgroundColor: Colors.white,
+                flexDirection: "row",
+                width: "100%",
+                alignItems: "center",
+                paddingVertical: 12,
+                // backgroundColor:'red'
+              }}
+              onPress={() => Linking.openURL(`tel:${sp?.sp_contact}`)}
+            >
+              <Icon name="phone-fill" color={Colors.gray900} size={20} />
+              <Text
+                style={{
+                  color: Colors.black,
+                  fontFamily: "Regular",
+                  textAlignVertical: "center",
+                  marginLeft: 12,
+                }}
+              >
+                {sp?.sp_contact}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </ModalPopup>
+      <ModalPopup
+        ref={popupWNumber}
+        animationType="fade"
+        onTouchOutside={() => {
+          popupWNumber.current.close();
+        }}
+      >
+        <View
+          style={{
+            alignItems: "center",
+            // paddingHorizontal: 16,
+            paddingVertical: 16,
+            justifyContent: "center",
+          }}
+        >
+          <Text
             style={{
-              borderTopColor: Colors.gray500,
-              borderTopWidth: 1,
-              backgroundColor: Colors.white,
-              flexDirection: "row",
-              width: "100%",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingVertical: 12,
-              // backgroundColor:'red'
+              color: Colors.black,
+              fontSize: 24,
+              fontFamily: "Black",
+              marginBottom: 24,
             }}
-            onPress={() => Linking.openURL(`tel:${sp?.sp_contact}`)}
           >
-            <Text style={{ color: Colors.black, fontFamily: "Regular" }}>
-              {sp?.sp_contact}
-            </Text>
-          </TouchableOpacity>
+            Phone Number
+          </Text>
+
+          {sp?.sp_officeNumber && (
+            <TouchableOpacity
+              style={{
+                borderBottomColor: Colors.gray500,
+                borderBottomWidth: 1,
+                backgroundColor: Colors.white,
+                flexDirection: "row",
+                width: "100%",
+                alignItems: "center",
+                paddingVertical: 12,
+                // backgroundColor:'red'
+              }}
+              onPress={() => {
+                let url =
+                  "whatsapp://send?text=" +
+                  "Hello" +
+                  "&phone=+977" +
+                  sp?.sp_officeNumber;
+                Linking.openURL(url)
+                  .then((data) => {
+                    console.log("WhatsApp Opened");
+                  })
+                  .catch(() => {
+                    alert("Make sure Whatsapp installed on your device");
+                  });
+              }}
+            >
+              <Icon name="phone-fill" color={Colors.gray900} size={20} />
+              <Text
+                style={{
+                  color: Colors.black,
+                  fontFamily: "Regular",
+                  textAlignVertical: "center",
+                  marginLeft: 12,
+                }}
+              >
+                {sp?.sp_officeNumber}
+              </Text>
+            </TouchableOpacity>
+          )}
+          {sp?.sp_contact && (
+            <TouchableOpacity
+              style={{
+                backgroundColor: Colors.white,
+                flexDirection: "row",
+                width: "100%",
+                alignItems: "center",
+                paddingVertical: 12,
+                // backgroundColor:'red'
+              }}
+              onPress={() => {
+                let url =
+                  "whatsapp://send?text=" +
+                  "Hello" +
+                  "&phone=+977" +
+                  sp?.sp_contact;
+                Linking.openURL(url)
+                  .then((data) => {
+                    console.log("WhatsApp Opened");
+                  })
+                  .catch(() => {
+                    alert("Make sure Whatsapp installed on your device");
+                  });
+              }}
+            >
+              <Icon name="phone-fill" color={Colors.gray900} size={20} />
+              <Text
+                style={{
+                  color: Colors.black,
+                  fontFamily: "Regular",
+                  textAlignVertical: "center",
+                  marginLeft: 12,
+                }}
+              >
+                {sp?.sp_contact}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ModalPopup>
       <ModalPopup

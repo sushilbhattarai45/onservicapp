@@ -1,5 +1,6 @@
 import spSchema from "../model/spSchema.js";
 import {} from "dotenv/config";
+import subCatSchema from "../model/subCatSchema.js";
 const API_KEY = process.env.API_KEY;
 export const test = async (req, res) => {
   res.send("okkk");
@@ -156,6 +157,71 @@ export const getSearchedSp = async (req, res) => {
     return res.json({ statuscode: 700, message: "Wrong Api Key" });
   }
 };
+
+export const getFilteredSubCat = async (req, res) => {
+  const { GIVEN_API_KEY, city } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      let subcatid = [];
+      let subcatdetails = [];
+
+      if (city && city !== "") {
+        const spdata = await spSchema.find({
+          sp_district: city,
+        });
+        console.log(spdata);
+        let count = 0;
+        spdata.map((item) => {
+          item.sp_skills.map((skill) => {
+            if (!subcatid.includes(skill)) {
+              subcatid.push(skill);
+            }
+          });
+
+          // subcatid.forEach((element) => {
+          //   if (element == item.sp_skills[0]) {
+          //     count += 1;
+          //   }
+          // });
+          // if (count == 0) {
+
+          // }
+          // count = 0;
+        });
+
+        subcatdetails = await Promise.all(
+          subcatid.map(async (item) => {
+            const subcat = await subCatSchema.find({
+              subCat_name: item,
+            });
+            console.log(subcat[0]);
+            return subcat[0];
+          })
+        );
+
+        return res.json({
+          statuscode: 201,
+          data: subcatid,
+          subcat: subcatdetails,
+        });
+      } else {
+        const spdata = await spSchema.find({
+          sp_skills: skill,
+        });
+        console.log(spdata);
+
+        return res.json({ statuscode: 201, data: spdata });
+      }
+    } catch (e) {
+      return res.json({
+        error: "Sry there is some error in our side",
+      });
+    }
+  } else {
+    return res.json({ statuscode: 700, message: "Wrong Api Key" });
+  }
+};
+
 export const updateSettings = async (req, res) => {
   const { GIVEN_API_KEY, sp_contact, sp_status, sp_showReview } = req.body;
   if (GIVEN_API_KEY == API_KEY) {

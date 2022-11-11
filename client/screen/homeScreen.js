@@ -28,8 +28,16 @@ const wWidth = Dimensions.get("window").width;
 import NewlyAddedServices from "../component/NewlyAddedServices";
 
 const HomeScreen = ({ navigation }) => {
-  const { categories, user, logged, userData, isitsp, setIsitSp } =
-    useContext(AppContext);
+  const {
+    categories,
+    user,
+    logged,
+    userData,
+    coords,
+    livedistrict,
+    isitsp,
+    setIsitSp,
+  } = useContext(AppContext);
   console.log(userData);
   const [newaddons, setNewaddons] = useState();
   const [featured, setFeatured] = useState();
@@ -83,7 +91,8 @@ const HomeScreen = ({ navigation }) => {
             ) : (
               <Text style={styles.userName}>Hello User!</Text>
             )}
-            <Text style={styles.userNeedHelp}>Need help?</Text>
+
+            <Text style={styles.userNeedHelp}>{livedistrict}</Text>
           </View>
           <Icon
             onPress={() => navigation.navigate("QrScreen")}

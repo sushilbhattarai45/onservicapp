@@ -68,7 +68,6 @@ export default function BookMarkCard({
                   alert("Deleted Successfully");
                   navigation.navigate("Home");
                 }
-                console.log(deleteBm.data);
               }}
               style={{
                 alignSelf: "center",
