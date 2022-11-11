@@ -23,7 +23,11 @@ import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import { Districts } from "../../component/district";
 import Checkbox from "expo-checkbox";
 import Icon from "../../component/Icon";
-import { axiosInstance, BASE_OUR_API_URL, uploadImage } from "../../component/tools";
+import {
+  axiosInstance,
+  BASE_OUR_API_URL,
+  uploadImage,
+} from "../../component/tools";
 import AppContext from "../../component/appContext";
 import { Video } from "expo-av";
 const gendersList = [
@@ -97,7 +101,10 @@ const UpdateSpScreen = ({ route, navigation }) => {
   const { userData } = useContext(AppContext);
   console.log(sp.sp_media.video);
   const { subCategories, setIsitSp } = useContext(AppContext);
-  const [citiesList, setCitiesList] = useState([]);
+  const [citiesList, setCitiesList] = useState(
+    Districts.filter((item) => item.label == sp?.sp_district)[0].cities
+  );
+  console.log(citiesList);
   const [load, setLoad] = useState(false);
 
   const submit = async (values) => {
@@ -178,13 +185,6 @@ const UpdateSpScreen = ({ route, navigation }) => {
     }
   };
 
-  useEffect(() => {
-    Districts.map((item) => {
-      if (sp?.sp_district == item.label) {
-        setCitiesList(item.cities);
-      }
-    });
-  });
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: Colors.gray200 }}

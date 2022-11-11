@@ -456,7 +456,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               ) : null}
             </Pressable>
           ) : null}
-          {showReviews && (
+          {showReviews && sp?.sp_contact == isitsp?.sp_contact && (
             <>
               <View
                 style={{
