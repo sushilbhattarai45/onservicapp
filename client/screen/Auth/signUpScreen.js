@@ -124,9 +124,7 @@ export default registerUser = ({ navigation }) => {
   const selectFile = async () => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync();
-
       setFile(result);
-
       let uri = result.uri;
       return uri;
     } catch (e) {

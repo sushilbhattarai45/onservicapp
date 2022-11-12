@@ -127,14 +127,13 @@ const SPProfileScreen = ({ navigation, route }) => {
       sp_id: sp?.sp_contact,
       GIVEN_API_KEY: "AXCF",
     });
-
-    let d = res?.data?.data.splice(0, 5);
-    setReviews(d);
+    let d = res?.data?.data;
     let sum = 0;
-    res?.data?.data?.map((item) => {
+    d?.map((item) => {
       sum += item.review_stars;
     });
     setSp_Rated((sum / d?.length).toFixed(2));
+    setReviews(d);
   };
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -500,7 +499,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                     }}
                     onPress={() =>
                       navigation.navigate("ViewAllReviews", {
-                        sp_contact: sp?.sp_contact,
+                        reviews: reviews,
                       })
                     }
                   >
@@ -510,8 +509,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               </View>
               <View>
                 {reviews !== [] && reviews ? (
-                  reviews?.map((item, index) => {
-                    console.log(item);
+                  reviews?.slice(0, 5).map((item, index) => {
                     return (
                       <ReviewCard
                         image={item.user_profile_image}

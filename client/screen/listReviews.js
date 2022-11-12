@@ -17,25 +17,8 @@ import axios from "axios";
 import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
 export default function ListReviews({ route, navigation }) {
-  const { sp_contact } = route.params;
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      getSpData();
-      //Put your Data loading function here instead of my loadData()
-    });
-    async function getSpData() {
-      let res = await axiosInstance.post("/review/getSpreview", {
-        sp_id: sp_contact,
-        GIVEN_API_KEY: "AXCF",
-      });
-
-      setReviews(res.data.data);
-      console.log("ok" + JSON.stringify(res.data.data));
-    }
-    return unsubscribe;
-    // getSpData();
-  }, [navigation]);
-  const [reviews, setReviews] = useState();
+  // const { r } = route.params;
+  const [reviews, setReviews] = useState(route.params.reviews);
 
   return (
     <View

@@ -92,7 +92,11 @@ const userValidationSchema = yup.object().shape({
     .of(yup.string().required())
     .min(1, "required-field")
     .required(),
-  photo: yup.array().min(1, "required-field").required(),
+  photo: yup
+    .array()
+    .min(1, "required-field")
+    .max(10, "Maximum 10 photos can be selected")
+    .required(),
   video: yup.string().required(),
 });
 
@@ -147,10 +151,9 @@ const UpdateSpScreen = ({ route, navigation }) => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsMultipleSelection: true,
-
         mediaType: "image",
+        selectionLimit: 10,
       });
-      console.log(result);
       let files = {};
       if (!result.cancelled) {
         files = result.selected
@@ -160,6 +163,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         return files;
       } else {
         setLoading(false);
+        return [...images];
       }
     } catch (e) {
       console.log(e);

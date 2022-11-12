@@ -172,6 +172,7 @@ const BecomeSPScreen = ({ navigation }) => {
         setLoading(false);
         return files;
       } else {
+        return images;
         setLoading(false);
       }
     } catch (e) {
