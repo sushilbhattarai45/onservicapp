@@ -134,7 +134,6 @@ const SPProfileScreen = ({ navigation, route }) => {
     });
     setSp_Rated((sum / d?.length).toFixed(2));
 
-    alert(sp_rated);
     setReviews(d);
   };
   useEffect(() => {
