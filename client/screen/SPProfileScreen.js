@@ -129,8 +129,7 @@ const SPProfileScreen = ({ navigation, route }) => {
     });
     let d = res?.data?.data;
     let sum = 0;
-    if(d.length>0){
-
+    if (d.length > 0) {
       d?.map((item) => {
         sum += item.review_stars;
       });
@@ -255,7 +254,17 @@ const SPProfileScreen = ({ navigation, route }) => {
               }}
             />
             {/* Buttons call/message/bookmark */}
-            <View style={{ flexDirection: "row", marginBottom: 12 }}>
+            <View
+              style={{
+                flex: 1,
+                alignSelf: "flex-end",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                marginTop: "auto",
+                flexWrap: "wrap",
+              }}
+            >
               <ActionIcon
                 name="phone-line"
                 onPress={() => {
@@ -282,11 +291,28 @@ const SPProfileScreen = ({ navigation, route }) => {
                   }}
                 />
               )}
+              {sp?.sp_location && (
+                <ActionIcon
+                  name="map-pin-line"
+                  onPress={() => Linking.openURL(sp?.sp_location)}
+                />
+              )}
+              {sp?.sp_tiktok && (
+                <Pressable
+                  style={{
+                    ...styles.actionIcon,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onPress={() => Linking.openURL(sp?.sp_tiktok)}
+                >
+                  <Image
+                    source={require("../assets/images/tiktok.png")}
+                    style={{ height: 24, width: 24 }}
+                  />
+                </Pressable>
+              )}
 
-              <ActionIcon
-                name="map-pin-line"
-                onPress={() => navigation.navigate("UpdateSP", { sp: sp })}
-              />
               {bookIcon == "true" ? (
                 <ActionIcon
                   name="bookmark-2-fill"
@@ -1049,6 +1075,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 24,
   },
   profileImage: {
+    position: "relative",
     width: 130,
     height: 130,
     borderRadius: 20,
@@ -1061,6 +1088,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.gray500,
     borderRadius: 200,
     marginLeft: 8,
+    marginTop: 8,
+    // marginBottom:8
   },
   subCategoriesContainerHeading: {
     marginBottom: 24,

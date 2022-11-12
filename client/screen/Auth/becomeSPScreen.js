@@ -98,6 +98,8 @@ const userValidationSchema = yup.object().shape({
   gender: yup.string().required("Please, select your gender"),
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
+  location: yup.string(),
+  tiktok: yup.string(),
   street: yup
     .string()
     .required()
@@ -107,7 +109,7 @@ const userValidationSchema = yup.object().shape({
   skills: yup
     .array()
     .of(yup.string().required())
-    .min(1, "required-field")
+    .min(1, "Please, select at least one skills.")
     .required(),
   photo: yup
     .array()
@@ -137,6 +139,8 @@ const BecomeSPScreen = ({ navigation }) => {
       sp_city: values.city,
       sp_street: values.street,
       sp_gender: values.gender,
+      sp_location: values.location,
+      sp_tiktok: values.tiktok,
       sp_media: {
         photo: img,
         video: vdo,
@@ -220,7 +224,8 @@ const BecomeSPScreen = ({ navigation }) => {
             city: "",
             street: userData?.user_street,
             accepted: false,
-            // googlemaplink: "",
+            location: userData?.sp_location,
+            tiktok: userData?.sp_tiktok,
             skills: [],
             photo: [],
             video: "",
@@ -330,7 +335,7 @@ const BecomeSPScreen = ({ navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Office Phone Number </Text>
+                <Text>Office/WhatsApp Number </Text>
                 <TextInput
                   keyboardType="numeric"
                   maxLength={10}
@@ -347,7 +352,7 @@ const BecomeSPScreen = ({ navigation }) => {
                   value={values.officePhone}
                   onChangeText={handleChange("officePhone")}
                   onBlur={() => setFieldTouched("officePhone")}
-                  placeholder="Office Phone Number"
+                  placeholder="Office/WhatsApp Number (optional)"
                   placeholderTextColor={Colors.gray900}
                 />
                 {touched.officePhone && errors.officePhone && (
@@ -484,7 +489,7 @@ const BecomeSPScreen = ({ navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Street *</Text>
+                <Text>Street*</Text>
                 <TextInput
                   style={[
                     styles.inputStyle,
@@ -505,6 +510,62 @@ const BecomeSPScreen = ({ navigation }) => {
                 />
                 {touched.street && errors.street && (
                   <Text style={{ color: "red" }}>{errors.street}</Text>
+                )}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>TikTok Link </Text>
+                <TextInput
+                  style={[
+                    styles.inputStyle,
+                    {
+                      borderColor: !touched.tiktok
+                        ? Colors.gray900
+                        : errors.tiktok
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.tiktok}
+                  onChangeText={handleChange("tiktok")}
+                  onBlur={() => setFieldTouched("tiktok")}
+                  placeholder="TikTok Link (optional)"
+                  placeholderTextColor={Colors.gray900}
+                  // placeholderStyle={{ color: Colors.gray900 }}
+                />
+                {touched.tiktok && errors.tiktok && (
+                  <Text style={{ color: "red" }}>{errors.tiktok}</Text>
+                )}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>Google Map Link </Text>
+                <TextInput
+                  style={[
+                    styles.inputStyle,
+                    {
+                      borderColor: !touched.location
+                        ? Colors.gray900
+                        : errors.location
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.location}
+                  onChangeText={handleChange("location")}
+                  onBlur={() => setFieldTouched("location")}
+                  placeholder="Google Map Link (optional)"
+                  placeholderTextColor={Colors.gray900}
+                  // placeholderStyle={{ color: Colors.gray900 }}
+                />
+                {touched.location && errors.location && (
+                  <Text style={{ color: "red" }}>{errors.location}</Text>
                 )}
               </View>
               <View
@@ -552,9 +613,9 @@ const BecomeSPScreen = ({ navigation }) => {
                     />
                   )}
                 />
-                {!values.skills && touched.skills ? (
+                {touched.skills && errors.skills && (
                   <Text style={{ color: "red" }}>{errors.skills}</Text>
-                ) : null}
+                )}
               </View>
               <View style={{ marginTop: 12 }}>
                 <Text>Upload Photos of your work!</Text>

@@ -87,10 +87,18 @@ const userValidationSchema = yup.object().shape({
     .min(6)
     .required("Please, provide your street!"),
   // image: yup.string().required(),
+  location: yup.string().required("Please, provide a google map link"),
+  tiktok: yup.string().required("Please, provide a tiktok id link"),
+  street: yup
+    .string()
+    .required()
+    .min(6)
+    .required("Please, provide your street!"),
+  // image: yup.string().required(),
   skills: yup
     .array()
     .of(yup.string().required())
-    .min(1, "required-field")
+    .min(1, "Please, select at least one skills.")
     .required(),
   photo: yup
     .array()
@@ -128,6 +136,8 @@ const UpdateSpScreen = ({ route, navigation }) => {
         sp_city: values.city,
         sp_street: values.street,
         sp_gender: values.gender,
+        sp_location: values.location,
+        sp_tiktok: values.tiktok,
         sp_media: {
           photo: img,
           video: vdo,
@@ -207,7 +217,8 @@ const UpdateSpScreen = ({ route, navigation }) => {
             city: sp?.sp_city,
             street: sp?.sp_street,
             accepted: false,
-            // googlemaplink: "",
+            location: userData?.sp_location,
+            tiktok: userData?.sp_tiktok,
             skills: sp?.sp_skills,
             photo: sp?.sp_media.photo,
             video: sp?.sp_media.video,
@@ -291,7 +302,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Office / Whatsapp Number</Text>
+                <Text>Office/WhatsApp Number </Text>
                 <TextInput
                   keyboardType="numeric"
                   maxLength={10}
@@ -308,7 +319,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   value={values.officePhone}
                   onChangeText={handleChange("officePhone")}
                   onBlur={() => setFieldTouched("officePhone")}
-                  placeholder="Office Phone Number  (optional)"
+                  placeholder="Office/WhatsApp Number (optional)"
                   placeholderTextColor={Colors.gray900}
                 />
                 {touched.officePhone && errors.officePhone && (
@@ -473,6 +484,62 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   marginTop: 12,
                 }}
               >
+                <Text>TikTok Link </Text>
+                <TextInput
+                  style={[
+                    styles.inputStyle,
+                    {
+                      borderColor: !touched.tiktok
+                        ? Colors.gray900
+                        : errors.tiktok
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.tiktok}
+                  onChangeText={handleChange("street")}
+                  onBlur={() => setFieldTouched("street")}
+                  placeholder="TikTok Link (optional)"
+                  placeholderTextColor={Colors.gray900}
+                  // placeholderStyle={{ color: Colors.gray900 }}
+                />
+                {touched.tiktok && errors.tiktok && (
+                  <Text style={{ color: "red" }}>{errors.tiktok}</Text>
+                )}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>Google Map Link </Text>
+                <TextInput
+                  style={[
+                    styles.inputStyle,
+                    {
+                      borderColor: !touched.location
+                        ? Colors.gray900
+                        : errors.location
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.location}
+                  onChangeText={handleChange("street")}
+                  onBlur={() => setFieldTouched("street")}
+                  placeholder="Google Map Link (optional)"
+                  placeholderTextColor={Colors.gray900}
+                  // placeholderStyle={{ color: Colors.gray900 }}
+                />
+                {touched.location && errors.location && (
+                  <Text style={{ color: "red" }}>{errors.location}</Text>
+                )}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
                 <Text>Skills *</Text>
                 <MultiSelect
                   placeholderStyle={{ color: Colors.gray900, fontSize: 14 }}
@@ -513,9 +580,9 @@ const UpdateSpScreen = ({ route, navigation }) => {
                     />
                   )}
                 />
-                {!values.skills && touched.skills ? (
+                {touched.skills && errors.skills && (
                   <Text style={{ color: "red" }}>{errors.skills}</Text>
-                ) : null}
+                )}
               </View>
               <View style={{ marginTop: 12 }}>
                 <Text>Upload Photos of your work!</Text>
