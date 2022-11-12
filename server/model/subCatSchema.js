@@ -3,6 +3,10 @@ const subCategories = mongoose.Schema({
   subCat_name: {
     type: String,
   },
+  subCat_hassubCat: {
+    default: false,
+    type: Boolean,
+  },
   subCat_status: {
     default: true,
     type: Boolean,
