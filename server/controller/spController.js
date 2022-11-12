@@ -136,6 +136,7 @@ export const getSearchedSp = async (req, res) => {
         const spdata = await spSchema.find({
           sp_skills: skill,
           sp_district: city,
+          sp_status: "ACTIVE",
         });
         console.log(spdata);
 
@@ -143,6 +144,7 @@ export const getSearchedSp = async (req, res) => {
       } else {
         const spdata = await spSchema.find({
           sp_skills: skill,
+          sp_status: "ACTIVE",
         });
         console.log(spdata);
 

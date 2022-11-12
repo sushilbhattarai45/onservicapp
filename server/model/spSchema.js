@@ -16,6 +16,9 @@ const sp = new mongoose.Schema({
   sp_location: {
     type: String,
   },
+  sp_tiktok: {
+    type: String,
+  },
   sp_street: {
     type: String,
   },

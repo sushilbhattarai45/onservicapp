@@ -387,7 +387,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                   marginLeft: 4,
                 }}
               >
-                {sp?.sp_street + " " + sp?.sp_city}
+                {sp?.sp_street + " " + sp?.sp_city + " " + sp?.sp_district}
               </Text>
             </View>
             <View
