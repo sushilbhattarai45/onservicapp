@@ -196,12 +196,16 @@ export default UpdateUser = ({ navigation }) => {
   };
   const selectFile = async () => {
     try {
-      let result = await ImagePicker.launchImageLibraryAsync();
-
-      setFile(result);
-
-      let uri = result.uri;
-      return uri;
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: "Images",
+      });
+      if (!result.cancelled) {
+        setFile(result);
+        let uri = result.uri;
+        return uri;
+      } else {
+        return userData?.user_profileImage;
+      }
     } catch (e) {
       console.log(e);
     }

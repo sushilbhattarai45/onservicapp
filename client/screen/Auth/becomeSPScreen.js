@@ -184,8 +184,8 @@ const BecomeSPScreen = ({ navigation }) => {
     setVdoLoading(true);
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        mediaType: "video",
+        mediaTypes: "Videos",
+
         selectionLimit: 1,
       });
       if (!result.cancelled) {
