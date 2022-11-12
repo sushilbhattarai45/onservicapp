@@ -7,6 +7,7 @@ import {
   View,
   ScrollView,
   FlatList,
+  ActivityIndicator,
   Pressable,
 } from "react-native";
 import CheckBox from "expo-checkbox";
@@ -23,15 +24,27 @@ import Icon from "../component/Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "../component/buttonComponent";
 import ModalPopup from "../component/Modal";
+import SubCatCard from "../component/subCatCard";
+import { styles } from "react-native-image-slider-banner/src/style";
 export default function UserProfileScreen({ navigation }) {
-  const { setUser, setLogged, userData, user, setUserData, isitsp, setIsitSp } =
-    useContext(AppContext);
+  const {
+    setUser,
+    setLogged,
+    userData,
+    user,
+    setUserData,
+    isitsp,
+    setIsitSp,
+    livedistrict,
+    snearyou,
+  } = useContext(AppContext);
   const popup = createRef();
   return (
     <ScrollView style={{ backgroundColor: Colors.gray200 }}>
       <View
         style={{
           flex: 1,
+          marginBottom: 20,
           display: "flex",
           backgroundColor: Colors.primary,
           flexDirection: "column",
@@ -346,57 +359,7 @@ export default function UserProfileScreen({ navigation }) {
                 </Text>
               </View>
             </View>
-            <View
-              style={{
-                marginTop: 24,
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: "Bold",
-                  fontStyle: "normal",
-                  fontWeight: "800",
-                  fontSize: 20,
-                  lineHeight: 38,
-                  display: "flex",
-                  alignItems: "flex-end",
-                  letterSpacing: -0.02,
-                }}
-              >
-                People Near You{" "}
-              </Text>
-              <View>
-                {/* <FlatList
-                  style={{
-                    marginTop: 12,
-                  }}
-                  //   style={styles.videos_flatList}
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                  data={Persons}
-                  renderItem={({ item }) => (
-                    <PeopleNearYou
-                      name={item.name}
-                      number={item.number}
-                      image={item.img}
-                      works={item.works}
-                    />
-                  )}
-                  ItemSeparatorComponent={() => {
-                    return (
-                      <View
-                        style={{
-                          height: "100%",
-                          width: 20,
-                          backgroundColor: Colors.gray200,
-                        }}
-                      />
-                    );
-                  }}
-                  keyExtractor={(item, index) => index.toString()}
-                /> */}
-              </View>
-            </View>
+
             <ModalPopup
               ref={popup}
               animationType="slide"
@@ -494,6 +457,72 @@ export default function UserProfileScreen({ navigation }) {
                 </Pressable>
               </View>
             </ModalPopup>
+            <View>
+              <Text
+                style={{
+                  marginTop: 32,
+                  fontFamily: "Regular",
+                  fontWeight: "bold",
+                  fontSize: 18,
+                }}
+              >
+                Services Near You
+              </Text>
+
+              {snearyou ? (
+                <FlatList
+                  style={{ marginBottom: 3, marginTop: 10 }}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  data={snearyou}
+                  renderItem={({ item, index }) => {
+                    let isEnd = index === snearyou.length - 1;
+                    return (
+                      <SubCatCard
+                        key={item?._id}
+                        district={livedistrict}
+                        image={item?.subCat_photo}
+                        category_id={item?._id}
+                        name={item?.subCat_name}
+                      />
+                    );
+                  }}
+                  ItemSeparatorComponent={() => {
+                    return (
+                      <View
+                        style={{
+                          height: "100%",
+                          width: 20,
+                          backgroundColor: Colors.gray200,
+                        }}
+                      />
+                    );
+                  }}
+                  keyExtractor={(item, index) => index.toString()}
+                />
+              ) : (
+                <View>
+                  <Text
+                    style={{
+                      justifyContent: "center",
+                      // alignItems: "center",
+                      fontFamily: "Regular",
+                      textAlign: "center",
+                      paddingBottom: 10,
+                    }}
+                  >
+                    No Data found for your current Location! Still Searching
+                  </Text>
+                  <ActivityIndicator
+                    size="large"
+                    color={Colors.primary}
+                    style={{
+                      marginBottom: 10,
+                    }}
+                  />
+                </View>
+              )}
+            </View>
           </View>
         </View>
       </View>

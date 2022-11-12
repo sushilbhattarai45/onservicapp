@@ -162,7 +162,13 @@ export default function SearchPersonListingScreen({ navigation }) {
         </View>
         {/* Suggestions */}
         {suggestionsActive && (
-          <View style={{ marginTop: 16, backgroundColor: Colors.white }}>
+          <View
+            style={{
+              marginTop: 16,
+              backgroundColor: Colors.white,
+              marginBottom: 20,
+            }}
+          >
             <ScrollView keyboardShouldPersistTaps={"handled"}>
               {suggestions.map((item, index) => {
                 return (
@@ -203,9 +209,7 @@ export default function SearchPersonListingScreen({ navigation }) {
                   <PersonCard
                     name={person.sp_name}
                     sp_contact={person.sp_contact}
-                    image={
-                      "https://thumbs.dreamstime.com/b/profile-picture-smiling-caucasian-male-employee-close-up-young-businessman-show-leadership-qualities-headshot-portrait-happy-204044575.jpg"
-                    }
+                    image={person.sp_profileImage}
                     address={person.sp_city + person.sp_district}
                     rating={5}
                     ratingcount={5}
