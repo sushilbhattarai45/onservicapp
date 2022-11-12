@@ -22,7 +22,11 @@ import { Dropdown, MultiSelect } from "react-native-element-dropdown";
 import { Districts } from "../../component/district";
 import Checkbox from "expo-checkbox";
 import Icon from "../../component/Icon";
-import { axiosInstance, BASE_OUR_API_URL, uploadImage } from "../../component/tools";
+import {
+  axiosInstance,
+  BASE_OUR_API_URL,
+  uploadImage,
+} from "../../component/tools";
 import axios from "axios";
 import AppContext from "../../component/appContext";
 import { Video } from "expo-av";
@@ -104,7 +108,11 @@ const userValidationSchema = yup.object().shape({
     .of(yup.string().required())
     .min(1, "required-field")
     .required(),
-  photo: yup.array().min(1, "required-field").required(),
+  photo: yup
+    .array()
+    .min(1, "required-field")
+    .max(10, "Max of 10 photos can be added")
+    .required(),
   video: yup.string().required(),
 });
 
@@ -152,8 +160,8 @@ const BecomeSPScreen = ({ navigation }) => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsMultipleSelection: true,
-
         mediaType: "image",
+        selectionLimit: 10,
       });
       console.log(result);
       let files = {};
@@ -190,7 +198,6 @@ const BecomeSPScreen = ({ navigation }) => {
     }
   };
 
- 
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: Colors.gray200 }}
@@ -634,7 +641,7 @@ const BecomeSPScreen = ({ navigation }) => {
                       }}
                       color="#0000ff"
                     />
-                  ) : (
+                  ) : values.photo.length != 10 ? (
                     <Pressable
                       style={{
                         height: 60,
@@ -656,7 +663,7 @@ const BecomeSPScreen = ({ navigation }) => {
                     >
                       <Icon name="add-line" size={24} color="white" />
                     </Pressable>
-                  )}
+                  ) : null}
                 </View>
               </View>
 

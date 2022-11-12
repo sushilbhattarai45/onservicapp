@@ -133,10 +133,11 @@ const SPProfileScreen = ({ navigation, route }) => {
     let d = res?.data?.data.splice(0, 5);
     setReviews(d);
     let sum = 0;
-    d?.map((item) => {
+    res?.data?.data?.map((item) => {
+      alert(item);
       sum += item.review_stars;
     });
-    setSp_Rated(sum / d?.length);
+    setSp_Rated((sum / d?.length).toFixed(2));
   };
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
