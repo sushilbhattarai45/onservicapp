@@ -160,8 +160,8 @@ const BecomeSPScreen = ({ navigation }) => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsMultipleSelection: true,
-
         mediaType: "image",
+        selectionLimit: 10,
       });
       console.log(result);
       let files = {};
