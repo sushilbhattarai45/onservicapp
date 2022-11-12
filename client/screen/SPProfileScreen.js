@@ -89,7 +89,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [spStatus, setSpStatus] = useState(
     sp?.sp_status == "ACTIVE" ? true : false
   );
-  const [sp_rated, setSp_Rated] = useState();
+  const [sp_rated, setSp_Rated] = useState(0);
 
   const popup = createRef();
   const popupQr = createRef();

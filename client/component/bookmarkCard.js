@@ -58,7 +58,6 @@ export default function BookMarkCard({
           >
             <Icon
               onPress={async () => {
-                alert("ok");
                 const deleteBm = await axiosInstance.post("/bm/delete", {
                   GIVEN_API_KEY: "AXCF",
                   user_id: user,

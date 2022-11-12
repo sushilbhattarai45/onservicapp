@@ -35,6 +35,7 @@ const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },
   { value: "Other", label: "Other" },
+  { value: "Company", label: "Company" },
 ];
 
 const data = [

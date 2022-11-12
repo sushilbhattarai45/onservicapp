@@ -268,6 +268,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   style={[
                     styles.inputStyle,
                     {
+                      color: "black",
                       borderColor: !touched.phone
                         ? Colors.gray900
                         : errors.phone
@@ -290,7 +291,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Office Phone Number *</Text>
+                <Text>Office / Whatsapp Number</Text>
                 <TextInput
                   keyboardType="numeric"
                   maxLength={10}
@@ -307,7 +308,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   value={values.officePhone}
                   onChangeText={handleChange("officePhone")}
                   onBlur={() => setFieldTouched("officePhone")}
-                  placeholder="Office Phone Number"
+                  placeholder="Office Phone Number  (optional)"
                   placeholderTextColor={Colors.gray900}
                 />
                 {touched.officePhone && errors.officePhone && (

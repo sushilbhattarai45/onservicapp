@@ -112,9 +112,7 @@ export default registerUser = ({ navigation }) => {
       setFieldError("phone", "Phone Number already exists");
     } else {
       setLoad(false);
-      alert("no");
     }
-    alert(status);
   }
   const storeData = async (value) => {
     try {
@@ -228,6 +226,7 @@ export default registerUser = ({ navigation }) => {
                     }}
                   >
                     <Pressable
+                      style={{ borderRadius: 10 }}
                       onPress={async () => {
                         let img = await selectFile();
                         console.log("a" + img);
@@ -258,6 +257,7 @@ export default registerUser = ({ navigation }) => {
                           style={{
                             alignSelf: "center",
                             right: 0,
+                            borderRadius: 24,
                             height: 75,
                             width: 75,
                             borderWidth: StyleSheet.hairlineWidth,
@@ -617,10 +617,17 @@ export default registerUser = ({ navigation }) => {
                         </Text>{" "}
                       </Text>
                     }
-                  </View>{
-                    
-                  <Text></Text>
-                  }
+                  </View>
+                  {errors.image ? (
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        color: "red",
+                      }}
+                    >
+                      {errors.image}
+                    </Text>
+                  ) : null}
                   <Pressable
                     style={{
                       borderColor: Colors.primary,

@@ -62,8 +62,8 @@ const userValidationSchema = yup.object().shape({
   confirm: yup
     .string()
     .label("confirm password")
-    .required("Please, Reenter your PIN!")
-    .oneOf([yup.ref("password"), null], "PIN must match"),
+    .required("Please, Enter your PIN!")
+    .oneOf([yup.ref("password"), null], "Invalid PIN"),
   image: yup.string().required(),
 });
 
@@ -571,12 +571,12 @@ export default UpdateUser = ({ navigation }) => {
                       <Text style={{ color: "red" }}>{errors.street}</Text>
                     )}
                   </View>
-                  <View
+                  {/* <View
                     style={{
                       marginTop: 12,
                     }}
-                  >
-                    <Text>Password *</Text>
+                  > */}
+                  {/* <Text>Password *</Text>
                     <TextInput
                       secureTextEntry={true}
                       keyboardType="numeric"
@@ -584,6 +584,7 @@ export default UpdateUser = ({ navigation }) => {
                       style={[
                         styles.inputStyle,
                         {
+                          color: "black",
                           borderColor: !touched.password
                             ? Colors.gray900
                             : errors.password
@@ -592,6 +593,7 @@ export default UpdateUser = ({ navigation }) => {
                         },
                       ]}
                       value={values.password}
+                      editable={false}
                       onChangeText={handleChange("password")}
                       onBlur={() => setFieldTouched("password")}
                       placeholder="Password"
@@ -599,13 +601,13 @@ export default UpdateUser = ({ navigation }) => {
                     {touched.password && errors.password && (
                       <Text style={{ color: "red" }}>{errors.password}</Text>
                     )}
-                  </View>
+                  </View> */}
                   <View
                     style={{
                       marginTop: 12,
                     }}
                   >
-                    <Text>Confirm Password *</Text>
+                    <Text>Enter your PIN *</Text>
                     <TextInput
                       secureTextEntry={true}
                       keyboardType="numeric"
