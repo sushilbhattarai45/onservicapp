@@ -87,8 +87,8 @@ const userValidationSchema = yup.object().shape({
     .min(6)
     .required("Please, provide your street!"),
   // image: yup.string().required(),
-  location: yup.string().required("Please, provide a google map link"),
-  tiktok: yup.string().required("Please, provide a tiktok id link"),
+  location: yup.string(),
+  tiktok: yup.string(),
   street: yup
     .string()
     .required()
@@ -497,8 +497,8 @@ const UpdateSpScreen = ({ route, navigation }) => {
                     },
                   ]}
                   value={values.tiktok}
-                  onChangeText={handleChange("street")}
-                  onBlur={() => setFieldTouched("street")}
+                  onChangeText={handleChange("tiktok")}
+                  onBlur={() => setFieldTouched("tiktok")}
                   placeholder="TikTok Link (optional)"
                   placeholderTextColor={Colors.gray900}
                   // placeholderStyle={{ color: Colors.gray900 }}
@@ -525,8 +525,8 @@ const UpdateSpScreen = ({ route, navigation }) => {
                     },
                   ]}
                   value={values.location}
-                  onChangeText={handleChange("street")}
-                  onBlur={() => setFieldTouched("street")}
+                  onChangeText={handleChange("location")}
+                  onBlur={() => setFieldTouched("location")}
                   placeholder="Google Map Link (optional)"
                   placeholderTextColor={Colors.gray900}
                   // placeholderStyle={{ color: Colors.gray900 }}
