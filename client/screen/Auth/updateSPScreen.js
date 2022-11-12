@@ -147,8 +147,8 @@ const UpdateSpScreen = ({ route, navigation }) => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsMultipleSelection: true,
-
-        mediaType: "image",
+        mediaType: "Images",
+        selectionLimit: 10,
       });
       console.log(result);
       let files = {};
