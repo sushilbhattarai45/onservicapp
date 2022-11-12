@@ -23,7 +23,7 @@ import AppContext from "../../component/appContext";
 import { axiosInstance } from "../../component/tools";
 export default function LoginScreen({ navigation, route, path }) {
   const nav = useNavigation();
-  const { user, logged, setLogged, setUser, setUserData } =
+  const { user, logged, setLogged, setUser, setUserData, setIsitSp } =
     useContext(AppContext);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
@@ -75,6 +75,15 @@ export default function LoginScreen({ navigation, route, path }) {
         alert(setdata?.data.data.user_name);
         setUserData(setdata?.data?.data);
         setLogged("true");
+        const res = await axiosInstance.post("sp/getOneSp", {
+          GIVEN_API_KEY: "AXCF",
+          sp_contact: num,
+        });
+        if (res?.data?.statuscode == 201) {
+          setIsitSp(res.data.data);
+        } else {
+          setIsitSp(false);
+        }
         navigation.navigate("Home");
         alert("done");
       } else {
@@ -220,14 +229,6 @@ export default function LoginScreen({ navigation, route, path }) {
               flexDirection: "row",
             }}
           >
-            <CheckBox
-              value={toggleCheckBox}
-              onValueChange={() => setToggleCheckBox(!toggleCheckBox)}
-              color={toggleCheckBox ? Colors.primary : undefined}
-            />
-            <Text style={{ marginLeft: 12, fontFamily: "Regular" }}>
-              Remember me
-            </Text>
             <Text
               style={{ position: "absolute", fontFamily: "Regular", right: 12 }}
               onPress={() => nav.navigate("ForgotPin")}

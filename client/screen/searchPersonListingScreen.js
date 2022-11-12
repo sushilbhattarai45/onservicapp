@@ -207,10 +207,11 @@ export default function SearchPersonListingScreen({ navigation }) {
                   }}
                 >
                   <PersonCard
+                    subcat={value}
                     name={person.sp_name}
                     sp_contact={person.sp_contact}
                     image={person.sp_profileImage}
-                    address={person.sp_city + person.sp_district}
+                    address={person.sp_city + " " + person.sp_district}
                     rating={5}
                     ratingcount={5}
                     onPress={() => navigation.navigate("Sp", { sp: person })}

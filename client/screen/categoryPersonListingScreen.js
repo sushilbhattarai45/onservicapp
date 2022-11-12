@@ -127,6 +127,7 @@ export default function CategoryPersonListingScreen({
                       }}
                     >
                       <PersonCard
+                        subcat={sub_name}
                         sp_contact={persons.sp_contact}
                         name={persons.sp_name}
                         image={persons.sp_profileImage}

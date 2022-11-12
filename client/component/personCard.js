@@ -16,6 +16,7 @@ export default function PersonCard({
   rating,
   ratingcount,
   address,
+  subcat,
   onPress,
   sp_contact,
 }) {
@@ -36,7 +37,7 @@ export default function PersonCard({
         <View>
           <Text style={styles.Txt758}>{name}</Text>
           <Text style={styles.works}>
-            ★{rating}({ratingcount}) • {address} • Technician
+            {address} • {subcat}
           </Text>
         </View>
         <View
