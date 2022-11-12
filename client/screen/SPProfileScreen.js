@@ -89,7 +89,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [spStatus, setSpStatus] = useState(
     sp?.sp_status == "ACTIVE" ? true : false
   );
-  const [sp_rated, setSp_Rated] = useState();
+  const [sp_rated, setSp_Rated] = useState(0);
 
   const popup = createRef();
   const popupQr = createRef();
@@ -127,14 +127,15 @@ const SPProfileScreen = ({ navigation, route }) => {
       sp_id: sp?.sp_contact,
       GIVEN_API_KEY: "AXCF",
     });
-
-    let d = res?.data?.data.splice(0, 5);
-    setReviews(d);
+    let d = res?.data?.data;
     let sum = 0;
-    res?.data?.data?.map((item) => {
+    d?.map((item) => {
       sum += item.review_stars;
     });
     setSp_Rated((sum / d?.length).toFixed(2));
+
+    alert(sp_rated);
+    setReviews(d);
   };
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -500,7 +501,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                     }}
                     onPress={() =>
                       navigation.navigate("ViewAllReviews", {
-                        sp_contact: sp?.sp_contact,
+                        reviews: reviews,
                       })
                     }
                   >
@@ -510,8 +511,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               </View>
               <View>
                 {reviews !== [] && reviews ? (
-                  reviews?.map((item, index) => {
-                    console.log(item);
+                  reviews?.slice(0, 5).map((item, index) => {
                     return (
                       <ReviewCard
                         image={item.user_profile_image}

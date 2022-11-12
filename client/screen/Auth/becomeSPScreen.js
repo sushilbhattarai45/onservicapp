@@ -35,6 +35,7 @@ const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },
   { value: "Other", label: "Other" },
+  { value: "Company", label: "Company" },
 ];
 
 const data = [
@@ -110,10 +111,10 @@ const userValidationSchema = yup.object().shape({
     .required(),
   photo: yup
     .array()
-    .min(1, "required-field")
+    .min(1, "Please provide photos of work")
     .max(10, "Max of 10 photos can be added")
     .required(),
-  video: yup.string().required(),
+  video: yup.string().required("Please, provide video of your work"),
 });
 
 const BecomeSPScreen = ({ navigation }) => {
@@ -172,6 +173,7 @@ const BecomeSPScreen = ({ navigation }) => {
         setLoading(false);
         return files;
       } else {
+        return images;
         setLoading(false);
       }
     } catch (e) {
@@ -665,6 +667,9 @@ const BecomeSPScreen = ({ navigation }) => {
                     </Pressable>
                   ) : null}
                 </View>
+                {errors.photo && touched.photo ? (
+                  <Text style={{ color: "red" }}>{errors.photo}</Text>
+                ) : null}
               </View>
 
               <View style={{ marginTop: 12 }}>
@@ -767,6 +772,9 @@ const BecomeSPScreen = ({ navigation }) => {
                     />
                   )}
                 </View>
+                {errors.video && touched.video ? (
+                  <Text style={{ color: "red" }}>{errors.video}</Text>
+                ) : null}
               </View>
               {/* SCheckBox */}
               <View

@@ -112,9 +112,7 @@ export default registerUser = ({ navigation }) => {
       setFieldError("phone", "Phone Number already exists");
     } else {
       setLoad(false);
-      alert("no");
     }
-    alert(status);
   }
   const storeData = async (value) => {
     try {
@@ -228,6 +226,7 @@ export default registerUser = ({ navigation }) => {
                     }}
                   >
                     <Pressable
+                      style={{ borderRadius: 10 }}
                       onPress={async () => {
                         let img = await selectFile();
                         console.log("a" + img);
@@ -243,8 +242,9 @@ export default registerUser = ({ navigation }) => {
                             width: 75,
                             borderRadius: 24,
                             borderWidth: StyleSheet.hairlineWidth,
-                            objectFit: "contain",
+                            borderColor: "red",
                           }}
+                          objectFit="cover"
                           source={require("../../assets/images/profile.png")}
                         />
                       ) : (
@@ -257,9 +257,9 @@ export default registerUser = ({ navigation }) => {
                           style={{
                             alignSelf: "center",
                             right: 0,
+                            borderRadius: 24,
                             height: 75,
                             width: 75,
-                            borderRadius: 24,
                             borderWidth: StyleSheet.hairlineWidth,
                             objectFit: "contain",
                           }}
@@ -272,7 +272,7 @@ export default registerUser = ({ navigation }) => {
                           color: errors.image ? "red" : Colors.primary,
                         }}
                       >
-                        Choose
+                        {values.image ? "Choose" : "Please Select"}
                       </Text>
                     </Pressable>
                   </View>
@@ -618,7 +618,16 @@ export default registerUser = ({ navigation }) => {
                       </Text>
                     }
                   </View>
-
+                  {errors.image ? (
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        color: "red",
+                      }}
+                    >
+                      {errors.image}
+                    </Text>
+                  ) : null}
                   <Pressable
                     style={{
                       borderColor: Colors.primary,

@@ -92,8 +92,12 @@ const userValidationSchema = yup.object().shape({
     .of(yup.string().required())
     .min(1, "required-field")
     .required(),
-  photo: yup.array().min(1, "required-field").required(),
-  video: yup.string().required(),
+  photo: yup
+    .array()
+    .min(1, "Please provide photos of work")
+    .max(10, "Max of 10 photos can be added")
+    .required(),
+  video: yup.string().required("Please, provide video of your work"),
 });
 
 const UpdateSpScreen = ({ route, navigation }) => {
@@ -147,10 +151,9 @@ const UpdateSpScreen = ({ route, navigation }) => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowsMultipleSelection: true,
-        mediaType: "Images",
+        mediaType: "image",
         selectionLimit: 10,
       });
-      console.log(result);
       let files = {};
       if (!result.cancelled) {
         files = result.selected
@@ -160,6 +163,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         return files;
       } else {
         setLoading(false);
+        return [...images];
       }
     } catch (e) {
       console.log(e);
@@ -264,6 +268,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   style={[
                     styles.inputStyle,
                     {
+                      color: "black",
                       borderColor: !touched.phone
                         ? Colors.gray900
                         : errors.phone
@@ -286,7 +291,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Office Phone Number *</Text>
+                <Text>Office / Whatsapp Number</Text>
                 <TextInput
                   keyboardType="numeric"
                   maxLength={10}
@@ -303,7 +308,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   value={values.officePhone}
                   onChangeText={handleChange("officePhone")}
                   onBlur={() => setFieldTouched("officePhone")}
-                  placeholder="Office Phone Number"
+                  placeholder="Office Phone Number  (optional)"
                   placeholderTextColor={Colors.gray900}
                 />
                 {touched.officePhone && errors.officePhone && (
@@ -623,6 +628,9 @@ const UpdateSpScreen = ({ route, navigation }) => {
                     </Pressable>
                   )}
                 </View>
+                {touched.photo && errors.photo ? (
+                  <Text style={{ color: "red" }}>{errors.photo}</Text>
+                ) : null}
               </View>
 
               <View style={{ marginTop: 12 }}>
@@ -725,6 +733,9 @@ const UpdateSpScreen = ({ route, navigation }) => {
                     />
                   )}
                 </View>
+                {errors.video && touched.video ? (
+                  <Text style={{ color: "red" }}>{errors.video}</Text>
+                ) : null}
               </View>
               {/* SCheckBox */}
               <View
