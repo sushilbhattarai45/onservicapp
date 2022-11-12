@@ -18,6 +18,8 @@ import UpdateSpScreen from "../screen/Auth/updateSPScreen";
 import UpdateUser from "../screen/Auth/updateUser";
 import LocationScreen from "../screen/location";
 import SubCategoryCard from "../component/subCatCard";
+import ListReviews from "../screen/listReviews";
+
 import SecondSubCategoryScreen from "../screen/secondSubCategoryScreen";
 const Stack = createNativeStackNavigator();
 export default function AppStack() {
@@ -47,6 +49,7 @@ export default function AppStack() {
       <Stack.Screen name="UpdateSP" component={UpdateSpScreen} />
       <Stack.Screen name="UpdateUser" component={UpdateUser} />
       <Stack.Screen name="LocationScreen" component={LocationScreen} />
+      <Stack.Screen name="ViewAllReviews" component={ListReviews} />
 
       <Stack.Screen
         name="CategoryPersonListing"

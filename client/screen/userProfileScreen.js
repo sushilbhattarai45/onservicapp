@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useContext } from "react";
+import { React, useEffect, useState, useContext, createRef } from "react";
 import {
   StyleSheet,
   Image,
@@ -7,6 +7,7 @@ import {
   View,
   ScrollView,
   FlatList,
+  Pressable,
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Colors } from "../styles/main";
@@ -20,9 +21,12 @@ import axios from "axios";
 import AppContext from "../component/appContext";
 import Icon from "../component/Icon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Button from "../component/buttonComponent";
+import ModalPopup from "../component/Modal";
 export default function UserProfileScreen({ navigation }) {
   const { setUser, setLogged, userData, user, setUserData, isitsp, setIsitSp } =
     useContext(AppContext);
+  const popup = createRef();
   return (
     <ScrollView style={{ backgroundColor: Colors.gray200 }}>
       <View
@@ -59,60 +63,6 @@ export default function UserProfileScreen({ navigation }) {
                   Profile
                 </Text>
               </View>
-              <View
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  marginRight: 20,
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: 2,
-                }}
-              >
-                <Icon
-                  onPress={() => navigation.navigate("UpdateUser")}
-                  style={{
-                    marginRight: 20,
-                  }}
-                  name="pencil-fill"
-                  size={24}
-                  color="white"
-                />
-                <Icon
-                  style={{
-                    marginRight: 20,
-                  }}
-                  onPress={async () => {
-                    if (isitsp) {
-                      const res = await axiosInstance.post("sp/getOneSp", {
-                        GIVEN_API_KEY: "AXCF",
-                        sp_contact: user,
-                      });
-                      navigation.navigate("Sp", { sp: res?.data.data });
-                    } else {
-                      console.log("hi");
-                      navigation.navigate("BecomeSP");
-                    }
-                  }}
-                  name="shield-user-fill"
-                  size={24}
-                  color="white"
-                />
-                <Icon
-                  onPress={async () => {
-                    await AsyncStorage.removeItem("user_contact");
-                    setUser(null);
-                    setLogged("false");
-                    setUserData(null);
-                    setIsitSp(null);
-
-                    navigation.navigate("Home");
-                  }}
-                  name="logout-box-r-line"
-                  size={24}
-                  color="white"
-                />
-              </View>
             </View>
 
             <View
@@ -120,7 +70,7 @@ export default function UserProfileScreen({ navigation }) {
                 marginTop: 24,
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "flex-start",
+                alignItems: "flex-end",
                 overflow: "visible",
               }}
             >
@@ -132,69 +82,64 @@ export default function UserProfileScreen({ navigation }) {
                     height: 120,
                   }}
                   source={{
-                    // uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
                     uri: userData?.user_profileImage,
                   }}
                 />
-                {/* <Icon
-                  onPress={() => {}}
-                  style={{
-                    position: "absolute",
-                    bottom: -2,
-                    right: -2,
-                  }}
-                  name="add-circle-fill"
-                  size={28}
-                  color="white"
-                /> */}
               </View>
 
-              <View>
+              <View style={{ marginBottom: 40 }}>
                 <Text
                   style={{
                     color: "white",
-                    fontSize: 20,
+                    fontSize: 24,
                     fontFamily: "Bold",
                     marginLeft: 24,
                   }}
                 >
                   {userData?.user_name}{" "}
                 </Text>
-                <Text
+
+                <View
                   style={{
                     marginTop: 4,
-                    fontFamily: "Regular",
-
-                    marginLeft: 17,
-                    fontSize: 15,
-                    color: Colors.white,
+                    marginLeft: 24,
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
                 >
-                  <Ionicons
-                    name="ios-location-sharp"
-                    size={20}
-                    style={{}}
-                    color="white"
-                  />{" "}
-                  {userData?.user_city + " " + userData?.user_street}{" "}
-                </Text>
-
-                <Text
+                  <Icon name="map-pin-2-fill" size={20} color="white" />
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontFamily: "Regular",
+                      color: Colors.white,
+                    }}
+                  >
+                    {"  "}
+                    {userData?.user_city + " " + userData?.user_street} {"  "}
+                  </Text>
+                </View>
+                <View
                   style={{
                     marginTop: 4,
-                    marginLeft: 17,
-                    fontSize: 15,
-                    fontFamily: "Regular",
-
-                    color: Colors.white,
+                    marginLeft: 24,
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
                 >
-                  {"  "}
-                  <FontAwesome name="phone" size={20} color="white" />
-                  {"  "}
-                  {userData?.user_contact}
-                  {"  "}
-                </Text>
+                  <Icon name="phone-fill" size={20} color="white" />
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontFamily: "Regular",
+                      color: Colors.white,
+                    }}
+                  >
+                    {"  "}
+                    {userData?.user_contact}
+                    {"  "}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
@@ -215,11 +160,106 @@ export default function UserProfileScreen({ navigation }) {
               marginTop: 54,
             }}
           >
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginBottom: 24,
+              }}
+            >
+              <Pressable
+                style={{
+                  flex: 1,
+                  paddingVertical: 8,
+                  marginRight: 12,
+                  paddingHorizontal: 16,
+                  borderRadius: 4,
+                  borderWidth: StyleSheet.hairlineWidth,
+                  borderStyle: "solid",
+                  borderColor: Colors.primary,
+                  height: 40,
+                }}
+                onPress={() => navigation.navigate("UpdateUser")}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "SemiBold",
+                    fontWeight: "600",
+                    color: Colors.primary,
+                    textAlign: "center",
+                    justifyContent: "center",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Edit User
+                </Text>
+              </Pressable>
+              <Pressable
+                style={{
+                  flex: 1,
+                  marginRight: 12,
+                  paddingVertical: 8,
+                  paddingHorizontal: 16,
+                  borderRadius: 4,
+                  backgroundColor: Colors.gray500,
+                  height: 40,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onPress={async () => {
+                  if (isitsp) {
+                    const res = await axiosInstance.post("sp/getOneSp", {
+                      GIVEN_API_KEY: "AXCF",
+                      sp_contact: user,
+                    });
+                    navigation.navigate("Sp", { sp: res?.data.data });
+                  } else {
+                    console.log("hi");
+                    navigation.navigate("BecomeSP");
+                  }
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Bold",
+                    fontWeight: "600",
+                    color: Colors.white,
+                    textAlign: "center",
+                    justifyContent: "center",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {isitsp ? "SP Screen" : "BEcome SP"}
+                </Text>
+              </Pressable>
+              <Pressable
+                style={{
+                  paddingVertical: 8,
+                  paddingHorizontal: 16,
+                  borderRadius: 4,
+                  backgroundColor: Colors.gray500,
+                  height: 40,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onPress={() => popup.current.show()}
+              >
+                <Icon
+                  name="more-fill"
+                  size={22}
+                  color={Colors.white}
+                  style={{
+                    color: Colors.white,
+                  }}
+                />
+              </Pressable>
+            </View>
             <Text
               style={{
                 color: Colors.black,
                 fontSize: 20,
-                argimnLeft: 4,
                 fontFamily: "Regular",
               }}
             >
@@ -229,141 +269,81 @@ export default function UserProfileScreen({ navigation }) {
             <View>
               <View
                 style={{
-                  marginTop: 12,
+                  paddingTop: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontFamily: "Regular",
-
-                    fontSize: 12,
-                    color: Colors.gray900,
-                  }}
-                >
-                  Phone Number
+                <Icon name="phone-fill" size={20} style={{ marginRight: 8 }} />
+                <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+                  {userData?.user_contact}
                 </Text>
-                <TextInput
-                  editable={false}
-                  style={{
-                    width: "100%",
-                    borderBottomWidth: 1,
-                    paddingLeft: 0,
-                    borderColor: Colors.black,
-                    borderRadius: 4,
-                    height: 35,
-                    color: Colors.black,
-                    fontFamily: "Regular",
-
-                    fontSize: 15,
-                  }}
-                  value={userData?.user_contact}
-                  read
-                />
-                {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
               </View>
               <View
                 style={{
-                  marginTop: 12,
+                  paddingTop: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontFamily: "Regular",
-
-                    color: Colors.gray900,
-                  }}
-                >
-                  City
+                <Icon name="home-6-line" size={20} style={{ marginRight: 8 }} />
+                <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+                  {userData?.user_street}
                 </Text>
-                <TextInput
-                  editable={false}
-                  style={{
-                    width: "100%",
-                    fontFamily: "Regular",
-
-                    borderBottomWidth: 1,
-                    paddingLeft: 0,
-                    borderColor: Colors.black,
-                    borderRadius: 4,
-                    height: 35,
-                    fontSize: 15,
-                    color: Colors.black,
-                  }}
-                  value={userData?.user_city}
-                  read
-                  // placeholder="Re-Enter Your PIN"
-                />
-                {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
               </View>
               <View
                 style={{
-                  marginTop: 12,
+                  paddingTop: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontFamily: "Regular",
-
-                    fontSize: 12,
-                    color: Colors.gray900,
-                  }}
-                >
-                  Street
-                </Text>
-                <TextInput
-                  editable={false}
-                  style={{
-                    width: "100%",
-                    borderBottomWidth: 1,
-                    paddingLeft: 0,
-                    borderColor: Colors.black,
-                    borderRadius: 4,
-                    height: 35,
-                    fontFamily: "Regular",
-
-                    fontSize: 15,
-                    color: Colors.black,
-                  }}
-                  value={userData?.user_street}
-                  read
-                  // placeholder="Re-Enter Your PIN"
+                <Icon
+                  name="map-pin-2-line"
+                  size={20}
+                  style={{ marginRight: 8 }}
                 />
-                {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
+                <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+                  {userData?.user_city}
+                </Text>
               </View>
               <View
                 style={{
-                  marginTop: 12,
+                  paddingTop: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontFamily: "Regular",
-
-                    color: Colors.gray900,
-                  }}
-                >
-                  Gender
-                </Text>
-                <TextInput
-                  editable={false}
-                  style={{
-                    width: "100%",
-                    fontFamily: "Regular",
-                    borderBottomWidth: 1,
-                    paddingLeft: 0,
-                    borderColor: Colors.black,
-                    color: Colors.black,
-                    borderRadius: 4,
-                    height: 35,
-                    fontSize: 15,
-                  }}
-                  value={userData?.user_gender}
-                  read
-                  // placeholder="Re-Enter Your PIN"
+                <Icon
+                  name="building-4-line"
+                  size={20}
+                  style={{ marginRight: 8 }}
                 />
-                {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
+                <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+                  {userData?.user_district}
+                </Text>
+              </View>
+              <View
+                style={{
+                  paddingTop: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Icon
+                  name={
+                    userData?.user_gender == "Male"
+                      ? "men-line"
+                      : userData?.user_gender == "Female"
+                      ? "women-line"
+                      : "genderless-line"
+                  }
+                  size={20}
+                  style={{ marginRight: 8 }}
+                />
+                <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+                  {userData?.user_gender}
+                </Text>
               </View>
             </View>
             <View
@@ -417,6 +397,103 @@ export default function UserProfileScreen({ navigation }) {
                 /> */}
               </View>
             </View>
+            <ModalPopup
+              ref={popup}
+              animationType="slide"
+              containerStyle={{
+                width: "100%",
+                marginTop: "auto",
+                // alignItems: "center",
+                borderTopStartRadius: 32,
+                borderTopEndRadius: 32,
+                // marginTop:24
+              }}
+              onTouchOutside={() => popup.current.close()}
+            >
+              <View
+                style={{
+                  width: 50,
+                  height: 2.5,
+                  backgroundColor: Colors.black,
+                  borderRadius: 5,
+                  marginBottom: 24,
+                  alignSelf: "center",
+                }}
+              />
+              <View style={{ justifyContent: "center", width: "100%" }}>
+                <Pressable
+                  style={{
+                    paddingVertical: 12,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                  onPress={() => navigation.navigate("UpdateUser")}
+                >
+                  <Icon name="edit-fill" size={20} style={{ marginRight: 8 }} />
+                  <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+                    Edit User
+                  </Text>
+                </Pressable>
+                <Pressable
+                  style={{
+                    paddingVertical: 12,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    borderTopColor: Colors.black,
+                    borderTopWidth: StyleSheet.hairlineWidth,
+                  }}
+                  onPress={async () => {
+                    if (isitsp) {
+                      const res = await axiosInstance.post("sp/getOneSp", {
+                        GIVEN_API_KEY: "AXCF",
+                        sp_contact: user,
+                      });
+                      navigation.navigate("Sp", { sp: res?.data.data });
+                    } else {
+                      console.log("hi");
+                      navigation.navigate("BecomeSP");
+                    }
+                  }}
+                >
+                  <Icon
+                    name="shield-user-fill"
+                    size={20}
+                    style={{ marginRight: 8 }}
+                  />
+                  <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+                    {isitsp ? "Go to SP Screen" : "Be Our Partner"}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  style={{
+                    paddingVertical: 12,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    borderTopColor: Colors.black,
+                    borderTopWidth: StyleSheet.hairlineWidth,
+                  }}
+                  onPress={async () => {
+                    console.log("HI");
+                    await AsyncStorage.removeItem("user_contact");
+                    setUser(null);
+                    setLogged("false");
+                    setUserData(null);
+                    setIsitSp(null);
+
+                    navigation.navigate("Home");
+                  }}
+                >
+                  <Icon
+                    name="logout-box-r-line"
+                    size={20}
+                    style={{ marginRight: 8 }}
+                  />
+                  <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+                    Logout
+                  </Text>
+                </Pressable>
+              </View>
+            </ModalPopup>
           </View>
         </View>
       </View>
