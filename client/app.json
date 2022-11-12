@@ -1,24 +1,23 @@
 {
   "expo": {
-    "name": "onserivc",
+    "name": "ON servic",
     "slug": "onserivc",
     "version": "1.0.0",
+    "icon": "./assets/images/os.png",
     "ios": {
       "bundleIdentifier": "com.yourcompany.yourappname",
       "buildNumber": "1.0.0"
     },
     "splash": {
-      "image": "./assets/github.png"
+      "image": "./assets/images/os.png"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.onservic.app"
     },
     "extra": {
       "eas": {
-        "projectId": "081edec8-831f-4d01-90f6-520d425a5f99"
+        "projectId": "e309edbf-ccc5-460d-be5a-57fd5b39e26b"
       }
     }
   }

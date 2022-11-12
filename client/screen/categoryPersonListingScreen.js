@@ -23,19 +23,16 @@ export default function CategoryPersonListingScreen({
 }) {
   const [rating, setRating] = useState(3);
   const { userData, logged } = useContext(AppContext);
-
-  const { category_id, cat_name, sub_name } = route.params;
-
+  const { category_id, cat_name, givencity, sub_name } = route.params;
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       getSpData();
       //Put your Data loading function here instead of my loadData()
     });
-
     async function getSpData() {
       const data = await axiosInstance.post("sp/getSearchedSp", {
         GIVEN_API_KEY: "AXCF",
-        city: userData?.user_district,
+        city: givencity,
         skill: sub_name,
       });
       setSpData(data.data.data);
@@ -93,14 +90,22 @@ export default function CategoryPersonListingScreen({
             />
           </View>
           <View style={{ marginTop: 20 }}>
-            {logged == "true" ? (
+            {givencity ? (
               <Text
                 style={{
+                  fontFamily: "Regular",
                   marginHorizontal: 15,
                 }}
               >
                 This Data contains the list of the service provider from
-                District {userData.user_district}
+                District{" "}
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  {givencity}
+                </Text>
               </Text>
             ) : (
               <Text
