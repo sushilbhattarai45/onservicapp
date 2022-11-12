@@ -79,8 +79,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   console.log(sp);
   const { isitsp } = useContext(AppContext);
   console.log(sp?.sp_status, sp?.sp_showReview);
-  const { subCategories, user, userData, snearyou, livedistrict } =
-    useContext(AppContext);
+  const { user, snearyou, livedistrict } = useContext(AppContext);
   const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
@@ -96,7 +95,6 @@ const SPProfileScreen = ({ navigation, route }) => {
   const popupQr = createRef();
   const popupSettings = createRef();
   const popupNumber = createRef();
-  const popupWNumber = createRef();
   const video = useRef(null);
   const [videoMuted, setVideoMuted] = useState(true);
   const [bookIcon, setBookIcon] = useState("false");
@@ -134,7 +132,6 @@ const SPProfileScreen = ({ navigation, route }) => {
     setReviews(d);
     let sum = 0;
     res?.data?.data?.map((item) => {
-      alert(item);
       sum += item.review_stars;
     });
     setSp_Rated((sum / d?.length).toFixed(2));
@@ -264,10 +261,25 @@ const SPProfileScreen = ({ navigation, route }) => {
                 }}
               />
               <Text>{sp?.user_profileImage}</Text>
-              <ActionIcon
-                name="chat-1-line"
-                onPress={() => popupWNumber.current.show()}
-              />
+              {sp.sp_officeNumber && (
+                <ActionIcon
+                  name="chat-1-line"
+                  onPress={() => {
+                    let url =
+                      "whatsapp://send?text=" +
+                      "Hello" +
+                      "&phone=+977" +
+                      sp?.sp_officeNumber;
+                    Linking.openURL(url)
+                      .then((data) => {
+                        console.log("WhatsApp Opened");
+                      })
+                      .catch(() => {
+                        alert("Make sure Whatsapp installed on your device");
+                      });
+                  }}
+                />
+              )}
 
               <ActionIcon
                 name="map-pin-line"
@@ -415,50 +427,47 @@ const SPProfileScreen = ({ navigation, route }) => {
           <View style={{ marginTop: 24 }}>
             <ImageSliderComponent data={sp?.sp_media?.photo} />
           </View>
-          {user && user != sp.sp_contact ? (
-            <Pressable
-              style={{
-                flex: 1,
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: 32,
-              }}
-              onPress={() => popup.current.show()}
+          <Pressable
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 32,
+            }}
+            onPress={() =>
+              user && user != sp.sp_contact ? popup.current.show() : null
+            }
+          >
+            <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
+              {sp_rated ? sp_rated : 0}
+              <Text style={{ fontSize: 20, fontFamily: "Regular" }}>/5</Text>
+            </Text>
+            <View>
+              <StarRating
+                starSize={40}
+                onChange={() => null}
+                rating={sp_rated ? sp_rated : 0}
+                color={Colors.gold}
+                starStyle={{ marginLeft: -5 }}
+                animationConfig={{
+                  scale: 1,
+                  duration: 0,
+                  delay: 0,
+                }}
+              />
+            </View>
+            <Text
+              style={{ fontSize: 12, fontFamily: "Regular", marginTop: 12 }}
             >
-              <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
-                {sp_rated ? sp_rated : 0}
-                <Text style={{ fontSize: 20, fontFamily: "Regular" }}>/5</Text>
-              </Text>
-              <View>
-                <StarRating
-                  starSize={40}
-                  onChange={() => null}
-                  rating={sp_rated ? sp_rated : 0}
-                  color={Colors.gold}
-                  starStyle={{ marginLeft: -5 }}
-                  animationConfig={{
-                    scale: 1,
-                    duration: 0,
-                    delay: 0,
-                  }}
-                />
+              {reviews?.length} Reviews
+            </Text>
+            {user && user != sp.sp_contact ? (
+              <View style={{ marginTop: 24 }}>
+                <Button label="Rate Us" onPress={() => popup.current.show()} />
               </View>
-              <Text
-                style={{ fontSize: 12, fontFamily: "Regular", marginTop: 12 }}
-              >
-                {reviews?.length} Reviews
-              </Text>
-              {user ? (
-                <View style={{ marginTop: 24 }}>
-                  <Button
-                    label="Rate Us"
-                    onPress={() => popup.current.show()}
-                  />
-                </View>
-              ) : null}
-            </Pressable>
-          ) : null}
+            ) : null}
+          </Pressable>
           {(showReviews || sp?.sp_contact == isitsp?.sp_contact) && (
             <>
               <View
@@ -489,6 +498,11 @@ const SPProfileScreen = ({ navigation, route }) => {
                       paddingHorizontal: 8,
                       paddingVertical: 4,
                     }}
+                    onPress={() =>
+                      navigation.navigate("ViewAllReviews", {
+                        sp_contact: sp?.sp_contact,
+                      })
+                    }
                   >
                     View All
                   </Text>
@@ -935,112 +949,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           )}
         </View>
       </ModalPopup>
-      <ModalPopup
-        ref={popupWNumber}
-        animationType="fade"
-        onTouchOutside={() => {
-          popupWNumber.current.close();
-        }}
-      >
-        <View
-          style={{
-            alignItems: "center",
-            // paddingHorizontal: 16,
-            paddingVertical: 16,
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              color: Colors.black,
-              fontSize: 24,
-              fontFamily: "Black",
-              marginBottom: 24,
-            }}
-          >
-            WhatsApp
-          </Text>
 
-          {sp?.sp_officeNumber && (
-            <TouchableOpacity
-              style={{
-                borderBottomColor: Colors.gray500,
-                borderBottomWidth: 1,
-                backgroundColor: Colors.white,
-                flexDirection: "row",
-                width: "100%",
-                alignItems: "center",
-                paddingVertical: 12,
-                // backgroundColor:'red'
-              }}
-              onPress={() => {
-                let url =
-                  "whatsapp://send?text=" +
-                  "Hello" +
-                  "&phone=+977" +
-                  sp?.sp_officeNumber;
-                Linking.openURL(url)
-                  .then((data) => {
-                    console.log("WhatsApp Opened");
-                  })
-                  .catch(() => {
-                    alert("Make sure Whatsapp installed on your device");
-                  });
-              }}
-            >
-              <Icon name="phone-fill" color={Colors.gray900} size={20} />
-              <Text
-                style={{
-                  color: Colors.black,
-                  fontFamily: "Regular",
-                  textAlignVertical: "center",
-                  marginLeft: 12,
-                }}
-              >
-                {sp?.sp_officeNumber}
-              </Text>
-            </TouchableOpacity>
-          )}
-          {sp?.sp_contact && (
-            <TouchableOpacity
-              style={{
-                backgroundColor: Colors.white,
-                flexDirection: "row",
-                width: "100%",
-                alignItems: "center",
-                paddingVertical: 12,
-                // backgroundColor:'red'
-              }}
-              onPress={() => {
-                let url =
-                  "whatsapp://send?text=" +
-                  "Hello" +
-                  "&phone=+977" +
-                  sp?.sp_contact;
-                Linking.openURL(url)
-                  .then((data) => {
-                    console.log("WhatsApp Opened");
-                  })
-                  .catch(() => {
-                    alert("Make sure Whatsapp installed on your device");
-                  });
-              }}
-            >
-              <Icon name="phone-fill" color={Colors.gray900} size={20} />
-              <Text
-                style={{
-                  color: Colors.black,
-                  fontFamily: "Regular",
-                  textAlignVertical: "center",
-                  marginLeft: 12,
-                }}
-              >
-                {sp?.sp_contact}
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
-      </ModalPopup>
       <ModalPopup
         ref={popup}
         animationType="fade"

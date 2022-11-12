@@ -120,7 +120,7 @@ export default function UserProfileScreen({ navigation }) {
                 marginTop: 24,
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "flex-start",
+                alignItems: "flex-end",
                 overflow: "visible",
               }}
             >
@@ -132,35 +132,23 @@ export default function UserProfileScreen({ navigation }) {
                     height: 120,
                   }}
                   source={{
-                    // uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
                     uri: userData?.user_profileImage,
                   }}
                 />
-                {/* <Icon
-                  onPress={() => {}}
-                  style={{
-                    position: "absolute",
-                    bottom: -2,
-                    right: -2,
-                  }}
-                  name="add-circle-fill"
-                  size={28}
-                  color="white"
-                /> */}
               </View>
 
-              <View>
+              <View style={{ marginBottom: 40 }}>
                 <Text
                   style={{
                     color: "white",
-                    fontSize: 20,
+                    fontSize: 24,
                     fontFamily: "Bold",
                     marginLeft: 24,
                   }}
                 >
                   {userData?.user_name}{" "}
                 </Text>
-                <Text
+                {/* {/* <Text
                   style={{
                     marginTop: 4,
                     fontFamily: "Regular",
@@ -177,24 +165,28 @@ export default function UserProfileScreen({ navigation }) {
                     color="white"
                   />{" "}
                   {userData?.user_city + " " + userData?.user_street}{" "}
-                </Text>
-
-                <Text
+                </Text> */}
+                {/* <View
                   style={{
                     marginTop: 4,
-                    marginLeft: 17,
-                    fontSize: 15,
-                    fontFamily: "Regular",
-
-                    color: Colors.white,
+                    marginLeft: 24,
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
                 >
-                  {"  "}
-                  <FontAwesome name="phone" size={20} color="white" />
-                  {"  "}
-                  {userData?.user_contact}
-                  {"  "}
-                </Text>
+                  <Icon name="phone-fill" size={20} color="white" />
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontFamily: "Regular",
+                      color: Colors.white,
+                    }}
+                  >
+                    {"  "}
+                    {userData?.user_contact}
+                    {"  "}
+                  </Text>
+                </View> */}
               </View>
             </View>
           </View>
@@ -229,141 +221,71 @@ export default function UserProfileScreen({ navigation }) {
             <View>
               <View
                 style={{
-                  marginTop: 12,
+                  paddingTop: 16,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontFamily: "Regular",
-
-                    fontSize: 12,
-                    color: Colors.gray900,
-                  }}
-                >
-                  Phone Number
-                </Text>
-                <TextInput
-                  editable={false}
-                  style={{
-                    width: "100%",
-                    borderBottomWidth: 1,
-                    paddingLeft: 0,
-                    borderColor: Colors.black,
-                    borderRadius: 4,
-                    height: 35,
-                    color: Colors.black,
-                    fontFamily: "Regular",
-
-                    fontSize: 15,
-                  }}
-                  value={userData?.user_contact}
-                  read
-                />
-                {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
+                <Icon name="phone-fill" size={20} style={{ marginRight: 8 }} />
+                <Text style={{ fontSize: 18 }}>{userData?.user_contact}</Text>
               </View>
               <View
                 style={{
-                  marginTop: 12,
+                  paddingTop: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontFamily: "Regular",
-
-                    color: Colors.gray900,
-                  }}
-                >
-                  City
-                </Text>
-                <TextInput
-                  editable={false}
-                  style={{
-                    width: "100%",
-                    fontFamily: "Regular",
-
-                    borderBottomWidth: 1,
-                    paddingLeft: 0,
-                    borderColor: Colors.black,
-                    borderRadius: 4,
-                    height: 35,
-                    fontSize: 15,
-                    color: Colors.black,
-                  }}
-                  value={userData?.user_city}
-                  read
-                  // placeholder="Re-Enter Your PIN"
-                />
-                {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
+                <Icon name="home-6-fill" size={20} style={{ marginRight: 8 }} />
+                <Text style={{ fontSize: 18 }}>{userData?.user_street}</Text>
               </View>
               <View
                 style={{
-                  marginTop: 12,
+                  paddingTop: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontFamily: "Regular",
-
-                    fontSize: 12,
-                    color: Colors.gray900,
-                  }}
-                >
-                  Street
-                </Text>
-                <TextInput
-                  editable={false}
-                  style={{
-                    width: "100%",
-                    borderBottomWidth: 1,
-                    paddingLeft: 0,
-                    borderColor: Colors.black,
-                    borderRadius: 4,
-                    height: 35,
-                    fontFamily: "Regular",
-
-                    fontSize: 15,
-                    color: Colors.black,
-                  }}
-                  value={userData?.user_street}
-                  read
-                  // placeholder="Re-Enter Your PIN"
+                <Icon
+                  name="map-pin-2-fill"
+                  size={20}
+                  style={{ marginRight: 8 }}
                 />
-                {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
+                <Text style={{ fontSize: 18 }}>{userData?.user_city}</Text>
               </View>
               <View
                 style={{
-                  marginTop: 12,
+                  paddingTop: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontFamily: "Regular",
-
-                    color: Colors.gray900,
-                  }}
-                >
-                  Gender
-                </Text>
-                <TextInput
-                  editable={false}
-                  style={{
-                    width: "100%",
-                    fontFamily: "Regular",
-                    borderBottomWidth: 1,
-                    paddingLeft: 0,
-                    borderColor: Colors.black,
-                    color: Colors.black,
-                    borderRadius: 4,
-                    height: 35,
-                    fontSize: 15,
-                  }}
-                  value={userData?.user_gender}
-                  read
-                  // placeholder="Re-Enter Your PIN"
+                <Icon
+                  name="building-4-fill"
+                  size={20}
+                  style={{ marginRight: 8 }}
                 />
-                {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
+                <Text style={{ fontSize: 18 }}>{userData?.user_district}</Text>
+              </View>
+              <View
+                style={{
+                  paddingTop: 12,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Icon
+                  name={
+                    userData?.user_gender == "Male"
+                      ? "men-line"
+                      : userData?.user_gender == "Female"
+                      ? "women-line"
+                      : "genderless-line"
+                  }
+                  size={20}
+                  style={{ marginRight: 8 }}
+                />
+                <Text style={{ fontSize: 18 }}>{userData?.user_gender}</Text>
               </View>
             </View>
             <View
