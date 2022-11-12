@@ -90,7 +90,7 @@ export default function CategoryPersonListingScreen({
             />
           </View>
           <View style={{ marginTop: 20 }}>
-            {givencity != "" ? (
+            {givencity ? (
               <Text
                 style={{
                   fontFamily: "Regular",

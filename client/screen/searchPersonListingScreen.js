@@ -32,17 +32,22 @@ export default function SearchPersonListingScreen({ navigation }) {
   const [suggestionTouched, setSuggestionsTouched] = useState(false);
   const [suggestionsActive, setSuggestionsActive] = useState(false);
   const [value, setValue] = useState("");
-
+  const [live, setLive] = useState(false);
   const [searchData, setSearchData] = useState(null);
   const popup = createRef();
 
   const [citiesList, setCitiesList] = useState(Districts);
   const [filter, setFilter] = useState({ city: userData?.user_district });
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      getData();
-      //Put your Data loading function here instead of my loadData()
-    });
+    const unsubscribe = navigation.addListener(
+      "focus",
+      () => {
+        getData();
+        //Put your Data loading function here instead of my loadData()
+        return unsubscribe;
+      },
+      [navigation]
+    );
 
     // if (logged == "false") {
     //   alert("false");
@@ -116,8 +121,50 @@ export default function SearchPersonListingScreen({ navigation }) {
         />
       </View>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <View style={{ paddingHorizontal: 24 }}>
+        <View
+          style={{
+            marginTop: 5,
+            paddingHorizontal: 24,
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
           <Text>{filter?.city}</Text>
+          {filter?.city == livedistrict ? (
+            <Text
+              style={{
+                position: "absolute",
+                right: 0,
+                marginRight: 24,
+                color: Colors.primary,
+                fontFamily: "Regular",
+                textDecorationLine: "underline",
+              }}
+              onPress={() => {
+                setLive(true);
+                setFilter({ city: userData?.user_district });
+              }}
+            >
+              Current Location Enabled
+            </Text>
+          ) : (
+            <Text
+              style={{
+                position: "absolute",
+                right: 0,
+                marginRight: 24,
+                color: Colors.primary,
+                fontFamily: "Regular",
+                textDecorationLine: "underline",
+              }}
+              onPress={() => {
+                setLive(true);
+                setFilter({ city: livedistrict });
+              }}
+            >
+              Use Your current location ?
+            </Text>
+          )}
         </View>
         {/* Suggestions */}
         {suggestionsActive && (
