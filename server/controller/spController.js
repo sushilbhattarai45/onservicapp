@@ -171,39 +171,37 @@ export const getFilteredSubCat = async (req, res) => {
         });
         console.log(spdata);
         let count = 0;
-        spdata.map((item) => {
-          item.sp_skills.map((skill) => {
-            if (!subcatid.includes(skill)) {
-              subcatid.push(skill);
-            }
+        if (spdata.length != 0) {
+          spdata.map((item) => {
+            item.sp_skills.map((skill) => {
+              if (!subcatid.includes(skill)) {
+                subcatid.push(skill);
+              }
+            });
           });
 
-          // subcatid.forEach((element) => {
-          //   if (element == item.sp_skills[0]) {
-          //     count += 1;
-          //   }
-          // });
-          // if (count == 0) {
+          subcatdetails = await Promise.all(
+            subcatid.map(async (item) => {
+              const subcat = await subCatSchema.find({
+                subCat_name: item,
+              });
+              console.log(subcat[0]);
+              return subcat[0];
+            })
+          );
 
-          // }
-          // count = 0;
-        });
+          return res.json({
+            statuscode: 201,
+            data: subcatid,
+            subcat: subcatdetails,
+          });
+        } else {
+          return res.json({
+            statuscode: 400,
 
-        subcatdetails = await Promise.all(
-          subcatid.map(async (item) => {
-            const subcat = await subCatSchema.find({
-              subCat_name: item,
-            });
-            console.log(subcat[0]);
-            return subcat[0];
-          })
-        );
-
-        return res.json({
-          statuscode: 201,
-          data: subcatid,
-          subcat: subcatdetails,
-        });
+            message: "No Data found",
+          });
+        }
       } else {
         const spdata = await spSchema.find({
           sp_skills: skill,

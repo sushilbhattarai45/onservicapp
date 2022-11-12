@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useReducer } from "react";
 import {
   StyleSheet,
   Image,
@@ -9,10 +9,16 @@ import {
 } from "react-native";
 import { Colors } from "../styles/main";
 import { useNavigation } from "@react-navigation/native";
-
-export default function SubCategory({ name, image, cat_name, category_id }) {
+import AppContext from "./appContext";
+export default function SubCategory({
+  name,
+  image,
+  cat_name,
+  category_id,
+  givencity,
+}) {
   const navigation = useNavigation();
-
+  const { userData } = useContext(AppContext);
   return (
     <View style={styles.ThemeLightComponentSongsCard}>
       <TouchableOpacity
@@ -21,6 +27,7 @@ export default function SubCategory({ name, image, cat_name, category_id }) {
             category_id: category_id,
             cat_name: cat_name,
             sub_name: name,
+            givencity: userData?.user_district,
           });
         }}
       >

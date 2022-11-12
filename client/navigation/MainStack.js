@@ -17,6 +17,7 @@ import QrScreen from "../screen/Qrscreen.js";
 import UpdateSpScreen from "../screen/Auth/updateSPScreen";
 import UpdateUser from "../screen/Auth/updateUser";
 import LocationScreen from "../screen/location";
+import SubCategoryCard from "../component/subCatCard";
 
 const Stack = createNativeStackNavigator();
 export default function AppStack() {
@@ -36,6 +37,8 @@ export default function AppStack() {
       <Stack.Screen name="BecomeSP" component={BecomeSPScreen} />
       <Stack.Screen name="Sp" component={SPProfileScreen} />
       <Stack.Screen name="CategoryCard" component={CategoryCard} />
+      <Stack.Screen name="SubCategoryCard" component={SubCategoryCard} />
+
       <Stack.Screen name="QrScreen" component={QrScreen} />
       <Stack.Screen name="UpdateSP" component={UpdateSpScreen} />
       <Stack.Screen name="UpdateUser" component={UpdateUser} />

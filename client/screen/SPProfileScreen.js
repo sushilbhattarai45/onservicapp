@@ -16,6 +16,7 @@ import {
   Pressable,
   Linking,
   Dimensions,
+  ActivityIndicator,
   TouchableOpacity,
   Switch,
 } from "react-native";
@@ -34,7 +35,7 @@ import ReviewCard from "../component/ReviewCard";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
 import BookMarkCard from "../component/bookmarkCard";
-
+import SubCatCard from "../component/subCatCard";
 import { Video, AVPlaybackStatus } from "expo-av";
 
 const ActionIcon = ({ name, onPress, color }) => {
@@ -78,7 +79,8 @@ const SPProfileScreen = ({ navigation, route }) => {
   console.log(sp);
   const { isitsp } = useContext(AppContext);
   console.log(sp?.sp_status, sp?.sp_showReview);
-  const { subCategories, user, userData } = useContext(AppContext);
+  const { subCategories, user, userData, snearyou, livedistrict } =
+    useContext(AppContext);
   const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
@@ -216,7 +218,7 @@ const SPProfileScreen = ({ navigation, route }) => {
         />
         <TouchableOpacity
           activeOpacity={1}
-          style={{ backgroundColor: "red" }}
+          style={{ backgroundColor: Colors.primary }}
           onPress={async () => {
             showVideoInFullscreen();
           }}
@@ -431,7 +433,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                 <StarRating
                   starSize={40}
                   onChange={() => null}
-                  rating={sp_rated ? sp_rated : 4}
+                  rating={sp_rated ? sp_rated : 0}
                   color={Colors.gold}
                   starStyle={{ marginLeft: -5 }}
                   animationConfig={{
@@ -541,35 +543,63 @@ const SPProfileScreen = ({ navigation, route }) => {
             >
               Services Near You
             </Text>
-            <FlatList
-              style={{ marginBottom: 32 }}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              data={subCategories}
-              renderItem={({ item, index }) => {
-                let isEnd = index === subCategories.length - 1;
-                return (
-                  <CategoryCard
-                    containerStyle={{
-                      marginLeft: index === 0 ? 24 : 0,
-                      marginRight: isEnd ? 24 : 0,
-                    }}
-                  />
-                );
-              }}
-              ItemSeparatorComponent={() => {
-                return (
-                  <View
-                    style={{
-                      height: "100%",
-                      width: 20,
-                      backgroundColor: Colors.gray200,
-                    }}
-                  />
-                );
-              }}
-              keyExtractor={(item, index) => index.toString()}
-            />
+            {snearyou ? (
+              <FlatList
+                style={{ marginBottom: 32 }}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                data={snearyou}
+                renderItem={({ item, index }) => {
+                  let isEnd = index === snearyou.length - 1;
+                  return (
+                    <SubCatCard
+                      key={item._id}
+                      district={livedistrict}
+                      image={item.subCat_photo}
+                      category_id={item._id}
+                      name={item.subCat_name}
+                      containerStyle={{
+                        marginLeft: index === 0 ? 24 : 0,
+                        marginRight: isEnd ? 24 : 0,
+                      }}
+                    />
+                  );
+                }}
+                ItemSeparatorComponent={() => {
+                  return (
+                    <View
+                      style={{
+                        height: "100%",
+                        width: 20,
+                        backgroundColor: Colors.gray200,
+                      }}
+                    />
+                  );
+                }}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            ) : (
+              <View>
+                <Text
+                  style={{
+                    justifyContent: "center",
+                    // alignItems: "center",
+                    fontFamily: "Regular",
+                    textAlign: "center",
+                    paddingBottom: 10,
+                  }}
+                >
+                  No Data found for your current Location! Still Searching
+                </Text>
+                <ActivityIndicator
+                  size="large"
+                  color={Colors.primary}
+                  style={{
+                    marginBottom: 10,
+                  }}
+                />
+              </View>
+            )}
           </View>
           {/* Footer */}
           <View
@@ -927,7 +957,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               marginBottom: 24,
             }}
           >
-            Phone Number
+            WhatsApp
           </Text>
 
           {sp?.sp_officeNumber && (

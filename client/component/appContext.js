@@ -15,13 +15,13 @@ export const ContextProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [location, setLocation] = useState(null);
+  const [snearyou, setSNearYou] = useState();
   const [livedistrict, setLiveDistrict] = useState("");
   const [coords, setCoords] = useState({
     latitude: "",
     longitude: "",
   });
   const [errorMsg, setErrorMsg] = useState(null);
-
   useEffect(() => {
     async function getLocation() {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -53,6 +53,13 @@ export const ContextProvider = ({ children }) => {
           let district = res?.data?.features[0].text;
           console.log(district);
           setLiveDistrict(district);
+
+          const cat = await axiosInstance.post("/sp/filteredsubcat", {
+            GIVEN_API_KEY: "AXCF",
+            city: district,
+          });
+
+          setSNearYou(cat?.data?.subcat);
         }
         console.log(url);
       }
@@ -135,6 +142,8 @@ export const ContextProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        snearyou,
+        setSNearYou,
         logged,
         coords,
         livedistrict,
