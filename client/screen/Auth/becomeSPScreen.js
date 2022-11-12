@@ -667,7 +667,7 @@ const BecomeSPScreen = ({ navigation }) => {
                   ) : null}
                 </View>
                 {errors.photo && touched.photo ? (
-                  <Text style={{ color: "red" }}>{errors.video}</Text>
+                  <Text style={{ color: "red" }}>{errors.photo}</Text>
                 ) : null}
               </View>
 

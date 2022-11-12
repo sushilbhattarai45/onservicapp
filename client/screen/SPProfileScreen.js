@@ -129,10 +129,13 @@ const SPProfileScreen = ({ navigation, route }) => {
     });
     let d = res?.data?.data;
     let sum = 0;
-    d?.map((item) => {
-      sum += item.review_stars;
-    });
-    setSp_Rated((sum / d?.length).toFixed(2));
+    if(d.length>0){
+
+      d?.map((item) => {
+        sum += item.review_stars;
+      });
+      setSp_Rated((sum / d?.length).toFixed(2));
+    }
     setReviews(d);
   };
   useEffect(() => {
