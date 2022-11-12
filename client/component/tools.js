@@ -47,8 +47,16 @@ export const uploadImage = async (files) => {
         });
         console.log(response?.data);
         let url = response?.data?.fileName;
-        const finalname = BASE_OUR_API_URL + "/" + url;
-        return finalname;
+        if (url.includes("\\")) {
+          const filname = url.split("\\");
+          const finalname = BASE_OUR_API_URL + "/" + filname[0]+"/"+filname[1];
+          return finalname;
+        }
+        else {
+          const finalname = BASE_OUR_API_URL + "/" + url;
+
+          return finalname;
+        }
       })
     );
     console.log(finalData);

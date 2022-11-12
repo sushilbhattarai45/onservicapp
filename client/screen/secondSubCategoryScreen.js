@@ -22,7 +22,6 @@ export default function SecondSubCategoryScreen({
   const { category_id, cat_name } = route.params;
   useEffect(() => {
     async function getSubC() {
-      alert(category_id);
       const data = await axiosInstance.post("subcategories/getsecond", {
         GIVEN_API_KEY: "AXCF",
         category_id: category_id,
