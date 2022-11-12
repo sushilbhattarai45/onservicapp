@@ -298,11 +298,11 @@ const HomeScreen = ({ navigation }) => {
                 let isEnd = index === snearyou.length - 1;
                 return (
                   <SubCatCard
-                    key={item._id}
+                    key={item?._id}
                     district={livedistrict}
-                    image={item.subCat_photo}
-                    category_id={item._id}
-                    name={item.subCat_name}
+                    image={item?.subCat_photo}
+                    category_id={item?._id}
+                    name={item?.subCat_name}
                     containerStyle={{
                       marginLeft: index === 0 ? 24 : 0,
                       marginRight: isEnd ? 24 : 0,

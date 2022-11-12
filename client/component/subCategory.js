@@ -14,8 +14,10 @@ export default function SubCategory({
   name,
   image,
   cat_name,
+  hassubcat,
   category_id,
   givencity,
+  id,
 }) {
   const navigation = useNavigation();
   const { userData } = useContext(AppContext);
@@ -23,12 +25,21 @@ export default function SubCategory({
     <View style={styles.ThemeLightComponentSongsCard}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("CategoryPersonListing", {
-            category_id: category_id,
-            cat_name: cat_name,
-            sub_name: name,
-            givencity: userData?.user_district,
-          });
+          if (!hassubcat) {
+            navigation.navigate("CategoryPersonListing", {
+              category_id: category_id,
+              cat_name: cat_name,
+              sub_name: name,
+              givencity: userData?.user_district,
+            });
+          } else {
+            navigation.navigate("SecondSubCategory", {
+              category_id: id,
+              cat_name: name,
+              // sub_name: name,
+              // givencity: userData?.user_district,
+            });
+          }
         }}
       >
         <View style={styles.SubCategoryCard}>

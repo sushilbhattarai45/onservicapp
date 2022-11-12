@@ -14,7 +14,7 @@ import { Colors } from "../styles/main";
 import axios from "axios";
 import { axiosInstance } from "../component/tools";
 
-export default function SubCategoryScreen({
+export default function SecondSubCategoryScreen({
   route,
   category_name,
   navigation: { goBack },
@@ -22,7 +22,8 @@ export default function SubCategoryScreen({
   const { category_id, cat_name } = route.params;
   useEffect(() => {
     async function getSubC() {
-      const data = await axiosInstance.post("subcategories/getfilteredsubcat", {
+      alert(category_id);
+      const data = await axiosInstance.post("subcategories/getsecond", {
         GIVEN_API_KEY: "AXCF",
         category_id: category_id,
       });
@@ -34,34 +35,7 @@ export default function SubCategoryScreen({
     getSubC();
   }, []);
   const [emptydata, setEmptydata] = useState(true);
-
   const [sData, setSData] = useState();
-  // const subcategory = [
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-
-  //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
-
-  //   ,
-  // ];
   return (
     <View
       style={{
@@ -119,7 +93,6 @@ export default function SubCategoryScreen({
                   ? sData.map((subcategory) => {
                       return (
                         <SubCategory
-                          id={subcategory._id}
                           hassubcat={subcategory.subCat_hassubCat}
                           category_id={category_id}
                           cat_name={cat_name}

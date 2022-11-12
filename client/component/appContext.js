@@ -123,8 +123,7 @@ export const ContextProvider = ({ children }) => {
     };
     const getSubCategories = () => {
       try {
-        axiosInstance
-          .post("/subcategories/getallsubcategory", { GIVEN_API_KEY: "AXCF" })
+        axiosInstance.post("/subcategories/getmixedsubcategory", { GIVEN_API_KEY: "AXCF" })
           .then((res) => {
             setSubCategories(res.data.data);
           });
