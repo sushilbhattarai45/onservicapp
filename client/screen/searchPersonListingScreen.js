@@ -49,12 +49,6 @@ export default function SearchPersonListingScreen({ navigation }) {
       [navigation]
     );
 
-    // if (logged == "false") {
-    //   alert("false");
-    // } else {
-    //   alert("true");
-    // }
-
     return unsubscribe;
   }, [navigation]);
   async function getData() {
