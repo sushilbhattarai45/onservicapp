@@ -2,7 +2,7 @@ import userSchema from "../model/userSchema.js";
 import multer from "multer";
 import {} from "dotenv/config";
 const API_KEY = process.env.API_KEY;
-
+import spSchema from "../model/spSchema.js";
 export const updateUser = async (req, res) => {
   const {
     user_name,
@@ -40,6 +40,12 @@ export const updateUser = async (req, res) => {
       const updatedData = await userSchema.find({
         user_contact: user_contact,
       });
+      
+      const spUpdate = await spSchema.findOneAndUpdate({ sp_contact: user_contact }, {
+  sp_profileImage:user_profileImage
+})
+console.log(spUpdate)
+
       return res.json({ statuscode: 201, user: updatedData });
     }
   } catch (e) {

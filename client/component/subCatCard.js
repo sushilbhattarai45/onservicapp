@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 8,
+    borderRadius: 20,
     backgroundColor: "rgba(255, 255, 255, 1)",
     shadowColor: "rgba(0,0,0,0.25)",
     elevation: 1,
