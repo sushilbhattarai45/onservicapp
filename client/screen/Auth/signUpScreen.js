@@ -237,8 +237,9 @@ export default registerUser = ({ navigation }) => {
                             width: 75,
                             borderRadius: 24,
                             borderWidth: StyleSheet.hairlineWidth,
-                            objectFit: "contain",
+                            borderColor: "red",
                           }}
+                          objectFit="cover"
                           source={require("../../assets/images/profile.png")}
                         />
                       ) : (
@@ -253,7 +254,6 @@ export default registerUser = ({ navigation }) => {
                             right: 0,
                             height: 75,
                             width: 75,
-                            borderRadius: 24,
                             borderWidth: StyleSheet.hairlineWidth,
                             objectFit: "contain",
                           }}
@@ -266,7 +266,7 @@ export default registerUser = ({ navigation }) => {
                           color: errors.image ? "red" : Colors.primary,
                         }}
                       >
-                        Choose
+                        {values.image ? "Choose" : "Please Select"}
                       </Text>
                     </Pressable>
                   </View>
@@ -611,8 +611,10 @@ export default registerUser = ({ navigation }) => {
                         </Text>{" "}
                       </Text>
                     }
-                  </View>
-
+                  </View>{
+                    
+                  <Text></Text>
+                  }
                   <Pressable
                     style={{
                       borderColor: Colors.primary,

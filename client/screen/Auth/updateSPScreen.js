@@ -94,10 +94,10 @@ const userValidationSchema = yup.object().shape({
     .required(),
   photo: yup
     .array()
-    .min(1, "required-field")
-    .max(10, "Maximum 10 photos can be selected")
+    .min(1, "Please provide photos of work")
+    .max(10, "Max of 10 photos can be added")
     .required(),
-  video: yup.string().required(),
+  video: yup.string().required("Please, provide video of your work"),
 });
 
 const UpdateSpScreen = ({ route, navigation }) => {
@@ -628,6 +628,9 @@ const UpdateSpScreen = ({ route, navigation }) => {
                     </Pressable>
                   )}
                 </View>
+                {touched.photo && errors.photo ? (
+                  <Text style={{ color: "red" }}>{errors.photo}</Text>
+                ) : null}
               </View>
 
               <View style={{ marginTop: 12 }}>
@@ -730,6 +733,9 @@ const UpdateSpScreen = ({ route, navigation }) => {
                     />
                   )}
                 </View>
+                {errors.video && touched.video ? (
+                  <Text style={{ color: "red" }}>{errors.video}</Text>
+                ) : null}
               </View>
               {/* SCheckBox */}
               <View

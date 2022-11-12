@@ -326,7 +326,7 @@ export default UpdateUser = ({ navigation }) => {
                           color: errors.image ? "red" : Colors.primary,
                         }}
                       >
-                        Choose
+                        {values.image ? "Choose" : "Please Select"}
                       </Text>
                     </Pressable>
                   </View>
