@@ -10,6 +10,7 @@ import {
   Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Colors } from "../styles/main";
 
 export default function SubCategoryCard({
   containerStyle,
@@ -30,13 +31,24 @@ export default function SubCategoryCard({
         });
       }}
     >
-      <Image
-        style={styles.Repair1}
-        source={{
-          uri: image,
-        }}
-      />
-      <Text style={styles.Txt035}>{name}</Text>
+      <ImageBackground
+        source={{ uri: image }}
+        style={{ width: "100%", height: "100%", borderRadius: 10 }}
+      >
+        <Text
+          style={{
+            color: "white",
+            fontSize: 13,
+            fontWeight: "800",
+            fontFamily: "Regular",
+            margin: 5,
+            position: "absolute",
+            bottom: 0,
+          }}
+        >
+          {name}
+        </Text>
+      </ImageBackground>
     </Pressable>
   );
 }
@@ -47,29 +59,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    padding: 24,
     borderRadius: 8,
     backgroundColor: "rgba(255, 255, 255, 1)",
     shadowColor: "rgba(0,0,0,0.25)",
     elevation: 1,
     shadowOffset: { width: 0, height: 4 },
-    width: 140,
-    height: 140,
-  },
-
-  Repair1: {
-    borderRadius: 5,
-    width: 80,
-    height: 80,
-    marginBottom: 12,
-  },
-  Txt035: {
-    fontSize: 14,
-    fontFamily: "Regular",
-    fontWeight: "400",
-    letterSpacing: -0.28,
-    color: "rgba(0,0,0,1)",
-    textAlign: "center",
-    justifyContent: "center",
+    width: 100,
+    height: 100,
   },
 });

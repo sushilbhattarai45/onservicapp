@@ -179,3 +179,80 @@ export const deleteOne = async (req, res) => {
     });
   }
 };
+export const secondSubCat = async (req, res) => {
+  const { GIVEN_API_KEY, category_id } = req.body;
+  if (API_KEY == GIVEN_API_KEY) {
+    try {
+      const data = await subcategoriesSchema.find({
+        category_id: category_id,
+        subCat_status: true,
+      });
+      console.log("ok" + category_id);
+      return res.json({
+        status: 200,
+        data: data,
+      });
+    } catch (e) {
+      res.json({ error: e });
+    }
+  } else {
+    return res.json({ error: "Wrong Api Key", statuscode: 700 });
+  }
+};
+
+export const postSecond = async (req, res) => {
+  const {
+    GIVEN_API_KEY,
+    subCat_name,
+    subCat_photo,
+    category_id,
+    subCat_status,
+    subCat_updatedby,
+  } = req.body;
+  const subCat_doc = {
+    date: moment().format("ll"),
+    time: moment().format("LT"),
+  };
+  const subCat_dou = {
+    date: moment().format("ll"),
+    time: moment().format("LT"),
+  };
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const exists = await subcategoriesSchema.findOne({
+        subCat_name: subCat_name,
+      });
+      if (!exists || exists?.length == 0) {
+        const postSubCat = await subcategoriesSchema({
+          subCat_name,
+          subCat_photo,
+          subCat_status,
+          category_id,
+          subCat_updatedby,
+          subCat_doc,
+          subCat_dou,
+        });
+        const updateSubCat = await subcategoriesSchema.findOneAndUpdate(
+          { _id: category_id },
+          {
+            subCat_hassubCat: true,
+          }
+        );
+        const savepostSubCat = await postSubCat.save();
+        return res.json({
+          statuscode: 200,
+          data: savepostSubCat,
+        });
+      } else {
+        return res.json({
+          statuscode: 600,
+          error: "sub Category Already Exists",
+        });
+      }
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({ error: "Wrong Api Key", statusCode: 700 });
+  }
+};

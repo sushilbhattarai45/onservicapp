@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   StyleSheet,
   Image,
@@ -8,8 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import AppContext from "./appContext";
-import App from "../App";
+
 export default function SubCategoryGroupCard({
   containerStyle,
   onPress,
@@ -18,7 +17,7 @@ export default function SubCategoryGroupCard({
   cat_id,
 }) {
   const navigation = useNavigation();
-  const { userData } = useContext(AppContext);
+
   return (
     <Pressable
       style={[styles.container, { ...containerStyle }]}
@@ -26,7 +25,6 @@ export default function SubCategoryGroupCard({
         navigation.navigate("CategoryPersonListing", {
           cat_name: cat_name,
           sub_name: name,
-          givencity: userData?.user_district,
           category_id: cat_id,
         })
       }

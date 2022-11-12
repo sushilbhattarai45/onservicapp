@@ -7,6 +7,8 @@ import {
   getFilteredSubCat,
   deleteAllSubCategories,
   deleteOne,
+  secondSubCat,
+  postSecond,
 } from "../controller/subcategoryController.js";
 const router = Express.Router();
 // router.route("/").get(hello);
@@ -17,4 +19,7 @@ router.route("/getallsubcategory").post(getAllSubCat);
 router.route("/getfilteredsubcat").post(getFilteredSubCat);
 router.route("/deleteallsubcategories").post(deleteAllSubCategories);
 router.route("/deleteone").post(deleteOne);
+router.route("/getsecond").post(secondSubCat);
+router.route("/postsecond").post(postSecond);
+
 export default router;
