@@ -22,6 +22,7 @@ import {
   Modal,
   StyleSheet,
   TouchableWithoutFeedback,
+  Pressable,
 } from "react-native";
 
 class ModalPopup extends Component {
@@ -62,10 +63,13 @@ class ModalPopup extends Component {
           ) : (
             <></>
           )}
-          <View style={[styles.modal, this.props.containerStyle]}>
+          <Pressable
+            onPress={this.props.onPressContainer}
+            style={[styles.modal, this.props.containerStyle]}
+          >
             {/* <Text>Hello</Text> */}
             {this.props.children}
-          </View>
+          </Pressable>
         </View>
       </Modal>
     );

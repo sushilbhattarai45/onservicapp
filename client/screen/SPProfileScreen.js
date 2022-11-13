@@ -452,9 +452,10 @@ const SPProfileScreen = ({ navigation, route }) => {
             </Text>
           </>
           {/* Slider */}
-          <View style={{ marginTop: 24 }}>
-            <ImageSliderComponent data={sp?.sp_media?.photo} />
-          </View>
+          <ImageSliderComponent
+            data={sp?.sp_media?.photo}
+            style={{ marginTop: 24 }}
+          />
           <Pressable
             style={{
               flex: 1,
@@ -1075,7 +1076,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 24,
   },
   profileImage: {
-    position: "relative",
+    // position: "relative",
     width: 130,
     height: 130,
     borderRadius: 20,
