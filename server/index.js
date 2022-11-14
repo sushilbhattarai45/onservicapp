@@ -12,6 +12,7 @@ const App = Express();
 import category_route from "./routes/categoryroute.js";
 import subcategory_route from "./routes/subcategoryroute.js";
 import review_route from "./routes/reviewroute.js";
+import ads_route from "./routes/adsroute.js";
 
 connectDB();
 
@@ -29,6 +30,7 @@ App.use("/v1/api/user", user_route);
 App.use("/v1/api/sp", sp_route);
 App.use("/v1/api/bm", bm_route);
 App.use("/v1/api/review", review_route);
+App.use("/v1/api/ads", ads_route);
 
 App.use("/v1/api/categories", category_route);
 App.use("/v1/api/subcategories", subcategory_route);
