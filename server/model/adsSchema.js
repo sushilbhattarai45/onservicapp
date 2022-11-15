@@ -4,6 +4,9 @@ const ads = new mongoose.Schema({
   ads_name: {
     type: String,
   },
+  ads_link:{
+    type:String
+  },
   ads_givenEmail: {
     type: String,
   },
