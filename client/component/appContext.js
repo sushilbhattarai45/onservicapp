@@ -14,6 +14,7 @@ export const ContextProvider = ({ children }) => {
   const [logged, setLogged] = useState("false");
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [ads, setAds] = useState({});
   const [location, setLocation] = useState(null);
   const [snearyou, setSNearYou] = useState();
   const [livedistrict, setLiveDistrict] = useState("");
@@ -75,6 +76,16 @@ export const ContextProvider = ({ children }) => {
         console.error(res.error);
       }
     };
+
+    const getAds = async () => {
+      let res = await axiosInstance.post("/ads/getAds", {
+        GIVEN_API_KEY: "AXCF",
+      });
+      if (!res.error) {
+        setAds(res.data);
+        console.log(res.data);
+      }
+    };
     const getUser = async () => {
       try {
         const loggedUser = await AsyncStorage.getItem("user_contact");
@@ -123,7 +134,8 @@ export const ContextProvider = ({ children }) => {
     };
     const getSubCategories = () => {
       try {
-        axiosInstance.post("/subcategories/getmixedsubcategory", { GIVEN_API_KEY: "AXCF" })
+        axiosInstance
+          .post("/subcategories/getmixedsubcategory", { GIVEN_API_KEY: "AXCF" })
           .then((res) => {
             setSubCategories(res.data.data);
           });
@@ -136,6 +148,7 @@ export const ContextProvider = ({ children }) => {
     getLocation();
     getCategories();
     getSubCategories();
+    getAds();
   }, []);
 
   return (
@@ -157,6 +170,7 @@ export const ContextProvider = ({ children }) => {
         subCategories,
         setUserData,
         userData,
+        ads,
       }}
     >
       {children}

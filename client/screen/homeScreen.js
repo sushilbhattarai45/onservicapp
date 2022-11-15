@@ -1,9 +1,16 @@
-import React, { createRef, useContext, useEffect, useState } from "react";
+import React, {
+  createRef,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   ActivityIndicator,
   Dimensions,
   FlatList,
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -28,24 +35,18 @@ import AppContext from "../component/appContext";
 const wWidth = Dimensions.get("window").width;
 
 import NewlyAddedServices from "../component/NewlyAddedServices";
+import { ImageSlider } from "react-native-image-slider-banner";
+import { Video } from "expo-av";
 
 const HomeScreen = ({ navigation }) => {
-  const {
-    categories,
-    snearyou,
-    user,
-    logged,
-    userData,
-    coords,
-    livedistrict,
-    isitsp,
-    setIsitSp,
-  } = useContext(AppContext);
+  const { categories, snearyou, logged, userData, livedistrict, ads } =
+    useContext(AppContext);
   console.log(userData);
   const [newaddons, setNewaddons] = useState();
   const [featured, setFeatured] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState();
+  const video = useRef(null);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener(
@@ -76,7 +77,6 @@ const HomeScreen = ({ navigation }) => {
       }
     }
   }, []);
-
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -156,7 +156,26 @@ const HomeScreen = ({ navigation }) => {
             />
           </View>
         </View>
-
+        <ImageSlider
+          preview={false}
+          data={ads?.hometop?.map((item) => ({
+            img: item?.ads_mediaLink,
+            ads_link: item?.ads_link,
+          }))}
+          autoPlay={true}
+          closeIconColor="#fff"
+          timer={5000}
+          indicatorContainerStyle={{ bottom: -10 }}
+          inActiveIndicatorStyle={{ opacity: 0.5 }}
+          activeIndicatorStyle={{
+            backgroundColor: Colors.primary,
+            opacity: 0.9,
+          }}
+          caroselImageStyle={{ resizeMode: "cover", height: 250 }}
+          onClick={(item) =>
+            item.ads_link ? Linking.openURL("https://" + item.ads_link) : null
+          }
+        />
         {/* Sub Categorie */}
         <View style={styles.subCategoriesContainer}>
           <Text style={styles.subCategoriesContainerHeading}>
@@ -221,8 +240,18 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
         {/* Add */}
-        <ImageSliderComponent data={[]} />
-
+        <Video
+          ref={video}
+          style={styles.video}
+          source={{
+            uri: ads?.homevideo ? ads?.homevideo[0]?.ads_mediaLink : "",
+          }}
+          shouldPlay
+          isMuted={true}
+          resizeMode="contain"
+          pointerEvents="none"
+          isLooping
+        />
         {/* New Addons */}
         <View
           style={[
@@ -275,8 +304,27 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
         {/* Add */}
-        <ImageSliderComponent data={[]} />
 
+        <ImageSlider
+          preview={false}
+          data={ads?.homebottom?.map((item) => ({
+            img: item?.ads_mediaLink,
+            ads_link: item?.ads_link,
+          }))}
+          autoPlay={true}
+          closeIconColor="#fff"
+          timer={5000}
+          indicatorContainerStyle={{ bottom: -10 }}
+          inActiveIndicatorStyle={{ opacity: 0.5 }}
+          activeIndicatorStyle={{
+            backgroundColor: Colors.primary,
+            opacity: 0.9,
+          }}
+          caroselImageStyle={{ resizeMode: "cover", height: 250 }}
+          onClick={(item) =>
+            item.ads_link ? Linking.openURL("https://" + item.ads_link) : null
+          }
+        />
         {/* Services Near you */}
         <View>
           <Text
@@ -417,6 +465,10 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginLeft: 8,
+  },
+  video: {
+    height: 250,
+    width: Dimensions.get("window").width,
   },
 });
 

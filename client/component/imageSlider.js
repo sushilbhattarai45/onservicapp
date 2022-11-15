@@ -4,7 +4,7 @@ import { ImageSlider } from "react-native-image-slider-banner";
 import { Colors } from "../styles/main";
 import ModalPopup from "./Modal";
 
-export default function ImageSliderComponent({ style, data }) {
+export default function ImageSliderComponent({ style, data, onPress }) {
   let mappedData = data?.map((image) => ({ img: image }));
   const [open, setOpen] = useState(false);
   const popup = createRef();

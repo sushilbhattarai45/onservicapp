@@ -20,7 +20,7 @@ import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function BookMarkScreen({ navigation }) {
-  const { logged, user } = useContext(AppContext);
+  const { ads } = useContext(AppContext);
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       getBm();
@@ -71,6 +71,30 @@ export default function BookMarkScreen({ navigation }) {
           <View
             style={{
               marginTop: 20,
+              width: "100%",
+              height: 200,
+              // backgroundColor: "red",
+            }}
+          >
+            <Image
+              style={{
+                alignSelf: "center",
+                alignSelf: "center",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              source={{
+                uri: ads?.bookmarkimage[0]?.ads_mediaLink,
+                headers: {
+                  Accept: "*/*",
+                },
+              }}
+            />
+          </View>
+          <View
+            style={{
+              marginTop: 20,
             }}
           >
             {boomarked
@@ -110,30 +134,6 @@ export default function BookMarkScreen({ navigation }) {
               : null}
           </View>
         </View>
-      </View>
-      <View
-        style={{
-          marginTop: 20,
-          width: "100%",
-          height: 200,
-          // backgroundColor: "red",
-        }}
-      >
-        <Image
-          style={{
-            alignSelf: "center",
-            alignSelf: "center",
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
-          source={{
-            uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
-            headers: {
-              Accept: "*/*",
-            },
-          }}
-        />
       </View>
     </ScrollView>
   );
