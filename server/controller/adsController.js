@@ -8,6 +8,7 @@ export const postAds = async (req, res) => {
     GIVEN_API_KEY,
     ads_name,
     ads_givenEmail,
+    ads_link,
     ads_location,
     ads_mediaLink,
     ads_type,
@@ -23,6 +24,7 @@ export const postAds = async (req, res) => {
       const ads = new adsSchema({
         ads_toc,
         ads_name,
+        ads_link,
         ads_givenEmail,
         ads_mediaLink,
         ads_updatedBy,
