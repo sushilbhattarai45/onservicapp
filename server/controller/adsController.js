@@ -151,7 +151,34 @@ export const getAds = async (req, res) => {
                 homebottom:homebottomimages,
         homevideo: homeVideo,
 bookmarkimage:bookmark,
-        message: "Deleted",
+        message: "Done",
+        statuscode: 201,
+      });
+    } catch (e) {
+      return res.json({ error: " Server side error" });
+    }
+  } else {
+    return res.json({ statuscode: 700, error: "Wrong Api Key" });
+  }
+};
+
+export const getCatAds = async (req, res) => {
+  const { GIVEN_API_KEY,ads_tag } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      console.log(ads_tag)
+      const catads = await adsSchema.find({
+        ads_status: "true",
+        ads_type: "IMAGE",
+        ads_location: "CATAD",
+        ads_tag:ads_tag
+      });
+       
+      
+      return res.json({
+        catads:catads,
+               
+        message: "Done",
         statuscode: 201,
       });
     } catch (e) {

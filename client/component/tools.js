@@ -69,8 +69,8 @@ export const uploadImage = async (files) => {
 function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
-export const BASE_OUR_API_URL = "http://172.104.188.69:3001";
-// export const BASE_OUR_API_URL = "http://192.168.18.7:3001";
+// export const BASE_OUR_API_URL = "http://172.104.188.69:3001";
+export const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 export const axiosInstance = axios.create({
   baseURL: BASE_OUR_API_URL + "/v1/api/",

@@ -4,8 +4,10 @@ import {
   Image,
   Text,
   View,
+  Linking,
   ImageBackground,
   ScrollView,
+  Pressable,
 } from "react-native";
 import SubCategory from "../component/subCategory";
 import Header from "../component/Header";
@@ -21,6 +23,18 @@ export default function SubCategoryScreen({
 }) {
   const { category_id, cat_name } = route.params;
   useEffect(() => {
+
+    async function getAd()
+      {
+        const data = await axiosInstance.post("ads/getCatAds", {
+          GIVEN_API_KEY: "AXCF",
+          ads_tag:cat_name
+        })
+      setAds(data?.data?.catads[0])
+      console.log(ads)
+      setUriSource(data?.data?.catads[0]?.ads_mediaLink)
+      }
+    
     async function getSubC() {
       const data = await axiosInstance.post("subcategories/getfilteredsubcat", {
         GIVEN_API_KEY: "AXCF",
@@ -32,8 +46,11 @@ export default function SubCategoryScreen({
       console.log("OK");
     }
     getSubC();
+    getAd()
   }, []);
   const [emptydata, setEmptydata] = useState(true);
+  const [ads, setAds] = useState();
+  const [urisource, setUriSource] = useState(null);
 
   const [sData, setSData] = useState();
   // const subcategory = [
@@ -87,7 +104,10 @@ export default function SubCategoryScreen({
             }}
           >
             <View>
-              <View
+              {urisource ?   <Pressable onPress={() =>
+ Linking.openURL("https://" + ads?.ads_link) 
+          }
+                
                 style={{
                   width: "100%",
                   height: 180,
@@ -102,13 +122,14 @@ export default function SubCategoryScreen({
                     width: "95%",
                   }}
                   source={{
-                    uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
+                    uri: urisource,
                     headers: {
                       Accept: "*/*",
                     },
                   }}
                 />
-              </View>
+              </Pressable>
+                : null}
               <View
                 style={{
                   marginTop: 24,

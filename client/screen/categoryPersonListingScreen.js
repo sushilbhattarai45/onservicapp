@@ -6,6 +6,8 @@ import {
   View,
   ImageBackground,
   ScrollView,
+  Linking,
+  Pressable,
 } from "react-native";
 import PersonCard from "../component/personCard";
 import Search from "../component/searchBar";
@@ -27,8 +29,21 @@ export default function CategoryPersonListingScreen({
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       getSpData();
+      getAd();
       //Put your Data loading function here instead of my loadData()
     });
+    
+    async function getAd()
+      {
+        const data = await axiosInstance.post("ads/getCatAds", {
+          GIVEN_API_KEY: "AXCF",
+          ads_tag:sub_name
+        })
+      setAds(data?.data?.catads[0])
+      console.log(ads)
+      setUriSource(data?.data?.catads[0]?.ads_mediaLink)
+      }
+    
     async function getSpData() {
       const data = await axiosInstance.post("sp/getSearchedSp", {
         GIVEN_API_KEY: "AXCF",
@@ -44,7 +59,8 @@ export default function CategoryPersonListingScreen({
   }, [navigation]);
   const [spData, setSpData] = useState();
   const [hasData, setHasData] = useState(false);
-
+  const [ads, setAds] = useState();
+  const [urisource, setUriSource] = useState(null);
   return (
     <View
       style={{
@@ -66,7 +82,9 @@ export default function CategoryPersonListingScreen({
           style={{ backgroundColor: Colors.gray200 }}
           showsVerticalScrollIndicator={false}
         >
-          <View
+          {ads ?  <Pressable onPress={() =>
+ Linking.openURL("https://" + ads?.ads_link) 
+          }
             style={{
               marginTop: 10,
               width: "100%",
@@ -82,13 +100,13 @@ export default function CategoryPersonListingScreen({
                 width: "95%",
               }}
               source={{
-                uri: "https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png",
+                uri: urisource,
                 headers: {
                   Accept: "*/*",
                 },
               }}
             />
-          </View>
+          </Pressable> : null}
           <View style={{ marginTop: 20 }}>
             {givencity ? (
               <Text

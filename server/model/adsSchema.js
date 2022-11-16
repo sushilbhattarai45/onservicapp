@@ -11,7 +11,7 @@ const ads = new mongoose.Schema({
     type: String,
   },
    ads_tag: {
-    type: String,
+    type: Array,
   },
   ads_location: {
     type: String,
