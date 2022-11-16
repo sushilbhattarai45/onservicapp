@@ -11,6 +11,7 @@ export const postAds = async (req, res) => {
     ads_link,
     ads_location,
     ads_mediaLink,
+    ads_tag,
     ads_type,
     ads_status,
     ads_updatedBy
@@ -25,6 +26,7 @@ export const postAds = async (req, res) => {
         ads_toc,
         ads_name,
         ads_link,
+        ads_tag,
         ads_givenEmail,
         ads_mediaLink,
         ads_updatedBy,
@@ -69,6 +71,7 @@ export const updateAds = async (req, res) => {
     ads_givenEmail,
     ads_updatedBy,
     ads_status,
+    ads_tag,
     ads_link,
     ads_location,
     ads_type,
@@ -87,6 +90,7 @@ export const updateAds = async (req, res) => {
           ads_updatedBy: ads_updatedBy,
           ads_givenEmail: ads_givenEmail,
           ads_link: ads_link,
+          ads_tag:ads_tag,
         }
       );
       return res.json({

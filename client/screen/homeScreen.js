@@ -250,7 +250,7 @@ const HomeScreen = ({ navigation }) => {
           isMuted={true}
           resizeMode="contain"
           pointerEvents="none"
-          isLooping
+        isLooping={true}
         />
         {/* New Addons */}
         <View

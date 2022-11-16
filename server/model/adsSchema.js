@@ -10,6 +10,9 @@ const ads = new mongoose.Schema({
   ads_givenEmail: {
     type: String,
   },
+   ads_tag: {
+    type: String,
+  },
   ads_location: {
     type: String,
   },
