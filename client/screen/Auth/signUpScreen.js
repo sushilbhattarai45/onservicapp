@@ -74,6 +74,7 @@ export default registerUser = ({ navigation }) => {
 
   async function postData(values, { setSubmitting, setFieldError }) {
     setLoad(true);
+    setSubmitting(true);
     const [img] = await uploadImage([values.image]);
     console.log("a " + img);
     let response = await axios.post(
@@ -109,8 +110,11 @@ export default registerUser = ({ navigation }) => {
       navigation.navigate("Home");
     } else if (status == 600) {
       setLoad(false);
+      setSubmitting(false);
       setFieldError("phone", "Phone Number already exists");
     } else {
+      setSubmitting(false);
+
       setLoad(false);
     }
   }
