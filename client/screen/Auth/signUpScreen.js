@@ -625,7 +625,7 @@ export default registerUser = ({ navigation }) => {
                         color: "red",
                       }}
                     >
-                      {errors.image}
+                      Please choose an Image
                     </Text>
                   ) : null}
                   <Pressable

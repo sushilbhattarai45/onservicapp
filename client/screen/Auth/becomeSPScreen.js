@@ -93,6 +93,7 @@ const userValidationSchema = yup.object().shape({
     .min(10)
     .required("Please, provide your Phone Number!"),
   officePhone: yup.number("Phone number must be Numeric").min(10),
+  bio: yup.string().min(6).required("Please, Enter your Bio!"),
 
   accepted: yup.bool().oneOf([true], "Field must be checked"),
   gender: yup.string().required("Please, select your gender"),
@@ -139,6 +140,7 @@ const BecomeSPScreen = ({ navigation }) => {
       sp_city: values.city,
       sp_street: values.street,
       sp_gender: values.gender,
+      sp_bio: values.bio,
       sp_location: values.location,
       sp_tiktok: values.tiktok,
       sp_media: {
@@ -222,6 +224,7 @@ const BecomeSPScreen = ({ navigation }) => {
             district: "",
             gender: userData?.user_gender,
             city: "",
+            bio: "",
             street: userData?.user_street,
             accepted: false,
             location: userData?.sp_location,
@@ -401,6 +404,34 @@ const BecomeSPScreen = ({ navigation }) => {
                 {!values.gender && touched.gender ? (
                   <Text style={{ color: "red" }}>{errors.gender}</Text>
                 ) : null}
+              </View>
+
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>Bio *</Text>
+                <TextInput
+                  style={[
+                    styles.inputStyle,
+                    {
+                      borderColor: !touched.bio
+                        ? Colors.gray900
+                        : errors.bio
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.bio}
+                  onChangeText={handleChange("bio")}
+                  onBlur={() => setFieldTouched("bio")}
+                  placeholder="Bio"
+                  placeholderTextColor={Colors.gray900}
+                />
+                {touched.bio && errors.bio && (
+                  <Text style={{ color: "red" }}>{errors.bio}</Text>
+                )}
               </View>
               <View
                 style={{

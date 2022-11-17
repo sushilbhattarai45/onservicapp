@@ -1,5 +1,8 @@
 import axios from "axios";
 import { URL } from "@env";
+import React, { useContext } from "react";
+import AppContext from "./appContext";
+import * as Location from "expo-location";
 export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2 - lat1); // deg2rad below
@@ -78,3 +81,67 @@ export const axiosInstance = axios.create({
   // baseURL: URL,
   headers: { "Content-Type": "application/json" },
 });
+
+// export const getLocation = async () => {
+//   // const {
+//   //   livedistrict,
+//   //   coords,
+//   //   setCoords,
+//   //   setLiveDistrict,
+//   //   lpermission,
+//   //   setLpermission,
+//   // } = useContext(AppContext);
+
+//   const { status, canAskAgain } =
+//     await Location.requestForegroundPermissionsAsync();
+//   console.log("ok");
+//   console.log("ok");
+//   console.log("ok");
+//   console.log("ok");
+//   console.log(status);
+//   alert(canAskAgain);
+
+//   if (status !== "granted") {
+//     setLpermission("false");
+//     setErrorMsg("Permission to access location was denied");
+//     return;
+//   } else {
+//     console.log(status);
+//   }
+
+//   let location = await Location.getCurrentPositionAsync({});
+
+//   let text = "Waiting..";
+//   if (errorMsg) {
+//     text = errorMsg;
+//   } else if (location) {
+//     setLpermission("true");
+//     alert("Please restart the app");
+//     setCoords({
+//       latitude: location?.coords?.latitude,
+//       longitude: location?.coords?.longitude,
+//     });
+//     text = location?.coords?.latitude;
+//     let url =
+//       "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+//       location?.coords?.longitude +
+//       "," +
+//       location?.coords?.latitude +
+//       ".json?country=np&limit=1&types=district&access_token=pk.eyJ1Ijoib25zZXJ2aWMwMSIsImEiOiJjbGFjbGYycGIwYmljM3ZtaXFkbGFjZTcxIn0.sRocgrMGOjXS98-r7t1G_g";
+
+//     let res = await axios.get(url);
+//     if (res) {
+//       let district = res?.data?.features[0].text;
+//       console.log(district);
+//       setLiveDistrict(district);
+
+//       const cat = await axiosInstance.post("/sp/filteredsubcat", {
+//         GIVEN_API_KEY: "AXCF",
+//         city: district,
+//       });
+
+//       setSNearYou(cat?.data?.subcat);
+//     }
+//     console.log(url);
+//   }
+// };

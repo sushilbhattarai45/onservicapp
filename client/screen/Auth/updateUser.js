@@ -50,20 +50,12 @@ const userValidationSchema = yup.object().shape({
     .min(10)
     .required("Please, provide your Phone Number!"),
   accepted: yup.bool().oneOf([true], "Field must be checked"),
-  password: yup
-    .string()
-    .min(4, "Pin must be of 4 digits")
-    .max(4)
-    .required("Please, create a new PIN!"),
+
   gender: yup.string().required("Please, select your gender"),
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
   street: yup.string().min(6).required("Please, provide your street!"),
-  confirm: yup
-    .string()
-    .label("confirm password")
-    .required("Please, Enter your PIN!")
-    .oneOf([yup.ref("password"), null], "Invalid PIN"),
+
   image: yup.string().required(),
 });
 
@@ -163,7 +155,6 @@ export default UpdateUser = ({ navigation }) => {
         user_city: values.city,
         user_street: values.street,
         user_gender: values.gender,
-        user_password: values.password,
         user_profileImage: img,
         user_toc: {
           date: moment().format("ll"),
@@ -602,35 +593,7 @@ export default UpdateUser = ({ navigation }) => {
                       <Text style={{ color: "red" }}>{errors.password}</Text>
                     )}
                   </View> */}
-                  <View
-                    style={{
-                      marginTop: 12,
-                    }}
-                  >
-                    <Text>Enter your PIN *</Text>
-                    <TextInput
-                      secureTextEntry={true}
-                      keyboardType="numeric"
-                      maxLength={4}
-                      style={[
-                        styles.inputStyle,
-                        {
-                          borderColor: !touched.confirm
-                            ? Colors.gray900
-                            : errors.confirm
-                            ? "red"
-                            : Colors.primary,
-                        },
-                      ]}
-                      value={values.confirm}
-                      onChangeText={handleChange("confirm")}
-                      onBlur={() => setFieldTouched("confirm")}
-                      placeholder="Confirm Password"
-                    />
-                    {touched.confirm && errors.confirm && (
-                      <Text style={{ color: "red" }}>{errors.confirm}</Text>
-                    )}
-                  </View>
+
                   <View
                     style={{
                       marginTop: 24,

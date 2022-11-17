@@ -18,6 +18,7 @@ export const ContextProvider = ({ children }) => {
   const [location, setLocation] = useState(null);
   const [snearyou, setSNearYou] = useState();
   const [livedistrict, setLiveDistrict] = useState("");
+  const [lpermission, setLpermission] = useState("false");
   const [coords, setCoords] = useState({
     latitude: "",
     longitude: "",
@@ -27,6 +28,7 @@ export const ContextProvider = ({ children }) => {
     async function getLocation() {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
+        setLpermission("false");
         setErrorMsg("Permission to access location was denied");
         return;
       }
@@ -37,6 +39,8 @@ export const ContextProvider = ({ children }) => {
       if (errorMsg) {
         text = errorMsg;
       } else if (location) {
+        setLpermission("true");
+
         setCoords({
           latitude: location?.coords?.latitude,
           longitude: location?.coords?.longitude,
@@ -155,6 +159,8 @@ export const ContextProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         snearyou,
+        lpermission,
+        setLpermission,
         setSNearYou,
         logged,
         coords,

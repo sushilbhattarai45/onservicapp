@@ -39,8 +39,16 @@ import { ImageSlider } from "react-native-image-slider-banner";
 import { Video } from "expo-av";
 
 const HomeScreen = ({ navigation }) => {
-  const { categories, snearyou, logged, userData, livedistrict, ads } =
-    useContext(AppContext);
+  const {
+    categories,
+    snearyou,
+    logged,
+    userData,
+    livedistrict,
+    ads,
+    lpermission,
+    setLpermission,
+  } = useContext(AppContext);
   console.log(userData);
   const [newaddons, setNewaddons] = useState();
   const [featured, setFeatured] = useState();
@@ -250,7 +258,7 @@ const HomeScreen = ({ navigation }) => {
           isMuted={true}
           resizeMode="contain"
           pointerEvents="none"
-        isLooping={true}
+          isLooping={true}
         />
         {/* New Addons */}
         <View
@@ -335,63 +343,89 @@ const HomeScreen = ({ navigation }) => {
           >
             Services Near You
           </Text>
-
-          {snearyou ? (
-            <FlatList
-              style={{ marginBottom: 32 }}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              data={snearyou}
-              renderItem={({ item, index }) => {
-                let isEnd = index === snearyou.length - 1;
-                return (
-                  <SubCatCard
-                    key={item?._id}
-                    district={livedistrict}
-                    image={item?.subCat_photo}
-                    category_id={item?._id}
-                    name={item?.subCat_name}
-                    containerStyle={{
-                      marginLeft: index === 0 ? 24 : 0,
-                      marginRight: isEnd ? 24 : 0,
-                    }}
-                  />
-                );
-              }}
-              ItemSeparatorComponent={() => {
-                return (
-                  <View
-                    style={{
-                      height: "100%",
-                      width: 20,
-                      backgroundColor: Colors.gray200,
-                    }}
-                  />
-                );
-              }}
-              keyExtractor={(item, index) => index.toString()}
-            />
+          {lpermission == "true" ? (
+            snearyou ? (
+              <FlatList
+                style={{ marginBottom: 32 }}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                data={snearyou}
+                renderItem={({ item, index }) => {
+                  let isEnd = index === snearyou.length - 1;
+                  return (
+                    <SubCatCard
+                      key={item?._id}
+                      district={livedistrict}
+                      image={item?.subCat_photo}
+                      category_id={item?._id}
+                      name={item?.subCat_name}
+                      containerStyle={{
+                        marginLeft: index === 0 ? 24 : 0,
+                        marginRight: isEnd ? 24 : 0,
+                      }}
+                    />
+                  );
+                }}
+                ItemSeparatorComponent={() => {
+                  return (
+                    <View
+                      style={{
+                        height: "100%",
+                        width: 20,
+                        backgroundColor: Colors.gray200,
+                      }}
+                    />
+                  );
+                }}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            ) : (
+              <View>
+                <Text
+                  style={{
+                    justifyContent: "center",
+                    // alignItems: "center",
+                    fontFamily: "Regular",
+                    textAlign: "center",
+                    paddingBottom: 10,
+                  }}
+                >
+                  No Data found for your current Location! Still Searching
+                </Text>
+                <ActivityIndicator
+                  size="large"
+                  color={Colors.primary}
+                  style={{
+                    marginBottom: 10,
+                  }}
+                />
+              </View>
+            )
           ) : (
-            <View>
+            <Text
+              style={{
+                fontFamily: "Regular",
+                marginBottom: 20,
+                textAlign: "center",
+              }}
+              onPress={() => {
+                alert("Please allow Location access and restart the app");
+                setTimeout(() => {
+                  Linking.openSettings();
+                }, 2000);
+              }}
+            >
+              You havenot allowed Location permission please{"\n"}
               <Text
                 style={{
-                  justifyContent: "center",
-                  // alignItems: "center",
-                  fontFamily: "Regular",
-                  textAlign: "center",
-                  paddingBottom: 10,
+                  textDecorationLine: "underline",
+                  color: Colors.primary,
                 }}
               >
-                No Data found for your current Location! Still Searching
+                {" "}
+                Allow Location Acess
               </Text>
-              <ActivityIndicator
-                size="large"
-                color={Colors.primary}
-                style={{
-                  marginBottom: 10,
-                }}
-              />
-            </View>
+            </Text>
           )}
         </View>
       </View>

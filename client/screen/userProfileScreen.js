@@ -104,7 +104,7 @@ export default function UserProfileScreen({ navigation }) {
                 <Text
                   style={{
                     color: "white",
-                    fontSize: 24,
+                    fontSize: 20,
                     fontFamily: "Bold",
                     marginLeft: 24,
                   }}

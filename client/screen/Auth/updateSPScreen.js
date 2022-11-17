@@ -81,6 +81,8 @@ const userValidationSchema = yup.object().shape({
   gender: yup.string().required("Please, select your gender"),
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
+  bio: yup.string().min(6).required("Please, Enter your Bio!"),
+
   street: yup
     .string()
     .required()
@@ -137,6 +139,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         sp_street: values.street,
         sp_gender: values.gender,
         sp_location: values.location,
+        sp_bio: values.bio,
         sp_tiktok: values.tiktok,
         sp_media: {
           photo: img,
@@ -220,6 +223,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
             location: sp?.sp_location,
             tiktok: sp?.sp_tiktok,
             skills: sp?.sp_skills,
+            bio: sp?.sp_bio,
             photo: sp?.sp_media.photo,
             video: sp?.sp_media.video,
           }}
@@ -265,7 +269,6 @@ const UpdateSpScreen = ({ route, navigation }) => {
                 )}
                 {/* <Text style={{ color: "red" }}>This field Is required</Text> */}
               </View>
-
               <View
                 style={{
                   marginTop: 12,
@@ -368,6 +371,34 @@ const UpdateSpScreen = ({ route, navigation }) => {
                 {!values.gender && touched.gender ? (
                   <Text style={{ color: "red" }}>{errors.gender}</Text>
                 ) : null}
+              </View>
+              <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>Bio*</Text>
+                <TextInput
+                  style={[
+                    styles.inputStyle,
+                    {
+                      color: "black",
+                      borderColor: !touched.bio
+                        ? Colors.gray900
+                        : errors.bio
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.bio}
+                  onChangeText={handleChange("bio")}
+                  onBlur={() => setFieldTouched("bio")}
+                  placeholder="Bio"
+                  placeholderTextColor={Colors.gray900}
+                />
+                {touched.bio && errors.bio && (
+                  <Text style={{ color: "red" }}>{errors.bio}</Text>
+                )}
               </View>
               <View
                 style={{
@@ -699,7 +730,6 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   <Text style={{ color: "red" }}>{errors.photo}</Text>
                 ) : null}
               </View>
-
               <View style={{ marginTop: 12 }}>
                 <Text>Upload Video of your work!</Text>
                 <View

@@ -312,37 +312,38 @@ const SPProfileScreen = ({ navigation, route }) => {
                   />
                 </Pressable>
               )}
+              {user ? (
+                bookIcon == "true" ? (
+                  <ActionIcon
+                    name="bookmark-2-fill"
+                    color={Colors.primary}
+                    onPress={async () => {
+                      const deleteBm = await axiosInstance.post("/bm/delete", {
+                        GIVEN_API_KEY: "AXCF",
+                        user_id: user,
+                        sp_id: sp?.sp_contact,
+                      });
+                      setBookIcon("false");
+                      setBookmarked(null);
+                    }}
+                  />
+                ) : (
+                  <ActionIcon
+                    name="bookmark-2-line"
+                    color={Colors.gray900}
+                    onPress={async () => {
+                      const postBm = await axiosInstance.post("/bm/post", {
+                        GIVEN_API_KEY: "AXCF",
+                        user_id: user,
+                        sp_id: sp?.sp_contact,
+                      });
+                      setBookIcon("true");
 
-              {bookIcon == "true" ? (
-                <ActionIcon
-                  name="bookmark-2-fill"
-                  color={Colors.primary}
-                  onPress={async () => {
-                    const deleteBm = await axiosInstance.post("/bm/delete", {
-                      GIVEN_API_KEY: "AXCF",
-                      user_id: user,
-                      sp_id: sp?.sp_contact,
-                    });
-                    setBookIcon("false");
-                    setBookmarked(null);
-                  }}
-                />
-              ) : (
-                <ActionIcon
-                  name="bookmark-2-line"
-                  color={Colors.gray900}
-                  onPress={async () => {
-                    const postBm = await axiosInstance.post("/bm/post", {
-                      GIVEN_API_KEY: "AXCF",
-                      user_id: user,
-                      sp_id: sp?.sp_contact,
-                    });
-                    setBookIcon("true");
-
-                    setBookmarked(postBm.data);
-                  }}
-                />
-              )}
+                      setBookmarked(postBm.data);
+                    }}
+                  />
+                )
+              ) : null}
             </View>
           </View>
           {/* N

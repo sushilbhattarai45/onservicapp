@@ -11,6 +11,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TextInput,
+  Linking,
 } from "react-native";
 import PersonCard from "../component/personCard";
 import Search from "../component/searchBar";
@@ -24,9 +25,16 @@ import ModalPopup from "../component/Modal";
 import { Dropdown } from "react-native-element-dropdown";
 import { Districts } from "../component/district";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 export default function SearchPersonListingScreen({ navigation }) {
-  const { subCategories, userData, livedistrict } = useContext(AppContext);
+  const {
+    subCategories,
+    userData,
+    livedistrict,
+    coords,
+    setCoords,
+    lpermission,
+    setLpermission,
+  } = useContext(AppContext);
 
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionTouched, setSuggestionsTouched] = useState(false);
@@ -151,9 +159,19 @@ export default function SearchPersonListingScreen({ navigation }) {
                 fontFamily: "Regular",
                 textDecorationLine: "underline",
               }}
-              onPress={() => {
-                setLive(true);
-                setFilter({ city: livedistrict });
+              onPress={async () => {
+                if (lpermission == "true") {
+                  setLive(true);
+                  setFilter({ city: livedistrict });
+                } else {
+                  alert("Please allow Location access and restart the app");
+                  setTimeout(() => {
+                    Linking.openSettings();
+                  }, 2000);
+
+                  setLive(false);
+                  setFilter({ city: filter?.city });
+                }
               }}
             >
               Use Your current location ?
