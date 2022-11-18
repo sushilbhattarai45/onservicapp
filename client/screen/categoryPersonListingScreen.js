@@ -80,31 +80,32 @@ export default function CategoryPersonListingScreen({
           style={{ backgroundColor: Colors.gray200 }}
           showsVerticalScrollIndicator={false}
         >
-          {ads ?  <Pressable onPress={() =>
- Linking.openURL("https://" + ads?.ads_link) 
-          }
-            style={{
-              marginTop: 10,
-              width: "100%",
-              height: 180,
-              // backgroundColor: "red",
-            }}
-          >
-            <Image
+          {ads ? (
+            <Pressable
+              onPress={() => Linking.openURL("https://" + ads?.ads_link)}
               style={{
-                alignSelf: "center",
-                alignSelf: "center",
-                height: "100%",
-                width: "95%",
+                marginTop: 10,
+                width: "100%",
+                height: 180,
+                // backgroundColor: "red",
               }}
-              source={{
-                uri: urisource,
-                headers: {
-                  Accept: "*/*",
-                },
-              }}
-            />
-          </Pressable> : null}
+            >
+              <Image
+                style={{
+                  alignSelf: "center",
+                  alignSelf: "center",
+                  height: "100%",
+                  width: "95%",
+                }}
+                source={{
+                  uri: urisource,
+                  headers: {
+                    Accept: "*/*",
+                  },
+                }}
+              />
+            </Pressable>
+          ) : null}
           <View style={{ marginTop: 20 }}>
             {givencity ? (
               <Text
@@ -145,6 +146,7 @@ export default function CategoryPersonListingScreen({
                       <PersonCard
                         subcat={sub_name}
                         sp_contact={persons.sp_contact}
+                        verified={persons.sp_verified}
                         name={persons.sp_name}
                         image={persons.sp_profileImage}
                         address={persons.sp_city + " " + persons.sp_district}

@@ -10,12 +10,18 @@ export default function Header({
   icon,
   right,
   color,
-   style
+  style,
 }) {
-  let textColor = color ? color : Colors.black ;
+  let textColor = color ? color : Colors.black;
   return (
-    <View style={{...styles.header, ...style}}>
-      <Icon name={icon} onPress={onPressIcon} size={24} style={styles.icon} color={textColor} />
+    <View style={{ ...styles.header, ...style }}>
+      <Icon
+        name={icon}
+        onPress={onPressIcon}
+        size={24}
+        style={styles.icon}
+        color={textColor}
+      />
       <Text style={[styles.headerText, { color: textColor }]}>
         {headerText}
       </Text>
@@ -26,8 +32,8 @@ export default function Header({
 
 const styles = StyleSheet.create({
   header: {
-    width:'100%',
-    marginTop: Constants.statusBarHeight + 16,
+    width: "100%",
+    marginTop: Constants.statusBarHeight,
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
