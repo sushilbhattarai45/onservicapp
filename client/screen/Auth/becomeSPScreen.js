@@ -38,17 +38,6 @@ const gendersList = [
   { value: "Company", label: "Company" },
 ];
 
-const data = [
-  { label: "Item 1", value: "1" },
-  { label: "Item 2", value: "2" },
-  { label: "Item 3", value: "3" },
-  { label: "Item 4", value: "4" },
-  { label: "Item 5", value: "5" },
-  { label: "Item 6", value: "6" },
-  { label: "Item 7", value: "7" },
-  { label: "Item 8", value: "8" },
-];
-
 const SkillPill = ({ name, onPress }) => {
   return (
     <View
@@ -135,7 +124,7 @@ const BecomeSPScreen = ({ navigation }) => {
       sp_email: values.email,
       sp_contact: values.phone,
       sp_district: values.district,
-      sp_officenumber: values.officePhone,
+      sp_officeNumber: values.officePhone,
       sp_skills: values.skills,
       sp_city: values.city,
       sp_street: values.street,

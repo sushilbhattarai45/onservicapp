@@ -132,51 +132,53 @@ export default function SearchPersonListingScreen({ navigation }) {
           }}
         >
           <Text>{filter?.city}</Text>
-          {filter?.city == livedistrict ? (
-            <Text
-              style={{
-                position: "absolute",
-                right: 0,
-                marginRight: 24,
-                color: Colors.primary,
-                fontFamily: "Regular",
-                textDecorationLine: "underline",
-              }}
-              onPress={() => {
-                setLive(true);
-                setFilter({ city: userData?.user_district });
-              }}
-            >
-              Current Location Enabled
-            </Text>
-          ) : (
-            <Text
-              style={{
-                position: "absolute",
-                right: 0,
-                marginRight: 24,
-                color: Colors.primary,
-                fontFamily: "Regular",
-                textDecorationLine: "underline",
-              }}
-              onPress={async () => {
-                if (lpermission == "true") {
+          {livedistrict ? (
+            filter?.city == livedistrict ? (
+              <Text
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  marginRight: 24,
+                  color: Colors.primary,
+                  fontFamily: "Regular",
+                  textDecorationLine: "underline",
+                }}
+                onPress={() => {
                   setLive(true);
-                  setFilter({ city: livedistrict });
-                } else {
-                  alert("Please allow Location access and restart the app");
-                  setTimeout(() => {
-                    Linking.openSettings();
-                  }, 2000);
+                  setFilter({ city: userData?.user_district });
+                }}
+              >
+                Current Location Enabled
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  marginRight: 24,
+                  color: Colors.primary,
+                  fontFamily: "Regular",
+                  textDecorationLine: "underline",
+                }}
+                onPress={async () => {
+                  if (lpermission == "true") {
+                    setLive(true);
+                    setFilter({ city: livedistrict });
+                  } else {
+                    alert("Please allow Location access and restart the app");
+                    setTimeout(() => {
+                      Linking.openSettings();
+                    }, 2000);
 
-                  setLive(false);
-                  setFilter({ city: filter?.city });
-                }
-              }}
-            >
-              Use Your current location ?
-            </Text>
-          )}
+                    setLive(false);
+                    setFilter({ city: filter?.city });
+                  }
+                }}
+              >
+                Use Your current location ?
+              </Text>
+            )
+          ) : null}
         </View>
         {/* Suggestions */}
         {suggestionsActive && (
@@ -251,12 +253,7 @@ export default function SearchPersonListingScreen({ navigation }) {
           >
             <View>
               <Image
-                source={{
-                  uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/7c63n63o6t3-472%3A6676?alt=media&token=fe730173-04a9-40a8-8afd-1445f2a0ac78",
-                  headers: {
-                    Accept: "*/*",
-                  },
-                }}
+                source={require("../assets/images/not.png")}
                 style={{ width: "90%", aspectRatio: 1.5 }}
                 resizeMode="contain"
               />
@@ -315,7 +312,7 @@ export default function SearchPersonListingScreen({ navigation }) {
                 marginTop: 12,
               }}
             >
-              <Text>City *</Text>
+              <Text>District *</Text>
               <Dropdown
                 style={{
                   width: "100%",
