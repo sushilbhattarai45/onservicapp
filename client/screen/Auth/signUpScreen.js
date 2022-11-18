@@ -76,6 +76,8 @@ export default registerUser = ({ navigation }) => {
     setLoad(true);
     setSubmitting(true);
     const [img] = await uploadImage([values.image]);
+    alert(img);
+
     console.log("a " + img);
     let response = await axios.post(
       BASE_OUR_API_URL + "/v1/api/user/register",

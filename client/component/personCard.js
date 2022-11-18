@@ -7,6 +7,8 @@ import {
   ImageBackground,
   Pressable,
 } from "react-native";
+import Icon from "../component/Icon";
+
 import { Colors } from "../styles/main";
 import { useNavigation } from "@react-navigation/native";
 
@@ -18,6 +20,7 @@ export default function PersonCard({
   address,
   subcat,
   onPress,
+  verified,
   sp_contact,
 }) {
   const navigation = useNavigation();
@@ -35,7 +38,22 @@ export default function PersonCard({
       />
       <View style={styles.AutoLayoutVertical}>
         <View>
-          <Text style={styles.Txt758}>{name}</Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <Text style={styles.Txt758}>{name}</Text>
+            {verified && (
+              <Icon
+                name="checkbox-circle-fill"
+                color="#2A65FD"
+                size={20}
+                style={{ marginLeft: 8, marginTop: 2 }}
+              />
+            )}
+          </View>
           <Text style={styles.works}>
             {address} • {subcat}
           </Text>

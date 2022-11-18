@@ -228,6 +228,7 @@ export default function SearchPersonListingScreen({ navigation }) {
                 >
                   <PersonCard
                     subcat={value}
+                    verified={person.sp_verified}
                     name={person.sp_name}
                     sp_contact={person.sp_contact}
                     image={person.sp_profileImage}
