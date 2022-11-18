@@ -82,7 +82,6 @@ const SPProfileScreen = ({ navigation, route }) => {
       review_bio: review,
       review_stars: rating,
     });
-    console.log(res.data.data);
     setReview((prev) => [res.data.data, ...prev]);
   };
   const getReviews = async () => {
@@ -114,7 +113,6 @@ const SPProfileScreen = ({ navigation, route }) => {
           setBookmarked(null);
           setBookIcon("false");
         }
-        // console.log("Bookmarked:" + res.data.data);
       }
     }
   }, []);
@@ -659,7 +657,6 @@ const SPProfileScreen = ({ navigation, route }) => {
             label="Share Review"
             onPress={() => {
               if (review.length > 0) {
-                console.log("no error");
                 setReviewError(false);
                 postReview("123456789", rating, review, sp.sp_contact);
                 setReview("");

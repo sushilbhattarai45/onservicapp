@@ -20,7 +20,6 @@ export default function OtpScreen({ navigation, route }) {
   const max = 1;
   const popup = createRef();
   const { otp, num } = route.params;
-  console.log(otp)
   const firstTextInputRef = useRef(null);
   const [secondTextInputValue, setSecondTextInputValue] = useState(null);
   const [firstTextInputValue, setFirstTextInputValue] = useState(null);
@@ -40,7 +39,6 @@ export default function OtpScreen({ navigation, route }) {
     if (id == 4) setFocusColor4(Colors.primary);
   };
   useEffect(() => {
-    console.log(otp);
   });
   const deFocus = (id) => {
     if (id == 1) setFocusColor1(Colors.black);

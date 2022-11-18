@@ -17,7 +17,6 @@ const LocationScreen = () => {
         city: livedistrict,
       });
 
-      console.log(cat?.data.subcat);
     }
     if (livedistrict != null) {
       getDistrictName();

@@ -55,16 +55,13 @@ export default function BookMarkScreen({ navigation }) {
         user_id: num,
       });
       if (data.data.statuscode == 201) {
-        // console.log(data.data.message);
         const finaldata = data.data.data;
-        console.log(finaldata);
         setBmPersons(finaldata);
         setBookmarked(true);
       } else {
         console.log(data.data.message);
         setBookmarked(false);
       }
-      // console.log(data.data);
     }
   }, []);
   const [num, setNum] = useState("");

@@ -49,7 +49,6 @@ const HomeScreen = ({ navigation }) => {
     lpermission,
     setLpermission,
   } = useContext(AppContext);
-  console.log(userData);
   const [newaddons, setNewaddons] = useState();
   const [featured, setFeatured] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
@@ -74,7 +73,6 @@ const HomeScreen = ({ navigation }) => {
       let newaddons = await axiosInstance.post("/categories/newaddons", {
         GIVEN_API_KEY: "AXCF",
       });
-      console.log(featuredOnHome.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
 

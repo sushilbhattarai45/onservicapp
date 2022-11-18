@@ -228,7 +228,6 @@ export default function UserProfileScreen({ navigation }) {
                     });
                     navigation.navigate("Sp", { sp: res?.data.data });
                   } else {
-                    console.log("hi");
                     navigation.navigate("BecomeSP");
                   }
                 }}
@@ -413,7 +412,6 @@ export default function UserProfileScreen({ navigation }) {
                       });
                       navigation.navigate("Sp", { sp: res?.data.data });
                     } else {
-                      console.log("hi");
                       navigation.navigate("BecomeSP");
                     }
                   }}
@@ -436,7 +434,6 @@ export default function UserProfileScreen({ navigation }) {
                     borderTopWidth: StyleSheet.hairlineWidth,
                   }}
                   onPress={async () => {
-                    console.log("HI");
                     await AsyncStorage.removeItem("user_contact");
                     setUser(null);
                     setLogged("false");

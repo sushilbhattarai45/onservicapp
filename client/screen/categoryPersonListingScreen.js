@@ -40,7 +40,6 @@ export default function CategoryPersonListingScreen({
           ads_tag:sub_name
         })
       setAds(data?.data?.catads[0])
-      console.log(ads)
       setUriSource(data?.data?.catads[0]?.ads_mediaLink)
       }
     
@@ -52,7 +51,6 @@ export default function CategoryPersonListingScreen({
       });
       setSpData(data.data.data);
       setHasData(true);
-      console.log("ok" + JSON.stringify(data.data.data));
     }
     return unsubscribe;
     // getSpData();

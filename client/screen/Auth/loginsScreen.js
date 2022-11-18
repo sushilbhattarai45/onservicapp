@@ -64,7 +64,6 @@ export default function LoginScreen({ navigation, route, path }) {
         user_pass: pin,
       });
       const status = res?.data?.statuscode;
-      console.log(res);
       if (status == 200 || status == 201) {
         await AsyncStorage.setItem("user_contact", num);
         setUser(num);

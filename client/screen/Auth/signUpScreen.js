@@ -76,7 +76,6 @@ export default registerUser = ({ navigation }) => {
     setLoad(true);
     setSubmitting(true);
     const [img] = await uploadImage([values.image]);
-    console.log("a " + img);
     let response = await axios.post(
       BASE_OUR_API_URL + "/v1/api/user/register",
       {
@@ -106,7 +105,6 @@ export default registerUser = ({ navigation }) => {
       setIsitSp(null);
       setUser(values.phone);
       await storeData(values.phone);
-
       navigation.navigate("Home");
     } else if (status == 600) {
       setLoad(false);
@@ -138,12 +136,7 @@ export default registerUser = ({ navigation }) => {
     } catch (e) {
       console.log(e);
     }
-    // console.log({ result });
-    // let result = await launchImageLibraryAsync({ mediaTypes: "photo" });
-    // console.log(result);
-    // if (!result.cancelled) {
-    //   setImage(result.uri);
-    // }
+    
   };
 
   return (
@@ -233,7 +226,6 @@ export default registerUser = ({ navigation }) => {
                       style={{ borderRadius: 10 }}
                       onPress={async () => {
                         let img = await selectFile();
-                        console.log("a" + img);
                         setFieldValue("image", img);
                       }}
                     >
@@ -481,7 +473,6 @@ export default registerUser = ({ navigation }) => {
                       value={values.city}
                       onChange={(item) => {
                         setFieldValue("city", item.label);
-                        console.log(item.label);
                       }}
                     />
                     {!values.city && touched.city ? (
