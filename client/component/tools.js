@@ -48,9 +48,7 @@ export const uploadImage = async (files) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log(response?.data);
         let url = response?.data?.fileName;
-        console.log("Ok" + url);
         if (url.includes("\\")) {
           const filname = url.split("\\");
           const finalname =
