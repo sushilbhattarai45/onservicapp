@@ -43,6 +43,7 @@ const userValidationSchema = yup.object().shape({
   phone: yup
     .number("Phone number must be Numeric")
     .min(10)
+    .max(10)
     .required("Please, provide your Phone Number!"),
   accepted: yup.bool().oneOf([true], "Field must be checked"),
   password: yup
@@ -136,7 +137,6 @@ export default registerUser = ({ navigation }) => {
     } catch (e) {
       console.log(e);
     }
-    
   };
 
   return (

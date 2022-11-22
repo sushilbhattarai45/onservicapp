@@ -217,3 +217,35 @@ export const getOneUser = async (req, res) => {
     return res.json({ error: "Wrong Api Key", statuscode: 700 });
   }
 };
+
+export const deleteUser = async (req, res) => {
+  const { GIVEN_API_KEY, user_contact } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const exists = await userSchema.findOne({ user_contact: user_contact });
+
+      // return res.json({ data: exists, id: id });
+      if (exists || exists?.length == 0) {
+        const user = await userSchema.findOneAndDelete({
+          user_contact: user_contact,
+        });
+        return res.json({
+          statuscode: 200,
+          message: "Sucessfully deleted  data of given id",
+        });
+      } else {
+        return res.json({
+          error: "No Data Found for Given id",
+          statusCode: 400,
+        });
+      }
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 700,
+      error: "WrongApi Key",
+    });
+  }
+};

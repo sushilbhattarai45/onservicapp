@@ -9,6 +9,7 @@ import {
   getOneUser,
   updateUser,
   forgetPin,
+  deleteUser,
 } from "../controller/userController.js";
 import { connectDB } from "../db/connectDb.js";
 import multer from "multer";
@@ -22,6 +23,7 @@ router.route("/getAllUser").post(getAllUser);
 router.route("/getOneUser").post(getOneUser);
 router.route("/updateUser").post(updateUser);
 router.route("/forgetPin").post(forgetPin);
+router.route("/deleteuser").post(deleteUser);
 
 const storage = multer.diskStorage({
   filename: function (req, file, cb) {

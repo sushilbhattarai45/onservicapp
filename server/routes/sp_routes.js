@@ -8,6 +8,7 @@ import {
   postSp,
   test,
   updateSp,
+  deleteSp,
   updateSettings,
   getFilteredSubCat,
 } from "../controller/spController.js";
@@ -19,5 +20,6 @@ router.route("/getSearchedSp").post(getSearchedSp);
 router.route("/updateSp").post(updateSp);
 router.route("/updateSettings").post(updateSettings);
 router.route("/filteredsubcat").post(getFilteredSubCat);
+router.route("/deletesp").post(deleteSp);
 
 export default router;

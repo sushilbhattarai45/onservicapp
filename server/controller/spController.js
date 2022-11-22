@@ -252,3 +252,35 @@ export const updateSettings = async (req, res) => {
     });
   }
 };
+
+export const deleteSp = async (req, res) => {
+  const { GIVEN_API_KEY, sp_contact } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const exists = await spSchema.findOne({ sp_contact: sp_contact });
+
+      // return res.json({ data: exists, id: id });
+      if (exists || exists?.length == 0) {
+        const sp = await spSchema.findOneAndDelete({
+          sp_contact: sp_contact,
+        });
+        return res.json({
+          statuscode: 200,
+          message: "Sucessfully deleted  data of given id",
+        });
+      } else {
+        return res.json({
+          error: "No Data Found for Given id",
+          statusCode: 400,
+        });
+      }
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 700,
+      error: "WrongApi Key",
+    });
+  }
+};
