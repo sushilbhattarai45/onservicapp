@@ -40,7 +40,6 @@ export const uploadImage = async (files) => {
           },
           "myfile"
         );
-
         const response = await axiosInstance("/user/uploadImage", {
           method: "post",
           data: data,

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const NewlyAddedServices = ({ containerStyle, name, cat_id }) => {
+const NewlyAddedServices = ({ containerStyle, name, cat_id, image }) => {
   const navigation = useNavigation();
   return (
     <View style={{ ...containerStyle }}>
@@ -25,7 +25,7 @@ const NewlyAddedServices = ({ containerStyle, name, cat_id }) => {
         <Image
           style={{ width: 100, borderRadius: 8, height: 100 }}
           source={{
-            uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
+            uri: image,
           }}
         />
         <Text style={{ fontFamily: "Regular", fontSize: 16, marginTop: 8 }}>

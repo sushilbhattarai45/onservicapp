@@ -14,6 +14,7 @@ export default function SubCategoryGroupCard({
   onPress,
   name,
   cat_name,
+  image,
   cat_id,
 }) {
   const navigation = useNavigation();
@@ -32,7 +33,7 @@ export default function SubCategoryGroupCard({
       <Image
         style={styles.image}
         source={{
-          uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/jsv4q2x08j9-22%3A191?alt=media&token=2b0aea99-e4d3-49da-ace4-e9d81a9756df",
+          uri: image,
         }}
       />
       <Text style={styles.text}>{name}</Text>

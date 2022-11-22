@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   },
   MaskGroup: {
     width: 60,
+    borderRadius: 10,
     height: 60,
     marginRight: 16,
   },

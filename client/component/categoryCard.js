@@ -32,7 +32,7 @@ export default function CategoryCard({
       <Image
         style={styles.Repair1}
         source={{
-          uri: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/qqlret7skn-I155%3A2151%3B22%3A106?alt=media&token=505e72a8-f261-4f38-81e1-bfae6f037c3e",
+          uri: image,
         }}
       />
       <Text style={styles.Txt035}>{name}</Text>
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
 
   Repair1: {
     width: 59,
+    borderRadius: 10,
     height: 59.82,
     marginBottom: 12,
   },

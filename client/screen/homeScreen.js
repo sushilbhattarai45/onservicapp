@@ -143,11 +143,13 @@ const HomeScreen = ({ navigation }) => {
                       >
                         <CategoryCard
                           name={item.category_name}
+                          image={item.category_photo}
                           category_id={item._id}
                         />
                         {categories[index + 1] && (
                           <CategoryCard
                             name={categories[index + 1]?.category_name}
+                            image={categories[index + 1]?.category_photo}
                             category_id={categories[index + 1]?._id}
                             containerStyle={{ marginLeft: 16 }}
                           />
@@ -185,6 +187,7 @@ const HomeScreen = ({ navigation }) => {
           }
         />
         {/* Sub Categorie */}
+
         <View style={styles.subCategoriesContainer}>
           <Text style={styles.subCategoriesContainerHeading}>
             {featured?.catName}
@@ -193,11 +196,13 @@ const HomeScreen = ({ navigation }) => {
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <SubCategoryGroupCard
                 name={featured?.subCat[0]?.subCat_name}
+                image={featured?.subCat[0]?.subCat_photo}
                 cat_name={featured?.catName}
                 cat_id={featured?.catId}
               />
               <SubCategoryGroupCard
                 name={featured?.subCat[1]?.subCat_name}
+                image={featured?.subCat[1]?.subCat_photo}
                 cat_name={featured?.catName}
                 cat_id={featured?.catId}
                 containerStyle={{ marginLeft: 16 }}
@@ -211,12 +216,14 @@ const HomeScreen = ({ navigation }) => {
               }}
             >
               <SubCategoryGroupCard
+                image={featured?.subCat[2]?.subCat_photo}
                 name={featured?.subCat[2]?.subCat_name}
                 cat_name={featured?.catName}
                 cat_id={featured?.catId}
               />
               <SubCategoryGroupCard
                 name={featured?.subCat[3]?.subCat_name}
+                image={featured?.subCat[3]?.subCat_photo}
                 cat_name={featured?.catName}
                 cat_id={featured?.catId}
                 containerStyle={{ marginLeft: 16 }}
@@ -292,12 +299,14 @@ const HomeScreen = ({ navigation }) => {
                     }}
                   >
                     <NewlyAddedServices
-                      name={item.category_name}
-                      cat_id={item._id}
+                      image={item?.category_photo}
+                      name={item?.category_name}
+                      cat_id={item?._id}
                       navigation={navigation}
                     />
                     {categories[index + 1] && (
                       <NewlyAddedServices
+                        image={newaddons[index + 1]?.category_photo}
                         cat_id={newaddons[index + 1]?._id}
                         navigation={navigation}
                         name={newaddons[index + 1]?.category_name}
