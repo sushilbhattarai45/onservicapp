@@ -10,6 +10,10 @@ const sp = new mongoose.Schema({
   sp_district: {
     type: String,
   },
+  sp_paid: {
+    type: Boolean,
+    default: false,
+  },
   sp_city: {
     type: String,
   },
