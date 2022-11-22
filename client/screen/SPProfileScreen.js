@@ -76,9 +76,7 @@ const SkillPill = ({ name }) => {
 };
 const SPProfileScreen = ({ navigation, route }) => {
   const { sp } = route.params;
-  console.log(sp);
   const { isitsp } = useContext(AppContext);
-  console.log(sp?.sp_status, sp?.sp_showReview);
   const { user, snearyou, livedistrict } = useContext(AppContext);
   const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(0);
@@ -99,7 +97,6 @@ const SPProfileScreen = ({ navigation, route }) => {
   const [videoMuted, setVideoMuted] = useState(true);
   const [bookIcon, setBookIcon] = useState("false");
   const onFullscreenUpdate = ({ fullscreenUpdate, status }) => {
-    console.log("Update" + fullscreenUpdate);
     if (fullscreenUpdate == 3) {
       setVideoMuted(true);
     }
@@ -159,7 +156,6 @@ const SPProfileScreen = ({ navigation, route }) => {
           setBookmarked(null);
           setBookIcon("false");
         }
-        // console.log("Bookmarked:" + res.data.data);
       }
     }
   }, []);
@@ -836,7 +832,6 @@ const SPProfileScreen = ({ navigation, route }) => {
               thumbColor={showReviews ? Colors.primary : Colors.gray900}
               ios_backgroundColor="#3e3e3e"
               onValueChange={async (value) => {
-                console.log(value);
                 let res = axiosInstance
                   .post("/sp/updateSettings", {
                     GIVEN_API_KEY: "AXCF",
@@ -845,7 +840,6 @@ const SPProfileScreen = ({ navigation, route }) => {
                     sp_showReview: value,
                   })
                   .then(() => setShowReviews(value));
-                console.log(res.data);
               }}
               value={showReviews}
             />
@@ -868,7 +862,6 @@ const SPProfileScreen = ({ navigation, route }) => {
               thumbColor={spStatus ? Colors.primary : Colors.gray900}
               ios_backgroundColor="#3e3e3e"
               onValueChange={async (value) => {
-                console.log(value);
                 let res = axiosInstance
                   .post("/sp/updateSettings", {
                     GIVEN_API_KEY: "AXCF",
@@ -877,7 +870,6 @@ const SPProfileScreen = ({ navigation, route }) => {
                     sp_showReview: showReviews,
                   })
                   .then(() => setSpStatus(value));
-                console.log(res.data);
               }}
               value={spStatus}
             />
@@ -1046,7 +1038,6 @@ const SPProfileScreen = ({ navigation, route }) => {
               } else if (review.split(" ").length > 50) {
                 setReviewError("Max no of word is 50");
               } else {
-                console.log("no error");
                 setReviewError(false);
                 postReview(rating, review);
                 setRating(0);

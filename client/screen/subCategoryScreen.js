@@ -31,7 +31,6 @@ export default function SubCategoryScreen({
           ads_tag:cat_name
         })
       setAds(data?.data?.catads[0])
-      console.log(ads)
       setUriSource(data?.data?.catads[0]?.ads_mediaLink)
       }
     
@@ -42,8 +41,6 @@ export default function SubCategoryScreen({
       });
       setSData(data.data.data);
       setEmptydata(false);
-      console.log(JSON.stringify(sData));
-      console.log("OK");
     }
     getSubC();
     getAd()

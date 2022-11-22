@@ -32,17 +32,17 @@ export default function CategoryPersonListingScreen({
       getAd();
       //Put your Data loading function here instead of my loadData()
     });
-
-    async function getAd() {
-      const data = await axiosInstance.post("ads/getCatAds", {
-        GIVEN_API_KEY: "AXCF",
-        ads_tag: sub_name,
-      });
-      setAds(data?.data?.catads[0]);
-      console.log(ads);
-      setUriSource(data?.data?.catads[0]?.ads_mediaLink);
-    }
-
+    
+    async function getAd()
+      {
+        const data = await axiosInstance.post("ads/getCatAds", {
+          GIVEN_API_KEY: "AXCF",
+          ads_tag:sub_name
+        })
+      setAds(data?.data?.catads[0])
+      setUriSource(data?.data?.catads[0]?.ads_mediaLink)
+      }
+    
     async function getSpData() {
       const data = await axiosInstance.post("sp/getSearchedSp", {
         GIVEN_API_KEY: "AXCF",
@@ -51,7 +51,6 @@ export default function CategoryPersonListingScreen({
       });
       setSpData(data.data.data);
       setHasData(true);
-      console.log("ok" + JSON.stringify(data.data.data));
     }
     return unsubscribe;
     // getSpData();

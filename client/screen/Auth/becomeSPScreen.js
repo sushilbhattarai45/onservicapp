@@ -116,7 +116,6 @@ const BecomeSPScreen = ({ navigation }) => {
   const submit = async (values) => {
     setLoad(true);
     const img = await uploadImage(values.photo);
-    console.log(img);
     let [vdo] = await uploadImage([values.video]);
     let response = await axiosInstance.post("/sp/postsp/", {
       GIVEN_API_KEY: "AXCF",
@@ -143,7 +142,6 @@ const BecomeSPScreen = ({ navigation }) => {
       sp_profileImage: userData?.user_profileImage,
     });
     setLoad(false);
-    console.log(response.data.sp);
     setIsitSp(response.data.sp);
     navigation.navigate("Home");
   };
@@ -159,7 +157,6 @@ const BecomeSPScreen = ({ navigation }) => {
         mediaType: "image",
         selectionLimit: 10,
       });
-      console.log(result);
       let files = {};
       if (!result.cancelled) {
         files = result.selected
@@ -168,8 +165,8 @@ const BecomeSPScreen = ({ navigation }) => {
         setLoading(false);
         return files;
       } else {
-        return images;
         setLoading(false);
+        return images;
       }
     } catch (e) {
       console.log(e);
@@ -497,7 +494,6 @@ const BecomeSPScreen = ({ navigation }) => {
                   value={values.city}
                   onChange={(item) => {
                     setFieldValue("city", item.label);
-                    console.log(item.label);
                   }}
                 />
                 {!values.city && touched.city ? (
@@ -612,7 +608,6 @@ const BecomeSPScreen = ({ navigation }) => {
                   containerStyle={{ marginTop: 24 }}
                   onBlur={() => setFieldTouched("skills")}
                   onChange={(item) => {
-                    console.log(item);
                     setFieldValue("skills", item);
                   }}
                   style={[
@@ -741,7 +736,6 @@ const BecomeSPScreen = ({ navigation }) => {
                         setFieldTouched("photo");
                         let a = await selectFile(values.photo);
                         setFieldValue("photo", a);
-                        console.log(a);
                       }}
                     >
                       <Icon name="add-line" size={24} color="white" />
@@ -888,9 +882,6 @@ const BecomeSPScreen = ({ navigation }) => {
                       color: errors.accepted ? Colors.black : Colors.red,
                       fontSize: 12,
                     }}
-                    onPress={async () =>
-                      console.log(await uploadImage(values.photo))
-                    }
                   >
                     I agree to the{" "}
                     <Text

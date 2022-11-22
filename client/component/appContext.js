@@ -56,7 +56,6 @@ export const ContextProvider = ({ children }) => {
         let res = await axios.get(url);
         if (res) {
           let district = res?.data?.features[0].text;
-          console.log(district);
           setLiveDistrict(district);
 
           const cat = await axiosInstance.post("/sp/filteredsubcat", {
@@ -66,7 +65,6 @@ export const ContextProvider = ({ children }) => {
 
           setSNearYou(cat?.data?.subcat);
         }
-        console.log(url);
       }
     }
     const getUserData = async (contact) => {

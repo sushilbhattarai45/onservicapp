@@ -113,20 +113,17 @@ const userValidationSchema = yup.object().shape({
 const UpdateSpScreen = ({ route, navigation }) => {
   let { sp } = route.params;
   const { userData } = useContext(AppContext);
-  console.log(sp.sp_media.video);
   const { subCategories, setIsitSp } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState(
     Districts.filter((item) => item.label == sp?.sp_district)[0].cities
   );
-  console.log(citiesList);
   const [load, setLoad] = useState(false);
 
   const submit = async (values) => {
     setLoad(true);
     const img = await uploadImage(values.photo);
     let [vdo] = await uploadImage([values.video]);
-    console.log(img);
-    console.log(vdo);
+
     let response = axiosInstance
       .post("/sp/updateSp/", {
         GIVEN_API_KEY: "AXCF",
@@ -148,7 +145,6 @@ const UpdateSpScreen = ({ route, navigation }) => {
         sp_profileImage: userData?.user_profileImage,
       })
       .then((response) => {
-        console.log(response.data);
         setLoad(false);
 
         navigation.navigate("Sp", { sp: response?.data?.sp[0] });
@@ -475,7 +471,6 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   value={values.city}
                   onChange={(item) => {
                     setFieldValue("city", item.label);
-                    console.log(item.label);
                   }}
                 />
                 {!values.city && touched.city ? (
@@ -590,7 +585,6 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   containerStyle={{ marginTop: 24 }}
                   onBlur={() => setFieldTouched("skills")}
                   onChange={(item) => {
-                    console.log(item);
                     setFieldValue("skills", item);
                   }}
                   style={[
@@ -865,9 +859,6 @@ const UpdateSpScreen = ({ route, navigation }) => {
                       color: errors.accepted ? Colors.black : Colors.red,
                       fontSize: 12,
                     }}
-                    onPress={async () =>
-                      console.log(await uploadImage(values.photo))
-                    }
                   >
                     I agree to the{" "}
                     <Text

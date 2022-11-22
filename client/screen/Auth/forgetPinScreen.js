@@ -26,7 +26,6 @@ export default function ForgetPinScreen() {
       if (check?.data.statuscode == 201) {
         // const otp = Math.floor(Math.random() * 10000);
         let genOtp = getOtp();
-        console.log(genOtp);
         navigation.navigate("OtpScreen", {
           num: num,
           otp: genOtp,

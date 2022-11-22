@@ -112,8 +112,6 @@ export default function ImagePickerExample() {
 
   //end
   const uploadImage = async (file) => {
-    console.log("the file you have choosed is ");
-    console.log(file);
     try {
       // checks if the file is empty
       if (file === null) {
@@ -141,7 +139,6 @@ export default function ImagePickerExample() {
       );
 
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-      console.log("s" + serverUrl);
       const response = await axios(serverUrl, {
         method: "post",
         data: data,
@@ -156,8 +153,6 @@ export default function ImagePickerExample() {
     } catch (e) {
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
 
-      console.log("trying again " + serverUrl);
-
       axios(serverUrl, {
         method: "post",
         data: data,
@@ -166,11 +161,8 @@ export default function ImagePickerExample() {
           "Content-Type": "multipart/form-data",
         },
       })
-        .then((res) => {
-          console.log(res);
-        })
+        .then(res)
         .catch((error) => {
-          console.log("second error");
           console.log(error);
         });
       // setError({
@@ -187,10 +179,7 @@ export default function ImagePickerExample() {
       setFile(result);
 
       uploadImage(result).then((res) => {
-        console.log("hello" + { res });
-
         setImage(BASE_OUR_API_URL + "/" + res);
-        console.log("hello" + image);
       });
     } catch (e) {
       console.log(e);

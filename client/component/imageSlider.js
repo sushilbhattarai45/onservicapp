@@ -22,7 +22,6 @@ export default function ImageSliderComponent({ style, data, onPress }) {
         activeIndicatorStyle={{ backgroundColor: Colors.primary, opacity: 0.9 }}
         caroselImageStyle={{ resizeMode: "cover", height: 250 }}
         onClick={(item) => {
-          console.log(item);
           setOpen(item.img);
           popup.current.show();
         }}

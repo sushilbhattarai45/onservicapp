@@ -74,8 +74,6 @@ export default Formikwalaform = () => {
   const [image, setImage] = useState("");
 
   const uploadImage = async (file) => {
-    // console.log("the file you have choosed is ");
-    // console.log(file);
     try {
       // checks if the file is empty
       if (file === null) {
@@ -103,7 +101,6 @@ export default Formikwalaform = () => {
       );
 
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-      console.log("s" + serverUrl);
       const response = await axios(serverUrl, {
         method: "post",
         data: data,
@@ -118,8 +115,6 @@ export default Formikwalaform = () => {
     } catch (e) {
       const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
 
-      console.log("trying again " + serverUrl);
-
       axios(serverUrl, {
         method: "post",
         data: data,
@@ -128,11 +123,8 @@ export default Formikwalaform = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-        .then((res) => {
-          console.log(res);
-        })
+        .then(res)
         .catch((error) => {
-          console.log("second error");
           console.log(error);
         });
       // setError({
@@ -186,12 +178,7 @@ export default Formikwalaform = () => {
     } catch (e) {
       console.log(e);
     }
-    // console.log({ result });
-    // let result = await launchImageLibraryAsync({ mediaTypes: "photo" });
-    // console.log(result);
-    // if (!result.cancelled) {
-    //   setImage(result.uri);
-    // }
+   
   };
 
   return (
@@ -260,7 +247,6 @@ export default Formikwalaform = () => {
                 <Pressable
                   onPress={async () => {
                     let img = await selectFile();
-                    console.log("a" + img);
                     setFieldValue("image", img);
                   }}
                 >
@@ -492,7 +478,6 @@ export default Formikwalaform = () => {
                   value={values.city}
                   onChange={(item) => {
                     setFieldValue("city", item.label);
-                    console.log(item.label);
                   }}
                 />
                 {!values.city && touched.city ? (

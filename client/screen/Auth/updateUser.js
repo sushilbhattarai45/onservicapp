@@ -69,81 +69,10 @@ export default UpdateUser = ({ navigation }) => {
   const [file, setFile] = useState(null);
   const [load, setLoad] = useState(false);
 
-  // const uploadImage = async (file) => {
-  //   // console.log("the file you have choosed is ");
-  //   // console.log(file);
-  //   try {
-  //     // checks if the file is empty
-  //     if (file === null) {
-  //       setError({
-  //         target: "image",
-  //         message: "Sorry ,There is some error with the profile picture!!",
-  //       });
-  //       return null;
-  //     }
-  //     // setError(false);
-  //     // if not empty creating a form data to send to upload the image to the server
-  //     // alert("ok");
-
-  //     const imageToUpload = file;
-  //     const data = new FormData();
-
-  //     data.append(
-  //       "profile",
-  //       {
-  //         uri: imageToUpload?.uri,
-  //         name: imageToUpload?.uri,
-  //         type: "image/jpg",
-  //       },
-  //       "myfile"
-  //     );
-
-  //     const response = await axiosInstance("user/uploadImage", {
-  //       method: "post",
-  //       data: data,
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     });
-  //     var url = response?.data?.fileName;
-  //     alert(url);
-  //     const filename = url.split("\\");
-  //     const finalname = filename[0];
-  //     // alert(finalname);
-  //     return finalname;
-  //   } catch (e) {
-  //     const serverUrl = BASE_OUR_API_URL + `/v1/api/user/uploadImage`;
-
-  //     console.log("trying again " + serverUrl);
-
-  //     axios(serverUrl, {
-  //       method: "post",
-  //       data: data,
-
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     })
-  //       .then((res) => {
-  //         console.log(res);
-  //       })
-  //       .catch((error) => {
-  //         console.log("second error");
-  //         console.log(error);
-  //       });
-  //     // setError({
-  //     //   target: "image",
-  //     //   message: "Sry, we are having trouble uploading the Profile ",
-  //     // });
-  //     return;
-  //   }
-
-  // };
-
+  
   async function postData(values, { setSubmitting, setFieldError }) {
     setLoad(true);
     const [img] = await uploadImage([values.image]);
-    console.log("a " + img);
     let response = await axios.post(
       BASE_OUR_API_URL + "/v1/api/user/updateUser",
       {
@@ -168,7 +97,6 @@ export default UpdateUser = ({ navigation }) => {
       setLoad(false);
       setData(finaldata);
       setUserData(finaldata[0]);
-      console.log(finaldata);
       await storeData(data);
       navigation.navigate("Home");
     } else if (status == 600) {
@@ -181,7 +109,6 @@ export default UpdateUser = ({ navigation }) => {
   }
   const storeData = async (value) => {
     try {
-      console.log(value);
       await AsyncStorage.setItem("user_contact", value?.user_contact);
     } catch (e) {}
   };
@@ -200,12 +127,7 @@ export default UpdateUser = ({ navigation }) => {
     } catch (e) {
       console.log(e);
     }
-    // console.log({ result });
-    // let result = await launchImageLibraryAsync({ mediaTypes: "photo" });
-    // console.log(result);
-    // if (!result.cancelled) {
-    //   setImage(result.uri);
-    // }
+
   };
 
   return (
@@ -294,7 +216,6 @@ export default UpdateUser = ({ navigation }) => {
                     <Pressable
                       onPress={async () => {
                         let img = await selectFile();
-                        console.log("a" + img);
                         setFieldValue("image", img);
                       }}
                     >
@@ -488,7 +409,6 @@ export default UpdateUser = ({ navigation }) => {
                       value={values.district}
                       onChange={(item) => {
                         setFieldValue("district", item.label);
-                        console.log(item.cities);
                         setCitiesList(item.cities);
                       }}
                     />
@@ -529,7 +449,6 @@ export default UpdateUser = ({ navigation }) => {
                       value={values.city}
                       onChange={(item) => {
                         setFieldValue("city", item.label);
-                        console.log(item.label);
                       }}
                     />
                     {!values.city && touched.city ? (
