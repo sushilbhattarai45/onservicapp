@@ -644,6 +644,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           {/* Footer */}
           <View
             style={{
+              flex: 1,
               paddingHorizontal: 24,
               paddingVertical: 30,
               backgroundColor: Colors.white,
@@ -654,9 +655,8 @@ const SPProfileScreen = ({ navigation, route }) => {
             }}
           >
             <Image
-              source={require("../assets/logo.png")}
-              style={{ width: 130 }}
-              resizeMode="cover"
+              source={require("../assets/images/logo.png")}
+              style={{ height: 30, width: 180, resizeMode: "contain" }}
             />
             <View>
               <View

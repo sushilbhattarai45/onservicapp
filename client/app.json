@@ -3,13 +3,13 @@
     "name": "ON servic",
     "slug": "onserivc",
     "version": "1.0.0",
-    "icon": "./assets/images/os.png",
+    "icon": "./assets/images/onservicLogo.png",
     "ios": {
       "bundleIdentifier": "com.yourcompany.yourappname",
       "buildNumber": "1.0.0"
     },
     "splash": {
-      "image": "./assets/images/os.png"
+      "image": "./assets/images/Splash.png"
     },
     "assetBundlePatterns": ["**/*"],
     "android": {
