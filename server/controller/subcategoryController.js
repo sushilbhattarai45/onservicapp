@@ -114,6 +114,7 @@ export const getMixedsubCategories = async (req, res) => {
     try {
       const data = await subcategoriesSchema.find({
         subCat_hassubCat: false,
+        subCat_status: true,
       });
       return res.json({
         status: 200,
