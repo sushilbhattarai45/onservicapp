@@ -113,7 +113,6 @@ export default registerUser = ({ navigation }) => {
       setFieldError("phone", "Phone Number already exists");
     } else {
       setSubmitting(false);
-
       setLoad(false);
     }
   }
