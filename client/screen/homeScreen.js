@@ -73,8 +73,10 @@ const HomeScreen = ({ navigation }) => {
       let newaddons = await axiosInstance.post("/categories/newaddons", {
         GIVEN_API_KEY: "AXCF",
       });
+      console.log(featuredOnHome.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
+      else setNewaddons(null);
 
       if (res.error || featuredOnHome.error || newaddons.error) {
         console.error(res?.error);
@@ -186,72 +188,81 @@ const HomeScreen = ({ navigation }) => {
         />
         {/* Sub Categorie */}
 
-        <View style={styles.subCategoriesContainer}>
-          <Text style={styles.subCategoriesContainerHeading}>
-            {featured?.catName}
-          </Text>
-          <View style={{ alignItems: "center" }}>
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
-              <SubCategoryGroupCard
-                name={featured?.subCat[0]?.subCat_name}
-                image={featured?.subCat[0]?.subCat_photo}
-                cat_name={featured?.catName}
-                cat_id={featured?.catId}
-              />
-              <SubCategoryGroupCard
-                name={featured?.subCat[1]?.subCat_name}
-                image={featured?.subCat[1]?.subCat_photo}
-                cat_name={featured?.catName}
-                cat_id={featured?.catId}
-                containerStyle={{ marginLeft: 16 }}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                marginTop: 16,
-              }}
-            >
-              <SubCategoryGroupCard
-                image={featured?.subCat[2]?.subCat_photo}
-                name={featured?.subCat[2]?.subCat_name}
-                cat_name={featured?.catName}
-                cat_id={featured?.catId}
-              />
-              <SubCategoryGroupCard
-                name={featured?.subCat[3]?.subCat_name}
-                image={featured?.subCat[3]?.subCat_photo}
-                cat_name={featured?.catName}
-                cat_id={featured?.catId}
-                containerStyle={{ marginLeft: 16 }}
-              />
-            </View>
-            <View style={{ flexDirection: "row", marginTop: 24 }}>
-              <Text
-                onPress={() => {
-                  navigation.navigate("SubCategory", {
-                    category_id: featured?.catId,
-                    cat_name: featured?.catName,
-                  });
-                }}
+        {featured && featured?.subCat && (
+          <View style={styles.subCategoriesContainer}>
+            <Text style={styles.subCategoriesContainerHeading}>
+              {featured?.catName}
+            </Text>
+            <View style={{ alignItems: "center" }}>
+              <View
                 style={{
-                  fontSize: 16,
-                  fontFamily: "Regular",
-                  color: Colors.primary,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                See More{" "}
-              </Text>
-              <Icon
-                name="arrow-right-s-line"
-                size={20}
-                color={Colors.primary}
-                style={{ marginLeft: 4 }}
-              />
+                <SubCategoryGroupCard
+                  name={featured?.subCat[0]?.subCat_name}
+                  image={featured?.subCat[0]?.subCat_photo}
+                  cat_name={featured?.catName}
+                  cat_id={featured?.catId}
+                />
+                <SubCategoryGroupCard
+                  name={featured?.subCat[1]?.subCat_name}
+                  image={featured?.subCat[1]?.subCat_photo}
+                  cat_name={featured?.catName}
+                  cat_id={featured?.catId}
+                  containerStyle={{ marginLeft: 16 }}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 16,
+                }}
+              >
+                <SubCategoryGroupCard
+                  image={featured?.subCat[2]?.subCat_photo}
+                  name={featured?.subCat[2]?.subCat_name}
+                  cat_name={featured?.catName}
+                  cat_id={featured?.catId}
+                />
+                <SubCategoryGroupCard
+                  name={featured?.subCat[3]?.subCat_name}
+                  image={featured?.subCat[3]?.subCat_photo}
+                  cat_name={featured?.catName}
+                  cat_id={featured?.catId}
+                  containerStyle={{ marginLeft: 16 }}
+                />
+              </View>
+              <View style={{ flexDirection: "row", marginTop: 24 }}>
+                <Text
+                  onPress={() => {
+                    navigation.navigate("SubCategory", {
+                      category_id: featured?.catId,
+                      cat_name: featured?.catName,
+                    });
+                  }}
+                  style={{
+                    fontSize: 16,
+                    fontFamily: "Regular",
+                    color: Colors.primary,
+                  }}
+                >
+                  See More{" "}
+                </Text>
+                <Icon
+                  name="arrow-right-s-line"
+                  size={20}
+                  color={Colors.primary}
+                  style={{ marginLeft: 4 }}
+                />
+              </View>
             </View>
           </View>
-        </View>
+        )}
         {/* Add */}
         <Video
           ref={video}
@@ -286,35 +297,36 @@ const HomeScreen = ({ navigation }) => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           >
-            {newaddons?.map((item, index) => {
-              if (index % 2 == 0) {
-                return (
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      marginLeft: index === 0 ? 24 : 0,
-                      marginRight: index === newaddons.length - 1 ? 24 : 0,
-                    }}
-                  >
-                    <NewlyAddedServices
-                      image={item?.category_photo}
-                      name={item?.category_name}
-                      cat_id={item?._id}
-                      navigation={navigation}
-                    />
-                    {categories[index + 1] && (
+            {newaddons &&
+              newaddons?.map((item, index) => {
+                if (index % 2 == 0) {
+                  return (
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        marginLeft: index === 0 ? 24 : 0,
+                        marginRight: index === newaddons.length - 1 ? 24 : 0,
+                      }}
+                    >
                       <NewlyAddedServices
-                        image={newaddons[index + 1]?.category_photo}
-                        cat_id={newaddons[index + 1]?._id}
+                        image={item?.category_photo}
+                        name={item?.category_name}
+                        cat_id={item?._id}
                         navigation={navigation}
-                        name={newaddons[index + 1]?.category_name}
-                        containerStyle={{ marginTop: 24, marginRight: 24 }}
                       />
-                    )}
-                  </View>
-                );
-              }
-            })}
+                      {categories[index + 1] && (
+                        <NewlyAddedServices
+                          image={newaddons[index + 1]?.category_photo}
+                          cat_id={newaddons[index + 1]?._id}
+                          navigation={navigation}
+                          name={newaddons[index + 1]?.category_name}
+                          containerStyle={{ marginTop: 24, marginRight: 24 }}
+                        />
+                      )}
+                    </View>
+                  );
+                }
+              })}
           </ScrollView>
         </View>
 

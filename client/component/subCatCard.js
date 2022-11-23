@@ -33,7 +33,8 @@ export default function SubCategoryCard({
     >
       <ImageBackground
         source={{ uri: image }}
-        style={{ width: "100%", height: "100%", borderRadius: 10 }}
+        style={{ width: "100%", height: "100%", borderRadius: 24 }}
+        imageStyle={{ borderRadius: 8 }}
       >
         <Text
           style={{
@@ -66,6 +67,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     width: 100,
     height: 100,
-    borderRadius: 24,
+    // borderRadius: 24,
   },
 });

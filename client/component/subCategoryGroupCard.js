@@ -44,8 +44,13 @@ export default function SubCategoryGroupCard({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    borderRadius: 4,
+    // alignContent: "center",
+    // backgroundColor: "red",
   },
   image: {
+    borderRadius: 4,
+
     height: 80,
   },
   text: {
