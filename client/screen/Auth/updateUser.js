@@ -47,7 +47,7 @@ const userValidationSchema = yup.object().shape({
     .required("Please, provide your email!"),
   phone: yup
     .number("Phone number must be Numeric")
-    .min(10)
+    .min(1000000000, "Please, provide a valid phone number!")
     .required("Please, provide your Phone Number!"),
   accepted: yup.bool().oneOf([true], "Field must be checked"),
 
@@ -69,7 +69,6 @@ export default UpdateUser = ({ navigation }) => {
   const [file, setFile] = useState(null);
   const [load, setLoad] = useState(false);
 
-  
   async function postData(values, { setSubmitting, setFieldError }) {
     setLoad(true);
     const [img] = await uploadImage([values.image]);
@@ -127,7 +126,6 @@ export default UpdateUser = ({ navigation }) => {
     } catch (e) {
       console.log(e);
     }
-
   };
 
   return (

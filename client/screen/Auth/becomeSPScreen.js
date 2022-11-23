@@ -78,10 +78,17 @@ const userValidationSchema = yup.object().shape({
     .email("Please, provide a valid email!")
     .required("Please, provide your email!"),
   phone: yup
-    .number("Phone number must be Numeric")
-    .min(10)
-    .required("Please, provide your Phone Number!"),
-  officePhone: yup.number("Phone number must be Numeric").min(10),
+    .number()
+    .typeError("Phone number must be a number")
+    .min(10, "Please, provide a valid phone number!")
+    .required("Please, provide your phone number!"),
+  accepted: yup.bool().oneOf([true], "Field must be checked"),
+  officePhone: yup
+    .number()
+    .typeError("Phone number must be a number")
+    .min(1000000000, "Please, provide a valid phone number!")
+    .required("Please, provide your phone number!"),
+  accepted: yup.bool().oneOf([true], "Field must be checked"),
   bio: yup.string().min(6).required("Please, Enter your Bio!"),
 
   accepted: yup.bool().oneOf([true], "Field must be checked"),
