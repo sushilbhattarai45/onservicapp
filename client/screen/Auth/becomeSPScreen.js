@@ -138,6 +138,7 @@ const BecomeSPScreen = ({ navigation }) => {
       sp_bio: values.bio,
       sp_location: values.location,
       sp_tiktok: values.tiktok,
+      sp_createdBy: "App",
       sp_media: {
         photo: img,
         video: vdo,
@@ -216,6 +217,7 @@ const BecomeSPScreen = ({ navigation }) => {
             officePhone: "",
             district: "",
             gender: userData?.user_gender,
+
             city: "",
             bio: "",
             street: userData?.user_street,
