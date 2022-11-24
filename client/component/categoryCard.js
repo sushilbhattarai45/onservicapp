@@ -15,6 +15,7 @@ export default function CategoryCard({
   containerStyle,
   name,
   category_id,
+  givencity,
   image,
 }) {
   const navigation = useNavigation();
@@ -26,6 +27,7 @@ export default function CategoryCard({
         navigation.navigate("SubCategory", {
           category_id: category_id,
           cat_name: name,
+          givencity: givencity,
         });
       }}
     >

@@ -18,11 +18,13 @@ import Header from "../component/Header";
 import axios from "axios";
 import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
+import App from "../App";
 export default function CategoryPersonListingScreen({
   route,
   navigation,
   navigation: { goBack },
 }) {
+  const { livedistrict } = useContext(AppContext);
   const [rating, setRating] = useState(3);
   const { userData, logged } = useContext(AppContext);
   const { category_id, cat_name, givencity, sub_name } = route.params;
@@ -32,21 +34,20 @@ export default function CategoryPersonListingScreen({
       getAd();
       //Put your Data loading function here instead of my loadData()
     });
-    
-    async function getAd()
-      {
-        const data = await axiosInstance.post("ads/getCatAds", {
-          GIVEN_API_KEY: "AXCF",
-          ads_tag:sub_name
-        })
-      setAds(data?.data?.catads[0])
-      setUriSource(data?.data?.catads[0]?.ads_mediaLink)
-      }
-    
+
+    async function getAd() {
+      const data = await axiosInstance.post("ads/getCatAds", {
+        GIVEN_API_KEY: "AXCF",
+        ads_tag: sub_name,
+      });
+      setAds(data?.data?.catads[0]);
+      setUriSource(data?.data?.catads[0]?.ads_mediaLink);
+    }
+
     async function getSpData() {
       const data = await axiosInstance.post("sp/getSearchedSp", {
         GIVEN_API_KEY: "AXCF",
-        city: givencity,
+        city: livedistrict,
         skill: sub_name,
       });
       setSpData(data.data.data);
@@ -107,7 +108,7 @@ export default function CategoryPersonListingScreen({
             </Pressable>
           ) : null}
           <View style={{ marginTop: 20 }}>
-            {givencity ? (
+            {livedistrict ? (
               <Text
                 style={{
                   fontFamily: "Regular",
@@ -121,7 +122,7 @@ export default function CategoryPersonListingScreen({
                     fontWeight: "bold",
                   }}
                 >
-                  {givencity}
+                  {livedistrict}
                 </Text>
               </Text>
             ) : (

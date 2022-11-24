@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
   FlatList,
+  Alert,
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Colors } from "../../styles/main";
@@ -65,26 +66,37 @@ export default function LoginScreen({ navigation, route, path }) {
       });
       const status = res?.data?.statuscode;
       if (status == 200 || status == 201) {
-        await AsyncStorage.setItem("user_contact", num);
-        setUser(num);
         const setdata = await axiosInstance.post("/user/getOneUser", {
           GIVEN_API_KEY: "AXCF",
           user_contact: num,
         });
-        alert(setdata?.data.data.user_name);
-        setUserData(setdata?.data?.data);
-        setLogged("true");
-        const res = await axiosInstance.post("sp/getOneSp", {
-          GIVEN_API_KEY: "AXCF",
-          sp_contact: num,
-        });
-        if (res?.data?.statuscode == 201) {
-          setIsitSp(res.data.data);
+        const statuslogin = setdata?.data.data.user_status;
+        if (statuslogin != "ACTIVE") {
+          Alert.alert(
+            "Account Not Active",
+            "Your account is " +
+              setdata?.data.data.user_status +
+              "  Please contact our office",
+            [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+          );
         } else {
-          setIsitSp(false);
+          await AsyncStorage.setItem("user_contact", num);
+          setUser(num);
+
+          setUserData(setdata?.data?.data);
+          setLogged("true");
+          const res = await axiosInstance.post("sp/getOneSp", {
+            GIVEN_API_KEY: "AXCF",
+            sp_contact: num,
+          });
+          if (res?.data?.statuscode == 201) {
+            setIsitSp(res.data.data);
+          } else {
+            setIsitSp(false);
+          }
+          navigation.navigate("Home");
+          alert("done");
         }
-        navigation.navigate("Home");
-        alert("done");
       } else {
         setFocusColor2("red");
         setFocusColor1("red");

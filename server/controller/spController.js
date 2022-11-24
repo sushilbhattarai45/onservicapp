@@ -18,6 +18,7 @@ export const postSp = async (req, res) => {
     sp_skills,
     sp_city,
     sp_street,
+    sp_createdBy,
     sp_gender,
     sp_password,
     sp_location,

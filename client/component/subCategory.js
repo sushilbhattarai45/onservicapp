@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -21,6 +21,8 @@ export default function SubCategory({
 }) {
   const navigation = useNavigation();
   const { userData } = useContext(AppContext);
+  const [city, setCity] = useState(userData?.user_district);
+
   return (
     <View style={styles.ThemeLightComponentSongsCard}>
       <TouchableOpacity
