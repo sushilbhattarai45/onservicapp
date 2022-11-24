@@ -6,7 +6,8 @@ import {
   deleteAllAds,
   updateAds,
   getAds,
-  getCatAds
+  getCatAds,
+  getAllADS,
 } from "../controller/adsController.js";
 const router = Express.Router();
 router.route("/").get((req, res) => {
@@ -19,5 +20,6 @@ router.route("/deleteAll").post(deleteAllAds);
 router.route("/updateAds").post(updateAds);
 router.route("/getAds").post(getAds);
 router.route("/getCatAds").post(getCatAds);
+router.route("/getAllAds").post(getAllADS);
 
 export default router;

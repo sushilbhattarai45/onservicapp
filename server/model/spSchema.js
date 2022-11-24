@@ -61,6 +61,9 @@ const sp = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  sp_createdBy: {
+    type: String,
+  },
   sp_toc: {
     date: { type: String },
     time: { type: String },

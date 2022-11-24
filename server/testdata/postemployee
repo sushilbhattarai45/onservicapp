@@ -1,0 +1,11 @@
+{
+
+  "GIVEN_API_KEY": "AXCF",
+  "employee_contact": "9999999999",
+    "employee_name": "Sushil Bhattarai",
+      "employee_status": true,
+      "employee_limit":100,
+      "employee_post":"E1"
+
+
+}

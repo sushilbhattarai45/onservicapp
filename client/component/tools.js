@@ -60,7 +60,6 @@ export const uploadImage = async (files) => {
       })
     );
 
-    alert(finalData);
     return finalData;
   } catch (e) {
     console.log(e);
@@ -79,4 +78,3 @@ export const axiosInstance = axios.create({
   // baseURL: URL,
   headers: { "Content-Type": "application/json" },
 });
-
