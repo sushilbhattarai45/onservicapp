@@ -39,20 +39,20 @@ export default function LoginScreen({ navigation, route, path }) {
   const showHeader = path == "NotLoggedIn" ? false : true;
   async function checkLogin() {
     // alert(Number.isInteger(num));
-    if (pin.length != 4 || num.length != 10) {
+    if (pin.length != 6 || num.length != 10) {
       // if (Number.isInteger(pin) == false || Number.isInteger(num) == false) {
       //   if (Number.isInteger(pin) == false) {
       //     setError2("Please Enter A Valid Pin");
       //     setFocusColor2("red");
       //   }
       // } else
-      if (pin.length != 4 && num.length != 10) {
+      if (pin.length != 6 && num.length != 10) {
         setError1("Please enter a valid Phone Number");
-        setError2("Please enter a valid OTP");
+        setError2("Please enter a valid PIN");
         setFocusColor2("red");
         setFocusColor1("red");
-      } else if (pin.length != 4) {
-        setError2("Please enter a valid OTP");
+      } else if (pin.length != 6) {
+        setError2("PIN Must be of 6 Digits");
         setFocusColor2("red");
       } else {
         setError1("Please enter a valid Phone Number");
@@ -64,6 +64,7 @@ export default function LoginScreen({ navigation, route, path }) {
         user_num: num,
         user_pass: pin,
       });
+      alert(res?.data?.statuscode);
       const status = res?.data?.statuscode;
       if (status == 200 || status == 201) {
         const setdata = await axiosInstance.post("/user/getOneUser", {
@@ -190,7 +191,7 @@ export default function LoginScreen({ navigation, route, path }) {
           >
             <Text style={{ fontFamily: "Regular" }}>Password</Text>
             <TextInput
-              maxLength={4}
+              maxLength={6}
               keyboardType="numeric"
               style={{
                 fontFamily: "Regular",
