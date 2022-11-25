@@ -53,7 +53,7 @@ export default function UserProfileScreen({ navigation }) {
         <View style={{ zIndex: 10 }}>
           <View
             style={{
-              marginTop: Constants.statusBarHeight + 20,
+              marginTop: 8,
               marginLeft: 30,
             }}
           >

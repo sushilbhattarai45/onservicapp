@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Text, View } from "react-native";
+import { Text, View, StatusBar } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -32,10 +32,13 @@ export default function App() {
   }
 
   return (
-    <ContextProvider>
-      <NavigationContainer onReady={onLayoutRootView} style={{ flex: 1 }}>
-        <AppStack />
-      </NavigationContainer>
-    </ContextProvider>
+    <>
+      <ContextProvider>
+        <NavigationContainer onReady={onLayoutRootView} style={{ flex: 1 }}>
+          <AppStack />
+        </NavigationContainer>
+      </ContextProvider>
+      <StatusBar />
+    </>
   );
 }

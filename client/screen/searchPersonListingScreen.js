@@ -99,7 +99,7 @@ export default function SearchPersonListingScreen({ navigation }) {
       style={{
         flex: 1,
         backgroundColor: Colors.gray200,
-        marginTop: 40,
+        marginTop: 12,
       }}
     >
       <View style={{ marginHorizontal: 20 }}>
@@ -142,6 +142,7 @@ export default function SearchPersonListingScreen({ navigation }) {
                 onPress={() => {
                   setLive(true);
                   setFilter({ city: userData?.user_district });
+                  getPeopleList({ location: userData?.user_district });
                 }}
               >
                 Current Location Enabled

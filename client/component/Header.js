@@ -33,7 +33,7 @@ export default function Header({
 const styles = StyleSheet.create({
   header: {
     width: "100%",
-    marginTop: Constants.statusBarHeight,
+    marginTop: 8,
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",

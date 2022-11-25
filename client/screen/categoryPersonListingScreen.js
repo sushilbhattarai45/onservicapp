@@ -32,17 +32,16 @@ export default function CategoryPersonListingScreen({
       getAd();
       //Put your Data loading function here instead of my loadData()
     });
-    
-    async function getAd()
-      {
-        const data = await axiosInstance.post("ads/getCatAds", {
-          GIVEN_API_KEY: "AXCF",
-          ads_tag:sub_name
-        })
-      setAds(data?.data?.catads[0])
-      setUriSource(data?.data?.catads[0]?.ads_mediaLink)
-      }
-    
+
+    async function getAd() {
+      const data = await axiosInstance.post("ads/getCatAds", {
+        GIVEN_API_KEY: "AXCF",
+        ads_tag: sub_name,
+      });
+      setAds(data?.data?.catads[0]);
+      setUriSource(data?.data?.catads[0]?.ads_mediaLink);
+    }
+
     async function getSpData() {
       const data = await axiosInstance.post("sp/getSearchedSp", {
         GIVEN_API_KEY: "AXCF",
@@ -64,9 +63,8 @@ export default function CategoryPersonListingScreen({
       style={{
         backgroundColor: Colors.gray200,
         flex: 1,
-        paddingBottom: 20,
-        // margin:ConnectionStates,
-        // marginTop: Constants.statusBarHeight + 20,
+        marginBottom: 10,
+        marginTop: 8,
       }}
     >
       <Header
@@ -75,7 +73,7 @@ export default function CategoryPersonListingScreen({
         style={{ paddingHorizontal: 10 }}
         icon="arrow-left-line"
       />
-      <View style={{ marginTop: 10, marginBottom: 50 }}>
+      <View style={{ marginBottom: 50 }}>
         <ScrollView
           style={{ backgroundColor: Colors.gray200 }}
           showsVerticalScrollIndicator={false}
@@ -106,7 +104,7 @@ export default function CategoryPersonListingScreen({
               />
             </Pressable>
           ) : null}
-          <View style={{ marginTop: 20 }}>
+          <View style={{ marginTop: 16 }}>
             {givencity ? (
               <Text
                 style={{

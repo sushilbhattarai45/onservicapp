@@ -142,7 +142,7 @@ export default UpdateUser = ({ navigation }) => {
       /> */}
           <View
             style={{
-              marginTop: 0,
+              marginTop: 8,
 
               marginBottom: 20,
             }}
@@ -637,7 +637,6 @@ export default UpdateUser = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
-    marginTop: 10,
     position: "relative",
     marginBottom: 10,
   },

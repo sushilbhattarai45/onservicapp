@@ -60,6 +60,7 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
         onPressIcon={() => goBack()}
         style={{
           paddingHorizontal: 10,
+          marginTop: 8,
         }}
         icon="arrow-left-line"
       />

@@ -23,17 +23,15 @@ export default function SubCategoryScreen({
 }) {
   const { category_id, cat_name } = route.params;
   useEffect(() => {
+    async function getAd() {
+      const data = await axiosInstance.post("ads/getCatAds", {
+        GIVEN_API_KEY: "AXCF",
+        ads_tag: cat_name,
+      });
+      setAds(data?.data?.catads[0]);
+      setUriSource(data?.data?.catads[0]?.ads_mediaLink);
+    }
 
-    async function getAd()
-      {
-        const data = await axiosInstance.post("ads/getCatAds", {
-          GIVEN_API_KEY: "AXCF",
-          ads_tag:cat_name
-        })
-      setAds(data?.data?.catads[0])
-      setUriSource(data?.data?.catads[0]?.ads_mediaLink)
-      }
-    
     async function getSubC() {
       const data = await axiosInstance.post("subcategories/getfilteredsubcat", {
         GIVEN_API_KEY: "AXCF",
@@ -43,7 +41,7 @@ export default function SubCategoryScreen({
       setEmptydata(false);
     }
     getSubC();
-    getAd()
+    getAd();
   }, []);
   const [emptydata, setEmptydata] = useState(true);
   const [ads, setAds] = useState();
@@ -80,7 +78,8 @@ export default function SubCategoryScreen({
     <View
       style={{
         flex: 1,
-        marginBottom: 90,
+        marginBottom: 10,
+        marginTop: 8,
         display: "flex",
         backgroundColor: Colors.gray200,
       }}
@@ -93,7 +92,7 @@ export default function SubCategoryScreen({
           icon="arrow-left-line"
         />
 
-        <View style={{ marginTop: 24 }}>
+        <View style={{ marginTop: 8 }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{
@@ -101,32 +100,31 @@ export default function SubCategoryScreen({
             }}
           >
             <View>
-              {urisource ?   <Pressable onPress={() =>
- Linking.openURL("https://" + ads?.ads_link) 
-          }
-                
-                style={{
-                  width: "100%",
-                  height: 180,
-                  // backgroundColor: "red",
-                }}
-              >
-                <Image
+              {urisource ? (
+                <Pressable
+                  onPress={() => Linking.openURL("https://" + ads?.ads_link)}
                   style={{
-                    alignSelf: "center",
-                    alignSelf: "center",
-                    height: "100%",
-                    width: "95%",
+                    width: "100%",
+                    height: 180,
+                    // backgroundColor: "red",
                   }}
-                  source={{
-                    uri: urisource,
-                    headers: {
-                      Accept: "*/*",
-                    },
-                  }}
-                />
-              </Pressable>
-                : null}
+                >
+                  <Image
+                    style={{
+                      alignSelf: "center",
+                      alignSelf: "center",
+                      height: "100%",
+                      width: "95%",
+                    }}
+                    source={{
+                      uri: urisource,
+                      headers: {
+                        Accept: "*/*",
+                      },
+                    }}
+                  />
+                </Pressable>
+              ) : null}
               <View
                 style={{
                   marginTop: 24,

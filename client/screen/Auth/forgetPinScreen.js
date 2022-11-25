@@ -55,6 +55,7 @@ export default function ForgetPinScreen() {
       <View
         style={{
           marginLeft: 24,
+          marginTop: 8,
         }}
       >
         <Header
