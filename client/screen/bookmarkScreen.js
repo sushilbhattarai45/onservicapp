@@ -7,8 +7,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   ScrollView,
-    Linking,
-
+  Linking,
   Alert,
   Pressable,
 } from "react-native";
@@ -24,28 +23,32 @@ import { axiosInstance } from "../component/tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function BookMarkScreen({ navigation }) {
   const { ads } = useContext(AppContext);
-  const [adlink, setAdLink] = useState("www.Onservic.com")
-    const [adsource,setAdSource]=useState("https://www.w3schools.com/css/img_lights.jpg")
+  const [adlink, setAdLink] = useState("www.Onservic.com");
+  const [adsource, setAdSource] = useState(
+    "https://www.w3schools.com/css/img_lights.jpg"
+  );
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", async() => {
-      getBm();
-   await  getads()
-      // if (ads!=null)
-      // {
-      //  
+    const unsubscribe = navigation.addListener(
+      "focus",
+      async () => {
+        getBm();
+        await getads();
+        // if (ads!=null)
+        // {
+        //
 
-      //   }
-      return navigation;
-      //Put your Data loading function here instead of my loadData()
-    }, [navigation]);
-   async function getads()
-    { if (ads) {
-       setAdLink(ads?.bookmarkimage[0].ads_link)
-          setAdSource(ads?.bookmarkimage[0].ads_mediaLink)
-
+        //   }
+        return navigation;
+        //Put your Data loading function here instead of my loadData()
+      },
+      [navigation]
+    );
+    async function getads() {
+      if (ads) {
+        setAdLink(ads?.bookmarkimage[0].ads_link);
+        setAdSource(ads?.bookmarkimage[0].ads_mediaLink);
       }
-
     }
 
     async function getBm() {
@@ -72,7 +75,7 @@ export default function BookMarkScreen({ navigation }) {
     <ScrollView style={{ backgroundColor: Colors.gray200 }}>
       <View
         style={{
-          marginTop: Constants.statusBarHeight + 20,
+          marginTop: 8,
         }}
       >
         <View>
@@ -86,9 +89,8 @@ export default function BookMarkScreen({ navigation }) {
           >
             Bookmarks
           </Text>
-          <Pressable onPress={() =>
- Linking.openURL("https://" + adlink) 
-          }
+          <Pressable
+            onPress={() => Linking.openURL("https://" + adlink)}
             style={{
               marginTop: 20,
               width: "100%",
@@ -96,7 +98,7 @@ export default function BookMarkScreen({ navigation }) {
               // backgroundColor: "red",
             }}
           >
-            <Image     
+            <Image
               style={{
                 alignSelf: "center",
                 alignSelf: "center",

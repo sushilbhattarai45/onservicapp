@@ -930,7 +930,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: Constants.statusBarHeight + 16,
+    marginTop: 8,
     marginBottom: 20,
     backgroundColor: Colors.gray200,
     paddingHorizontal: 24,

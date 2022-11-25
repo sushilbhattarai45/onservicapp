@@ -164,7 +164,12 @@ const SPProfileScreen = ({ navigation, route }) => {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={{ flex: 1 }}>
         <Header
-          style={{ position: "absolute", zIndex: 10, paddingHorizontal: 24 }}
+          style={{
+            position: "absolute",
+            zIndex: 10,
+            paddingHorizontal: 24,
+            marginTop: 8,
+          }}
           icon="arrow-left-line"
           onPressIcon={() => navigation.goBack()}
           right={

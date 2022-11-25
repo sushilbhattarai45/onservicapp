@@ -8,7 +8,7 @@ export default function ImageSliderComponent({ style, data, onPress }) {
   let mappedData = data?.map((image) => ({ img: image }));
   const [open, setOpen] = useState(false);
   const popup = createRef();
-  return (
+return (
     <>
       <ImageSlider
         preview={false}
