@@ -64,7 +64,6 @@ export default function LoginScreen({ navigation, route, path }) {
         user_num: num,
         user_pass: pin,
       });
-      alert(res?.data?.statuscode);
       const status = res?.data?.statuscode;
       if (status == 200 || status == 201) {
         const setdata = await axiosInstance.post("/user/getOneUser", {
