@@ -39,6 +39,8 @@ export default function ForgetPinScreen() {
         // const otp = Math.floor(Math.random() * 10000);
         let genOtp = Math.floor(1000 + Math.random() * 9000);
         console.log(genOtp);
+        getSms(genOtp, num);
+
         navigation.navigate("OtpScreen", {
           num: num,
           otp: genOtp,
@@ -50,6 +52,7 @@ export default function ForgetPinScreen() {
       alert("Invalid Number");
     }
   }
+
   function getOtp() {
     let pin = Math.round(Math.random() * 10000);
     let pinStr = pin + "";
@@ -61,7 +64,30 @@ export default function ForgetPinScreen() {
       return getPin();
     }
   }
+  async function getSms(otp, num) {
+    var url = "https://sms.aakashsms.com/sms/v3/send/";
+    alert(url);
 
+    var data = {
+      to: num,
+      auth_token: "",
+      text: " Hello Sushil .Your code is :" + otp + " Regards Ride On",
+    };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        alert("Error" + error);
+      });
+  }
   const [num, setNum] = useState();
   return (
     <View>
