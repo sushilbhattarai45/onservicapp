@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
   FlatList,
+  Alert,
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Colors } from "../../styles/main";
@@ -38,20 +39,20 @@ export default function LoginScreen({ navigation, route, path }) {
   const showHeader = path == "NotLoggedIn" ? false : true;
   async function checkLogin() {
     // alert(Number.isInteger(num));
-    if (pin.length != 4 || num.length != 10) {
+    if (pin.length != 6 || num.length != 10) {
       // if (Number.isInteger(pin) == false || Number.isInteger(num) == false) {
       //   if (Number.isInteger(pin) == false) {
       //     setError2("Please Enter A Valid Pin");
       //     setFocusColor2("red");
       //   }
       // } else
-      if (pin.length != 4 && num.length != 10) {
+      if (pin.length != 6 && num.length != 10) {
         setError1("Please enter a valid Phone Number");
-        setError2("Please enter a valid OTP");
+        setError2("Please enter a valid PIN");
         setFocusColor2("red");
         setFocusColor1("red");
-      } else if (pin.length != 4) {
-        setError2("Please enter a valid OTP");
+      } else if (pin.length != 6) {
+        setError2("PIN Must be of 6 Digits");
         setFocusColor2("red");
       } else {
         setError1("Please enter a valid Phone Number");
@@ -65,26 +66,37 @@ export default function LoginScreen({ navigation, route, path }) {
       });
       const status = res?.data?.statuscode;
       if (status == 200 || status == 201) {
-        await AsyncStorage.setItem("user_contact", num);
-        setUser(num);
         const setdata = await axiosInstance.post("/user/getOneUser", {
           GIVEN_API_KEY: "AXCF",
           user_contact: num,
         });
-        alert(setdata?.data.data.user_name);
-        setUserData(setdata?.data?.data);
-        setLogged("true");
-        const res = await axiosInstance.post("sp/getOneSp", {
-          GIVEN_API_KEY: "AXCF",
-          sp_contact: num,
-        });
-        if (res?.data?.statuscode == 201) {
-          setIsitSp(res.data.data);
+        const statuslogin = setdata?.data.data.user_status;
+        if (statuslogin != "ACTIVE") {
+          Alert.alert(
+            "Account Not Active",
+            "Your account is " +
+              setdata?.data.data.user_status +
+              "  Please contact our office",
+            [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+          );
         } else {
-          setIsitSp(false);
+          await AsyncStorage.setItem("user_contact", num);
+          setUser(num);
+
+          setUserData(setdata?.data?.data);
+          setLogged("true");
+          const res = await axiosInstance.post("sp/getOneSp", {
+            GIVEN_API_KEY: "AXCF",
+            sp_contact: num,
+          });
+          if (res?.data?.statuscode == 201) {
+            setIsitSp(res.data.data);
+          } else {
+            setIsitSp(false);
+          }
+          navigation.navigate("Home");
+          alert("done");
         }
-        navigation.navigate("Home");
-        alert("done");
       } else {
         setFocusColor2("red");
         setFocusColor1("red");
@@ -173,7 +185,7 @@ export default function LoginScreen({ navigation, route, path }) {
           >
             <Text style={{ fontFamily: "Regular" }}>Password</Text>
             <TextInput
-              maxLength={4}
+              maxLength={6}
               keyboardType="numeric"
               style={{
                 fontFamily: "Regular",

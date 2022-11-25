@@ -17,7 +17,6 @@ import employee_route from "./routes/employeeroutes.js";
 
 connectDB();
 
-// App.use(cors())
 App.use(Express.json());
 App.listen(3001, () => {
   console.log("listening on port " + PORT);

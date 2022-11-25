@@ -3,7 +3,7 @@ import { axiosInstance } from "./tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import * as Location from "expo-location";
-
+import { Alert } from "react-native";
 const AppContext = createContext({});
 
 export const ContextProvider = ({ children }) => {
@@ -91,13 +91,33 @@ export const ContextProvider = ({ children }) => {
     const getUser = async () => {
       try {
         const loggedUser = await AsyncStorage.getItem("user_contact");
+
         if (loggedUser) {
-          setLogged("true");
-          setUser(loggedUser);
-          getUserData(loggedUser);
-          isSp(loggedUser);
-        } else {
-          setLogged("false");
+          let res = await axiosInstance.post("/user/getOneUser", {
+            GIVEN_API_KEY: "AXCF",
+            user_contact: loggedUser,
+          });
+          const status = res?.data.data.user_status;
+          if (status != "ACTIVE") {
+            await AsyncStorage.removeItem("user_contact");
+            setUser(null);
+            setLogged("false");
+            setUserData(null);
+            setIsitSp(null);
+
+            Alert.alert(
+              "Account Not Active",
+              "Your account is " +
+                res?.data.data.user_status +
+                ". Please contact at our office",
+              [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+            );
+          } else {
+            setLogged("true");
+            setUser(loggedUser);
+            getUserData(loggedUser);
+            isSp(loggedUser);
+          }
         }
       } catch (e) {
         console.log(e);
@@ -123,7 +143,7 @@ export const ContextProvider = ({ children }) => {
     const getCategories = () => {
       try {
         axiosInstance
-          .post("/categories", { GIVEN_API_KEY: "AXCF" })
+          .post("/categories/getvalidcategories", { GIVEN_API_KEY: "AXCF" })
           .then((res) => {
             if (!res.error) setCategories(res.data);
           })

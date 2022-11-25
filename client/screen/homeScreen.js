@@ -144,10 +144,12 @@ const HomeScreen = ({ navigation }) => {
                         <CategoryCard
                           name={item.category_name}
                           image={item.category_photo}
+                          givencity={livedistrict}
                           category_id={item._id}
                         />
                         {categories[index + 1] && (
                           <CategoryCard
+                            givencity={livedistrict}
                             name={categories[index + 1]?.category_name}
                             image={categories[index + 1]?.category_photo}
                             category_id={categories[index + 1]?._id}
@@ -205,12 +207,14 @@ const HomeScreen = ({ navigation }) => {
                   name={featured?.subCat[0]?.subCat_name}
                   image={featured?.subCat[0]?.subCat_photo}
                   cat_name={featured?.catName}
+                  givencity={livedistrict}
                   cat_id={featured?.catId}
                 />
                 <SubCategoryGroupCard
                   name={featured?.subCat[1]?.subCat_name}
                   image={featured?.subCat[1]?.subCat_photo}
                   cat_name={featured?.catName}
+                  givencity={livedistrict}
                   cat_id={featured?.catId}
                   containerStyle={{ marginLeft: 16 }}
                 />
@@ -227,10 +231,12 @@ const HomeScreen = ({ navigation }) => {
                   image={featured?.subCat[2]?.subCat_photo}
                   name={featured?.subCat[2]?.subCat_name}
                   cat_name={featured?.catName}
+                  givencity={livedistrict}
                   cat_id={featured?.catId}
                 />
                 <SubCategoryGroupCard
                   name={featured?.subCat[3]?.subCat_name}
+                  givencity={livedistrict}
                   image={featured?.subCat[3]?.subCat_photo}
                   cat_name={featured?.catName}
                   cat_id={featured?.catId}
@@ -312,10 +318,12 @@ const HomeScreen = ({ navigation }) => {
                         image={item?.category_photo}
                         name={item?.category_name}
                         cat_id={item?._id}
+                        givencity={livedistrict}
                         navigation={navigation}
                       />
                       {categories[index + 1] && (
                         <NewlyAddedServices
+                          givencity={livedistrict}
                           image={newaddons[index + 1]?.category_photo}
                           cat_id={newaddons[index + 1]?._id}
                           navigation={navigation}

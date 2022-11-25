@@ -27,7 +27,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
 
   const [second, setSecond] = useState("");
   async function setPin() {
-    if (first.length == 4 && second.length == 4) {
+    if (first.length == 6 && second.length == 6) {
       if (first == second) {
         const updatePin = await axiosInstance.post("/user/forgetPin", {
           GIVEN_API_KEY: "AXCF",
@@ -43,9 +43,9 @@ export default function CreateNewPinScreen({ navigation, route }) {
       }
     } else {
       if (first.length !== 4) {
-        setError({ first: "Pin Must be of Four digit" });
+        setError({ first: "Pin Must be of Six digit" });
       } else {
-        setError({ second: "Pin Must be of Four digit" });
+        setError({ second: "Pin Must be of Six digit" });
       }
     }
   }
@@ -135,7 +135,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
               >
                 <TextInput
                   keyboardType="numeric"
-                  maxLength={4}
+                  maxLength={6}
                   style={{
                     fontFamily: "Regular",
                     fontSize: 15,
@@ -194,7 +194,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
             >
               <TextInput
                 keyboardType="numeric"
-                maxLength={4}
+                maxLength={6}
                 style={{
                   fontFamily: "Regular",
 

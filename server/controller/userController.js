@@ -130,23 +130,32 @@ export const loginUser = async (req, res) => {
       const loginUser = await userSchema.findOne({
         user_contact: user_num,
       });
-
-      const password = bcrypt.compareSync(user_pass, loginUser?.user_password);
-      console.log(password);
-      // return res.json({ data: loginUser });
-      if (password) {
-        return res.json({
-          statuscode: 200,
-          message: "user found",
-          pass: password,
-          num: user_num,
-        });
+      if (loginUser) {
+        const password = bcrypt.compareSync(
+          user_pass,
+          loginUser?.user_password
+        );
+        console.log(password);
+        // return res.json({ data: loginUser });
+        if (password) {
+          return res.json({
+            statuscode: 200,
+            message: "user found",
+            pass: password,
+            num: user_num,
+          });
+        } else {
+          return res.json({
+            statuscode: 404,
+            message: "user  not  exists",
+            pass: user_pass,
+            num: user_num,
+          });
+        }
       } else {
         return res.json({
           statuscode: 404,
           message: "user  not  exists",
-          pass: user_pass,
-          num: user_num,
         });
       }
     } catch (error) {
