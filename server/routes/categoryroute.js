@@ -9,6 +9,7 @@ import {
   updateCategory,
   featuredOnHome,
   newAddons,
+  getAllValidCategories,
 } from "../controller/categoriesController.js";
 router.route("/").post(getAllCategories);
 router.route("/postcategory").post(postcategories);
@@ -17,5 +18,6 @@ router.route("/deleteallcategories").post(deleteAllCategories);
 router.route("/deleteonecategory").post(deleteOne);
 router.route("/featuredonhome").post(featuredOnHome);
 router.route("/newaddons").post(newAddons);
+router.route("/getvalidcategories").post(getAllValidCategories);
 
 export default router;

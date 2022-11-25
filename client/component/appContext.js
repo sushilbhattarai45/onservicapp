@@ -143,7 +143,7 @@ export const ContextProvider = ({ children }) => {
     const getCategories = () => {
       try {
         axiosInstance
-          .post("/categories", { GIVEN_API_KEY: "AXCF" })
+          .post("/categories/getvalidcategories", { GIVEN_API_KEY: "AXCF" })
           .then((res) => {
             if (!res.error) setCategories(res.data);
           })
