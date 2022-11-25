@@ -1,4 +1,4 @@
-import { react, useState, useRef } from "react";
+import { react, useState, useRef, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 import {
@@ -16,7 +16,19 @@ import { Colors } from "../../styles/main";
 import Header from "../../component/Header";
 import { useNavigation } from "@react-navigation/native";
 export default function ForgetPinScreen() {
+  const [numval, setNumVal] = useState(null);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener(
+      "focus",
+      () => {
+        setNumVal(null);
+        return unsubscribe;
+      },
+      [navigation]
+    );
+  });
   async function forget() {
     if (num.length == 10) {
       const check = await axiosInstance.post("/user/getOneUser", {
@@ -25,7 +37,8 @@ export default function ForgetPinScreen() {
       });
       if (check?.data.statuscode == 201) {
         // const otp = Math.floor(Math.random() * 10000);
-        let genOtp = getOtp();
+        let genOtp = Math.floor(1000 + Math.random() * 9000);
+        console.log(genOtp);
         navigation.navigate("OtpScreen", {
           num: num,
           otp: genOtp,
@@ -42,7 +55,7 @@ export default function ForgetPinScreen() {
     let pinStr = pin + "";
 
     // make sure that number is 4 digit
-    if (pinStr.length == 4) {
+    if (pinStr.length == 6) {
       return pinStr;
     } else {
       return getPin();
@@ -69,6 +82,7 @@ export default function ForgetPinScreen() {
       >
         <View style={{}}>
           <Text
+            value={numval}
             style={{
               fontFamily: "Regular",
               fontStyle: "normal",
