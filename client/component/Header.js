@@ -1,8 +1,16 @@
 import React from "react";
-import { StyleSheet, Image, Text, View, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  StatusBar,
+} from "react-native";
 import Constants from "expo-constants";
 import Icon from "./Icon";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Header({
   headerText,
@@ -15,17 +23,21 @@ export default function Header({
   let textColor = color ? color : Colors.black;
   return (
     <View style={{ ...styles.header, ...style }}>
-      <Icon
-        name={icon}
-        onPress={onPressIcon}
-        size={24}
-        style={styles.icon}
-        color={textColor}
-      />
-      <Text style={[styles.headerText, { color: textColor }]}>
-        {headerText}
-      </Text>
-      <View style={styles.right}>{right}</View>
+      <SafeAreaView>
+        <View style={{ ...styles.header }}>
+          <Icon
+            name={icon}
+            onPress={onPressIcon}
+            size={24}
+            style={styles.icon}
+            color={textColor}
+          />
+          <Text style={[styles.headerText, { color: textColor }]}>
+            {headerText}
+          </Text>
+          <View style={styles.right}>{right}</View>
+        </View>
+      </SafeAreaView>
     </View>
   );
 }
@@ -33,7 +45,6 @@ export default function Header({
 const styles = StyleSheet.create({
   header: {
     width: "100%",
-    marginTop: 8,
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
