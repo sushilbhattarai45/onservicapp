@@ -37,7 +37,7 @@ export default function App() {
           </NavigationContainer>
         </SafeAreaView>
       </ContextProvider>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" backgroundColor={"#000000"} />
     </>
   );
 }

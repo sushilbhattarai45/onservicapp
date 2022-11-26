@@ -163,6 +163,7 @@ export default function SearchPersonListingScreen({ navigation }) {
                     if (lpermission == "true") {
                       setLive(true);
                       setFilter({ city: livedistrict });
+                      getPeopleList({ location: livedistrict });
                     } else {
                       alert("Please allow Location access and restart the app");
                       setTimeout(() => {
