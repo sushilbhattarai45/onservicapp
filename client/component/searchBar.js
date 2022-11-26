@@ -21,7 +21,7 @@ export default function Search({
         style={styles.searchIcon}
       />
       <TextInput
-        style={[styles.input, { ...inputStyle }]}
+        style={[styles.input, inputStyle]}
         placeholder={active ? "" : "Search for services"}
         onChangeText={onChangeText}
         {...props}
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    // height: "100%",
     fontSize: 16,
     fontFamily: "Regular",
     color: Colors.black,

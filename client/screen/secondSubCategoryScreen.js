@@ -16,6 +16,7 @@ import { Colors } from "../styles/main";
 import axios from "axios";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
+import Search from "../component/searchBar";
 export default function SecondSubCategoryScreen({
   route,
   category_name,
@@ -39,6 +40,7 @@ export default function SecondSubCategoryScreen({
         category_id: category_id,
       });
       setSData(data.data.data);
+      setFilteredData(data.data.data);
       setEmptydata(false);
     }
     getAd();
@@ -48,12 +50,23 @@ export default function SecondSubCategoryScreen({
   const [sData, setSData] = useState();
   const [ads, setAds] = useState();
   const [urisource, setUriSource] = useState(null);
+  const [filteredData, setFilteredData] = useState(sData);
+  const [searchFocus, setSearchFocus] = useState();
+
+  const handleSearch = (value) => {
+    console.log(value);
+    const filter = sData.filter(
+      (s) => s.subCat_name.toLowerCase().indexOf(value.toLowerCase()) > -1
+    );
+    setFilteredData(filter);
+  };
   return (
     <View
       style={{
         flex: 1,
-        marginBottom: 90,
+        // marginBottom: 90,
         display: "flex",
+        // paddingTop: 8,
         backgroundColor: Colors.gray200,
       }}
     >
@@ -64,13 +77,35 @@ export default function SecondSubCategoryScreen({
           style={{ paddingHorizontal: 12 }}
           icon="arrow-left-line"
         />
-
+        <View style={{ marginHorizontal: 20 }}>
+          <Search
+            containerStyle={{
+              marginTop: 4,
+              paddingHorizontal: 0,
+              paddingBottom: 4,
+              borderRadius: 0,
+              backgroundColor: "none",
+              borderBottomWidth: 1,
+              borderBottomColor: searchFocus ? Colors.gray900 : Colors.gray500,
+            }}
+            inputStyle={{}}
+            onFocus={() => setSearchFocus(true)}
+            onBlur={() => setSearchFocus(false)}
+            // value={sValue}
+            onChangeText={handleSearch}
+            onSubmitEditing={() => {
+              setFilteredData([]);
+            }}
+          />
+        </View>
         <View style={{ marginTop: 24 }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{
-              marginBottom: 20,
-            }}
+            style={
+              {
+                // marginBottom: 20,
+              }
+            }
           >
             <View>
               {ads ? (
@@ -106,7 +141,7 @@ export default function SecondSubCategoryScreen({
                 }}
               >
                 {!emptydata
-                  ? sData.map((subcategory) => {
+                  ? filteredData?.map((subcategory) => {
                       return (
                         <SubCategory
                           hassubcat={subcategory.subCat_hassubCat}

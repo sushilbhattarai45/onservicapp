@@ -65,8 +65,6 @@ export default function CategoryPersonListingScreen({
       style={{
         backgroundColor: Colors.gray200,
         flex: 1,
-        marginBottom: 10,
-        marginTop: 8,
       }}
     >
       <Header
@@ -75,6 +73,7 @@ export default function CategoryPersonListingScreen({
         style={{ paddingHorizontal: 10 }}
         icon="arrow-left-line"
       />
+     
       <View style={{ marginBottom: 50 }}>
         <ScrollView
           style={{ backgroundColor: Colors.gray200 }}

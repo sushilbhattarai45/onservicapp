@@ -36,6 +36,7 @@ export default function SubCategoryGroupCard({
           uri: image,
         }}
       />
+      <View style={styles.overlay}></View>
       <Text style={styles.text}>{name}</Text>
     </Pressable>
   );
@@ -62,5 +63,10 @@ const styles = StyleSheet.create({
     // fontWeight: "700",
     letterSpacing: -0.28,
     color: "white",
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "#00000055",
+    borderRadius: 4,
   },
 });

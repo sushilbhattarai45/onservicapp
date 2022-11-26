@@ -117,7 +117,7 @@ export default function OtpScreen({ navigation, route }) {
     } catch (e) {}
   };
   return (
-    <View style={{ marginHorizontal: 24, marginTop: 8 }}>
+    <View style={{ marginHorizontal: 24 }}>
       <View
         style={{
           marginLeft: 0,

@@ -107,7 +107,7 @@ export default function LoginScreen({ navigation, route, path }) {
   }
 
   return (
-    <View style={[styles.container, { paddingTop: 8 }]}>
+    <View style={styles.container}>
       {showHeader && (
         <Header
           icon={"arrow-left-line"}

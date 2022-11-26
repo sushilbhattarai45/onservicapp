@@ -46,7 +46,7 @@ export default function UserProfileScreen({ navigation }) {
       <View
         style={{
           flex: 1,
-          marginBottom: 20,
+          // marginBottom: 20,
           display: "flex",
           backgroundColor: Colors.primary,
           flexDirection: "column",
