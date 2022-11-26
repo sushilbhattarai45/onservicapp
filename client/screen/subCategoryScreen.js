@@ -49,16 +49,14 @@ export default function SubCategoryScreen({
   const [emptydata, setEmptydata] = useState(true);
   const [ads, setAds] = useState();
   const [urisource, setUriSource] = useState(null);
-  // const [sValue, setSvalue] = useState();
+  const [searchFocus, setSearchFocus] = useState();
   const [filteredData, setFilteredData] = useState(sData);
   const handleSearch = (value) => {
     console.log(value);
-    if (value.length > 0) {
-      const filter = sData.filter(
-        (s) => s.subCat_name.toLowerCase().indexOf(value.toLowerCase()) > -1
-      );
-      setFilteredData(filter);
-    }
+    const filter = sData.filter(
+      (s) => s.subCat_name.toLowerCase().indexOf(value.toLowerCase()) > -1
+    );
+    setFilteredData(filter);
   };
   return (
     <View
@@ -79,8 +77,18 @@ export default function SubCategoryScreen({
         />
         <View style={{ marginHorizontal: 20 }}>
           <Search
-            containerStyle={{ padding: 0, marginTop: 12 }}
-            // onFocus={() => setSearching(true)}
+            containerStyle={{
+              marginTop: 4,
+              paddingHorizontal: 0,
+              paddingBottom: 4,
+              borderRadius: 0,
+              backgroundColor: "none",
+              borderBottomWidth: 1,
+              borderBottomColor: searchFocus ? Colors.gray900 : Colors.gray500,
+            }}
+            inputStyle={{}}
+            onFocus={() => setSearchFocus(true)}
+            onBlur={() => setSearchFocus(false)}
             // value={sValue}
             onChangeText={handleSearch}
             onSubmitEditing={() => {
@@ -89,7 +97,7 @@ export default function SubCategoryScreen({
           />
         </View>
 
-        <View style={{ marginTop: 8 }}>
+        <View style={{ marginTop: 4 }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{

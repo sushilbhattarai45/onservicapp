@@ -40,6 +40,7 @@ export default function SecondSubCategoryScreen({
         category_id: category_id,
       });
       setSData(data.data.data);
+      setFilteredData(data.data.data);
       setEmptydata(false);
     }
     getAd();
@@ -50,15 +51,14 @@ export default function SecondSubCategoryScreen({
   const [ads, setAds] = useState();
   const [urisource, setUriSource] = useState(null);
   const [filteredData, setFilteredData] = useState(sData);
+  const [searchFocus, setSearchFocus] = useState();
 
   const handleSearch = (value) => {
     console.log(value);
-    if (value.length > 0) {
-      const filter = sData.filter(
-        (s) => s.subCat_name.toLowerCase().indexOf(value.toLowerCase()) > -1
-      );
-      setFilteredData(filter);
-    }
+    const filter = sData.filter(
+      (s) => s.subCat_name.toLowerCase().indexOf(value.toLowerCase()) > -1
+    );
+    setFilteredData(filter);
   };
   return (
     <View
@@ -79,8 +79,18 @@ export default function SecondSubCategoryScreen({
         />
         <View style={{ marginHorizontal: 20 }}>
           <Search
-            containerStyle={{ padding: 0, marginTop: 12 }}
-            // onFocus={() => setSearching(true)}
+            containerStyle={{
+              marginTop: 4,
+              paddingHorizontal: 0,
+              paddingBottom: 4,
+              borderRadius: 0,
+              backgroundColor: "none",
+              borderBottomWidth: 1,
+              borderBottomColor: searchFocus ? Colors.gray900 : Colors.gray500,
+            }}
+            inputStyle={{}}
+            onFocus={() => setSearchFocus(true)}
+            onBlur={() => setSearchFocus(false)}
             // value={sValue}
             onChangeText={handleSearch}
             onSubmitEditing={() => {
@@ -131,7 +141,7 @@ export default function SecondSubCategoryScreen({
                 }}
               >
                 {!emptydata
-                  ? sData.map((subcategory) => {
+                  ? filteredData?.map((subcategory) => {
                       return (
                         <SubCategory
                           hassubcat={subcategory.subCat_hassubCat}
