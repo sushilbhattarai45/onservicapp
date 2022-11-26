@@ -7,6 +7,7 @@ import AppStack from "./navigation/MainStack";
 import { NavigationContainer } from "@react-navigation/native";
 import { ContextProvider } from "./component/appContext";
 SplashScreen.preventAutoHideAsync();
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,19 +25,17 @@ export default function App() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return (
-      <View>
-        <Text>Error</Text>
-      </View>
-    );
+    return <View></View>;
   }
 
   return (
     <>
       <ContextProvider>
-        <NavigationContainer onReady={onLayoutRootView} style={{ flex: 1 }}>
-          <AppStack />
-        </NavigationContainer>
+        <SafeAreaView style={{ flex: 1 }}>
+          <NavigationContainer onReady={onLayoutRootView} style={{ flex: 1 }}>
+            <AppStack />
+          </NavigationContainer>
+        </SafeAreaView>
       </ContextProvider>
       <StatusBar />
     </>
