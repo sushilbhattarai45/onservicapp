@@ -206,7 +206,10 @@ const UpdateSpScreen = ({ route, navigation }) => {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.container}>
-        <Header icon="arrow-left-line" />
+        <Header
+          icon="arrow-left-line"
+          onPressIcon={() => navigation.goBack()}
+        />
         <Text style={styles.heading}>Edit Your Profile</Text>
         {/* <KeyboardAvoidingView style={{ flex: 1 }}> */}
         <Formik
