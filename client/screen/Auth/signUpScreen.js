@@ -26,7 +26,7 @@ import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import ModalPopup from "../../component/Modal";
 import AppContext from "../../component/appContext";
-import { BASE_OUR_API_URL, uploadImage } from "../../component/tools";
+import { BASE_OUR_API_URL, getSms, uploadImage } from "../../component/tools";
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -77,37 +77,36 @@ export default registerUser = ({ navigation }) => {
     setLoad(true);
     setSubmitting(true);
     const [img] = await uploadImage([values.image]);
+
     let response = await axios.post(
-      BASE_OUR_API_URL + "/v1/api/user/register",
+      BASE_OUR_API_URL + "/v1/api/user/getOneUser",
       {
-        API_KEY: "AXCF",
-        user_name: values.name,
-        user_email: values.email,
         user_contact: values.phone,
-        user_district: values.district,
-        user_city: values.city,
-        user_street: values.street,
-        user_gender: values.gender,
-        user_password: values.password,
-        user_profileImage: img,
-        user_toc: {
-          date: moment().format("ll"),
-          time: moment().format("LT"),
-        },
+        GIVEN_API_KEY: "AXCF",
       }
     );
+
     const status = response?.data?.statuscode;
-    if (status == 201) {
+    if (status == 400) {
       setLoad(false);
-      const finaldata = response?.data?.user;
-      setData(finaldata);
-      setUserData(finaldata);
-      setLogged("true");
-      setIsitSp(null);
-      setUser(values.phone);
-      await storeData(values.phone);
-      navigation.navigate("Home");
-    } else if (status == 600) {
+      let genOtp = Math.floor(1000 + Math.random() * 9000);
+      getSms(genOtp, values.phone);
+      navigation.navigate("OtpScreen", {
+        num: values.phone,
+        otp: genOtp,
+        type: "signup",
+        values: values,
+        img: img,
+      });
+      // const finaldata = response?.data?.user;
+      // setData(finaldata);
+      // setUserData(finaldata);
+      // setLogged("true");
+      // setIsitSp(null);
+      // setUser(values.phone);
+      // await storeData(values.phone);
+      // navigation.navigate("Home");
+    } else if (status == 201) {
       setLoad(false);
       setSubmitting(false);
       setFieldError("phone", "Phone Number already exists");
