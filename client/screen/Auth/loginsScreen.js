@@ -22,6 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 import { number } from "yup";
 import AppContext from "../../component/appContext";
 import { axiosInstance } from "../../component/tools";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function LoginScreen({ navigation, route, path }) {
   const nav = useNavigation();
   const { user, logged, setLogged, setUser, setUserData, setIsitSp } =
@@ -113,111 +114,114 @@ export default function LoginScreen({ navigation, route, path }) {
           onPressIcon={() => navigation.goBack()}
         />
       )}
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : 0.1}>
-        {/* <ImageSliderComponent/> */}
-        <View style={{ marginTop: 24 }}>
-          <Text
-            style={{
-              fontFamily: "Regular",
-              fontStyle: "800",
-              fontWeight: "bold",
-              fontSize: 32,
-              lineHeight: 38,
-              display: "flex",
-              alignItems: "flex-end",
-              letterSpacing: -0.02,
-
-              color: "#212121",
-            }}
-          >
-            {showHeader ? "Login" : "Please Login First"}
-          </Text>
-          <View
-            style={{
-              marginTop: 24,
-            }}
-          >
+      <SafeAreaView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : 0.1}
+        >
+          {/* <ImageSliderComponent/> */}
+          <View style={{ marginTop: 24 }}>
             <Text
               style={{
                 fontFamily: "Regular",
+                fontStyle: "800",
+                fontWeight: "bold",
+                fontSize: 32,
+                lineHeight: 38,
+                display: "flex",
+                alignItems: "flex-end",
+                letterSpacing: -0.02,
+
+                color: "#212121",
               }}
             >
-              Phone Number
+              {showHeader ? "Login" : "Please Login First"}
             </Text>
-            <TextInput
-              keyboardType="numeric"
-              maxLength={10}
+            <View
               style={{
-                fontFamily: "Regular",
-
-                width: "100%",
-                marginTop: 8,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor1,
-                borderRadius: 4,
-                height: 50,
+                marginTop: 24,
               }}
-              onChangeText={(value) => {
-                setNum(value);
-                setError1("");
-                setFocusColor1(Colors.primary);
-              }}
-              placeholder="Phone Number"
-            />
-
-            {error1 ? (
+            >
               <Text
                 style={{
                   fontFamily: "Regular",
-
-                  color: "red",
                 }}
               >
-                {error1}
+                Phone Number
               </Text>
-            ) : null}
-          </View>
-          <View
-            style={{
-              marginTop: 12,
-            }}
-          >
-            <Text style={{ fontFamily: "Regular" }}>Password</Text>
-            <TextInput
-              maxLength={6}
-              keyboardType="numeric"
-              style={{
-                fontFamily: "Regular",
-
-                width: "100%",
-                marginTop: 8,
-                borderWidth: 1,
-                padding: 16,
-                borderColor: focuscolor2,
-                borderRadius: 4,
-                height: 50,
-              }}
-              onChangeText={(value) => {
-                setPin(value);
-                setFocusColor1(Colors.primary);
-                setError2("");
-                setFocusColor2(Colors.primary);
-              }}
-              placeholder="Enter Your Pin"
-            />
-
-            {error2 ? (
-              <Text
+              <TextInput
+                keyboardType="numeric"
+                maxLength={10}
                 style={{
-                  color: "red",
+                  fontFamily: "Regular",
+
+                  width: "100%",
+                  marginTop: 8,
+                  borderWidth: 1,
+                  padding: 16,
+                  borderColor: focuscolor1,
+                  borderRadius: 4,
+                  height: 50,
                 }}
-              >
-                {error2}
-              </Text>
-            ) : null}
-          </View>
-          {/* {error1 ? (
+                onChangeText={(value) => {
+                  setNum(value);
+                  setError1("");
+                  setFocusColor1(Colors.primary);
+                }}
+                placeholder="Phone Number"
+              />
+
+              {error1 ? (
+                <Text
+                  style={{
+                    fontFamily: "Regular",
+
+                    color: "red",
+                  }}
+                >
+                  {error1}
+                </Text>
+              ) : null}
+            </View>
+            <View
+              style={{
+                marginTop: 12,
+              }}
+            >
+              <Text style={{ fontFamily: "Regular" }}>Password</Text>
+              <TextInput
+                maxLength={6}
+                keyboardType="numeric"
+                style={{
+                  fontFamily: "Regular",
+
+                  width: "100%",
+                  marginTop: 8,
+                  borderWidth: 1,
+                  padding: 16,
+                  borderColor: focuscolor2,
+                  borderRadius: 4,
+                  height: 50,
+                }}
+                onChangeText={(value) => {
+                  setPin(value);
+                  setFocusColor1(Colors.primary);
+                  setError2("");
+                  setFocusColor2(Colors.primary);
+                }}
+                placeholder="Enter Your Pin"
+              />
+
+              {error2 ? (
+                <Text
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {error2}
+                </Text>
+              ) : null}
+            </View>
+            {/* {error1 ? (
           <Text
             style={{
               textAlign: "center",
@@ -228,60 +232,69 @@ export default function LoginScreen({ navigation, route, path }) {
             {error1}
           </Text>
         ) : null} */}
-          <View
-            style={{
-              position: "relative",
-              marginTop: 12,
-              flexDirection: "row",
-            }}
-          >
-            <Text
-              style={{ position: "absolute", fontFamily: "Regular", right: 12 }}
-              onPress={() => nav.navigate("ForgotPin")}
+            <View
+              style={{
+                position: "relative",
+                marginTop: 12,
+                flexDirection: "row",
+              }}
             >
-              Forgot PIN?
+              <Text
+                style={{
+                  position: "absolute",
+                  fontFamily: "Regular",
+                  right: 12,
+                }}
+                onPress={() => nav.navigate("ForgotPin")}
+              >
+                Forgot PIN?
+              </Text>
+            </View>
+          </View>
+          <View style={{ marginTop: 50 }}>
+            <Pressable
+              style={{
+                borderColor: Colors.primary,
+                borderWidth: 1,
+                justifyContent: "center",
+                height: 50,
+              }}
+              onPress={() => checkLogin()}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: Colors.primary,
+                  fontFamily: "Regular",
+                  textAlignVertical: "center",
+                }}
+              >
+                Login
+              </Text>
+            </Pressable>
+            <Text
+              style={{
+                marginTop: 8,
+                fontFamily: "Regular",
+                textAlign: "center",
+              }}
+            >
+              Dont Have an account?
+              <Text
+                onPress={() => nav.navigate("Signup")}
+                style={{
+                  color: Colors.primary,
+                }}
+              >
+                {" "}
+                Register{" "}
+              </Text>
             </Text>
           </View>
-        </View>
-        <View style={{ marginTop: 50 }}>
-          <Pressable
-            style={{
-              borderColor: Colors.primary,
-              borderWidth: 1,
-              justifyContent: "center",
-              height: 50,
-            }}
-            onPress={() => checkLogin()}
-          >
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 20,
-                fontWeight: "bold",
-                color: Colors.primary,
-                fontFamily: "Regular",
-                textAlignVertical: "center",
-              }}
-            >
-              Login
-            </Text>
-          </Pressable>
-          <Text
-            style={{ marginTop: 8, fontFamily: "Regular", textAlign: "center" }}
-          >
-            Dont Have an account?
-            <Text
-              onPress={() => nav.navigate("Signup")}
-              style={{
-                color: Colors.primary,
-              }}
-            >
-              {" "}
-              Register{" "}
-            </Text>
-          </Text>
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </View>
   );
 }
