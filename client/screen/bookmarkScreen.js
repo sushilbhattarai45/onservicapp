@@ -21,6 +21,7 @@ import AppContext from "../component/appContext";
 
 import { axiosInstance } from "../component/tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function BookMarkScreen({ navigation }) {
   const { ads } = useContext(AppContext);
   const [adlink, setAdLink] = useState("www.Onservic.com");
@@ -78,84 +79,88 @@ export default function BookMarkScreen({ navigation }) {
           marginTop: 8,
         }}
       >
-        <View>
-          <Text
-            style={{
-              paddingHorizontal: 24,
-              fontFamily: "Regular",
-              fontSize: 24,
-              fontWeight: "800",
-            }}
-          >
-            Bookmarks
-          </Text>
-          <Pressable
-            onPress={() => Linking.openURL("https://" + adlink)}
-            style={{
-              marginTop: 20,
-              width: "100%",
-              height: 200,
-              // backgroundColor: "red",
-            }}
-          >
-            <Image
+        <SafeAreaView>
+          <View>
+            <Text
               style={{
-                alignSelf: "center",
-                alignSelf: "center",
+                paddingHorizontal: 24,
+                fontFamily: "Regular",
+                fontSize: 24,
+                fontWeight: "800",
+              }}
+            >
+              Bookmarks
+            </Text>
+            <Pressable
+              onPress={() => Linking.openURL("https://" + adlink)}
+              style={{
+                marginTop: 20,
                 width: "100%",
-                height: "100%",
-                objectFit: "cover",
+                height: 200,
+                // backgroundColor: "red",
               }}
-              source={{
-                uri: adsource,
-                headers: {
-                  Accept: "*/*",
-                },
+            >
+              <Image
+                style={{
+                  alignSelf: "center",
+                  alignSelf: "center",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+                source={{
+                  uri: adsource,
+                  headers: {
+                    Accept: "*/*",
+                  },
+                }}
+              />
+            </Pressable>
+            <View
+              style={{
+                marginTop: 20,
               }}
-            />
-          </Pressable>
-          <View
-            style={{
-              marginTop: 20,
-            }}
-          >
-            {boomarked
-              ? BmPersons.map((persons) => {
-                  return (
-                    <View
-                      style={{
-                        marginBottom: 2,
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={async () => {
-                          const SpData = await axiosInstance.post(
-                            "sp/getOneSp",
-                            {
-                              GIVEN_API_KEY: "AXCF",
-                              sp_contact: persons.sp_contact,
-                            }
-                          );
-                          navigation.navigate("Sp", {
-                            sp: SpData?.data.data,
-                          });
+            >
+              {boomarked
+                ? BmPersons.map((persons) => {
+                    return (
+                      <View
+                        style={{
+                          marginBottom: 2,
                         }}
                       >
-                        <BookMarkCard
-                          id={persons.sp_contact}
-                          name={persons.sp_name}
-                          image={persons.sp_profileImage}
-                          address={persons.sp_district + " " + persons.sp_city}
-                          rating={persons.rating}
-                          ratingcount={persons.ratingcount}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  );
-                })
-              : null}
+                        <TouchableOpacity
+                          onPress={async () => {
+                            const SpData = await axiosInstance.post(
+                              "sp/getOneSp",
+                              {
+                                GIVEN_API_KEY: "AXCF",
+                                sp_contact: persons.sp_contact,
+                              }
+                            );
+                            navigation.navigate("Sp", {
+                              sp: SpData?.data.data,
+                            });
+                          }}
+                        >
+                          <BookMarkCard
+                            id={persons.sp_contact}
+                            name={persons.sp_name}
+                            image={persons.sp_profileImage}
+                            address={
+                              persons.sp_district + " " + persons.sp_city
+                            }
+                            rating={persons.rating}
+                            ratingcount={persons.ratingcount}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  })
+                : null}
+            </View>
           </View>
-        </View>
+        </SafeAreaView>
       </View>
     </ScrollView>
   );

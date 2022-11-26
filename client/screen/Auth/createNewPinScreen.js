@@ -18,6 +18,7 @@ import { axiosInstance } from "../../component/tools";
 import ModalPopup from "../../component/Modal";
 import { ref } from "yup";
 import tick from "../../assets/images/tick.png";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function CreateNewPinScreen({ navigation, route }) {
   const popup = createRef();
 
@@ -51,112 +52,112 @@ export default function CreateNewPinScreen({ navigation, route }) {
   }
   return (
     <View>
-      <ModalPopup
-        ref={popup}
-        animationType="fade"
-        onTouchOutside={() => popup.current.close()}
-      >
-        <View style={styles.toppopupview}>
-          <Image
-            style={styles.popupimage}
-            source={require("../../assets/images/tick.png")}
+      <SafeAreaView>
+        <ModalPopup
+          ref={popup}
+          animationType="fade"
+          onTouchOutside={() => popup.current.close()}
+        >
+          <View style={styles.toppopupview}>
+            <Image
+              style={styles.popupimage}
+              source={require("../../assets/images/tick.png")}
+            />
+            <View style={styles.popuptext}>
+              <Text style={styles.popupmaintext}>Changed</Text>
+              <Text style={styles.popupsecondarytext}>
+                You have successfully Changed your PIN
+              </Text>
+            </View>
+            <View style={styles.Button}>
+              <Text
+                onPress={() => navigation.navigate("Home")}
+                style={styles.Txt566}
+              >
+                ok
+              </Text>
+            </View>
+          </View>
+        </ModalPopup>
+        <View
+          style={{
+            marginLeft: 24,
+          }}
+        >
+          <Header
+            icon={"arrow-left-line"}
+            onPressIcon={() => navigation.goBack()}
           />
-          <View style={styles.popuptext}>
-            <Text style={styles.popupmaintext}>Changed</Text>
-            <Text style={styles.popupsecondarytext}>
-              You have successfully Changed your PIN
-            </Text>
-          </View>
-          <View style={styles.Button}>
-            <Text
-              onPress={() => navigation.navigate("Home")}
-              style={styles.Txt566}
-            >
-              ok
-            </Text>
-          </View>
         </View>
-      </ModalPopup>
-      <View
-        style={{
-          marginLeft: 24,
-          marginTop: 8,
-        }}
-      >
-        <Header
-          icon={"arrow-left-line"}
-          onPressIcon={() => navigation.goBack()}
-        />
-      </View>
-      <View
-        style={{
-          margin: 24,
-        }}
-      >
-        <View style={{}}>
-          <Text
-            style={{
-              fontFamily: "Regular",
-              fontStyle: "normal",
-              fontWeight: "800",
-              fontSize: 20,
-              lineHeight: 38,
-              display: "flex",
-              alignItems: "flex-end",
-              letterS: -0.02,
-
-              color: Colors.black,
-            }}
-          >
-            Create new PIN
-          </Text>
-          <View>
-            <Text style={{ color: Colors.gray900, fontFamily: "Regular" }}>
-              Enter New Pin for the given Number: {num}{" "}
-            </Text>
-          </View>
-
-          <View style={{ marginTop: 5 }}>
-            <View
+        <View
+          style={{
+            margin: 24,
+          }}
+        >
+          <View style={{}}>
+            <Text
               style={{
-                marginTop: 10,
+                fontFamily: "Regular",
+                fontStyle: "normal",
+                fontWeight: "800",
+                fontSize: 20,
+                lineHeight: 38,
+                display: "flex",
+                alignItems: "flex-end",
+                letterS: -0.02,
+
+                color: Colors.black,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: "Regular",
-                }}
-              >
-                PIN{" "}
+              Create new PIN
+            </Text>
+            <View>
+              <Text style={{ color: Colors.gray900, fontFamily: "Regular" }}>
+                Enter New Pin for the given Number: {num}{" "}
               </Text>
+            </View>
+
+            <View style={{ marginTop: 5 }}>
               <View
                 style={{
-                  display: "flex",
+                  marginTop: 10,
                 }}
               >
-                <TextInput
-                  keyboardType="numeric"
-                  maxLength={6}
+                <Text
                   style={{
                     fontFamily: "Regular",
-                    fontSize: 15,
-                    width: "100%",
-                    marginTop: 8,
-                    borderWidth: 1,
-                    padding: 16,
-                    borderColor: Colors.black,
-                    borderRadius: 4,
-                    height: 50,
                   }}
-                  placeholder="Enter your New PIN"
-                  onChangeText={(value) => {
-                    setError({ first: null });
-
-                    setFirst(value);
+                >
+                  PIN{" "}
+                </Text>
+                <View
+                  style={{
+                    display: "flex",
                   }}
-                />
+                >
+                  <TextInput
+                    keyboardType="numeric"
+                    maxLength={6}
+                    style={{
+                      fontFamily: "Regular",
+                      fontSize: 15,
+                      width: "100%",
+                      marginTop: 8,
+                      borderWidth: 1,
+                      padding: 16,
+                      borderColor: Colors.black,
+                      borderRadius: 4,
+                      height: 50,
+                    }}
+                    placeholder="Enter your New PIN"
+                    onChangeText={(value) => {
+                      setError({ first: null });
 
-                {/* <Ionicons
+                      setFirst(value);
+                    }}
+                  />
+
+                  {/* <Ionicons
                 
                   style={{
                     position: "absolute",
@@ -167,91 +168,92 @@ export default function CreateNewPinScreen({ navigation, route }) {
                   size={24}
                   color="black"
                 /> */}
+                </View>
+                {error.first ? (
+                  <Text style={{ color: "red" }}>{error.first}</Text>
+                ) : null}
               </View>
-              {error.first ? (
-                <Text style={{ color: "red" }}>{error.first}</Text>
-              ) : null}
             </View>
-          </View>
-          <View>
-            <View
-              style={{
-                marginTop: 12,
-              }}
-            >
-              <Text
+            <View>
+              <View
                 style={{
-                  fontFamily: "Regular",
+                  marginTop: 12,
                 }}
               >
-                {" "}
-                Confirm PIN
-              </Text>
-            </View>
-            <View
-              style={{
-                display: "flex",
-              }}
-            >
-              <TextInput
-                keyboardType="numeric"
-                maxLength={6}
+                <Text
+                  style={{
+                    fontFamily: "Regular",
+                  }}
+                >
+                  {" "}
+                  Confirm PIN
+                </Text>
+              </View>
+              <View
                 style={{
-                  fontFamily: "Regular",
+                  display: "flex",
+                }}
+              >
+                <TextInput
+                  keyboardType="numeric"
+                  maxLength={6}
+                  style={{
+                    fontFamily: "Regular",
 
-                  width: "100%",
-                  marginTop: 8,
-                  borderWidth: 1,
-                  padding: 16,
-                  borderColor: Colors.black,
-                  borderRadius: 4,
-                  height: 50,
-                }}
-                onChangeText={(value) => {
-                  setError({ second: null });
-                  setSecond(value);
-                }}
-                placeholder="Confirm PIN"
-              />
-              {/* <Ionicons
+                    width: "100%",
+                    marginTop: 8,
+                    borderWidth: 1,
+                    padding: 16,
+                    borderColor: Colors.black,
+                    borderRadius: 4,
+                    height: 50,
+                  }}
+                  onChangeText={(value) => {
+                    setError({ second: null });
+                    setSecond(value);
+                  }}
+                  placeholder="Confirm PIN"
+                />
+                {/* <Ionicons
                 style={{ position: "absolute", paddingVertical: 20, right: 16 }}
                 name="eye-off-outline"
                 size={24}
                 color="black"
               /> */}
+              </View>
+              {error.second ? (
+                <Text style={{ color: "red" }}>{error.second}</Text>
+              ) : null}
             </View>
-            {error.second ? (
-              <Text style={{ color: "red" }}>{error.second}</Text>
-            ) : null}
-          </View>
 
-          <Pressable
-            onPress={async () => await setPin()}
-            style={{
-              borderColor: Colors.primary,
-              borderWidth: 1,
-              justifyContent: "center",
-              height: 50,
-              marginTop: 24,
-            }}
-          >
-            <Text
+            <Pressable
+              onPress={async () => await setPin()}
               style={{
-                fontFamily: "Regular",
-
-                textAlign: "center",
-                fontSize: 20,
-                fontWeight: "bold",
-                color: Colors.primary,
-                fontFamily: "Bold",
-                textAlignVertical: "center",
+                borderColor: Colors.primary,
+                borderWidth: 1,
+                justifyContent: "center",
+                height: 50,
+                marginTop: 24,
               }}
             >
-              CREATE
-            </Text>
-          </Pressable>
+              <Text
+                style={{
+                  fontFamily: "Regular",
+
+                  textAlign: "center",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: Colors.primary,
+                  fontFamily: "Bold",
+                  textAlignVertical: "center",
+                }}
+              >
+                CREATE
+              </Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     </View>
   );
 }
