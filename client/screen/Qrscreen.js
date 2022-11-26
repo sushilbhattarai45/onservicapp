@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Dimensions, StatusBar } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Colors } from "../styles/main";
 import Header from "../component/Header";
 import { axiosInstance } from "../component/tools";
+import Button from "../component/buttonComponent";
 
 export default function QrScreen({ navigation, navigation: { goBack } }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
-    setScanned(false);
     const unsubscribe = navigation.addListener("focus", () => {
+      setScanned(false);
+      setHasPermission(false);
       getBarCodeScannerPermissions();
-
-      getBarCodeScannerPermissions(); //Put your Data loading function here instead of my loadData()
+      getBarCodeScannerPermissions();
     });
     return unsubscribe;
   }, [navigation]);
@@ -24,11 +25,8 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
   };
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-
+    console.log("Hello");
     getData(data);
-    setTimeout(() => {
-      setScanned(false);
-    }, 2000);
   };
 
   if (hasPermission === null) {
@@ -38,7 +36,6 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
     return <Text>No access to camera</Text>;
   }
   async function getData(num) {
-    setScanned(false);
     const data = await axiosInstance.post("sp/getOneSp", {
       GIVEN_API_KEY: "AXCF",
       sp_contact: num,
@@ -55,35 +52,41 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
 
   return (
     <View style={styles.container}>
+      <View>
+        <BarCodeScanner
+          onBarCodeScanned={!scanned ? handleBarCodeScanned : () => {}}
+          style={{
+            width: Dimensions.get("window").width * 1.8,
+            height: Dimensions.get("window").height * 1.1,
+          }}
+          barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+          ratio="16:9"
+        />
+      </View>
       <Header
         headerText="QR Code"
         onPressIcon={() => goBack()}
         style={{
           paddingHorizontal: 10,
           marginTop: 8,
+          position: "absolute",
+          top: 0,
         }}
+        color={Colors.white}
         icon="arrow-left-line"
       />
-      <View
-        style={{
-          marginTop: 5,
-          height: "80%",
-          width: "100%",
-        }}
-      >
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-        />
-        <Text
+      {scanned && (
+        <View
           style={{
-            color: "white",
-            marginLeft: 15,
+            width: 150,
+            marginTop: 24,
+            position: "absolute",
+            bottom: 24,
           }}
         >
-          Please Scan a valid Qr Code of OnServic Pvt Ltd
-        </Text>
-      </View>
+          <Button label={"Scan Again"} onPress={() => setScanned(false)} />
+        </View>
+      )}
     </View>
   );
 }
@@ -91,5 +94,8 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
