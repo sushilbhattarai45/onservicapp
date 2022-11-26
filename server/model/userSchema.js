@@ -30,7 +30,6 @@ const user = new mongoose.Schema({
   },
   user_status: {
     type: String,
-    default: "ACTIVE",
   },
   user_toc: {
     date: { type: String },

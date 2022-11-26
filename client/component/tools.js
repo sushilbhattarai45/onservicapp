@@ -69,6 +69,31 @@ export const uploadImage = async (files) => {
 function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
+
+export async function getSms(otp, num) {
+  var url = "https://sms.aakashsms.com/sms/v3/send/";
+
+  var data = {
+    to: num,
+    auth_token:
+      "241ce853e05422c4dca29b2ac40bfd6afbb6408eb858eec4775eb69fe0b0bbfe",
+    text: " Hello Sushil .Your code is :" + otp + " Regards Ride On",
+  };
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      alert("Error" + error);
+    });
+}
 export const BASE_OUR_API_URL = "http://172.104.188.69:3001";
 // export const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 

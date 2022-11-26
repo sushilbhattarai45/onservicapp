@@ -10,6 +10,7 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
+import { getSms } from "../../component/tools.js";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { axiosInstance } from "../../component/tools";
 import { Colors } from "../../styles/main";
@@ -44,6 +45,9 @@ export default function ForgetPinScreen() {
         navigation.navigate("OtpScreen", {
           num: num,
           otp: genOtp,
+          type: "forget",
+          values: null,
+          img: null,
         });
       } else {
         alert("User Not Found");
@@ -63,30 +67,6 @@ export default function ForgetPinScreen() {
     } else {
       return getPin();
     }
-  }
-  async function getSms(otp, num) {
-    var url = "https://sms.aakashsms.com/sms/v3/send/";
-    alert(url);
-
-    var data = {
-      to: num,
-      auth_token: "",
-      text: " Hello Sushil .Your code is :" + otp + " Regards Ride On",
-    };
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        alert("Error" + error);
-      });
   }
   const [num, setNum] = useState();
   return (

@@ -1,4 +1,12 @@
-import { useRef, React, useState, createRef, useEffect } from "react";
+import {
+  useRef,
+  React,
+  useState,
+  createRef,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
 
 import {
   StyleSheet,
@@ -9,17 +17,22 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
+import moment from "moment";
+import axios from "axios";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ModalPopup from "../../component/Modal";
 import Header from "../../component/Header";
+import { BASE_OUR_API_URL } from "../../component/tools";
+import { axiosInstance } from "../../component/tools";
 import { Colors } from "../../styles/main";
+import AppContext from "../../component/appContext";
 export default function OtpScreen({ navigation, route }) {
   const secondTextInputRef = useRef(null);
   const thirdTextInputRef = useRef(null);
   const fourthTextInputRef = useRef(null);
   const max = 1;
   const popup = createRef();
-  const { otp, num } = route.params;
+  const { otp, num, type, values, img } = route.params;
   const firstTextInputRef = useRef(null);
   const [secondTextInputValue, setSecondTextInputValue] = useState(null);
   const [firstTextInputValue, setFirstTextInputValue] = useState(null);
@@ -28,8 +41,11 @@ export default function OtpScreen({ navigation, route }) {
   const [focuscolor1, setFocusColor1] = useState(Colors.black);
   const [focuscolor2, setFocusColor2] = useState(Colors.black);
   const [focuscolor3, setFocusColor3] = useState(Colors.black);
-  const [focuscolor4, setFocusColor4] = useState(Colors.black);
+  const [data, setData] = useState();
 
+  const [focuscolor4, setFocusColor4] = useState(Colors.black);
+  const { userData, logged, user, setUserData, setLogged, setUser, setIsitSp } =
+    useContext(AppContext);
   const onFocus = (id) => {
     if (id == 1) setFocusColor1(Colors.primary);
     if (id == 2) setFocusColor2(Colors.primary);
@@ -47,7 +63,7 @@ export default function OtpScreen({ navigation, route }) {
     setFocusColor1(Colors.primary);
     if (id == 4) setFocusColor4(Colors.black);
   };
-  const checkotp = (fourth) => {
+  const checkotp = async (fourth) => {
     const givenotp =
       firstTextInputValue +
       secondTextInputValue +
@@ -55,14 +71,50 @@ export default function OtpScreen({ navigation, route }) {
       fourthTextInputValue;
     // alert(givenotp);
     if (givenotp == otp) {
-      alert("Valid otp");
-      navigation.navigate("CreateNewPin", {
-        num: num,
-      });
+      if (type == "forget") {
+        navigation.navigate("CreateNewPin", {
+          num: num,
+        });
+      } else {
+        let response = await axios.post(
+          BASE_OUR_API_URL + "/v1/api/user/register",
+          {
+            API_KEY: "AXCF",
+            user_name: values.name,
+            user_email: values.email,
+            user_contact: values.phone,
+            user_district: values.district,
+            user_city: values.city,
+            user_street: values.street,
+            user_gender: values.gender,
+            user_password: values.password,
+            user_profileImage: img,
+            user_toc: {
+              date: moment().format("ll"),
+              time: moment().format("LT"),
+            },
+          }
+        );
+        const finaldata = response?.data?.user;
+        setData(finaldata);
+        setUserData(finaldata);
+        setLogged("true");
+        setIsitSp(null);
+        setUser(values.phone);
+        await storeData(values.phone);
+        navigation.navigate("Home");
+
+        navigation.navigate("Home");
+      }
       // popup.current.show();
     } else {
       alert("Invalid Otp");
     }
+  };
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem("user_contact", value);
+    } catch (e) {}
   };
   return (
     <View style={{ marginHorizontal: 24 }}>
