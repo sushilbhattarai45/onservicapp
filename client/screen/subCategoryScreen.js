@@ -15,6 +15,7 @@ import Constants from "expo-constants";
 import { Colors } from "../styles/main";
 import axios from "axios";
 import { axiosInstance } from "../component/tools";
+import Search from "../component/searchBar";
 
 export default function SubCategoryScreen({
   route,
@@ -37,43 +38,28 @@ export default function SubCategoryScreen({
         GIVEN_API_KEY: "AXCF",
         category_id: category_id,
       });
+      setFilteredData(data.data.data);
       setSData(data.data.data);
       setEmptydata(false);
     }
     getSubC();
     getAd();
   }, []);
+  const [sData, setSData] = useState();
   const [emptydata, setEmptydata] = useState(true);
   const [ads, setAds] = useState();
   const [urisource, setUriSource] = useState(null);
-
-  const [sData, setSData] = useState();
-  // const subcategory = [
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-  //   {
-  //     name: "Telivision",
-  //     img: "https://firebasestorage.googleapis.com/v0/b/unify-bc2ad.appspot.com/o/ow7hdxo6drl-215%3A259?alt=media&token=f8186c30-dea2-4ae5-94e1-f57e487d486e",
-  //   },
-
-  //  {"name":"Air Conditioner","img":"https://mobileimages.lowes.com/marketingimages/067f9576-6565-4cf8-b171-37bb42f5bec9/room-air-conditioners.png"},
-
-  //   ,
-  // ];
+  // const [sValue, setSvalue] = useState();
+  const [filteredData, setFilteredData] = useState(sData);
+  const handleSearch = (value) => {
+    console.log(value);
+    if (value.length > 0) {
+      const filter = sData.filter(
+        (s) => s.subCat_name.toLowerCase().indexOf(value.toLowerCase()) > -1
+      );
+      setFilteredData(filter);
+    }
+  };
   return (
     <View
       style={{
@@ -91,12 +77,23 @@ export default function SubCategoryScreen({
           style={{ paddingHorizontal: 12 }}
           icon="arrow-left-line"
         />
+        <View style={{ marginHorizontal: 20 }}>
+          <Search
+            containerStyle={{ padding: 0, marginTop: 12 }}
+            // onFocus={() => setSearching(true)}
+            // value={sValue}
+            onChangeText={handleSearch}
+            onSubmitEditing={() => {
+              setFilteredData([]);
+            }}
+          />
+        </View>
 
         <View style={{ marginTop: 8 }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{
-              marginBottom: 20,
+              marginBottom: 16,
             }}
           >
             <View>
@@ -132,7 +129,7 @@ export default function SubCategoryScreen({
                 }}
               >
                 {!emptydata
-                  ? sData.map((subcategory) => {
+                  ? filteredData?.map((subcategory) => {
                       return (
                         <SubCategory
                           id={subcategory._id}

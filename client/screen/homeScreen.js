@@ -206,21 +206,25 @@ const HomeScreen = ({ navigation }) => {
                     alignItems: "center",
                   }}
                 >
-                  <SubCategoryGroupCard
-                    name={featured?.subCat[0]?.subCat_name}
-                    image={featured?.subCat[0]?.subCat_photo}
-                    cat_name={featured?.catName}
-                    givencity={livedistrict}
-                    cat_id={featured?.catId}
-                  />
-                  <SubCategoryGroupCard
-                    name={featured?.subCat[1]?.subCat_name}
-                    image={featured?.subCat[1]?.subCat_photo}
-                    cat_name={featured?.catName}
-                    givencity={livedistrict}
-                    cat_id={featured?.catId}
-                    containerStyle={{ marginLeft: 16 }}
-                  />
+                  {featured?.subCat[0] && (
+                    <SubCategoryGroupCard
+                      name={featured?.subCat[0]?.subCat_name}
+                      image={featured?.subCat[0]?.subCat_photo}
+                      cat_name={featured?.catName}
+                      givencity={livedistrict}
+                      cat_id={featured?.catId}
+                    />
+                  )}
+                  {featured?.subCat[1] && (
+                    <SubCategoryGroupCard
+                      name={featured?.subCat[1]?.subCat_name}
+                      image={featured?.subCat[1]?.subCat_photo}
+                      cat_name={featured?.catName}
+                      givencity={livedistrict}
+                      cat_id={featured?.catId}
+                      containerStyle={{ marginLeft: 16 }}
+                    />
+                  )}
                 </View>
                 <View
                   style={{
@@ -230,21 +234,25 @@ const HomeScreen = ({ navigation }) => {
                     marginTop: 16,
                   }}
                 >
-                  <SubCategoryGroupCard
-                    image={featured?.subCat[2]?.subCat_photo}
-                    name={featured?.subCat[2]?.subCat_name}
-                    cat_name={featured?.catName}
-                    givencity={livedistrict}
-                    cat_id={featured?.catId}
-                  />
-                  <SubCategoryGroupCard
-                    name={featured?.subCat[3]?.subCat_name}
-                    givencity={livedistrict}
-                    image={featured?.subCat[3]?.subCat_photo}
-                    cat_name={featured?.catName}
-                    cat_id={featured?.catId}
-                    containerStyle={{ marginLeft: 16 }}
-                  />
+                  {featured?.subCat[2] && (
+                    <SubCategoryGroupCard
+                      image={featured?.subCat[2]?.subCat_photo}
+                      name={featured?.subCat[2]?.subCat_name}
+                      cat_name={featured?.catName}
+                      givencity={livedistrict}
+                      cat_id={featured?.catId}
+                    />
+                  )}
+                  {featured?.subCat[3] && (
+                    <SubCategoryGroupCard
+                      name={featured?.subCat[3]?.subCat_name}
+                      givencity={livedistrict}
+                      image={featured?.subCat[3]?.subCat_photo}
+                      cat_name={featured?.catName}
+                      cat_id={featured?.catId}
+                      containerStyle={{ marginLeft: 16 }}
+                    />
+                  )}
                 </View>
                 <View style={{ flexDirection: "row", marginTop: 24 }}>
                   <Text

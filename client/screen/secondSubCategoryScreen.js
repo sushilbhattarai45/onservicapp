@@ -16,6 +16,7 @@ import { Colors } from "../styles/main";
 import axios from "axios";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
+import Search from "../component/searchBar";
 export default function SecondSubCategoryScreen({
   route,
   category_name,
@@ -48,6 +49,17 @@ export default function SecondSubCategoryScreen({
   const [sData, setSData] = useState();
   const [ads, setAds] = useState();
   const [urisource, setUriSource] = useState(null);
+  const [filteredData, setFilteredData] = useState(sData);
+
+  const handleSearch = (value) => {
+    console.log(value);
+    if (value.length > 0) {
+      const filter = sData.filter(
+        (s) => s.subCat_name.toLowerCase().indexOf(value.toLowerCase()) > -1
+      );
+      setFilteredData(filter);
+    }
+  };
   return (
     <View
       style={{
@@ -65,7 +77,17 @@ export default function SecondSubCategoryScreen({
           style={{ paddingHorizontal: 12 }}
           icon="arrow-left-line"
         />
-
+        <View style={{ marginHorizontal: 20 }}>
+          <Search
+            containerStyle={{ padding: 0, marginTop: 12 }}
+            // onFocus={() => setSearching(true)}
+            // value={sValue}
+            onChangeText={handleSearch}
+            onSubmitEditing={() => {
+              setFilteredData([]);
+            }}
+          />
+        </View>
         <View style={{ marginTop: 24 }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
