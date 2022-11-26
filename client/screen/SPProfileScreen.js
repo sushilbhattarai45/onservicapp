@@ -879,7 +879,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               value={spStatus}
             />
           </View>
-          <View
+          {/* <View
             style={{
               flexDirection: "row",
               width: "100%",
@@ -892,7 +892,7 @@ const SPProfileScreen = ({ navigation, route }) => {
             <Text style={{ color: Colors.black, fontFamily: "Regular" }}>
               stg date
             </Text>
-          </View>
+          </View> */}
         </View>
       </ModalPopup>
       <ModalPopup
