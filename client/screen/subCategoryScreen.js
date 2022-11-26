@@ -78,8 +78,8 @@ export default function SubCategoryScreen({
     <View
       style={{
         flex: 1,
-        marginBottom: 10,
-        marginTop: 8,
+        // marginBottom: 10,
+        // marginTop: 8,
         display: "flex",
         backgroundColor: Colors.gray200,
       }}

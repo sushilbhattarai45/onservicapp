@@ -142,8 +142,6 @@ export default UpdateUser = ({ navigation }) => {
       /> */}
           <View
             style={{
-              marginTop: 8,
-
               marginBottom: 20,
             }}
           >

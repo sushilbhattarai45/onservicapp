@@ -100,7 +100,7 @@ export default function SearchPersonListingScreen({ navigation }) {
       style={{
         flex: 1,
         backgroundColor: Colors.gray200,
-        marginTop: 12,
+        marginTop: 8,
       }}
     >
       <SafeAreaView>

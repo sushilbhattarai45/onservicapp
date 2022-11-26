@@ -65,8 +65,8 @@ export default function CategoryPersonListingScreen({
       style={{
         backgroundColor: Colors.gray200,
         flex: 1,
-        marginBottom: 10,
-        marginTop: 8,
+        // marginBottom: 10,
+        // paddingTop: 8,
       }}
     >
       <Header

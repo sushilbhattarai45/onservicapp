@@ -26,17 +26,13 @@ import Header from "../component/Header";
 import Icon from "../component/Icon";
 import ImageSliderComponent from "../component/imageSlider";
 import { Colors } from "../styles/main";
-import Constants from "expo-constants";
-import { StatusBar } from "expo-status-bar";
-import CategoryCard from "../component/categoryCard";
 import Button from "../component/buttonComponent";
 import ModalPopup from "../component/Modal";
 import ReviewCard from "../component/ReviewCard";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
-import BookMarkCard from "../component/bookmarkCard";
 import SubCatCard from "../component/subCatCard";
-import { Video, AVPlaybackStatus } from "expo-av";
+import { Video } from "expo-av";
 
 const ActionIcon = ({ name, onPress, color }) => {
   return (
@@ -168,7 +164,6 @@ const SPProfileScreen = ({ navigation, route }) => {
             position: "absolute",
             zIndex: 10,
             paddingHorizontal: 24,
-            marginTop: 8,
           }}
           icon="arrow-left-line"
           onPressIcon={() => navigation.goBack()}

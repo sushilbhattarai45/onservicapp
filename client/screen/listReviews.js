@@ -27,7 +27,7 @@ export default function ListReviews({ route, navigation }) {
         flex: 1,
         paddingBottom: 20,
         // margin:ConnectionStates,
-        marginTop: 8,
+        // marginTop: 8,
       }}
     >
       <Header

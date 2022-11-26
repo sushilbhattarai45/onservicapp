@@ -52,8 +52,9 @@ export default function SecondSubCategoryScreen({
     <View
       style={{
         flex: 1,
-        marginBottom: 90,
+        // marginBottom: 90,
         display: "flex",
+        // paddingTop: 8,
         backgroundColor: Colors.gray200,
       }}
     >
@@ -68,9 +69,11 @@ export default function SecondSubCategoryScreen({
         <View style={{ marginTop: 24 }}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{
-              marginBottom: 20,
-            }}
+            style={
+              {
+                // marginBottom: 20,
+              }
+            }
           >
             <View>
               {ads ? (
