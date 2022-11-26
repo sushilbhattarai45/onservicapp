@@ -210,7 +210,7 @@ export default registerUser = ({ navigation }) => {
                       letterspacing: -0.02,
                     }}
                   >
-                    Register
+                    Create
                   </Text>
 
                   <View

@@ -289,7 +289,7 @@ export default function LoginScreen({ navigation, route, path }) {
                 }}
               >
                 {" "}
-                Register{" "}
+                Create{" "}
               </Text>
             </Text>
           </View>
