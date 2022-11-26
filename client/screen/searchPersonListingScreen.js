@@ -25,6 +25,7 @@ import ModalPopup from "../component/Modal";
 import { Dropdown } from "react-native-element-dropdown";
 import { Districts } from "../component/district";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function SearchPersonListingScreen({ navigation }) {
   const {
     subCategories,
@@ -102,244 +103,246 @@ export default function SearchPersonListingScreen({ navigation }) {
         marginTop: 12,
       }}
     >
-      <View style={{ marginHorizontal: 20 }}>
-        <Search
-          containerStyle={{ padding: 0 }}
-          rightIcon={"equalizer-fill"}
-          onBlur={() => setSuggestionsTouched(true)}
-          onRightIconPress={() => popup.current.show()}
-          // onFocus={() => setSearching(true)}
-          value={value}
-          onChangeText={handleSearchText}
-          onSubmitEditing={() => {
-            setSuggestions([]);
-            getPeopleList({});
-            setSuggestionsActive(false);
-          }}
-        />
-      </View>
-      <ScrollView keyboardShouldPersistTaps="handled">
-        <View
-          style={{
-            marginTop: 5,
-            paddingHorizontal: 24,
-            display: "flex",
-            flexDirection: "row",
-          }}
-        >
-          <Text>{filter?.city}</Text>
-          {livedistrict ? (
-            filter?.city == livedistrict ? (
-              <Text
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  marginRight: 24,
-                  color: Colors.primary,
-                  fontFamily: "Regular",
-                  textDecorationLine: "underline",
-                }}
-                onPress={() => {
-                  setLive(true);
-                  setFilter({ city: userData?.user_district });
-                  getPeopleList({ location: userData?.user_district });
-                }}
-              >
-                Current Location Enabled
-              </Text>
-            ) : (
-              <Text
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  marginRight: 24,
-                  color: Colors.primary,
-                  fontFamily: "Regular",
-                  textDecorationLine: "underline",
-                }}
-                onPress={async () => {
-                  if (lpermission == "true") {
-                    setLive(true);
-                    setFilter({ city: livedistrict });
-                  } else {
-                    alert("Please allow Location access and restart the app");
-                    setTimeout(() => {
-                      Linking.openSettings();
-                    }, 2000);
-
-                    setLive(false);
-                    setFilter({ city: filter?.city });
-                  }
-                }}
-              >
-                Use Your current location ?
-              </Text>
-            )
-          ) : null}
+      <SafeAreaView>
+        <View style={{ marginHorizontal: 20 }}>
+          <Search
+            containerStyle={{ padding: 0 }}
+            rightIcon={"equalizer-fill"}
+            onBlur={() => setSuggestionsTouched(true)}
+            onRightIconPress={() => popup.current.show()}
+            // onFocus={() => setSearching(true)}
+            value={value}
+            onChangeText={handleSearchText}
+            onSubmitEditing={() => {
+              setSuggestions([]);
+              getPeopleList({});
+              setSuggestionsActive(false);
+            }}
+          />
         </View>
-        {/* Suggestions */}
-        {suggestionsActive && (
+        <ScrollView keyboardShouldPersistTaps="handled">
           <View
             style={{
-              marginTop: 16,
-              backgroundColor: Colors.white,
-              marginBottom: 20,
+              marginTop: 5,
+              paddingHorizontal: 24,
+              display: "flex",
+              flexDirection: "row",
             }}
           >
-            <ScrollView keyboardShouldPersistTaps={"handled"}>
-              {suggestions.map((item, index) => {
+            <Text>{filter?.city}</Text>
+            {livedistrict ? (
+              filter?.city == livedistrict ? (
+                <Text
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    marginRight: 24,
+                    color: Colors.primary,
+                    fontFamily: "Regular",
+                    textDecorationLine: "underline",
+                  }}
+                  onPress={() => {
+                    setLive(true);
+                    setFilter({ city: userData?.user_district });
+                    getPeopleList({ location: userData?.user_district });
+                  }}
+                >
+                  Current Location Enabled
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    marginRight: 24,
+                    color: Colors.primary,
+                    fontFamily: "Regular",
+                    textDecorationLine: "underline",
+                  }}
+                  onPress={async () => {
+                    if (lpermission == "true") {
+                      setLive(true);
+                      setFilter({ city: livedistrict });
+                    } else {
+                      alert("Please allow Location access and restart the app");
+                      setTimeout(() => {
+                        Linking.openSettings();
+                      }, 2000);
+
+                      setLive(false);
+                      setFilter({ city: filter?.city });
+                    }
+                  }}
+                >
+                  Use Your current location ?
+                </Text>
+              )
+            ) : null}
+          </View>
+          {/* Suggestions */}
+          {suggestionsActive && (
+            <View
+              style={{
+                marginTop: 16,
+                backgroundColor: Colors.white,
+                marginBottom: 20,
+              }}
+            >
+              <ScrollView keyboardShouldPersistTaps={"handled"}>
+                {suggestions.map((item, index) => {
+                  return (
+                    <Pressable
+                      style={{
+                        padding: 16,
+                        paddingHorizontal: 24,
+                        borderColor: Colors.gray500,
+                        borderBottomWidth: StyleSheet.hairlineWidth,
+                      }}
+                      key={index.toString()}
+                      onPress={() => {
+                        Keyboard.dismiss();
+                        setSuggestions([]);
+                        setValue(item.subCat_name);
+                        setSuggestionsActive(false);
+                        getPeopleList({ skill: item.subCat_name });
+                      }}
+                    >
+                      <Text>{item.subCat_name}</Text>
+                    </Pressable>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          )}
+          {/* PersonList */}
+          {searchData && !suggestionsActive && value.length > 0 && (
+            <ScrollView style={{ marginTop: 16, flex: 1 }}>
+              {searchData.map((person, index) => {
                 return (
-                  <Pressable
-                    style={{
-                      padding: 16,
-                      paddingHorizontal: 24,
-                      borderColor: Colors.gray500,
-                      borderBottomWidth: StyleSheet.hairlineWidth,
-                    }}
+                  <View
                     key={index.toString()}
-                    onPress={() => {
-                      Keyboard.dismiss();
-                      setSuggestions([]);
-                      setValue(item.subCat_name);
-                      setSuggestionsActive(false);
-                      getPeopleList({ skill: item.subCat_name });
+                    style={{
+                      marginTop: 2,
                     }}
                   >
-                    <Text>{item.subCat_name}</Text>
-                  </Pressable>
+                    <PersonCard
+                      subcat={value}
+                      verified={person.sp_verified}
+                      name={person.sp_name}
+                      sp_contact={person.sp_contact}
+                      image={person.sp_profileImage}
+                      address={person.sp_city + " " + person.sp_district}
+                      rating={5}
+                      ratingcount={5}
+                      onPress={() => navigation.navigate("Sp", { sp: person })}
+                    />
+                  </View>
                 );
               })}
             </ScrollView>
-          </View>
-        )}
-        {/* PersonList */}
-        {searchData && !suggestionsActive && value.length > 0 && (
-          <ScrollView style={{ marginTop: 16, flex: 1 }}>
-            {searchData.map((person, index) => {
-              return (
-                <View
-                  key={index.toString()}
-                  style={{
-                    marginTop: 2,
-                  }}
-                >
-                  <PersonCard
-                    subcat={value}
-                    verified={person.sp_verified}
-                    name={person.sp_name}
-                    sp_contact={person.sp_contact}
-                    image={person.sp_profileImage}
-                    address={person.sp_city + " " + person.sp_district}
-                    rating={5}
-                    ratingcount={5}
-                    onPress={() => navigation.navigate("Sp", { sp: person })}
-                  />
-                </View>
-              );
-            })}
-          </ScrollView>
-        )}
-        {/* notfound */}
-        {!searchData && !suggestionsActive && value.length > 1 && (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 100,
-            }}
-          >
-            <View>
-              <Image
-                source={require("../assets/images/not.png")}
-                style={{ width: "90%", aspectRatio: 1.5 }}
-                resizeMode="contain"
-              />
-            </View>
-
+          )}
+          {/* notfound */}
+          {!searchData && !suggestionsActive && value.length > 1 && (
             <View
               style={{
-                marginHorizontal: 20,
-                marginTop: 10,
+                flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
+                marginTop: 100,
               }}
             >
-              <Text
+              <View>
+                <Image
+                  source={require("../assets/images/not.png")}
+                  style={{ width: "90%", aspectRatio: 1.5 }}
+                  resizeMode="contain"
+                />
+              </View>
+
+              <View
                 style={{
-                  textAlign: "center",
-                  fontFamily: "Regular",
-                  fontWeight: "700",
-                  fontSize: 24,
-                }}
-              >
-                Not Found
-              </Text>
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontFamily: "Regular",
-                  fontSize: 16,
+                  marginHorizontal: 20,
                   marginTop: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                Sorry, the keyword you entered cannot be found, please check
-                again or search with another keyword.
-              </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "Regular",
+                    fontWeight: "700",
+                    fontSize: 24,
+                  }}
+                >
+                  Not Found
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "Regular",
+                    fontSize: 16,
+                    marginTop: 10,
+                  }}
+                >
+                  Sorry, the keyword you entered cannot be found, please check
+                  again or search with another keyword.
+                </Text>
+              </View>
             </View>
-          </View>
-        )}
-        <ModalPopup
-          ref={popup}
-          animationType="fade"
-          onTouchOutside={() => popup.current.close()}
-        >
-          <View
-            style={{
-              // paddingHorizontal: 16,
-              paddingVertical: 16,
-            }}
+          )}
+          <ModalPopup
+            ref={popup}
+            animationType="fade"
+            onTouchOutside={() => popup.current.close()}
           >
-            <Text
-              style={{ fontSize: 28, fontFamily: "Black", marginBottom: 16 }}
-            >
-              Search Filter
-            </Text>
             <View
               style={{
-                marginTop: 12,
+                // paddingHorizontal: 16,
+                paddingVertical: 16,
               }}
             >
-              <Text>District *</Text>
-              <Dropdown
+              <Text
+                style={{ fontSize: 28, fontFamily: "Black", marginBottom: 16 }}
+              >
+                Search Filter
+              </Text>
+              <View
                 style={{
-                  width: "100%",
-                  marginTop: 8,
-                  marginRight: -10,
-                  borderWidth: 1,
-                  padding: 16,
-                  borderRadius: 4,
-                  height: 50,
-                  borderColor: Colors.black,
+                  marginTop: 12,
                 }}
-                placeholderStyle={{ color: Colors.gray900, fontSize: 14 }}
-                data={citiesList ? citiesList : []}
-                labelField="label"
-                valueField="label"
-                placeholder={"Select item"}
-                search
-                searchPlaceholder="Search..."
-                value={filter.city}
-                onChange={(item) => {
-                  setFilter({ ...filter, city: item.label });
-                  getPeopleList({ location: item.label });
-                  setSuggestionsActive(false);
-                }}
-              />
+              >
+                <Text>District *</Text>
+                <Dropdown
+                  style={{
+                    width: "100%",
+                    marginTop: 8,
+                    marginRight: -10,
+                    borderWidth: 1,
+                    padding: 16,
+                    borderRadius: 4,
+                    height: 50,
+                    borderColor: Colors.black,
+                  }}
+                  placeholderStyle={{ color: Colors.gray900, fontSize: 14 }}
+                  data={citiesList ? citiesList : []}
+                  labelField="label"
+                  valueField="label"
+                  placeholder={"Select item"}
+                  search
+                  searchPlaceholder="Search..."
+                  value={filter.city}
+                  onChange={(item) => {
+                    setFilter({ ...filter, city: item.label });
+                    getPeopleList({ location: item.label });
+                    setSuggestionsActive(false);
+                  }}
+                />
+              </View>
             </View>
-          </View>
-        </ModalPopup>
-      </ScrollView>
+          </ModalPopup>
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 }
