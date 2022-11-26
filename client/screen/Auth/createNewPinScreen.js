@@ -80,6 +80,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
       <View
         style={{
           marginLeft: 24,
+          marginTop: 8,
         }}
       >
         <Header

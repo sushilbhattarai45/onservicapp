@@ -38,8 +38,7 @@ export default function OtpScreen({ navigation, route }) {
     setFocusColor1(Colors.primary);
     if (id == 4) setFocusColor4(Colors.primary);
   };
-  useEffect(() => {
-  });
+  useEffect(() => {});
   const deFocus = (id) => {
     if (id == 1) setFocusColor1(Colors.black);
     if (id == 2) setFocusColor2(Colors.black);
@@ -66,7 +65,7 @@ export default function OtpScreen({ navigation, route }) {
     }
   };
   return (
-    <View style={{ margin: 24 }}>
+    <View style={{ marginHorizontal: 24, marginTop: 8 }}>
       <View
         style={{
           marginLeft: 0,
