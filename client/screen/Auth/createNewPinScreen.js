@@ -56,7 +56,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
         <ModalPopup
           ref={popup}
           animationType="fade"
-          onTouchOutside={() => popup.current.close()}
+          onTouchOutside={() => popup.curren+t.close()}
         >
           <View style={styles.toppopupview}>
             <Image
