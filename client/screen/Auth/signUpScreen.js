@@ -239,7 +239,7 @@ export default registerUser = ({ navigation }) => {
                             borderColor: "red",
                           }}
                           objectFit="cover"
-                          source={require("../../assets/images/profile.png")}
+                          source={require("../../assets/images/a.jpg")}
                         />
                       ) : (
                         <Image

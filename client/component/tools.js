@@ -76,8 +76,8 @@ export async function getSms(otp, num) {
   var data = {
     to: num,
     auth_token:
-      "241ce853e05422c4dca29b2ac40bfd6afbb6408eb858eec4775eb69fe0b0bbfe",
-    text: " Hello Sushil .Your code is :" + otp + " Regards Ride On",
+      "b83027e50e5ebe14738201708e8488ded718f4f139a51dbdd255264af88db89d",
+    text: " Hello User Your code is: " + otp + " Regards OnServic",
   };
   fetch(url, {
     method: "POST",
