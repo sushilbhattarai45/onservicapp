@@ -40,13 +40,13 @@ export default function CreateNewPinScreen({ navigation, route }) {
           popup.current.show();
         }
       } else {
-        setError({ second: "Pin Not matched" });
+        setError({ second: "Password Not matched" });
       }
     } else {
       if (first.length !== 4) {
-        setError({ first: "Pin Must be of Six digit" });
+        setError({ first: "Password Must be of Six digit" });
       } else {
-        setError({ second: "Pin Must be of Six digit" });
+        setError({ second: "Password Must be of Six digit" });
       }
     }
   }
@@ -56,7 +56,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
         <ModalPopup
           ref={popup}
           animationType="fade"
-          onTouchOutside={() => popup.curren+t.close()}
+          onTouchOutside={() => popup.curren + t.close()}
         >
           <View style={styles.toppopupview}>
             <Image
@@ -66,7 +66,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
             <View style={styles.popuptext}>
               <Text style={styles.popupmaintext}>Changed</Text>
               <Text style={styles.popupsecondarytext}>
-                You have successfully Changed your PIN
+                You have successfully Changed your Password
               </Text>
             </View>
             <View style={styles.Button}>
@@ -109,11 +109,11 @@ export default function CreateNewPinScreen({ navigation, route }) {
                 color: Colors.black,
               }}
             >
-              Create new PIN
+              Create new Password
             </Text>
             <View>
               <Text style={{ color: Colors.gray900, fontFamily: "Regular" }}>
-                Enter New Pin for the given Number: {num}{" "}
+                Enter New Password for the given Number: {num}{" "}
               </Text>
             </View>
 
@@ -128,7 +128,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
                     fontFamily: "Regular",
                   }}
                 >
-                  PIN{" "}
+                  Password{" "}
                 </Text>
                 <View
                   style={{
@@ -136,7 +136,6 @@ export default function CreateNewPinScreen({ navigation, route }) {
                   }}
                 >
                   <TextInput
-                    keyboardType="numeric"
                     maxLength={6}
                     style={{
                       fontFamily: "Regular",
@@ -149,7 +148,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
                       borderRadius: 4,
                       height: 50,
                     }}
-                    placeholder="Enter your New PIN"
+                    placeholder="Enter your New Password"
                     onChangeText={(value) => {
                       setError({ first: null });
 
@@ -186,7 +185,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
                   }}
                 >
                   {" "}
-                  Confirm PIN
+                  Confirm Password
                 </Text>
               </View>
               <View
@@ -195,7 +194,6 @@ export default function CreateNewPinScreen({ navigation, route }) {
                 }}
               >
                 <TextInput
-                  keyboardType="numeric"
                   maxLength={6}
                   style={{
                     fontFamily: "Regular",
@@ -212,7 +210,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
                     setError({ second: null });
                     setSecond(value);
                   }}
-                  placeholder="Confirm PIN"
+                  placeholder="Confirm Password"
                 />
                 {/* <Ionicons
                 style={{ position: "absolute", paddingVertical: 20, right: 16 }}

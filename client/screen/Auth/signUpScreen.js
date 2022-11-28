@@ -48,9 +48,9 @@ const userValidationSchema = yup.object().shape({
   accepted: yup.bool().oneOf([true], "Field must be checked"),
   password: yup
     .string()
-    .min(6, "Pin must be of 6 digits")
+    .min(6, "Password must be of 6 digits")
     .max(6)
-    .required("Please, create a new PIN!"),
+    .required("Please, create a new Password!"),
   gender: yup.string().required("Please, select your gender"),
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
@@ -58,8 +58,8 @@ const userValidationSchema = yup.object().shape({
   confirm: yup
     .string()
     .label("confirm password")
-    .required("Please, Reenter your PIN!")
-    .oneOf([yup.ref("password"), null], "PIN must match"),
+    .required("Please, Reenter your Password!")
+    .oneOf([yup.ref("password"), null], "Password must match"),
   image: yup.string().required("Please Choose an Image"),
 });
 
@@ -510,7 +510,6 @@ export default registerUser = ({ navigation }) => {
                   >
                     <Text>Password *</Text>
                     <TextInput
-                      keyboardType="numeric"
                       maxLength={6}
                       style={[
                         styles.inputStyle,
@@ -538,7 +537,6 @@ export default registerUser = ({ navigation }) => {
                   >
                     <Text>Confirm Password *</Text>
                     <TextInput
-                      keyboardType="numeric"
                       maxLength={6}
                       style={[
                         styles.inputStyle,

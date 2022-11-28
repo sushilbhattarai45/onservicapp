@@ -49,11 +49,11 @@ export default function LoginScreen({ navigation, route, path }) {
       // } else
       if (pin.length != 6 && num.length != 10) {
         setError1("Please enter a valid Phone Number");
-        setError2("Please enter a valid PIN");
+        setError2("Please enter a valid Password");
         setFocusColor2("red");
         setFocusColor1("red");
       } else if (pin.length != 6) {
-        setError2("PIN Must be of 6 Digits");
+        setError2("Password Must be of 6 Digits");
         setFocusColor2("red");
       } else {
         setError1("Please enter a valid Phone Number");
@@ -190,7 +190,6 @@ export default function LoginScreen({ navigation, route, path }) {
               <Text style={{ fontFamily: "Regular" }}>Password</Text>
               <TextInput
                 maxLength={6}
-                keyboardType="numeric"
                 style={{
                   fontFamily: "Regular",
 
@@ -208,7 +207,7 @@ export default function LoginScreen({ navigation, route, path }) {
                   setError2("");
                   setFocusColor2(Colors.primary);
                 }}
-                placeholder="Enter Your Pin"
+                placeholder="Enter Your Password"
               />
 
               {error2 ? (
@@ -247,7 +246,7 @@ export default function LoginScreen({ navigation, route, path }) {
                 }}
                 onPress={() => nav.navigate("ForgotPin")}
               >
-                Forgot PIN?
+                Forgot Password?
               </Text>
             </View>
           </View>
