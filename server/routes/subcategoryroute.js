@@ -23,6 +23,7 @@ router.route("/getfilteredsubcat").post(getFilteredSubCat);
 router.route("/deleteallsubcategories").post(deleteAllSubCategories);
 router.route("/deleteone").post(deleteOne);
 router.route("/getsecond").post(secondSubCat);
+
 router.route("/postsecond").post(postSecond);
 
 export default router;

@@ -250,6 +250,7 @@ export const postSecond = async (req, res) => {
           subCat_updatedby,
           subCat_doc,
           subCat_dou,
+          subCat_isSecond: true,
         });
         const updateSubCat = await subcategoriesSchema.findOneAndUpdate(
           { _id: category_id },
