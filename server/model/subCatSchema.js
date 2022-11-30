@@ -28,7 +28,6 @@ const subCategories = mongoose.Schema({
   },
   subCat_id: {
     type: String,
-    default: Date.now(),
   },
   subCat_isSecond: {
     type: Boolean,

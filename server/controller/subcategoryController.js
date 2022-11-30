@@ -33,6 +33,8 @@ export const postSubCategories = async (req, res) => {
           subCat_updatedby,
           subCat_doc,
           subCat_dou,
+
+          subCat_id: Date.now(),
         });
 
         const savepostSubCat = await postSubCat.save();
