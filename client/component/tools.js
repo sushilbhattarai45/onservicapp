@@ -94,7 +94,7 @@ export async function getSms(otp, num) {
       alert("Error" + error);
     });
 }
-export const BASE_OUR_API_URL = "http://172.104.188.69:3001";
+export const BASE_OUR_API_URL = "http://172.105.63.242:3001";
 // export const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 export const axiosInstance = axios.create({
