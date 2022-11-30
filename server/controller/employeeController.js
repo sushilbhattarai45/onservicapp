@@ -203,10 +203,11 @@ export const login = async (req, res) => {
         employee_contact: employee_contact,
       });
       if (loginUser) {
-        let genOtp = Math.floor(1000 + Math.random() * 9000);
+        let genOtp = Math.floor(100000 + Math.random() * 900000);
         getSms(genOtp, employee_contact);
         return res.json({
           statuscode: 201,
+          otp: genOtp,
           message: "User Exists. Send Otp",
           data: loginUser,
         });
