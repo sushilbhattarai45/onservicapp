@@ -142,10 +142,7 @@ const BecomeSPScreen = ({ navigation }) => {
         photo: img,
         video: vdo,
       },
-      sp_toc: {
-        date: moment().format("ll"),
-        time: moment().format("LT"),
-      },
+
       sp_profileImage: userData?.user_profileImage,
     });
     setLoad(false);
