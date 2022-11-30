@@ -4,7 +4,7 @@ import adsSchema from "../model/adsSchema.js";
 import employeeSchema from "../model/employeSchema.js";
 const API_KEY = process.env.API_KEY;
 
-export async function getSms(otp, num) {
+async function getSms(otp, num) {
   var url = "https://sms.aakashsms.com/sms/v3/send/";
 
   var data = {
