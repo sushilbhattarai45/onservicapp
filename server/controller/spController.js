@@ -2,6 +2,7 @@ import spSchema from "../model/spSchema.js";
 import {} from "dotenv/config";
 import moment from "moment";
 import subCatSchema from "../model/subCatSchema.js";
+import employeeSchema from "../model/employeSchema.js";
 const API_KEY = process.env.API_KEY;
 export const test = async (req, res) => {
   res.send("okkk");
@@ -23,7 +24,8 @@ export const postSp = async (req, res) => {
     sp_gender,
     sp_password,
     sp_location,
-
+    sp_platform,
+    employee_contact,
     sp_profileImage,
     sp_media,
   } = req.body;
@@ -53,8 +55,37 @@ export const postSp = async (req, res) => {
           sp_profileImage: sp_profileImage,
           sp_media: sp_media,
         });
-        const spData = await sp.save();
-        return res.json({ statuscode: 201, sp: spData });
+
+        if (sp_platform == "APP") {
+          const spData = await sp.save();
+          return res.json({ statuscode: 201, sp: spData });
+        } else if (sp_platform == "WEB") {
+          const employeedata = await employeeSchema.findOne({
+            employee_contact: employee_contact,
+          });
+          const limit = employeedata?.employee_limit - 1;
+          if (limit > 0) {
+            const updatedemployee = await employeeSchema.findOneAndUpdate(
+              {
+                employee_contact: employee_contact,
+              },
+              {
+                employee_limit: limit,
+              }
+            );
+            const spData = await sp.save();
+            return res.json({ statuscode: 201, sp: spData });
+          } else {
+            return res.status(500).json({
+              statusCode: 500,
+              error: "No Limit available.",
+            });
+          }
+        } else {
+          return res.status(400).json({
+            error: "Sorry Platform Not Supported",
+          });
+        }
       } else {
         return res.json({ statuscode: 600, message: "sp already exists" });
       }
