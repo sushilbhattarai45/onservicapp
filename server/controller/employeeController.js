@@ -170,3 +170,29 @@ export const deleteOne = async (req, res) => {
     return res.json({ statuscode: 700, error: "Wrong Api Key" });
   }
 };
+
+export const login = async (req, res) => {
+  const { employee_contact, GIVEN_API_KEY } = req.body;
+  if (API_KEY == GIVEN_API_KEY) {
+    try {
+      const loginUser = await employeeSchema.findOne({
+        employee_contact: employee_contact,
+      });
+      if (loginUser) {
+        return res.json({
+          statuscode: 201,
+          message: "User Exists. Send Otp",
+        });
+      } else {
+        return res.json({
+          statuscode: 404,
+          message: "user  not  exists",
+        });
+      }
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  } else {
+    return res.json({ error: "Error! Wrong Api Key", statuscode: 700 });
+  }
+};

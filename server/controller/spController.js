@@ -1,5 +1,6 @@
 import spSchema from "../model/spSchema.js";
 import {} from "dotenv/config";
+import moment from "moment";
 import subCatSchema from "../model/subCatSchema.js";
 const API_KEY = process.env.API_KEY;
 export const test = async (req, res) => {
@@ -22,16 +23,36 @@ export const postSp = async (req, res) => {
     sp_gender,
     sp_password,
     sp_location,
-    sp_toc,
+
     sp_profileImage,
     sp_media,
   } = req.body;
 
   if (GIVEN_API_KEY == API_KEY) {
     try {
+      const timeanddate = {
+        date: moment().format("ll"),
+        time: moment().format("LT"),
+      };
       const exists = await spSchema.findOne({ sp_contact: sp_contact });
       if (!exists || exists?.length == 0) {
-        const sp = new spSchema(req.body);
+        const sp = new spSchema({
+          sp_name: sp_name,
+          user_id: user_id,
+          sp_email: sp_email,
+          sp_contact: sp_contact,
+          sp_district: sp_district,
+          sp_officenumber: sp_officenumber,
+          sp_skills: sp_skills,
+          sp_city: sp_city,
+          sp_street: sp_street,
+          sp_createdBy: sp_createdBy,
+          sp_gender: sp_gender,
+          sp_location: sp_location,
+          sp_toc: timeanddate,
+          sp_profileImage: sp_profileImage,
+          sp_media: sp_media,
+        });
         const spData = await sp.save();
         return res.json({ statuscode: 201, sp: spData });
       } else {

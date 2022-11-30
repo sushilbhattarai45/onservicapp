@@ -656,7 +656,7 @@ const SPProfileScreen = ({ navigation, route }) => {
           >
             <Image
               source={require("../assets/images/onservicLogo.png")}
-              style={{ height: 30, width: 180, resizeMode: "contain" }}
+              style={{ height: 30, width: 180 }}
             />
             <View>
               <View

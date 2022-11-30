@@ -236,7 +236,7 @@ export const newAddons = async (req, res) => {
         .find({
           category_status: true,
         })
-        .limit(8);
+        .sort({ _id: -1 });
 
       return res.json({
         status: 200,

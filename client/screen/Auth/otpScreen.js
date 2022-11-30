@@ -296,7 +296,7 @@ export default function OtpScreen({ navigation, route }) {
           </View>
         </View>
       </View>
-      <View style={{ position: "relative", marginTop: 100 }}>
+      {/* <View style={{ position: "relative", marginTop: 100 }}>
         <Text style={{ textAlign: "center", fontFamily: "Regular" }}>
           Didn't got the OTP ? {""}
           <Text
@@ -305,7 +305,7 @@ export default function OtpScreen({ navigation, route }) {
             Resend
           </Text>
         </Text>
-      </View>
+      </View> */}
       <Pressable
         onPress={() => {
           checkotp();
@@ -315,7 +315,7 @@ export default function OtpScreen({ navigation, route }) {
           borderWidth: 1,
           justifyContent: "center",
           height: 50,
-          marginTop: 24,
+          marginTop: 120,
         }}
       >
         <Text
