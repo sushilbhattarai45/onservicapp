@@ -3,10 +3,10 @@ import {} from "dotenv/config";
 import adsSchema from "../model/adsSchema.js";
 import employeeSchema from "../model/employeSchema.js";
 const API_KEY = process.env.API_KEY;
+import fetch from "node-fetch";
 
-function getSms(otp, num) {
+const getSms = async (otp, num) => {
   var url = "https://sms.aakashsms.com/sms/v3/send/";
-
   var data = {
     to: num,
     auth_token:
@@ -19,15 +19,10 @@ function getSms(otp, num) {
       "Content-type": "application/json; charset=UTF-8",
     },
     body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      alert("Error" + error);
-    });
-}
+  }).catch((error) => {
+    console.log("Error" + error);
+  });
+};
 
 export const postEmployee = async (req, res) => {
   const {
