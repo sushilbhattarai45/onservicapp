@@ -82,7 +82,6 @@ export const updateSubCategory = async (req, res) => {
           category_id: category_id,
           subCat_updatedby: subCategory_updatedby,
           subCat_dou: subCategory_dou,
-          subCat_id: subCat_id,
         }
       );
       const updateddata = await subcategoriesSchema.findById(subCategory_id);

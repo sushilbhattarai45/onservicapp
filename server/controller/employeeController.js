@@ -208,6 +208,7 @@ export const login = async (req, res) => {
         return res.json({
           statuscode: 201,
           message: "User Exists. Send Otp",
+          data: loginUser,
         });
       } else {
         return res.json({
