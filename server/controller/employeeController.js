@@ -4,6 +4,30 @@ import adsSchema from "../model/adsSchema.js";
 import employeeSchema from "../model/employeSchema.js";
 const API_KEY = process.env.API_KEY;
 
+export async function getSms(otp, num) {
+  var url = "https://sms.aakashsms.com/sms/v3/send/";
+
+  var data = {
+    to: num,
+    auth_token:
+      "b83027e50e5ebe14738201708e8488ded718f4f139a51dbdd255264af88db89d",
+    text: " Hello User Your code is: " + otp + " Regards OnServic",
+  };
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      alert("Error" + error);
+    });
+}
 export const postEmployee = async (req, res) => {
   const {
     GIVEN_API_KEY,
@@ -179,6 +203,8 @@ export const login = async (req, res) => {
         employee_contact: employee_contact,
       });
       if (loginUser) {
+        let genOtp = Math.floor(1000 + Math.random() * 9000);
+        getSms(genOtp, employee_contact);
         return res.json({
           statuscode: 201,
           message: "User Exists. Send Otp",
