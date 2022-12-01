@@ -85,6 +85,7 @@ export const registerUser = async (req, res) => {
         user_street: user_street,
         user_gender: user_gender,
         user_password: password,
+        user_status: "ACTIVE",
         user_toc: user_toc,
         user_profileImage: user_profileImage,
       });
