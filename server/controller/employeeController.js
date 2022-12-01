@@ -4,13 +4,13 @@ import adsSchema from "../model/adsSchema.js";
 import employeeSchema from "../model/employeSchema.js";
 const API_KEY = process.env.API_KEY;
 import fetch from "node-fetch";
-
+const SMS_TOKEN = process.env.SMS_TOKEN;
 const getSms = async (otp, num) => {
   var url = "https://sms.aakashsms.com/sms/v3/send/";
   var data = {
     to: num,
-    auth_token:
-      "b83027e50e5ebe14738201708e8488ded718f4f139a51dbdd255264af88db89d",
+    auth_token: SMS_TOKEN,
+
     text: " Hello User Your code is: " + otp + " Regards OnServic",
   };
   fetch(url, {
@@ -199,14 +199,21 @@ export const login = async (req, res) => {
         employee_contact: employee_contact,
       });
       if (loginUser) {
-        let genOtp = Math.floor(100000 + Math.random() * 900000);
-        getSms(genOtp, employee_contact);
-        return res.json({
-          statuscode: 201,
-          otp: genOtp,
-          message: "User Exists.Sending Otp",
-          data: loginUser,
-        });
+        if (loginUser?.employee_status == true) {
+          let genOtp = Math.floor(100000 + Math.random() * 900000);
+          getSms(genOtp, employee_contact);
+          return res.json({
+            statuscode: 201,
+            otp: genOtp,
+            message: "User Exists",
+            data: loginUser,
+          });
+        } else {
+          return res.json({
+            statuscode: 800,
+            message: "Account INACTIVE.",
+          });
+        }
       } else {
         return res.json({
           statuscode: 404,
