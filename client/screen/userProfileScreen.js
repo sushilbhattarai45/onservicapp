@@ -7,6 +7,7 @@ import {
   View,
   SafeAreaView,
   ScrollView,
+  Linking,
   FlatList,
   ActivityIndicator,
   Pressable,
