@@ -144,7 +144,7 @@ export const getAds = async (req, res) => {
       const bookmark = await adsSchema.find({
         ads_status: "true",
         ads_type: "IMAGE",
-        ads_location: "BMIMAGE",
+        ads_location: "BMAD",
       });
 
       return res.json({
