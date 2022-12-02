@@ -131,7 +131,7 @@ export const updateCategory = async (req, res) => {
           }
         );
         const updateddata = await categorySchema.findById(id);
-        return res.json({ "stauscode:": 200, data: updateddata });
+        return res.json({ "statuscode:": 200, data: updateddata });
       } else {
         return res.json({
           error: "No data found for the given Category id",
