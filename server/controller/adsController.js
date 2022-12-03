@@ -67,6 +67,7 @@ export const updateAds = async (req, res) => {
   const {
     GIVEN_API_KEY,
     _id,
+    ads_mediaLink,
     ads_name,
     ads_givenEmail,
     ads_updatedBy,
@@ -83,6 +84,7 @@ export const updateAds = async (req, res) => {
           _id: _id,
         },
         {
+          ads_mediaLink: ads_mediaLink,
           ads_name: ads_name,
           ads_status: ads_status,
           ads_location: ads_location,
