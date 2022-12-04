@@ -51,6 +51,7 @@ export const postSp = async (req, res) => {
           sp_createdBy: sp_createdBy,
           sp_gender: sp_gender,
           sp_location: sp_location,
+          employee_contact: employee_contact,
           sp_toc: timeanddate,
           sp_profileImage: sp_profileImage,
           sp_media: sp_media,
@@ -343,7 +344,7 @@ export const getEmployeeCreatedSp = async (req, res) => {
   if (GIVEN_API_KEY == API_KEY) {
     try {
       const data = await spSchema.find({
-        sp_createdBy: employee_contact,
+        employee_contact: employee_contact,
       });
       return res.json({ statuscode: 201, data: data });
     } catch (e) {
