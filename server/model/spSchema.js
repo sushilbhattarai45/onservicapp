@@ -64,6 +64,9 @@ const sp = new mongoose.Schema({
   sp_createdBy: {
     type: String,
   },
+  employee_contact: {
+    type: String,
+  },
   sp_toc: {
     date: { type: String },
     time: { type: String },
