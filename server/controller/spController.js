@@ -64,8 +64,9 @@ export const postSp = async (req, res) => {
           const employeedata = await employeeSchema.findOne({
             employee_contact: employee_contact,
           });
+          const dblimit = employeedata?.employee_limit;
           const limit = employeedata?.employee_limit - 1;
-          if (limit > 0) {
+          if (dblimit > 0) {
             const updatedemployee = await employeeSchema.findOneAndUpdate(
               {
                 employee_contact: employee_contact,
