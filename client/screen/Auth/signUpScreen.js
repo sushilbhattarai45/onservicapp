@@ -76,6 +76,7 @@ export default registerUser = ({ navigation }) => {
   async function postData(values, { setSubmitting, setFieldError }) {
     setLoad(true);
     setSubmitting(true);
+    console.log(values);
     const [img] = await uploadImage([values.image]);
 
     let response = await axios.post(
@@ -85,7 +86,6 @@ export default registerUser = ({ navigation }) => {
         GIVEN_API_KEY: "AXCF",
       }
     );
-
     const status = response?.data?.statuscode;
     if (status == 400) {
       setLoad(false);
@@ -98,14 +98,6 @@ export default registerUser = ({ navigation }) => {
         values: values,
         img: img,
       });
-      // const finaldata = response?.data?.user;
-      // setData(finaldata);
-      // setUserData(finaldata);
-      // setLogged("true");
-      // setIsitSp(null);
-      // setUser(values.phone);
-      // await storeData(values.phone);
-      // navigation.navigate("Home");
     } else if (status == 201) {
       setLoad(false);
       setSubmitting(false);
