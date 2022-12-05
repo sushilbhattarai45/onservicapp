@@ -450,7 +450,24 @@ const UpdateSpScreen = ({ route, navigation }) => {
                 }}
               >
                 <Text>City *</Text>
-                <Dropdown
+                <TextInput
+                  style={[
+                    styles.inputStyle,
+                    {
+                      borderColor: !touched.city
+                        ? Colors.gray900
+                        : errors.city
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.city}
+                  onChangeText={handleChange("city")}
+                  onBlur={() => setFieldTouched("city")}
+                  placeholder="City"
+                  placeholderTextColor={Colors.gray900}
+                />
+                {/* <Dropdown
                   style={[
                     {
                       width: "100%",
@@ -478,7 +495,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   onChange={(item) => {
                     setFieldValue("city", item.label);
                   }}
-                />
+                /> */}
                 {!values.city && touched.city ? (
                   <Text style={{ color: "red" }}>{errors.city}</Text>
                 ) : null}
