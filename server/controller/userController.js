@@ -3,7 +3,9 @@ import multer from "multer";
 import {} from "dotenv/config";
 const API_KEY = process.env.API_KEY;
 import bcrypt from "bcrypt";
+import moment from "moment";
 import spSchema from "../model/spSchema.js";
+import employeeSchema from "../model/employeSchema.js";
 export const updateUser = async (req, res) => {
   const {
     user_name,
@@ -60,6 +62,8 @@ export const updateUser = async (req, res) => {
 
 export const registerUser = async (req, res) => {
   const {
+    employee_contact,
+    sp_platform,
     user_name,
     user_email,
     user_contact,
@@ -72,6 +76,10 @@ export const registerUser = async (req, res) => {
     user_profileImage,
   } = req.body;
   try {
+    const timeanddate = {
+      date: moment().format("ll"),
+      time: moment().format("LT"),
+    };
     const password = bcrypt.hashSync(user_password, 10);
     console.log(password);
     const exists = await userSchema.findOne({ user_contact: user_contact });
@@ -85,11 +93,33 @@ export const registerUser = async (req, res) => {
         user_street: user_street,
         user_gender: user_gender,
         user_password: password,
-        user_toc: user_toc,
+        user_status: "ACTIVE",
+        user_toc: timeanddate,
         user_profileImage: user_profileImage,
       });
-      const userData = await user.save();
-      return res.json({ statuscode: 201, user: userData });
+      if (sp_platform == "APP") {
+        const userData = await user.save();
+        return res.json({ statuscode: 201, user: userData });
+      } else if (sp_platform == "WEB") {
+        const employeedata = await employeeSchema.findOne({
+          employee_contact: employee_contact,
+        });
+        const dblimit = employeedata?.employee_limit;
+        if (dblimit > 0) {
+          const userData = await user.save();
+          return res.json({ statuscode: 201, user: userData });
+        } else {
+          return res.status(500).json({
+            statusCode: 500,
+            error: "No Limit available.",
+          });
+        }
+      } else {
+        return res.json({
+          statuscode: 400,
+          message: "Unsupported Platform",
+        });
+      }
     } else {
       return res.json({ statuscode: 600, message: "User already exists" });
     }

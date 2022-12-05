@@ -116,7 +116,7 @@ export const updateCategory = async (req, res) => {
       };
 
       const exists = await categorySchema.findOne({
-        category_name: category_name,
+        _id: id,
       });
       if (exists || exists?.length == 0) {
         const update = await categorySchema.findOneAndUpdate(
@@ -131,7 +131,7 @@ export const updateCategory = async (req, res) => {
           }
         );
         const updateddata = await categorySchema.findById(id);
-        return res.json({ "stauscode:": 200, data: updateddata });
+        return res.json({ "statuscode:": 200, data: updateddata });
       } else {
         return res.json({
           error: "No data found for the given Category id",

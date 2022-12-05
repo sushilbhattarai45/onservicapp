@@ -2,6 +2,7 @@ import spSchema from "../model/spSchema.js";
 import {} from "dotenv/config";
 import moment from "moment";
 import subCatSchema from "../model/subCatSchema.js";
+import employeeSchema from "../model/employeSchema.js";
 const API_KEY = process.env.API_KEY;
 export const test = async (req, res) => {
   res.send("okkk");
@@ -23,7 +24,8 @@ export const postSp = async (req, res) => {
     sp_gender,
     sp_password,
     sp_location,
-
+    sp_platform,
+    employee_contact,
     sp_profileImage,
     sp_media,
   } = req.body;
@@ -49,12 +51,43 @@ export const postSp = async (req, res) => {
           sp_createdBy: sp_createdBy,
           sp_gender: sp_gender,
           sp_location: sp_location,
+          employee_contact: employee_contact,
           sp_toc: timeanddate,
           sp_profileImage: sp_profileImage,
           sp_media: sp_media,
         });
-        const spData = await sp.save();
-        return res.json({ statuscode: 201, sp: spData });
+
+        if (sp_platform == "APP") {
+          const spData = await sp.save();
+          return res.json({ statuscode: 201, sp: spData });
+        } else if (sp_platform == "WEB") {
+          const employeedata = await employeeSchema.findOne({
+            employee_contact: employee_contact,
+          });
+          const dblimit = employeedata?.employee_limit;
+          const limit = employeedata?.employee_limit - 1;
+          if (dblimit > 0) {
+            const updatedemployee = await employeeSchema.findOneAndUpdate(
+              {
+                employee_contact: employee_contact,
+              },
+              {
+                employee_limit: limit,
+              }
+            );
+            const spData = await sp.save();
+            return res.json({ statuscode: 201, sp: spData });
+          } else {
+            return res.status(500).json({
+              statusCode: 500,
+              error: "No Limit available.",
+            });
+          }
+        } else {
+          return res.status(400).json({
+            error: "Sorry Platform Not Supported",
+          });
+        }
       } else {
         return res.json({ statuscode: 600, message: "sp already exists" });
       }
@@ -302,6 +335,25 @@ export const deleteSp = async (req, res) => {
   } else {
     return res.json({
       statuscode: 700,
+      error: "WrongApi Key",
+    });
+  }
+};
+export const getEmployeeCreatedSp = async (req, res) => {
+  const { GIVEN_API_KEY, employee_contact } = req.body;
+  console.log("apiKEy", GIVEN_API_KEY);
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const data = await spSchema.find({
+        employee_contact: employee_contact,
+      });
+      return res.json({ statuscode: 201, data: data });
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
       error: "WrongApi Key",
     });
   }

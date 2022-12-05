@@ -3,6 +3,8 @@ import { URL } from "@env";
 import React, { useContext } from "react";
 import AppContext from "./appContext";
 import * as Location from "expo-location";
+import { API_URL, SMS_TOKEN } from "@env";
+
 export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2 - lat1); // deg2rad below
@@ -75,8 +77,7 @@ export async function getSms(otp, num) {
 
   var data = {
     to: num,
-    auth_token:
-      "b83027e50e5ebe14738201708e8488ded718f4f139a51dbdd255264af88db89d",
+    auth_token: SMS_TOKEN,
     text: " Hello User Your code is: " + otp + " Regards OnServic",
   };
   fetch(url, {
@@ -94,7 +95,7 @@ export async function getSms(otp, num) {
       alert("Error" + error);
     });
 }
-export const BASE_OUR_API_URL = "http://172.105.63.242:3001";
+export const BASE_OUR_API_URL = API_URL;
 // export const BASE_OUR_API_URL = "http://192.168.100.11:3001";
 
 export const axiosInstance = axios.create({

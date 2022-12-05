@@ -33,6 +33,8 @@ export const postSubCategories = async (req, res) => {
           subCat_updatedby,
           subCat_doc,
           subCat_dou,
+
+          subCat_id: Date.now(),
         });
 
         const savepostSubCat = await postSubCat.save();
@@ -60,6 +62,7 @@ export const updateSubCategory = async (req, res) => {
     subCategory_id,
     subCategory_photo,
     subCategory_status,
+    subCat_hassubCat,
     subCategory_updatedby,
     subCategory_name,
     category_id,
@@ -76,11 +79,11 @@ export const updateSubCategory = async (req, res) => {
         {
           subCat_status: subCategory_status,
           subCat_photo: subCategory_photo,
+          subCat_hassubCat: subCat_hassubCat,
           subCat_name: subCategory_name,
           category_id: category_id,
           subCat_updatedby: subCategory_updatedby,
           subCat_dou: subCategory_dou,
-          subCat_id: subCat_id,
         }
       );
       const updateddata = await subcategoriesSchema.findById(subCategory_id);

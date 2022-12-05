@@ -138,6 +138,7 @@ const BecomeSPScreen = ({ navigation }) => {
       sp_location: values.location,
       sp_tiktok: values.tiktok,
       sp_createdBy: "App",
+      sp_platform: "APP",
       sp_media: {
         photo: img,
         video: vdo,
