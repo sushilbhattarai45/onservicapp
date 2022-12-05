@@ -22,6 +22,7 @@
     "node-fetch": "^2.6.7",
     "nodemon": "^2.0.20",
     "password-salt-and-hash": "^1.0.5",
+    "pdfkit": "^0.13.0",
     "uuid": "^9.0.0"
   }
 }
