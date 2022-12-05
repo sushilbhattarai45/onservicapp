@@ -3,6 +3,7 @@ import multer from "multer";
 import {} from "dotenv/config";
 const API_KEY = process.env.API_KEY;
 import bcrypt from "bcrypt";
+import moment from "moment";
 import spSchema from "../model/spSchema.js";
 import employeeSchema from "../model/employeSchema.js";
 export const updateUser = async (req, res) => {
@@ -75,6 +76,10 @@ export const registerUser = async (req, res) => {
     user_profileImage,
   } = req.body;
   try {
+    const timeanddate = {
+      date: moment().format("ll"),
+      time: moment().format("LT"),
+    };
     const password = bcrypt.hashSync(user_password, 10);
     console.log(password);
     const exists = await userSchema.findOne({ user_contact: user_contact });
@@ -89,7 +94,7 @@ export const registerUser = async (req, res) => {
         user_gender: user_gender,
         user_password: password,
         user_status: "ACTIVE",
-        user_toc: user_toc,
+        user_toc: timeanddate,
         user_profileImage: user_profileImage,
       });
       if (sp_platform == "APP") {
