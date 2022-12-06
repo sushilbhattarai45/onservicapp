@@ -13,6 +13,7 @@ export const updateUser = async (req, res) => {
     user_contact,
     user_district,
     user_city,
+    user_updatedBy,
     user_street,
     user_gender,
     user_status,
@@ -29,6 +30,7 @@ export const updateUser = async (req, res) => {
         {
           user_name: user_name,
           user_email: user_email,
+          user_updatedBy:user_updatedBy,
           user_contact: user_contact,
           user_status: user_status,
           user_district: user_district,
@@ -71,6 +73,7 @@ export const registerUser = async (req, res) => {
     user_city,
     user_street,
     user_gender,
+    user_updatedBy,
     user_password,
     user_toc,
     user_profileImage,
@@ -94,6 +97,7 @@ export const registerUser = async (req, res) => {
         user_gender: user_gender,
         user_password: password,
         user_status: "ACTIVE",
+        user_updatedBy:user_updatedBy,
         user_toc: timeanddate,
         user_profileImage: user_profileImage,
       });

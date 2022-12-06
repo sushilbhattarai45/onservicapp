@@ -83,6 +83,7 @@ export default UpdateUser = ({ navigation }) => {
         user_city: values.city,
         user_street: values.street,
         user_gender: values.gender,
+        user_updatedBy:"APP",
         user_profileImage: img,
         user_toc: {
           date: moment().format("ll"),

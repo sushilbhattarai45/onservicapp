@@ -28,6 +28,11 @@ const user = new mongoose.Schema({
   user_profileImage: {
     type: String,
   },
+
+  user_updatedBy: {
+    type: String,
+    default:"APP",
+  },
   user_status: {
     type: String,
   },

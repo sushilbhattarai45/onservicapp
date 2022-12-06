@@ -89,6 +89,7 @@ export default function OtpScreen({ navigation, route }) {
             user_gender: values.gender,
             user_password: values.password,
             sp_platform: "APP",
+            user_updatedBy:"APP",
             user_profileImage: img,
             user_toc: {
               date: moment().format("ll"),

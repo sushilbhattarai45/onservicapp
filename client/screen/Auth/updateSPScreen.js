@@ -139,6 +139,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         sp_street: values.street,
         sp_gender: values.gender,
         sp_location: values.location,
+        sp_updatedBy:"APP",
         sp_bio: values.bio,
         sp_tiktok: values.tiktok,
         sp_media: {
