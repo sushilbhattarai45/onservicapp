@@ -11,6 +11,8 @@ export const postSubCategories = async (req, res) => {
     subCat_status,
     subCat_updatedby,
   } = req.body;
+  const subCat_id = Date.now();
+
   const subCat_doc = {
     date: moment().format("ll"),
     time: moment().format("LT"),
@@ -30,11 +32,10 @@ export const postSubCategories = async (req, res) => {
           subCat_photo,
           subCat_status,
           category_id,
+          subCat_id,
           subCat_updatedby,
           subCat_doc,
           subCat_dou,
-
-          subCat_id: Date.now(),
         });
 
         const savepostSubCat = await postSubCat.save();
