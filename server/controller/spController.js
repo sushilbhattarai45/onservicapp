@@ -195,7 +195,7 @@ export const getSearchedSp = async (req, res) => {
           sp_skills: skill,
           sp_district: city,
           sp_status: "ACTIVE",
-        });
+        }).sort({ _id: -1 });
         console.log(spdata);
 
         return res.json({ statuscode: 201, data: spdata });

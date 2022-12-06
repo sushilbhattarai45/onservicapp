@@ -100,7 +100,7 @@ export const getAllSubCat = async (req, res) => {
   const { GIVEN_API_KEY } = req.body;
   if (API_KEY == GIVEN_API_KEY) {
     try {
-      const data = await subcategoriesSchema.find();
+      const data = await subcategoriesSchema.find().sort({ _id: -1 });
       return res.json({
         status: 200,
         data: data,
@@ -119,7 +119,7 @@ export const getMixedsubCategories = async (req, res) => {
       const data = await subcategoriesSchema.find({
         subCat_hassubCat: false,
         subCat_status: true,
-      });
+      }).sort({ _id: -1 });
       return res.json({
         status: 200,
         data: data,
