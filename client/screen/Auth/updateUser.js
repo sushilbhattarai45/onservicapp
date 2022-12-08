@@ -25,7 +25,8 @@ import { Field, Formik } from "formik";
 import Header from "../../component/Header";
 import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import App from "../../App";
+import { API_KEY } from "@env";
+
 // import ModalPopup from "../../component/Modal";
 import {
   axiosInstance,
@@ -75,7 +76,7 @@ export default UpdateUser = ({ navigation }) => {
     let response = await axios.post(
       BASE_OUR_API_URL + "/v1/api/user/updateUser",
       {
-        API_KEY: "AXCF",
+        API_KEY: API_KEY,
         user_name: values.name,
         user_email: values.email,
         user_contact: values.phone,

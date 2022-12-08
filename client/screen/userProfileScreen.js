@@ -28,6 +28,8 @@ import Button from "../component/buttonComponent";
 import ModalPopup from "../component/Modal";
 import SubCatCard from "../component/subCatCard";
 import { styles } from "react-native-image-slider-banner/src/style";
+import { API_KEY } from "@env";
+
 export default function UserProfileScreen({ navigation }) {
   const {
     setUser,
@@ -227,7 +229,7 @@ export default function UserProfileScreen({ navigation }) {
                   onPress={async () => {
                     if (isitsp) {
                       const res = await axiosInstance.post("sp/getOneSp", {
-                        GIVEN_API_KEY: "AXCF",
+                        GIVEN_API_KEY: API_KEY,
                         sp_contact: user,
                       });
                       navigation.navigate("Sp", { sp: res?.data.data });
@@ -423,7 +425,7 @@ export default function UserProfileScreen({ navigation }) {
                     onPress={async () => {
                       if (isitsp) {
                         const res = await axiosInstance.post("sp/getOneSp", {
-                          GIVEN_API_KEY: "AXCF",
+                          GIVEN_API_KEY: API_KEY,
                           sp_contact: user,
                         });
                         navigation.navigate("Sp", { sp: res?.data.data });

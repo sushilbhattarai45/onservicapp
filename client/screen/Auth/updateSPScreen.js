@@ -28,6 +28,8 @@ import {
   BASE_OUR_API_URL,
   uploadImage,
 } from "../../component/tools";
+import { API_KEY } from "@env";
+
 import AppContext from "../../component/appContext";
 import { Video } from "expo-av";
 const gendersList = [
@@ -129,7 +131,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
 
     let response = axiosInstance
       .post("/sp/updateSp/", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         sp_name: values.name,
         sp_contact: values.phone,
         sp_district: values.district,

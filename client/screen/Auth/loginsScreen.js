@@ -11,15 +11,11 @@ import {
   FlatList,
   Alert,
 } from "react-native";
-import CheckBox from "expo-checkbox";
 import { Colors } from "../../styles/main";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../component/Header";
-import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
 
-import { number } from "yup";
 import AppContext from "../../component/appContext";
 import { axiosInstance } from "../../component/tools";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -61,14 +57,14 @@ export default function LoginScreen({ navigation, route, path }) {
       }
     } else {
       const res = await axiosInstance.post("/user/login", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         user_num: num,
         user_pass: pin,
       });
       const status = res?.data?.statuscode;
       if (status == 200 || status == 201) {
         const setdata = await axiosInstance.post("/user/getOneUser", {
-          GIVEN_API_KEY: "AXCF",
+          GIVEN_API_KEY: API_KEY,
           user_contact: num,
         });
         const statuslogin = setdata?.data.data.user_status;
@@ -87,7 +83,7 @@ export default function LoginScreen({ navigation, route, path }) {
           setUserData(setdata?.data?.data);
           setLogged("true");
           const res = await axiosInstance.post("sp/getOneSp", {
-            GIVEN_API_KEY: "AXCF",
+            GIVEN_API_KEY: API_KEY,
             sp_contact: num,
           });
           if (res?.data?.statuscode == 201) {

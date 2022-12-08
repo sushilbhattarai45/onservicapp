@@ -5,7 +5,7 @@ import axios from "axios";
 import * as Location from "expo-location";
 import { Alert } from "react-native";
 const AppContext = createContext({});
-
+import { API_KEY } from "@env";
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [isitsp, setIsitSp] = useState(null);
@@ -59,7 +59,7 @@ export const ContextProvider = ({ children }) => {
           setLiveDistrict(district);
 
           const cat = await axiosInstance.post("/sp/filteredsubcat", {
-            GIVEN_API_KEY: "AXCF",
+            GIVEN_API_KEY: API_KEY,
             city: district,
           });
 
@@ -69,7 +69,7 @@ export const ContextProvider = ({ children }) => {
     }
     const getUserData = async (contact) => {
       let res = await axiosInstance.post("/user/getOneUser", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         user_contact: contact,
       });
       if (!res.error) {
@@ -81,7 +81,7 @@ export const ContextProvider = ({ children }) => {
 
     const getAds = async () => {
       let res = await axiosInstance.post("/ads/getAds", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
       });
       if (!res.error) {
         setAds(res.data);
@@ -94,7 +94,7 @@ export const ContextProvider = ({ children }) => {
 
         if (loggedUser) {
           let res = await axiosInstance.post("/user/getOneUser", {
-            GIVEN_API_KEY: "AXCF",
+            GIVEN_API_KEY: API_KEY,
             user_contact: loggedUser,
           });
           const status = res?.data.data.user_status;
@@ -127,7 +127,7 @@ export const ContextProvider = ({ children }) => {
       try {
         if (d) {
           const spcheck = await axiosInstance.post("/sp/getOneSp", {
-            GIVEN_API_KEY: "AXCF",
+            GIVEN_API_KEY: API_KEY,
             sp_contact: d,
           });
           if (spcheck?.data?.statuscode == 201) {
@@ -143,7 +143,7 @@ export const ContextProvider = ({ children }) => {
     const getCategories = () => {
       try {
         axiosInstance
-          .post("/categories/getvalidcategories", { GIVEN_API_KEY: "AXCF" })
+          .post("/categories/getvalidcategories", { GIVEN_API_KEY: API_KEY })
           .then((res) => {
             if (!res.error) setCategories(res.data);
           })
@@ -157,7 +157,7 @@ export const ContextProvider = ({ children }) => {
     const getSubCategories = () => {
       try {
         axiosInstance
-          .post("/subcategories/getmixedsubcategory", { GIVEN_API_KEY: "AXCF" })
+          .post("/subcategories/getmixedsubcategory", { GIVEN_API_KEY: API_KEY })
           .then((res) => {
             setSubCategories(res.data.data);
           });

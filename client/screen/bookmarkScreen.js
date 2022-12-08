@@ -22,6 +22,8 @@ import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { API_KEY } from "@env";
+
 export default function BookMarkScreen({ navigation }) {
   const { ads } = useContext(AppContext);
   const [adlink, setAdLink] = useState("www.Onservic.com");
@@ -55,7 +57,7 @@ export default function BookMarkScreen({ navigation }) {
     async function getBm() {
       const num = await AsyncStorage.getItem("user_contact");
       const data = await axiosInstance.post("bm/get", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         user_id: num,
       });
       if (data.data.statuscode == 201) {
@@ -134,7 +136,7 @@ export default function BookMarkScreen({ navigation }) {
                             const SpData = await axiosInstance.post(
                               "sp/getOneSp",
                               {
-                                GIVEN_API_KEY: "AXCF",
+                                GIVEN_API_KEY: API_KEY,
                                 sp_contact: persons.sp_contact,
                               }
                             );

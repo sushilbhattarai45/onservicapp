@@ -19,13 +19,12 @@ import {
 } from "react-native";
 import moment from "moment";
 import axios from "axios";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import ModalPopup from "../../component/Modal";
 import Header from "../../component/Header";
 import { BASE_OUR_API_URL } from "../../component/tools";
-import { axiosInstance } from "../../component/tools";
 import { Colors } from "../../styles/main";
 import AppContext from "../../component/appContext";
+import { API_KEY } from "@env";
+
 export default function OtpScreen({ navigation, route }) {
   const secondTextInputRef = useRef(null);
   const thirdTextInputRef = useRef(null);
@@ -79,7 +78,7 @@ export default function OtpScreen({ navigation, route }) {
         let response = await axios.post(
           BASE_OUR_API_URL + "/v1/api/user/register",
           {
-            API_KEY: "AXCF",
+            API_KEY: API_KEY,
             user_name: values.name,
             user_email: values.email,
             user_contact: values.phone,

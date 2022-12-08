@@ -32,6 +32,8 @@ import Icon from "../component/Icon";
 import { axiosInstance } from "../component/tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppContext from "../component/appContext";
+import { API_KEY } from "@env";
+
 const wWidth = Dimensions.get("window").width;
 
 import NewlyAddedServices from "../component/NewlyAddedServices";
@@ -68,11 +70,11 @@ const HomeScreen = ({ navigation }) => {
       let featuredOnHome = await axiosInstance.post(
         "/categories/featuredOnHome",
         {
-          GIVEN_API_KEY: "AXCF",
+          GIVEN_API_KEY: API_KEY,
         }
       );
       let newaddons = await axiosInstance.post("/categories/newaddons", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
       });
       console.log(featuredOnHome.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);

@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
+import { API_KEY } from "@env";
+
 import { Colors } from "../../styles/main";
 import Header from "../../component/Header";
 import { axiosInstance } from "../../component/tools";
@@ -31,7 +33,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
     if (first.length == 6 && second.length == 6) {
       if (first == second) {
         const updatePin = await axiosInstance.post("/user/forgetPin", {
-          GIVEN_API_KEY: "AXCF",
+          GIVEN_API_KEY: API_KEY,
           user_contact: num,
           user_password: first,
         });

@@ -18,6 +18,7 @@ import CheckBox from "expo-checkbox";
 import { Districts } from "../../component/district.js";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
+import { API_KEY } from "@env";
 
 import Header from "../../component/Header";
 import axios from "axios";
@@ -245,7 +246,7 @@ export default function ImagePickerExample() {
             const res = await axios.post(
               BASE_OUR_API_URL + "/v1/api/user/register",
               {
-                API_KEY: "AXCF",
+                API_KEY: API_KEY,
                 user_name: vname,
                 user_email: vemail,
                 user_contact: vphone,

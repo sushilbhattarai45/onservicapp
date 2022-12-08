@@ -12,6 +12,7 @@ import Icon from "../component/Icon";
 import { Colors } from "../styles/main";
 import AppContext from "./appContext";
 import { useNavigation } from "@react-navigation/native";
+import { API_KEY } from "@env";
 export default function BookMarkCard({
   name,
   image,
@@ -59,7 +60,7 @@ export default function BookMarkCard({
             <Icon
               onPress={async () => {
                 const deleteBm = await axiosInstance.post("/bm/delete", {
-                  GIVEN_API_KEY: "AXCF",
+                  GIVEN_API_KEY: API_KEY,
                   user_id: user,
                   sp_id: id,
                 });

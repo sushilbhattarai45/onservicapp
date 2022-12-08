@@ -15,8 +15,8 @@ import {
 } from "react-native";
 import PersonCard from "../component/personCard";
 import Search from "../component/searchBar";
-import { StatusBar } from "expo-status-bar";
-import { SvgUri, G, Path } from "react-native-svg";
+import { API_KEY } from "@env";
+
 import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
 import AppContext from "../component/appContext";
@@ -72,7 +72,7 @@ export default function SearchPersonListingScreen({ navigation }) {
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
       city: location,
-      GIVEN_API_KEY: "AXCF",
+      GIVEN_API_KEY: API_KEY,
     });
     if (res.data.data.length > 0) {
       setSearchData(res.data.data);

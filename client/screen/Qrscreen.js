@@ -5,6 +5,7 @@ import { Colors } from "../styles/main";
 import Header from "../component/Header";
 import { axiosInstance } from "../component/tools";
 import Button from "../component/buttonComponent";
+import { API_KEY } from "@env";
 
 export default function QrScreen({ navigation, navigation: { goBack } }) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -37,7 +38,7 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
   }
   async function getData(num) {
     const data = await axiosInstance.post("sp/getOneSp", {
-      GIVEN_API_KEY: "AXCF",
+      GIVEN_API_KEY: API_KEY,
       sp_contact: num,
     });
 

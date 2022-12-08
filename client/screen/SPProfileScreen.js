@@ -32,6 +32,8 @@ import ReviewCard from "../component/ReviewCard";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
 import SubCatCard from "../component/subCatCard";
+import { API_KEY } from "@env";
+
 import { Video } from "expo-av";
 
 const ActionIcon = ({ name, onPress, color }) => {
@@ -105,7 +107,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const postReview = (rating, review) => {
     axiosInstance
       .post("/review/post", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         user_contact: user,
         sp_contact: sp?.sp_contact,
         review_bio: review,
@@ -118,7 +120,7 @@ const SPProfileScreen = ({ navigation, route }) => {
   const getReviews = async () => {
     let res = await axiosInstance.post("/review/getSpreview", {
       sp_id: sp?.sp_contact,
-      GIVEN_API_KEY: "AXCF",
+      GIVEN_API_KEY: API_KEY,
     });
     let d = res?.data?.data;
     let sum = 0;
@@ -140,7 +142,7 @@ const SPProfileScreen = ({ navigation, route }) => {
       let res = await axiosInstance.post("/bm/check", {
         user_id: user,
         sp_id: sp?.sp_contact,
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
       });
       if (!res.error) {
         // alert(sp?.sp_contact + user);
@@ -315,7 +317,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                     color={Colors.primary}
                     onPress={async () => {
                       const deleteBm = await axiosInstance.post("/bm/delete", {
-                        GIVEN_API_KEY: "AXCF",
+                        GIVEN_API_KEY: API_KEY,
                         user_id: user,
                         sp_id: sp?.sp_contact,
                       });
@@ -329,7 +331,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                     color={Colors.gray900}
                     onPress={async () => {
                       const postBm = await axiosInstance.post("/bm/post", {
-                        GIVEN_API_KEY: "AXCF",
+                        GIVEN_API_KEY: API_KEY,
                         user_id: user,
                         sp_id: sp?.sp_contact,
                       });
@@ -834,7 +836,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               onValueChange={async (value) => {
                 let res = axiosInstance
                   .post("/sp/updateSettings", {
-                    GIVEN_API_KEY: "AXCF",
+                    GIVEN_API_KEY: API_KEY,
                     sp_status: spStatus,
                     sp_contact: sp?.sp_contact,
                     sp_showReview: value,
@@ -864,7 +866,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               onValueChange={async (value) => {
                 let res = axiosInstance
                   .post("/sp/updateSettings", {
-                    GIVEN_API_KEY: "AXCF",
+                    GIVEN_API_KEY: API_KEY,
                     sp_status: value ? "ACTIVE" : "INACTIVE",
                     sp_contact: sp.sp_contact,
                     sp_showReview: showReviews,

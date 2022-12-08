@@ -3,7 +3,7 @@ import { URL } from "@env";
 import React, { useContext } from "react";
 import AppContext from "./appContext";
 import * as Location from "expo-location";
-import { API_URL, SMS_TOKEN } from "@env";
+import { API_URL, SMS_TOKEN,  } from "@env";
 
 export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km

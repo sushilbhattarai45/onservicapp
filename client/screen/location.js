@@ -4,6 +4,8 @@ import * as Location from "expo-location";
 import axios from "axios";
 import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
+import { API_KEY } from "@env";
+
 import App from "../App";
 const LocationScreen = () => {
   const { livedistrict } = useContext(AppContext);
@@ -13,7 +15,7 @@ const LocationScreen = () => {
   useEffect(() => {
     async function getDistrictName() {
       const cat = await axiosInstance.post("/sp/filteredsubcat", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         city: livedistrict,
       });
 

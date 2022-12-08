@@ -16,6 +16,7 @@ import { Colors } from "../styles/main";
 import axios from "axios";
 import { axiosInstance } from "../component/tools";
 import Search from "../component/searchBar";
+import { API_KEY } from "@env";
 
 export default function SubCategoryScreen({
   route,
@@ -26,7 +27,7 @@ export default function SubCategoryScreen({
   useEffect(() => {
     async function getAd() {
       const data = await axiosInstance.post("ads/getCatAds", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         ads_tag: cat_name,
       });
       setAds(data?.data?.catads[0]);
@@ -35,7 +36,7 @@ export default function SubCategoryScreen({
 
     async function getSubC() {
       const data = await axiosInstance.post("subcategories/getfilteredsubcat", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         category_id: category_id,
       });
       setFilteredData(data.data.data);

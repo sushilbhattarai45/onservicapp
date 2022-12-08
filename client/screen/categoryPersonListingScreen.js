@@ -11,14 +11,12 @@ import {
 } from "react-native";
 import PersonCard from "../component/personCard";
 import Search from "../component/searchBar";
-import { StatusBar } from "expo-status-bar";
-import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
 import Header from "../component/Header";
-import axios from "axios";
+import { API_KEY } from "@env";
+
 import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
-import App from "../App";
 export default function CategoryPersonListingScreen({
   route,
   navigation,
@@ -37,7 +35,7 @@ export default function CategoryPersonListingScreen({
 
     async function getAd() {
       const data = await axiosInstance.post("ads/getCatAds", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         ads_tag: sub_name,
       });
       setAds(data?.data?.catads[0]);
@@ -46,7 +44,7 @@ export default function CategoryPersonListingScreen({
 
     async function getSpData() {
       const data = await axiosInstance.post("sp/getSearchedSp", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         city: livedistrict,
         skill: sub_name,
       });

@@ -15,7 +15,6 @@ import {
 } from "react-native";
 import CheckBox from "expo-checkbox";
 import { Dropdown } from "react-native-element-dropdown";
-import moment from "moment";
 import { Districts } from "../../component/district";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
@@ -25,6 +24,8 @@ import Header from "../../component/Header";
 import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import ModalPopup from "../../component/Modal";
+import { API_KEY } from "@env";
+
 import AppContext from "../../component/appContext";
 import { BASE_OUR_API_URL, getSms, uploadImage } from "../../component/tools";
 
@@ -83,7 +84,7 @@ export default registerUser = ({ navigation }) => {
       BASE_OUR_API_URL + "/v1/api/user/getOneUser",
       {
         user_contact: values.phone,
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
       }
     );
     const status = response?.data?.statuscode;

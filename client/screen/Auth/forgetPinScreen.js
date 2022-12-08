@@ -16,6 +16,8 @@ import { axiosInstance } from "../../component/tools";
 import { Colors } from "../../styles/main";
 import Header from "../../component/Header";
 import { useNavigation } from "@react-navigation/native";
+import { API_KEY } from "@env";
+
 export default function ForgetPinScreen() {
   const [numval, setNumVal] = useState(null);
   const navigation = useNavigation();
@@ -33,7 +35,7 @@ export default function ForgetPinScreen() {
   async function forget() {
     if (num.length == 10) {
       const check = await axiosInstance.post("/user/getOneUser", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         user_contact: num,
       });
       if (check?.data.statuscode == 201) {

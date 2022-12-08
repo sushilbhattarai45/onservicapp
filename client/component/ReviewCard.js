@@ -2,7 +2,6 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 import { Colors } from "../styles/main";
-import moment from "moment";
 
 export default ReviewCard = ({ name, image, date, rating, review, doc }) => {
   return (

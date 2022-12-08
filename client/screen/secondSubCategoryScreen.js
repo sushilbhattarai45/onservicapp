@@ -11,12 +11,12 @@ import {
 } from "react-native";
 import SubCategory from "../component/subCategory";
 import Header from "../component/Header";
-import Constants from "expo-constants";
 import { Colors } from "../styles/main";
-import axios from "axios";
 import { axiosInstance } from "../component/tools";
 import AppContext from "../component/appContext";
 import Search from "../component/searchBar";
+import { API_KEY } from "@env";
+
 export default function SecondSubCategoryScreen({
   route,
   category_name,
@@ -27,7 +27,7 @@ export default function SecondSubCategoryScreen({
   useEffect(() => {
     async function getAd() {
       const data = await axiosInstance.post("ads/getCatAds", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         ads_tag: cat_name,
       });
       setAds(data?.data?.catads[0]);
@@ -36,7 +36,7 @@ export default function SecondSubCategoryScreen({
 
     async function getSubC() {
       const data = await axiosInstance.post("subcategories/getsecond", {
-        GIVEN_API_KEY: "AXCF",
+        GIVEN_API_KEY: API_KEY,
         category_id: category_id,
       });
       setSData(data.data.data);

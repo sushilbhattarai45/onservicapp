@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as yup from "yup";
-import moment from "moment";
 import { Colors } from "../../styles/main";
 import Header from "../../component/Header";
 import { Formik } from "formik";
@@ -30,6 +29,8 @@ import {
 import axios from "axios";
 import AppContext from "../../component/appContext";
 import { Video } from "expo-av";
+import { API_KEY } from "@env";
+
 
 const gendersList = [
   { value: "Male", label: "Male" },
@@ -124,7 +125,7 @@ const BecomeSPScreen = ({ navigation }) => {
     const img = await uploadImage(values.photo);
     let [vdo] = await uploadImage([values.video]);
     let response = await axiosInstance.post("/sp/postsp/", {
-      GIVEN_API_KEY: "AXCF",
+      GIVEN_API_KEY: API_KEY,
       sp_name: values.name,
       sp_email: values.email,
       sp_contact: values.phone,
