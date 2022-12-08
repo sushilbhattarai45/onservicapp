@@ -137,7 +137,7 @@ export const getAllEmployee = async (req, res) => {
   const { GIVEN_API_KEY } = req.body;
   if (API_KEY == GIVEN_API_KEY) {
     try {
-      const allEmployee = await employeeSchema.find();
+      const allEmployee = await employeeSchema.find().sort({ _id: -1 });
       return res.json({ data: allEmployee });
     } catch (e) {
       return res.json({ error: e });

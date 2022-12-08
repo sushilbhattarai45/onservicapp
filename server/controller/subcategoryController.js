@@ -11,6 +11,8 @@ export const postSubCategories = async (req, res) => {
     subCat_status,
     subCat_updatedby,
   } = req.body;
+  const subCat_id = Date.now();
+
   const subCat_doc = {
     date: moment().format("ll"),
     time: moment().format("LT"),
@@ -30,11 +32,10 @@ export const postSubCategories = async (req, res) => {
           subCat_photo,
           subCat_status,
           category_id,
+          subCat_id,
           subCat_updatedby,
           subCat_doc,
           subCat_dou,
-
-          subCat_id: Date.now(),
         });
 
         const savepostSubCat = await postSubCat.save();
@@ -99,7 +100,7 @@ export const getAllSubCat = async (req, res) => {
   const { GIVEN_API_KEY } = req.body;
   if (API_KEY == GIVEN_API_KEY) {
     try {
-      const data = await subcategoriesSchema.find();
+      const data = await subcategoriesSchema.find().sort({ _id: -1 });
       return res.json({
         status: 200,
         data: data,
@@ -118,7 +119,7 @@ export const getMixedsubCategories = async (req, res) => {
       const data = await subcategoriesSchema.find({
         subCat_hassubCat: false,
         subCat_status: true,
-      });
+      }).sort({ _id: -1 });
       return res.json({
         status: 200,
         data: data,

@@ -23,6 +23,7 @@ export const postSp = async (req, res) => {
     sp_createdBy,
     sp_gender,
     sp_password,
+    sp_updatedBy,
     sp_location,
     sp_platform,
     sp_paid,
@@ -57,6 +58,7 @@ export const postSp = async (req, res) => {
           sp_toc: timeanddate,
           sp_profileImage: sp_profileImage,
           sp_media: sp_media,
+          sp_updatedBy:sp_updatedBy,
         });
 
         if (sp_platform == "APP") {
@@ -195,7 +197,7 @@ export const getSearchedSp = async (req, res) => {
           sp_skills: skill,
           sp_district: city,
           sp_status: "ACTIVE",
-        });
+        }).sort({ _id: -1 });
         console.log(spdata);
 
         return res.json({ statuscode: 201, data: spdata });

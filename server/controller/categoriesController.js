@@ -9,7 +9,7 @@ export const getAllCategories = async (req, res) => {
   console.log("apiKEy", GIVEN_API_KEY);
   if (GIVEN_API_KEY == API_KEY) {
     try {
-      const categories = await categorySchema.find();
+      const categories = await categorySchema.find().sort({ _id: -1 })
       return res.json(categories);
     } catch (e) {
       return res.json({ error: e });

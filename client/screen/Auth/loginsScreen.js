@@ -36,20 +36,20 @@ export default function LoginScreen({ navigation, route, path }) {
   const showHeader = path == "NotLoggedIn" ? false : true;
   async function checkLogin() {
     // alert(Number.isInteger(num));
-    if (pin.length != 6 || num.length != 10) {
+    if (!pin.length>=8 || num.length != 10) {
       // if (Number.isInteger(pin) == false || Number.isInteger(num) == false) {
       //   if (Number.isInteger(pin) == false) {
       //     setError2("Please Enter A Valid Pin");
       //     setFocusColor2("red");
       //   }
       // } else
-      if (pin.length != 6 && num.length != 10) {
+      if (!pin.length >= 8 && num.length != 10) {
         setError1("Please enter a valid Phone Number");
         setError2("Please enter a valid Password");
         setFocusColor2("red");
         setFocusColor1("red");
-      } else if (pin.length != 6) {
-        setError2("Password Must be of 6 Digits");
+      } else if (!pin.length >= 8) {
+        setError2("Password Must be of Mimimun 8  Digits");
         setFocusColor2("red");
       } else {
         setError1("Please enter a valid Phone Number");
@@ -185,7 +185,6 @@ export default function LoginScreen({ navigation, route, path }) {
             >
               <Text style={{ fontFamily: "Regular" }}>Password</Text>
               <TextInput
-                maxLength={6}
                 style={{
                   fontFamily: "Regular",
 

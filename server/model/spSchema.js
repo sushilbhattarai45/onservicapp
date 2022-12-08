@@ -7,6 +7,10 @@ const sp = new mongoose.Schema({
   user_id: {
     type: String,
   },
+    sp_updatedBy: {
+      type: String,
+      default:"APP",
+  },
   sp_district: {
     type: String,
   },
