@@ -19,7 +19,6 @@ import { API_URL, SMS_TOKEN, API_KEY } from "@env";
 import AppContext from "../../component/appContext";
 import { axiosInstance } from "../../component/tools";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { API_KEY } from "@env";
 export default function LoginScreen({ navigation, route, path }) {
   const nav = useNavigation();
   const { user, logged, setLogged, setUser, setUserData, setIsitSp } =
