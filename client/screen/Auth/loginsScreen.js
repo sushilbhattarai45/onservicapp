@@ -19,6 +19,7 @@ import { API_URL, SMS_TOKEN, API_KEY } from "@env";
 import AppContext from "../../component/appContext";
 import { axiosInstance } from "../../component/tools";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { API_KEY } from "@env";
 export default function LoginScreen({ navigation, route, path }) {
   const nav = useNavigation();
   const { user, logged, setLogged, setUser, setUserData, setIsitSp } =
@@ -36,7 +37,7 @@ export default function LoginScreen({ navigation, route, path }) {
   const showHeader = path == "NotLoggedIn" ? false : true;
   async function checkLogin() {
     // alert(Number.isInteger(num));
-    if (!pin.length>=8 || num.length != 10) {
+    if (!pin.length >= 8 || num.length != 10) {
       // if (Number.isInteger(pin) == false || Number.isInteger(num) == false) {
       //   if (Number.isInteger(pin) == false) {
       //     setError2("Please Enter A Valid Pin");

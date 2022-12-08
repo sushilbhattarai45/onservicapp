@@ -42,10 +42,8 @@ const gendersList = [
 
 const userValidationSchema = yup.object().shape({
   name: yup.string().min(6).required("Please, provide your name!"),
-  email: yup
-    .string()
-    .email("Please, provide a valid email!")
-    .required("Please, provide your email!"),
+  email: yup.string().email("Please, provide a valid email!"),
+  // .required("Please, provide your email!"),
   phone: yup
     .number("Phone number must be Numeric")
     .min(1000000000, "Please, provide a valid phone number!")
@@ -84,7 +82,7 @@ export default UpdateUser = ({ navigation }) => {
         user_city: values.city,
         user_street: values.street,
         user_gender: values.gender,
-        user_updatedBy:"APP",
+        user_updatedBy: "APP",
         user_profileImage: img,
         user_toc: {
           date: moment().format("ll"),
@@ -278,7 +276,7 @@ export default UpdateUser = ({ navigation }) => {
                       marginTop: 12,
                     }}
                   >
-                    <Text>Email Address *</Text>
+                    <Text>Email Address</Text>
                     <TextInput
                       style={[
                         styles.inputStyle,

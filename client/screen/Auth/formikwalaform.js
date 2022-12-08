@@ -311,7 +311,7 @@ export default Formikwalaform = () => {
                   marginTop: 12,
                 }}
               >
-                <Text>Email Address *</Text>
+                <Text>Email Address</Text>
                 <TextInput
                   style={[
                     styles.inputStyle,
