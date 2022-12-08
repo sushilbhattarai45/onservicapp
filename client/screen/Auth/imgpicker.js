@@ -446,7 +446,7 @@ export default function ImagePickerExample() {
               marginTop: 12,
             }}
           >
-            <Text>Email Address *</Text>
+            <Text>Email Address</Text>
             <TextInput
               style={{
                 width: "100%",

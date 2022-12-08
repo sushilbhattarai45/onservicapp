@@ -31,7 +31,6 @@ import AppContext from "../../component/appContext";
 import { Video } from "expo-av";
 import { API_KEY } from "@env";
 
-
 const gendersList = [
   { value: "Male", label: "Male" },
   { value: "Female", label: "Female" },
@@ -74,10 +73,8 @@ const SkillPill = ({ name, onPress }) => {
 
 const userValidationSchema = yup.object().shape({
   name: yup.string().min(6).required("Please, provide your name!"),
-  email: yup
-    .string()
-    .email("Please, provide a valid email!")
-    .required("Please, provide your email!"),
+  email: yup.string().email("Please, provide a valid email!"),
+  // .required("Please, provide your email!"),
   phone: yup
     .number()
     .typeError("Phone number must be a number")
@@ -273,7 +270,7 @@ const BecomeSPScreen = ({ navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Email Address *</Text>
+                <Text>Email Address</Text>
                 <TextInput
                   style={[
                     styles.inputStyle,
@@ -484,7 +481,7 @@ const BecomeSPScreen = ({ navigation }) => {
                         ? "red"
                         : Colors.primary,
                     },
-                  ]}  
+                  ]}
                   value={values.city}
                   onChangeText={handleChange("city")}
                   onBlur={() => setFieldTouched("city")}

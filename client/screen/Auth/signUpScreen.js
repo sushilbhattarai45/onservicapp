@@ -39,8 +39,8 @@ const userValidationSchema = yup.object().shape({
   name: yup.string().min(6).required("Please, provide your name!"),
   email: yup
     .string()
-    .email("Please, provide a valid email!")
-    .required("Please, provide your email!"),
+    .email("Please, provide a valid email!"),
+    // .required("Please, provide your email!"),
   phone: yup
     .number()
     .typeError("Phone number must be a number")
@@ -297,7 +297,7 @@ export default registerUser = ({ navigation }) => {
                       marginTop: 12,
                     }}
                   >
-                    <Text>Email Address *</Text>
+                    <Text>Email Address</Text>
                     <TextInput
                       style={[
                         styles.inputStyle,
