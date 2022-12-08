@@ -38,8 +38,11 @@ export default function SubCategoryCard({
       >
         <Text
           style={{
-            color: "white",
-            fontSize: 13,
+            backgroundColor: "white",
+            borderRadius: 5,
+            padding:2,
+            color: 'black',
+            fontSize: 11,
             fontWeight: "800",
             fontFamily: "Regular",
             margin: 5,

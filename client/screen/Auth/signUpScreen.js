@@ -91,6 +91,7 @@ export default registerUser = ({ navigation }) => {
     if (status == 400) {
       setLoad(false);
       let genOtp = Math.floor(1000 + Math.random() * 9000);
+      console.log(genOtp)
       getSms(genOtp, values.phone);
       navigation.navigate("OtpScreen", {
         num: values.phone,

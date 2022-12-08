@@ -7,7 +7,7 @@ import { Alert } from "react-native";
 const AppContext = createContext({});
 import { API_KEY } from "@env";
 export const ContextProvider = ({ children }) => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const [isitsp, setIsitSp] = useState(null);
 
   const [userData, setUserData] = useState({});

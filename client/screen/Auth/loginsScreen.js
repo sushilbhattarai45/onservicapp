@@ -15,7 +15,7 @@ import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../component/Header";
 import { useNavigation } from "@react-navigation/native";
-
+import { API_URL, SMS_TOKEN, API_KEY } from "@env";
 import AppContext from "../../component/appContext";
 import { axiosInstance } from "../../component/tools";
 import { SafeAreaView } from "react-native-safe-area-context";

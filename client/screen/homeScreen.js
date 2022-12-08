@@ -48,6 +48,7 @@ const HomeScreen = ({ navigation }) => {
     logged,
     userData,
     livedistrict,
+    user,
     ads,
     lpermission,
     setLpermission,
@@ -270,7 +271,7 @@ const HomeScreen = ({ navigation }) => {
                       color: Colors.primary,
                     }}
                   >
-                    See More{" "}
+                    See {user}{" "}
                   </Text>
                   <Icon
                     name="arrow-right-s-line"

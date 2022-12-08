@@ -24,7 +24,7 @@ import { BASE_OUR_API_URL } from "../../component/tools";
 import { Colors } from "../../styles/main";
 import AppContext from "../../component/appContext";
 import { API_KEY } from "@env";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function OtpScreen({ navigation, route }) {
   const secondTextInputRef = useRef(null);
   const thirdTextInputRef = useRef(null);
@@ -97,15 +97,16 @@ export default function OtpScreen({ navigation, route }) {
           }
         );
         const finaldata = response?.data?.user;
+        console.log(finaldata)
         setData(finaldata);
         setUserData(finaldata);
         setLogged("true");
-        setIsitSp(null);
+
         setUser(values.phone);
+                setIsitSp(null);
         await storeData(values.phone);
         navigation.navigate("Home");
 
-        navigation.navigate("Home");
       }
       // popup.current.show();
     } else {
