@@ -89,7 +89,7 @@ export default function OtpScreen({ navigation, route }) {
             user_password: values.password,
             sp_platform: "APP",
             user_updatedBy:"APP",
-            user_profileImage: img,
+            user_profileImage: "https://ui-avatars.com/api/?size=128&background=random&rounded=true&name="+values.name,
             user_toc: {
               date: moment().format("ll"),
               time: moment().format("LT"),

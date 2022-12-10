@@ -86,7 +86,7 @@ const userValidationSchema = yup.object().shape({
     .typeError("Phone number must be a number")
     .min(1000000000, "Please, provide a valid phone number!"),
   accepted: yup.bool().oneOf([true], "Field must be checked"),
-  bio: yup.string().min(6).required("Please, Enter your Bio!"),
+  bio: yup.string().min(6),
 
   accepted: yup.bool().oneOf([true], "Field must be checked"),
   gender: yup.string().required("Please, select your gender"),
@@ -96,9 +96,8 @@ const userValidationSchema = yup.object().shape({
   tiktok: yup.string(),
   street: yup
     .string()
-    .required()
     .min(6)
-    .required("Please, provide your street!"),
+   ,
   // image: yup.string().required(),
   skills: yup
     .array()
@@ -401,7 +400,7 @@ const BecomeSPScreen = ({ navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Bio *</Text>
+                <Text>Bio </Text>
                 <TextInput
                   style={[
                     styles.inputStyle,
@@ -526,7 +525,7 @@ const BecomeSPScreen = ({ navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Street*</Text>
+                <Text>Street</Text>
                 <TextInput
                   style={[
                     styles.inputStyle,

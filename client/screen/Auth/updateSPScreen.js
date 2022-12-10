@@ -86,21 +86,14 @@ const userValidationSchema = yup.object().shape({
   gender: yup.string().required("Please, select your gender"),
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
-  bio: yup.string().min(6).required("Please, Enter your Bio!"),
-
+  bio: yup.string().min(6),
   street: yup
     .string()
-    .required()
-    .min(6)
-    .required("Please, provide your street!"),
+    .min(6),
   // image: yup.string().required(),
   location: yup.string(),
   tiktok: yup.string(),
-  street: yup
-    .string()
-    .required()
-    .min(6)
-    .required("Please, provide your street!"),
+
   // image: yup.string().required(),
   skills: yup
     .array()
@@ -508,7 +501,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Street *</Text>
+                <Text>Street </Text>
                 <TextInput
                   style={[
                     styles.inputStyle,

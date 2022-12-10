@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation }) => {
           GIVEN_API_KEY: API_KEY,
         }
       );
-      let newaddons = await axiosInstance.post("/categories/newaddons", {
+      let newaddons = await axiosInstance.post("/subcategories/newaddons", {
         GIVEN_API_KEY: API_KEY,
       });
       console.log(featuredOnHome.data);
@@ -271,7 +271,7 @@ const HomeScreen = ({ navigation }) => {
                       color: Colors.primary,
                     }}
                   >
-                    See {user}{" "}
+                    See More{" "}
                   </Text>
                   <Icon
                     name="arrow-right-s-line"
@@ -286,6 +286,7 @@ const HomeScreen = ({ navigation }) => {
           {/* Add */}
           <Video
             ref={video}
+            onPress={()=>alert("ok")}
             style={styles.video}
             source={{
               uri: ads?.homevideo ? ads?.homevideo[0]?.ads_mediaLink : "",
