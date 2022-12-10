@@ -369,3 +369,28 @@ export const getEmployeeCreatedSp = async (req, res) => {
     });
   }
 };
+ export const getMoreskilledSp  = async (req, res) => {
+  const { GIVEN_API_KEY, employee_contact } = req.body;
+  console.log("apiKEy", GIVEN_API_KEY);
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const data = await spSchema.find();
+      const finaldata = [];
+      data.map(item => {
+        if (item.sp_skills.length > 1)
+        {
+          finaldata.push(item)
+        }
+      })
+      
+      return res.json({ statuscode: 201, data: finaldata });
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
+      error: "WrongApi Key",
+    });
+  }
+};
