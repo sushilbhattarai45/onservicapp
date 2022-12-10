@@ -28,7 +28,7 @@ const NewlyAddedServices = ({ containerStyle, name, cat_id, image }) => {
             uri: image,
           }}
         />
-        <Text style={{ fontFamily: "Regular", fontSize: 16, marginTop: 8 }}>
+        <Text style={{ fontFamily: "Regular", fontSize: 15, marginTop: 8 }}>
           {name}
         </Text>
       </TouchableOpacity>

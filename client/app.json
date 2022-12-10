@@ -3,7 +3,7 @@
     "name": "ON Servic",
     "slug": "onserivc",
     "version": "1.0.0",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "ios": {
       "bundleIdentifier": "com.onservic.app",
       "buildNumber": "1.0.0"
