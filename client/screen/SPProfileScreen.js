@@ -270,7 +270,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                 }}
               />
               <Text>{sp?.user_profileImage}</Text>
-              {sp.sp_officeNumber && (
+              {sp.sp_whatsapp && (
                 <ActionIcon
                   name="chat-1-line"
                   onPress={() => {
@@ -278,7 +278,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                       "whatsapp://send?text=" +
                       "Hello" +
                       "&phone=+977" +
-                      sp?.sp_officeNumber;
+                      sp?.sp_whatsapp;
                     Linking.openURL(url)
                       .then((data) => {
                         console.log("WhatsApp Opened");

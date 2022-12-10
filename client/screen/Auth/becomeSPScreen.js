@@ -115,7 +115,7 @@ const userValidationSchema = yup.object().shape({
 
 const BecomeSPScreen = ({ navigation }) => {
     const [isChecked, setChecked] = useState(false);
-    const [whatsapp, setWhatsapp] = useState('');
+    const [whatsapp, setWhatsapp] = useState(null);
 
   const { subCategories, userData, setIsitSp } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
@@ -127,9 +127,18 @@ const BecomeSPScreen = ({ navigation }) => {
 
     if (isChecked)
     {
-      setWhatsapp(values.officePhone)
+post(values.officePhone,values,img,vdo)
     }
-    let response = await axiosInstance.post("/sp/postsp/", {
+    else
+    {
+      post(" ",values,img,vdo)
+
+      }
+   
+  };
+  async function post(wnum, values,img,vdo)
+  {
+     let response = await axiosInstance.post("/sp/postsp/", {
       GIVEN_API_KEY: API_KEY,
       sp_name: values.name,
       sp_email: values.email,
@@ -141,7 +150,7 @@ const BecomeSPScreen = ({ navigation }) => {
       sp_city: values.city,
       sp_street: values.street,
       sp_gender: values.gender,
-      sp_whatsapp:whatsapp,
+      sp_whatsapp:wnum,
       sp_bio: values.bio,
       sp_location: values.location,
       sp_tiktok: values.tiktok,
@@ -157,7 +166,7 @@ const BecomeSPScreen = ({ navigation }) => {
     setLoad(false);
     setIsitSp(response.data.sp);
     navigation.navigate("Home");
-  };
+  }
   const [loading, setLoading] = useState(false);
   const [vdoloading, setVdoLoading] = useState(false);
   // const mulFile = [];
