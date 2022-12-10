@@ -14,6 +14,9 @@ const sp = new mongoose.Schema({
   sp_district: {
     type: String,
   },
+   sp_billid: {
+    type: String,
+  },
   sp_paid: {
     type: Boolean,
     default: false,
