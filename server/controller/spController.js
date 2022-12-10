@@ -42,6 +42,7 @@ export const postSp = async (req, res) => {
       const sp_billid = Date.now();
       const exists = await spSchema.findOne({ sp_contact: sp_contact });
       if (!exists || exists?.length == 0) {
+        console.log(sp_whatsapp)
         const sp = new spSchema({
           sp_name: sp_name,
           user_id: user_id,

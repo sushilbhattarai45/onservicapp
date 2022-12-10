@@ -115,6 +115,7 @@ const userValidationSchema = yup.object().shape({
 
 const BecomeSPScreen = ({ navigation }) => {
     const [isChecked, setChecked] = useState(false);
+    const [whatsapp, setWhatsapp] = useState('');
 
   const { subCategories, userData, setIsitSp } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
@@ -123,11 +124,11 @@ const BecomeSPScreen = ({ navigation }) => {
     setLoad(true);
     const img = await uploadImage(values.photo);
     let [vdo] = await uploadImage([values.video]);
-    let iswhatsapp="";
+
     if (isChecked)
     {
-      iswhatsapp = values.officePhone;
-      }
+      setWhatsapp(values.officePhone)
+    }
     let response = await axiosInstance.post("/sp/postsp/", {
       GIVEN_API_KEY: API_KEY,
       sp_name: values.name,
@@ -140,7 +141,7 @@ const BecomeSPScreen = ({ navigation }) => {
       sp_city: values.city,
       sp_street: values.street,
       sp_gender: values.gender,
-      sp_whatsapp:iswhatsapp,
+      sp_whatsapp:whatsapp,
       sp_bio: values.bio,
       sp_location: values.location,
       sp_tiktok: values.tiktok,

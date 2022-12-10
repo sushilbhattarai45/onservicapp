@@ -65,7 +65,7 @@ const sp = new mongoose.Schema({
     default: "Onservic Service Provider",
   },
   sp_whatsapp: {
-    typeof:String,
+    type:String,
   },
   sp_showReview: {
     type: Boolean,
