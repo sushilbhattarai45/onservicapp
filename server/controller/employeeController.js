@@ -88,6 +88,13 @@ export const updateEmployee = async (req, res) => {
       const exists = await employeeSchema.findOne({
         employee_contact: employee_contact,
       });
+      const dblimit = exists?.employee_totallimit;
+      console.log(employee_limit)
+      console.log(dblimit)
+    
+      const limitrem = exists?.employee_limit;
+      const limitfinal = limitrem + employee_limit;
+      const totallimit = dblimit + employee_limit;
       if (exists || exists?.length == 0) {
         const update = await employeeSchema.findOneAndUpdate(
           { employee_contact: employee_contact },
@@ -95,7 +102,8 @@ export const updateEmployee = async (req, res) => {
             employee_name: employee_name,
             employee_contact: employee_contact,
             employee_status: employee_status,
-            employee_limit: employee_limit,
+            employee_limit: limitfinal,
+            employee_totallimit:totallimit,
             employee_post: employee_post,
           }
         );

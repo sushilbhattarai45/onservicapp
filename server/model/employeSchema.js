@@ -15,6 +15,9 @@ const employee = mongoose.Schema({
   employee_post: {
     type: String,
   },
+    employee_totallimit: {
+    type: Number,
+  },
   employee_doc: {
     date: { type: String },
     time: { type: String },
