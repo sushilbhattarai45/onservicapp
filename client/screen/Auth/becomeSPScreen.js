@@ -451,7 +451,7 @@ whatsapp:"",
                   value={values.bio}
                   onChangeText={handleChange("bio")}
                   onBlur={() => setFieldTouched("bio")}
-                  placeholder="Bio"
+                  placeholder="Whats on your mind. (optional)"
                   placeholderTextColor={Colors.gray900}
                 />
                 {touched.bio && errors.bio && (
@@ -576,7 +576,7 @@ whatsapp:"",
                   value={values.street}
                   onChangeText={handleChange("street")}
                   onBlur={() => setFieldTouched("street")}
-                  placeholder="Street"
+                  placeholder="Street (optional)"
                   placeholderTextColor={Colors.gray900}
                   // placeholderStyle={{ color: Colors.gray900 }}
                 />
@@ -689,7 +689,7 @@ whatsapp:"",
                 )}
               </View>
               <View style={{ marginTop: 12 }}>
-                <Text>Upload Photos of your work!</Text>
+                <Text>Upload Photos of your work! *</Text>
                 <View
                   style={{
                     display: "flex",
@@ -804,7 +804,7 @@ whatsapp:"",
               </View>
 
               <View style={{ marginTop: 12 }}>
-                <Text>Upload Video of your work!</Text>
+                <Text>Upload Video of your work! *</Text>
                 <View
                   style={{
                     display: "flex",

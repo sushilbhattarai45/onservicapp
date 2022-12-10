@@ -8,6 +8,7 @@ import {
   postSp,
   test,
   updateSp,
+  getimedSp,
   deleteSp,
   getMoreskilledSp,
   updateSettings,
@@ -25,5 +26,6 @@ router.route("/filteredsubcat").post(getFilteredSubCat);
 router.route("/deletesp").post(deleteSp);
 router.route("/spbyemployee").post(getEmployeeCreatedSp);
 router.route("/moreskills").post(getMoreskilledSp);
+router.route("/gettimedsp").post(getimedSp);
 
 export default router;

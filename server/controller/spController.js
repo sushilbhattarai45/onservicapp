@@ -394,3 +394,27 @@ export const getEmployeeCreatedSp = async (req, res) => {
     });
   }
 };
+export const getimedSp = async (req, res) => {
+  const { GIVEN_API_KEY, creationdate } = req.body;
+  console.log("apiKEy", GIVEN_API_KEY);
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const data = await spSchema.find();
+      const finaldata = [];
+      data.map(item => {
+        if (item.sp_toc.date == creationdate) {
+          finaldata.push(item)
+        }
+      })
+      
+      return res.json({ statuscode: 201, data: finaldata });
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
+      error: "WrongApi Key",
+    });
+  }
+}
