@@ -21,13 +21,10 @@ import Search from "../component/searchBar";
 import { Colors } from "../styles/main";
 import SubCatCard from "../component/subCatCard";
 
-import Constants from "expo-constants";
 import CategoryCard from "../component/categoryCard";
 import Button from "../component/buttonComponent";
 import SubCategoryGroupCard from "../component/subCategoryGroupCard";
-import ImageSliderComponent from "../component/imageSlider";
 import Icon from "../component/Icon";
-// import { S, URL } from "@env";
 
 import { axiosInstance } from "../component/tools";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -271,7 +268,7 @@ const HomeScreen = ({ navigation }) => {
                       color: Colors.primary,
                     }}
                   >
-                    See {user}{" "}
+                    See More
                   </Text>
                   <Icon
                     name="arrow-right-s-line"
