@@ -71,9 +71,11 @@ const HomeScreen = ({ navigation }) => {
           GIVEN_API_KEY: API_KEY,
         }
       );
-      let newaddons = await axiosInstance.post("/categories/newaddons", {
+      let newaddons = await axiosInstance.post("/subcategories/newaddons", {
         GIVEN_API_KEY: API_KEY,
       });
+      console.log("newaddons")
+      console.log(newaddons.data.data)
       console.log(featuredOnHome.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
@@ -268,7 +270,7 @@ const HomeScreen = ({ navigation }) => {
                       color: Colors.primary,
                     }}
                   >
-                    See More
+                    See {user}{" "}
                   </Text>
                   <Icon
                     name="arrow-right-s-line"
@@ -283,6 +285,7 @@ const HomeScreen = ({ navigation }) => {
           {/* Add */}
           <Video
             ref={video}
+            onPress={()=>alert("ok")}
             style={styles.video}
             source={{
               uri: ads?.homevideo ? ads?.homevideo[0]?.ads_mediaLink : "",
@@ -326,8 +329,8 @@ const HomeScreen = ({ navigation }) => {
                         }}
                       >
                         <NewlyAddedServices
-                          image={item?.category_photo}
-                          name={item?.category_name}
+                          image={item?.subCat_photo}
+                          name={item?.subCat_name}
                           cat_id={item?._id}
                           givencity={livedistrict}
                           navigation={navigation}
@@ -335,10 +338,10 @@ const HomeScreen = ({ navigation }) => {
                         {categories[index + 1] && (
                           <NewlyAddedServices
                             givencity={livedistrict}
-                            image={newaddons[index + 1]?.category_photo}
+                            image={newaddons[index + 1]?.subCat_photo}
                             cat_id={newaddons[index + 1]?._id}
                             navigation={navigation}
-                            name={newaddons[index + 1]?.category_name}
+                            name={newaddons[index + 1]?.subCat_name}
                             containerStyle={{ marginTop: 24, marginRight: 24 }}
                           />
                         )}

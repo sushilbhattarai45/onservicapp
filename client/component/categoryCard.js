@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    padding: 24,
+    padding: 10,
     borderRadius: 8,
     backgroundColor: "rgba(255, 255, 255, 1)",
     shadowColor: "rgba(0,0,0,0.25)",
@@ -59,9 +59,9 @@ const styles = StyleSheet.create({
   },
 
   Repair1: {
-    width: 59,
+    width: 70,
     borderRadius: 10,
-    height: 59.82,
+    height: 70,
     marginBottom: 12,
   },
   Txt035: {

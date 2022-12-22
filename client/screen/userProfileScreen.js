@@ -214,6 +214,8 @@ export default function UserProfileScreen({ navigation }) {
                     Edit User
                   </Text>
                 </Pressable>
+                
+                
                 <Pressable
                   style={{
                     flex: 1,
@@ -301,7 +303,7 @@ export default function UserProfileScreen({ navigation }) {
                     {userData?.user_contact}
                   </Text>
                 </View>
-                <View
+             {userData?.user_street   ? <View
                   style={{
                     paddingTop: 12,
                     flexDirection: "row",
@@ -314,9 +316,10 @@ export default function UserProfileScreen({ navigation }) {
                     style={{ marginRight: 8 }}
                   />
                   <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
-                    {userData?.user_street}
+                    {userData?.user_street +" "+ userData?.user_city}
                   </Text>
-                </View>
+              </View>
+              :null}
                 <View
                   style={{
                     paddingTop: 12,
@@ -413,6 +416,24 @@ export default function UserProfileScreen({ navigation }) {
                     <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
                       Edit User
                     </Text>
+                  </Pressable>
+                    <Pressable
+                    style={{
+                      paddingVertical: 12,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                    onPress={() =>  navigation.navigate("CreateNewPin", {
+          num: userData?.user_contact,
+        })}
+                  >
+                    <Icon
+                      name="lock-fill"
+                      size={20}
+                      style={{ marginRight: 8 }}
+                    />
+                    <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+Change Password                    </Text>
                   </Pressable>
                   <Pressable
                     style={{

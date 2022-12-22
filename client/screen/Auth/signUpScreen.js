@@ -55,13 +55,13 @@ const userValidationSchema = yup.object().shape({
   gender: yup.string().required("Please, select your gender"),
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
-  street: yup.string().min(6).required("Please, provide your street!"),
+  street: yup.string().min(6),
   confirm: yup
     .string()
     .label("confirm password")
     .required("Please, Reenter your Password!")
     .oneOf([yup.ref("password"), null], "Password must match"),
-  image: yup.string().required("Please Choose an Image"),
+  // image: yup.string().required("Please Choose an Image"),
 });
 
 export default registerUser = ({ navigation }) => {
@@ -78,7 +78,7 @@ export default registerUser = ({ navigation }) => {
     setLoad(true);
     setSubmitting(true);
     console.log(values);
-    const [img] = await uploadImage([values.image]);
+    // const [img] = await uploadImage([values.image]);
 
     let response = await axios.post(
       BASE_OUR_API_URL + "/v1/api/user/getOneUser",
@@ -98,7 +98,6 @@ export default registerUser = ({ navigation }) => {
         otp: genOtp,
         type: "signup",
         values: values,
-        img: img,
       });
     } else if (status == 201) {
       setLoad(false);
@@ -114,22 +113,22 @@ export default registerUser = ({ navigation }) => {
       await AsyncStorage.setItem("user_contact", value);
     } catch (e) {}
   };
-  const selectFile = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: "Images",
-      });
-      if (!result.cancelled) {
-        setFile(result);
-        let uri = result.uri;
-        return uri;
-      } else {
-        return values.image;
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const selectFile = async () => {
+  //   try {
+  //     let result = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: "Images",
+  //     });
+  //     if (!result.cancelled) {
+  //       setFile(result);
+  //       let uri = result.uri;
+  //       return uri;
+  //     } else {
+  //       return values.image;
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <View
@@ -214,7 +213,7 @@ export default registerUser = ({ navigation }) => {
                       flexDirection: "column",
                     }}
                   >
-                    <Pressable
+                    {/* <Pressable
                       style={{ borderRadius: 10 }}
                       onPress={async () => {
                         let img = await selectFile();
@@ -262,7 +261,7 @@ export default registerUser = ({ navigation }) => {
                       >
                         {values.image ? "Choose" : "Please Select"}
                       </Text>
-                    </Pressable>
+                    </Pressable> */}
                   </View>
                 </View>
                 <View style={styles.formContainer}>
@@ -493,7 +492,7 @@ export default registerUser = ({ navigation }) => {
                       marginTop: 12,
                     }}
                   >
-                    <Text>Street *</Text>
+                    <Text>Street</Text>
                     <TextInput
                       style={[
                         styles.inputStyle,

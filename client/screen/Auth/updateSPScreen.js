@@ -86,21 +86,15 @@ const userValidationSchema = yup.object().shape({
   gender: yup.string().required("Please, select your gender"),
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
-  bio: yup.string().min(6).required("Please, Enter your Bio!"),
-
+  bio: yup.string().min(6),
   street: yup
     .string()
-    .required()
-    .min(6)
-    .required("Please, provide your street!"),
+    .min(6),
   // image: yup.string().required(),
   location: yup.string(),
   tiktok: yup.string(),
-  street: yup
-    .string()
-    .required()
-    .min(6)
-    .required("Please, provide your street!"),
+  whatsapp:yup.string().max(10,"Number cant be more than 10 Dgits.").min(10,"Number cant be less than 10 Dgits."),
+
   // image: yup.string().required(),
   skills: yup
     .array()
@@ -142,6 +136,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         sp_gender: values.gender,
         sp_location: values.location,
         sp_updatedBy: "APP",
+        sp_whatsapp:values.whatsapp,
         sp_bio: values.bio,
         sp_tiktok: values.tiktok,
         sp_media: {
@@ -228,6 +223,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
             location: sp?.sp_location,
             tiktok: sp?.sp_tiktok,
             skills: sp?.sp_skills,
+            whatsapp:sp?.sp_whatsapp,
             bio: sp?.sp_bio,
             photo: sp?.sp_media.photo,
             video: sp?.sp_media.video,
@@ -310,7 +306,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Office/WhatsApp Number </Text>
+                <Text>Office/Business Number </Text>
                 <TextInput
                   keyboardType="numeric"
                   maxLength={10}
@@ -327,13 +323,44 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   value={values.officePhone}
                   onChangeText={handleChange("officePhone")}
                   onBlur={() => setFieldTouched("officePhone")}
-                  placeholder="Office/WhatsApp Number (optional)"
+                  placeholder="Office/Business Number (optional)"
                   placeholderTextColor={Colors.gray900}
                 />
                 {touched.officePhone && errors.officePhone && (
                   <Text style={{ color: "red" }}>{errors.officePhone}</Text>
                 )}
               </View>
+
+   <View
+                style={{
+                  marginTop: 12,
+                }}
+              >
+                <Text>Whatsapp Number </Text>
+                <TextInput
+                  keyboardType="numeric"
+                  maxLength={10}
+                  style={[
+                    styles.inputStyle,
+                    {
+                      borderColor: !touched.whatsapp
+                        ? Colors.gray900
+                        : errors.whatsapp
+                        ? "red"
+                        : Colors.primary,
+                    },
+                  ]}
+                  value={values.whatsapp}
+                  onChangeText={handleChange("whatsapp")}
+                  onBlur={() => setFieldTouched("whatsapp")}
+                  placeholder="Whatsapp Number (optional)"
+                  placeholderTextColor={Colors.gray900}
+                />
+                {touched.whatsapp && errors.whatsapp&& (
+                  <Text style={{ color: "red" }}>{errors.whatsapp}</Text>
+                )}
+              </View>
+
               <View
                 style={{
                   marginTop: 12,
@@ -508,7 +535,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>Street *</Text>
+                <Text>Street </Text>
                 <TextInput
                   style={[
                     styles.inputStyle,

@@ -14,6 +14,9 @@ const sp = new mongoose.Schema({
   sp_district: {
     type: String,
   },
+   sp_billid: {
+    type: String,
+  },
   sp_paid: {
     type: Boolean,
     default: false,
@@ -60,6 +63,9 @@ const sp = new mongoose.Schema({
   sp_bio: {
     type: String,
     default: "Onservic Service Provider",
+  },
+  sp_whatsapp: {
+    type:String,
   },
   sp_showReview: {
     type: Boolean,

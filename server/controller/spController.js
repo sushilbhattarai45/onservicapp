@@ -13,6 +13,7 @@ export const postSp = async (req, res) => {
     GIVEN_API_KEY,
     sp_name,
     user_id,
+    sp_whatsapp,
     sp_email,
     sp_contact,
     sp_district,
@@ -38,11 +39,14 @@ export const postSp = async (req, res) => {
         date: moment().format("ll"),
         time: moment().format("LT"),
       };
+      const sp_billid = Date.now();
       const exists = await spSchema.findOne({ sp_contact: sp_contact });
       if (!exists || exists?.length == 0) {
+        console.log(sp_whatsapp)
         const sp = new spSchema({
           sp_name: sp_name,
           user_id: user_id,
+          sp_billid: sp_billid,
           sp_email: sp_email,
           sp_contact: sp_contact,
           sp_district: sp_district,
@@ -54,6 +58,7 @@ export const postSp = async (req, res) => {
           sp_gender: sp_gender,
           sp_paid:sp_paid,
           sp_location: sp_location,
+          sp_whatsapp:sp_whatsapp,
           employee_contact: employee_contact,
           sp_toc: timeanddate,
           sp_profileImage: sp_profileImage,
@@ -111,6 +116,7 @@ export const updateSp = async (req, res) => {
     user_id,
     sp_email,
     sp_contact,
+    sp_whatsapp,
     sp_district,
     sp_officenumber,
     sp_skills,
@@ -363,3 +369,52 @@ export const getEmployeeCreatedSp = async (req, res) => {
     });
   }
 };
+ export const getMoreskilledSp  = async (req, res) => {
+  const { GIVEN_API_KEY, employee_contact } = req.body;
+  console.log("apiKEy", GIVEN_API_KEY);
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const data = await spSchema.find();
+      const finaldata = [];
+      data.map(item => {
+        if (item.sp_skills.length > 1)
+        {
+          finaldata.push(item)
+        }
+      })
+      
+      return res.json({ statuscode: 201, data: finaldata });
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
+      error: "WrongApi Key",
+    });
+  }
+};
+export const getimedSp = async (req, res) => {
+  const { GIVEN_API_KEY, creationdate } = req.body;
+  console.log("apiKEy", GIVEN_API_KEY);
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      const data = await spSchema.find();
+      const finaldata = [];
+      data.map(item => {
+        if (item.sp_toc.date == creationdate) {
+          finaldata.push(item)
+        }
+      })
+      
+      return res.json({ statuscode: 201, data: finaldata });
+    } catch (e) {
+      return res.json({ error: e });
+    }
+  } else {
+    return res.json({
+      statuscode: 600,
+      error: "WrongApi Key",
+    });
+  }
+}

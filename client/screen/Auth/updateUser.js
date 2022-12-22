@@ -53,7 +53,7 @@ const userValidationSchema = yup.object().shape({
   gender: yup.string().required("Please, select your gender"),
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
-  street: yup.string().min(6).required("Please, provide your street!"),
+  street: yup.string().min(6),
 
   image: yup.string().required(),
 });
@@ -70,8 +70,24 @@ export default UpdateUser = ({ navigation }) => {
 
   async function postData(values, { setSubmitting, setFieldError }) {
     setLoad(true);
-    const [img] = await uploadImage([values.image]);
-    let response = await axios.post(
+    if (values.image != userData?.user_profileImage) {
+
+      const [img] = await uploadImage([values.image]);
+      let image = img;
+      sendData(image, values);
+      console.log(1)
+    }
+    else
+    {
+   const  img = userData?.user_profileImage;
+            console.log(2)
+     sendData(img,values);
+
+    }
+  }
+  async function sendData(img,values)
+  {
+        let response = await axios.post(
       BASE_OUR_API_URL + "/v1/api/user/updateUser",
       {
         API_KEY: API_KEY,
@@ -473,7 +489,7 @@ export default UpdateUser = ({ navigation }) => {
                       marginTop: 12,
                     }}
                   >
-                    <Text>Street *</Text>
+                    <Text>Street </Text>
                     <TextInput
                       style={[
                         styles.inputStyle,

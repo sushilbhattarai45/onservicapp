@@ -10,6 +10,7 @@ import {
   secondSubCat,
   postSecond,
   getMixedsubCategories,
+  newAddonsSubCat,
 } from "../controller/subcategoryController.js";
 const router = Express.Router();
 // router.route("/").get(hello);
@@ -23,6 +24,7 @@ router.route("/getfilteredsubcat").post(getFilteredSubCat);
 router.route("/deleteallsubcategories").post(deleteAllSubCategories);
 router.route("/deleteone").post(deleteOne);
 router.route("/getsecond").post(secondSubCat);
+router.route("/newaddons").post(newAddonsSubCat);
 
 router.route("/postsecond").post(postSecond);
 
