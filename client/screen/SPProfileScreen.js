@@ -236,7 +236,11 @@ const SPProfileScreen = ({ navigation, route }) => {
         ) : (
           <Image
             source={require("../assets/images/logo1.png")}
-            style={{ ...styles.video, backgroundColor: Colors.gray500, height: 200 }}
+            style={{
+              ...styles.video,
+              backgroundColor: Colors.gray500,
+              height: 200,
+            }}
           />
         )}
         {/* <Text>Hello</Text> */}
@@ -684,9 +688,29 @@ const SPProfileScreen = ({ navigation, route }) => {
                   }}
                 >
                   {" "}
-                  9847000000
+                  NTC 9762592690
                 </Text>
               </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 4,
+                }}
+              >
+                <Icon name="phone-fill" size={14} color={Colors.gray900} />
+                <Text
+                  style={{
+                    fontFamily: "Regular",
+                    fontSize: 12,
+                    color: Colors.gray900,
+                  }}
+                >
+                  {" "}
+                  Ncell 9810623203
+                </Text>
+              </View>
+
               <View
                 style={{
                   flexDirection: "row",
@@ -703,7 +727,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                   }}
                 >
                   {" "}
-                  Butwal 3 Golpark
+                  Butwal 11, Rupandehi
                 </Text>
               </View>
               <View

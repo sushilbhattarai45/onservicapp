@@ -39,6 +39,7 @@ export default function SubCategoryScreen({
         GIVEN_API_KEY: API_KEY,
         category_id: category_id,
       });
+      console.log(data.data.data);
       setFilteredData(data.data.data);
       setSData(data.data.data);
       setEmptydata(false);

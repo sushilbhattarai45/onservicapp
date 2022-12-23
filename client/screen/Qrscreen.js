@@ -41,7 +41,7 @@ export default function QrScreen({ navigation, navigation: { goBack } }) {
       GIVEN_API_KEY: API_KEY,
       sp_contact: num,
     });
-
+    console.log(data.data.data);
     if (data.data.data != null) {
       navigation.navigate("Sp", {
         sp: data.data.data,

@@ -113,7 +113,7 @@ const HomeScreen = ({ navigation }) => {
   // }
 
   useEffect(() => {
-    // getLocation();
+    getData();
     const unsubscribe = navigation.addListener("focus", () => {
       getData();
     });

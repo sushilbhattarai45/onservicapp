@@ -27,6 +27,7 @@ export const ContextProvider = ({ children }) => {
   });
   const [errorMsg, setErrorMsg] = useState(null);
   useEffect(() => {
+    console.log(API_KEY);
     async function getLocation() {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {

@@ -141,7 +141,7 @@ export default function CategoryPersonListingScreen({
               </Text>
             )} */}
             {hasData
-              ? spData.map((persons) => {
+              ? spData?.map((persons) => {
                   return (
                     <View
                       style={{
