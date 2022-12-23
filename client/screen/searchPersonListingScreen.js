@@ -69,6 +69,7 @@ export default function SearchPersonListingScreen({ navigation }) {
     }
   }
   const getPeopleList = async ({ skill = value, location = filter.city }) => {
+    console.log("ok");
     const res = await axiosInstance.post("/sp/getSearchedSp/", {
       skill: skill,
       city: location,

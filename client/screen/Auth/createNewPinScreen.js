@@ -30,8 +30,9 @@ export default function CreateNewPinScreen({ navigation, route }) {
 
   const [second, setSecond] = useState("");
   async function setPin() {
-    if (first.length >=8 && second.length >= 8) {
+    if (first.length >= 8 && second.length >= 8) {
       if (first == second) {
+        console.log("ok");
         const updatePin = await axiosInstance.post("/user/forgetPin", {
           GIVEN_API_KEY: API_KEY,
           user_contact: num,
@@ -45,7 +46,7 @@ export default function CreateNewPinScreen({ navigation, route }) {
         setError({ second: "Password Not matched" });
       }
     } else {
-      if (first.length <8) {
+      if (first.length < 8) {
         setError({ first: "Password Must be of Minimum 8  digits long." });
       } else {
         setError({ second: "Password Must be of Minimum 8 digits long." });

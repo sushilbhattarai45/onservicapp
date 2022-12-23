@@ -128,6 +128,7 @@ const BecomeSPScreen = ({ navigation }) => {
     }
   };
   async function post(wnum, values, img, vdo) {
+    console.log("ok");
     let response = await axiosInstance.post("/sp/postsp/", {
       GIVEN_API_KEY: API_KEY,
       sp_name: values.name,

@@ -214,8 +214,7 @@ export default function UserProfileScreen({ navigation }) {
                     Edit User
                   </Text>
                 </Pressable>
-                
-                
+
                 <Pressable
                   style={{
                     flex: 1,
@@ -251,7 +250,7 @@ export default function UserProfileScreen({ navigation }) {
                       textTransform: "uppercase",
                     }}
                   >
-                    {isitsp ? "SP Screen" : "BEcome SP"}
+                    {isitsp ? "SP Screen" : "Become SP"}
                   </Text>
                 </Pressable>
                 <Pressable
@@ -303,23 +302,24 @@ export default function UserProfileScreen({ navigation }) {
                     {userData?.user_contact}
                   </Text>
                 </View>
-             {userData?.user_street   ? <View
-                  style={{
-                    paddingTop: 12,
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
-                  <Icon
-                    name="home-6-line"
-                    size={20}
-                    style={{ marginRight: 8 }}
-                  />
-                  <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
-                    {userData?.user_street +" "+ userData?.user_city}
-                  </Text>
-              </View>
-              :null}
+                {userData?.user_street ? (
+                  <View
+                    style={{
+                      paddingTop: 12,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Icon
+                      name="home-6-line"
+                      size={20}
+                      style={{ marginRight: 8 }}
+                    />
+                    <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
+                      {userData?.user_street + " " + userData?.user_city}
+                    </Text>
+                  </View>
+                ) : null}
                 <View
                   style={{
                     paddingTop: 12,
@@ -417,15 +417,17 @@ export default function UserProfileScreen({ navigation }) {
                       Edit User
                     </Text>
                   </Pressable>
-                    <Pressable
+                  <Pressable
                     style={{
                       paddingVertical: 12,
                       flexDirection: "row",
                       alignItems: "center",
                     }}
-                    onPress={() =>  navigation.navigate("CreateNewPin", {
-          num: userData?.user_contact,
-        })}
+                    onPress={() =>
+                      navigation.navigate("CreateNewPin", {
+                        num: userData?.user_contact,
+                      })
+                    }
                   >
                     <Icon
                       name="lock-fill"
@@ -433,7 +435,8 @@ export default function UserProfileScreen({ navigation }) {
                       style={{ marginRight: 8 }}
                     />
                     <Text style={{ fontSize: 18, fontFamily: "Regular" }}>
-Change Password                    </Text>
+                      Change Password{" "}
+                    </Text>
                   </Pressable>
                   <Pressable
                     style={{
