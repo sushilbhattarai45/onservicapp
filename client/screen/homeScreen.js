@@ -72,16 +72,15 @@ const HomeScreen = ({ navigation }) => {
       );
       let newaddons = await axiosInstance.post("/subcategories/newaddons", {
         GIVEN_API_KEY: API_KEY,
-      });   
-      console.log("newaddons")
-      console.log(newaddons.data.data)
+      });
+      console.log("newaddons");
+      console.log(newaddons.data.data);
       console.log(featuredOnHome.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
       else setNewaddons(null);
 
-      if (res.error || featuredOnHome.error || newaddons.error) {
-        console.error(res?.error);
+      if (featuredOnHome.error || newaddons.error) {
         console.error(featuredOnHome?.error);
         console.error(newaddons?.error);
       }
@@ -110,7 +109,6 @@ const HomeScreen = ({ navigation }) => {
               ) : (
                 <Text style={styles.userName}>Hello User!{API_URL}</Text>
               )}
-
               <Text style={styles.userNeedHelp}>{livedistrict}</Text>
             </View>
             <Icon
@@ -284,7 +282,7 @@ const HomeScreen = ({ navigation }) => {
           {/* Add */}
           <Video
             ref={video}
-            onPress={()=>alert("ok")}
+            onPress={() => alert("ok")}
             style={styles.video}
             source={{
               uri: ads?.homevideo ? ads?.homevideo[0]?.ads_mediaLink : "",

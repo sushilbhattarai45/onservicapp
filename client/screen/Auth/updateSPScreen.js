@@ -87,13 +87,14 @@ const userValidationSchema = yup.object().shape({
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
   bio: yup.string().min(6),
-  street: yup
-    .string()
-    .min(6),
+  street: yup.string().min(6),
   // image: yup.string().required(),
   location: yup.string(),
   tiktok: yup.string(),
-  whatsapp:yup.string().max(10,"Number cant be more than 10 Dgits.").min(10,"Number cant be less than 10 Dgits."),
+  whatsapp: yup
+    .string()
+    .max(10, "Number cant be more than 10 Dgits.")
+    .min(10, "Number cant be less than 10 Dgits."),
 
   // image: yup.string().required(),
   skills: yup
@@ -104,9 +105,8 @@ const userValidationSchema = yup.object().shape({
   photo: yup
     .array()
     .min(1, "Please provide photos of work")
-    .max(10, "Max of 10 photos can be added")
-    .required(),
-  video: yup.string().required("Please, provide video of your work"),
+    .max(10, "Max of 10 photos can be added"),
+  video: yup.string(),
 });
 
 const UpdateSpScreen = ({ route, navigation }) => {
@@ -120,10 +120,11 @@ const UpdateSpScreen = ({ route, navigation }) => {
 
   const submit = async (values) => {
     setLoad(true);
-    const img = await uploadImage(values.photo);
-    let [vdo] = await uploadImage([values.video]);
+    const img =
+      values.photo.length > 0 ? await uploadImage(values.photo) : null;
+    let vdo = values.video ? await uploadImage([values.video]) : null;
 
-    let response = axiosInstance
+    axiosInstance
       .post("/sp/updateSp/", {
         GIVEN_API_KEY: API_KEY,
         sp_name: values.name,
@@ -136,18 +137,18 @@ const UpdateSpScreen = ({ route, navigation }) => {
         sp_gender: values.gender,
         sp_location: values.location,
         sp_updatedBy: "APP",
-        sp_whatsapp:values.whatsapp,
+        sp_whatsapp: values.whatsapp,
         sp_bio: values.bio,
         sp_tiktok: values.tiktok,
         sp_media: {
           photo: img,
-          video: vdo,
+          video: vdo[0],
         },
         sp_profileImage: userData?.user_profileImage,
       })
       .then((response) => {
         setLoad(false);
-
+        console.log(response.data.sp);
         navigation.navigate("Sp", { sp: response?.data?.sp[0] });
       });
     setLoad(false);
@@ -223,7 +224,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
             location: sp?.sp_location,
             tiktok: sp?.sp_tiktok,
             skills: sp?.sp_skills,
-            whatsapp:sp?.sp_whatsapp,
+            whatsapp: sp?.sp_whatsapp,
             bio: sp?.sp_bio,
             photo: sp?.sp_media.photo,
             video: sp?.sp_media.video,
@@ -331,7 +332,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                 )}
               </View>
 
-   <View
+              <View
                 style={{
                   marginTop: 12,
                 }}
@@ -356,7 +357,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   placeholder="Whatsapp Number (optional)"
                   placeholderTextColor={Colors.gray900}
                 />
-                {touched.whatsapp && errors.whatsapp&& (
+                {touched.whatsapp && errors.whatsapp && (
                   <Text style={{ color: "red" }}>{errors.whatsapp}</Text>
                 )}
               </View>
@@ -414,18 +415,21 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   style={[
                     styles.inputStyle,
                     {
-                      color: "black",
                       borderColor: !touched.bio
                         ? Colors.gray900
                         : errors.bio
                         ? "red"
                         : Colors.primary,
+                      height: 150,
+                      textAlignVertical: "top",
                     },
                   ]}
+                  multiline={true}
+                  numberOfLines={5}
                   value={values.bio}
                   onChangeText={handleChange("bio")}
                   onBlur={() => setFieldTouched("bio")}
-                  placeholder="Bio"
+                  placeholder="Whats on your mind. (optional)"
                   placeholderTextColor={Colors.gray900}
                 />
                 {touched.bio && errors.bio && (

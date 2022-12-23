@@ -124,7 +124,7 @@ const SPProfileScreen = ({ navigation, route }) => {
     });
     let d = res?.data?.data;
     let sum = 0;
-    if (d.length > 0) {
+    if (d?.length > 0) {
       d?.map((item) => {
         sum += item.review_stars;
       });

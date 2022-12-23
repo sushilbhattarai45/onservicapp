@@ -93,12 +93,12 @@ const userValidationSchema = yup.object().shape({
   district: yup.string().required("Please, provide your district!"),
   city: yup.string().required("Please, provide your city!"),
   location: yup.string(),
-  whatsapp:yup.string().max(10,"Number cant be more than 10 Dgits.").min(10,"Number cant be less than 10 Dgits."),
-  tiktok: yup.string(),
-  street: yup
+  whatsapp: yup
     .string()
-    .min(6)
-   ,
+    .max(10, "Number cant be more than 10 Dgits.")
+    .min(10, "Number cant be less than 10 Dgits."),
+  tiktok: yup.string(),
+  street: yup.string().min(6),
   // image: yup.string().required(),
   skills: yup
     .array()
@@ -107,50 +107,44 @@ const userValidationSchema = yup.object().shape({
     .required(),
   photo: yup
     .array()
-    .min(1, "Please provide photos of work")
-    .max(10, "Max of 10 photos can be added")
-    .required(),
-  video: yup.string().required("Please, provide video of your work"),
+    .max(10, "Max of 10 photos can be added"),
+  video: yup.string(),
 });
 
 const BecomeSPScreen = ({ navigation }) => {
-    const [isChecked, setChecked] = useState(false);
-    const [whatsapp, setWhatsapp] = useState(null);
+  const [isChecked, setChecked] = useState(false);
+  const [whatsapp, setWhatsapp] = useState(null);
 
   const { subCategories, userData, setIsitSp } = useContext(AppContext);
   const [citiesList, setCitiesList] = useState([]);
   const [load, setLoad] = useState(false);
   const submit = async (values) => {
     setLoad(true);
-    const img = await uploadImage(values.photo);
-    let [vdo] = await uploadImage([values.video]);
+    const img =
+      values.photo.length > 0 ? await uploadImage(values.photo) : console.log('empty');
+    let vdo = values.video ? await uploadImage([values.video]) : console.log('empty');
+    console.log(img, vdo);
 
-    if (isChecked)
-    {
-post(values.officePhone,values,img,vdo)
+    if (isChecked) {
+      post(values.officePhone, values, img, vdo[0]);
+    } else {
+      post(" ", values, img, vdo[0]);
     }
-    else
-    {
-      post(" ",values,img,vdo)
-
-      }
-   
   };
-  async function post(wnum, values,img,vdo)
-  {
-     let response = await axiosInstance.post("/sp/postsp/", {
+  async function post(wnum, values, img, vdo) {
+    let response = await axiosInstance.post("/sp/postsp/", {
       GIVEN_API_KEY: API_KEY,
       sp_name: values.name,
       sp_email: values.email,
       sp_contact: values.phone,
-      sp_whatsapp:values.whatsapp,
+      sp_whatsapp: values.whatsapp,
       sp_district: values.district,
       sp_officeNumber: values.officePhone,
       sp_skills: values.skills,
       sp_city: values.city,
       sp_street: values.street,
       sp_gender: values.gender,
-      sp_whatsapp:wnum,
+      sp_whatsapp: wnum,
       sp_bio: values.bio,
       sp_location: values.location,
       sp_tiktok: values.tiktok,
@@ -163,6 +157,7 @@ post(values.officePhone,values,img,vdo)
 
       sp_profileImage: userData?.user_profileImage,
     });
+    console.log(response.data);
     setLoad(false);
     setIsitSp(response.data.sp);
     navigation.navigate("Home");
@@ -231,7 +226,7 @@ post(values.officePhone,values,img,vdo)
             officePhone: "",
             district: "",
             gender: userData?.user_gender,
-whatsapp:"",
+            whatsapp: "",
             city: "",
             bio: "",
             street: userData?.user_street,
@@ -370,22 +365,26 @@ whatsapp:"",
                 {touched.officePhone && errors.officePhone && (
                   <Text style={{ color: "red" }}>{errors.officePhone}</Text>
                 )}
-                <View style={{ flex:1,display: "flex",flexDirection:"row",marginTop:5,}}>
-                <Checkbox
-                           
-          value={isChecked}
+                <View
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "row",
+                    marginTop: 5,
+                  }}
+                >
+                  <Checkbox
+                    value={isChecked}
                     onValueChange={(value) => {
-                      setChecked(value)
-                     
+                      setChecked(value);
                     }}
-                  
-          color={isChecked ? Colors.primary : undefined}
-              
-                />
-                  <Text style={{ marginLeft: 5 }}>This number is your  Whatsapp Number</Text>
-             </View>      
+                    color={isChecked ? Colors.primary : undefined}
+                  />
+                  <Text style={{ marginLeft: 5 }}>
+                    This number is your Whatsapp Number
+                  </Text>
+                </View>
               </View>
-                
 
               <View
                 style={{
@@ -446,8 +445,12 @@ whatsapp:"",
                         : errors.bio
                         ? "red"
                         : Colors.primary,
+                      height: 150,
+                      textAlignVertical: "top",
                     },
                   ]}
+                  multiline={true}
+                  numberOfLines={5}
                   value={values.bio}
                   onChangeText={handleChange("bio")}
                   onBlur={() => setFieldTouched("bio")}
@@ -689,7 +692,7 @@ whatsapp:"",
                 )}
               </View>
               <View style={{ marginTop: 12 }}>
-                <Text>Upload Photos of your work! *</Text>
+                <Text>Upload Photos of your work!</Text>
                 <View
                   style={{
                     display: "flex",
@@ -804,7 +807,7 @@ whatsapp:"",
               </View>
 
               <View style={{ marginTop: 12 }}>
-                <Text>Upload Video of your work! *</Text>
+                <Text>Upload Video of your work!</Text>
                 <View
                   style={{
                     display: "flex",
