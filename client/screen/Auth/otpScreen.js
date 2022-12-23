@@ -103,7 +103,6 @@ export default function OtpScreen({ navigation, route }) {
         setData(finaldata);
         setUserData(finaldata);
         setLogged("true");
-
         setUser(values.phone);
         setIsitSp(null);
         await storeData(values.phone);
