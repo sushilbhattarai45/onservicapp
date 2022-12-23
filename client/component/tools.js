@@ -97,7 +97,7 @@ export async function getSms(otp, num) {
 }
 export const BASE_OUR_API_URL = API_URL;
 // export const BASE_OUR_API_URL = "http://192.168.100.11:3001";
-
+console.log(BASE_OUR_API_URL)
 export const axiosInstance = axios.create({
   baseURL: BASE_OUR_API_URL + "/v1/api/",
   headers: { "Content-Type": "application/json" },

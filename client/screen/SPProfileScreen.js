@@ -1035,8 +1035,8 @@ const SPProfileScreen = ({ navigation, route }) => {
           <Button
             label="Share Review"
             onPress={() => {
-              if (review.length < 4) {
-                setReviewError("Minimum 4 charachets is rewuired");
+              if (review.length < 3) {
+                setReviewError("Minimum 3 characters is required");
               } else if (review.split(" ").length > 50) {
                 setReviewError("Max no of word is 50");
               } else {
