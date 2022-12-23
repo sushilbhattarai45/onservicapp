@@ -277,7 +277,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                 }}
               />
               <Text>{sp?.user_profileImage}</Text>
-              {sp.sp_whatsapp && (
+              {sp?.sp_whatsapp && (
                 <ActionIcon
                   name="chat-1-line"
                   onPress={() => {
@@ -471,7 +471,7 @@ const SPProfileScreen = ({ navigation, route }) => {
               marginTop: 32,
             }}
             onPress={() =>
-              user && user != sp.sp_contact ? popup.current.show() : null
+              user && user != sp?.sp_contact ? popup.current.show() : null
             }
           >
             <Text style={{ fontSize: 40, fontFamily: "Bold" }}>
@@ -497,7 +497,7 @@ const SPProfileScreen = ({ navigation, route }) => {
             >
               {reviews?.length} Reviews
             </Text>
-            {user && user != sp.sp_contact ? (
+            {user && user != sp?.sp_contact ? (
               <View style={{ marginTop: 24 }}>
                 <Button label="Rate Us" onPress={() => popup.current.show()} />
               </View>
@@ -875,7 +875,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                   .post("/sp/updateSettings", {
                     GIVEN_API_KEY: API_KEY,
                     sp_status: value ? "ACTIVE" : "INACTIVE",
-                    sp_contact: sp.sp_contact,
+                    sp_contact: sp?.sp_contact,
                     sp_showReview: showReviews,
                   })
                   .then(() => setSpStatus(value));

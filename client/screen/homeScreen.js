@@ -73,9 +73,9 @@ const HomeScreen = ({ navigation }) => {
       );
       let newaddons = await axiosInstance.post("/subcategories/newaddons", {
         GIVEN_API_KEY: API_KEY,
-      });   
-      console.log("newaddons")
-      console.log(newaddons.data.data)
+      });
+      console.log("newaddons");
+      console.log(newaddons.data.data);
       console.log(featuredOnHome.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
@@ -134,7 +134,7 @@ const HomeScreen = ({ navigation }) => {
             <View>
               {categories !== [] &&
                 categories
-                  .slice(0, categoriesOpen ? categories.length : 4)
+                  ?.slice(0, categoriesOpen ? categories.length : 4)
                   .map((item, index) => {
                     if (index % 2 == 0) {
                       return (
