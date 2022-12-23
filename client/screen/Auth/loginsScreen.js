@@ -56,6 +56,7 @@ export default function LoginScreen({ navigation, route, path }) {
         setFocusColor1("red");
       }
     } else {
+      console.log("ok");
       const res = await axiosInstance.post("/user/login", {
         GIVEN_API_KEY: API_KEY,
         user_num: num,

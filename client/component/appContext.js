@@ -18,7 +18,7 @@ export const ContextProvider = ({ children }) => {
   const [subCategories, setSubCategories] = useState([]);
   const [ads, setAds] = useState({});
   const [location, setLocation] = useState(null);
-  const [snearyou, setSNearYou] = useState();
+  const [snearyou, setSNearYou] = useState(null);
   const [livedistrict, setLiveDistrict] = useState("");
   const [livedcity, setLiveCty] = useState("");
 
@@ -29,6 +29,7 @@ export const ContextProvider = ({ children }) => {
   });
   const [errorMsg, setErrorMsg] = useState(null);
   useEffect(() => {
+    console.log(API_KEY);
     async function getLocation() {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -57,7 +58,6 @@ export const ContextProvider = ({ children }) => {
           ".json?country=np&limit=1&access_token=pk.eyJ1Ijoib25zZXJ2aWMwMSIsImEiOiJjbGFjbGYycGIwYmljM3ZtaXFkbGFjZTcxIn0.sRocgrMGOjXS98-r7t1G_g";
 
         let res = await axios.get(url);
-        alert(JSON.stringify(res.data.features[0].context))
         if (res) {
           let district = res?.data?.features[0].context[1].text;
           let city = res?.data?.features[0].context[0].text;
@@ -92,7 +92,6 @@ export const ContextProvider = ({ children }) => {
       });
       if (!res.error) {
         setAds(res.data);
-        console.log(res.data);
       }
     };
     const getUser = async () => {

@@ -33,6 +33,7 @@ export default function ForgetPinScreen() {
     );
   });
   async function forget() {
+    console.log("ok");
     if (num.length == 10) {
       const check = await axiosInstance.post("/user/getOneUser", {
         GIVEN_API_KEY: API_KEY,

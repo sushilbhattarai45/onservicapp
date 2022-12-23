@@ -37,10 +37,8 @@ const gendersList = [
 
 const userValidationSchema = yup.object().shape({
   name: yup.string().min(6).required("Please, provide your name!"),
-  email: yup
-    .string()
-    .email("Please, provide a valid email!"),
-    // .required("Please, provide your email!"),
+  email: yup.string().email("Please, provide a valid email!"),
+  // .required("Please, provide your email!"),
   phone: yup
     .number()
     .typeError("Phone number must be a number")
@@ -50,7 +48,7 @@ const userValidationSchema = yup.object().shape({
   password: yup
     .string()
     .min(8, "Password must be greater or equal to 8  digits")
-   
+
     .required("Please, create a new Password!"),
   gender: yup.string().required("Please, select your gender"),
   district: yup.string().required("Please, provide your district!"),
@@ -90,8 +88,9 @@ export default registerUser = ({ navigation }) => {
     const status = response?.data?.statuscode;
     if (status == 400) {
       setLoad(false);
+      console.log("ok");
       let genOtp = Math.floor(1000 + Math.random() * 9000);
-      console.log(genOtp)
+      console.log(genOtp);
       getSms(genOtp, values.phone);
       navigation.navigate("OtpScreen", {
         num: values.phone,

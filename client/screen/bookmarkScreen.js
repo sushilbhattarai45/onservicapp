@@ -35,6 +35,7 @@ export default function BookMarkScreen({ navigation }) {
     const unsubscribe = navigation.addListener(
       "focus",
       async () => {
+        console.log("ok");
         getBm();
         await getads();
         // if (ads!=null)
