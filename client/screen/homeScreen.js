@@ -43,6 +43,7 @@ const HomeScreen = ({ navigation }) => {
     snearyou,
     logged,
     userData,
+    livedcity,
     livedistrict,
     user,
     ads,
@@ -72,9 +73,9 @@ const HomeScreen = ({ navigation }) => {
       );
       let newaddons = await axiosInstance.post("/subcategories/newaddons", {
         GIVEN_API_KEY: API_KEY,
-      });
-      console.log("newaddons");
-      console.log(newaddons.data.data);
+      });   
+      console.log("newaddons")
+      console.log(newaddons.data.data)
       console.log(featuredOnHome.data);
       if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
       if (!newaddons.error) setNewaddons(newaddons.data.data);
@@ -107,9 +108,10 @@ const HomeScreen = ({ navigation }) => {
                   {/* {userData?.user_name} */}
                 </Text>
               ) : (
-                <Text style={styles.userName}>Hello User!{API_URL}</Text>
+                <Text style={styles.userName}>Hello User!</Text>
               )}
-              <Text style={styles.userNeedHelp}>{livedistrict}</Text>
+
+              <Text style={styles.userNeedHelp}>{livedcity}</Text>
             </View>
             <Icon
               onPress={() => navigation.navigate("QrScreen")}
@@ -267,7 +269,7 @@ const HomeScreen = ({ navigation }) => {
                       color: Colors.primary,
                     }}
                   >
-                    See {user}{" "}
+                    See More{" "}
                   </Text>
                   <Icon
                     name="arrow-right-s-line"

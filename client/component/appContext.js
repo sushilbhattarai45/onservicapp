@@ -18,6 +18,8 @@ export const ContextProvider = ({ children }) => {
   const [location, setLocation] = useState(null);
   const [snearyou, setSNearYou] = useState();
   const [livedistrict, setLiveDistrict] = useState("");
+  const [livedcity, setLiveCty] = useState("");
+
   const [lpermission, setLpermission] = useState("false");
   const [coords, setCoords] = useState({
     latitude: "",
@@ -51,16 +53,20 @@ export const ContextProvider = ({ children }) => {
           location?.coords?.longitude +
           "," +
           location?.coords?.latitude +
-          ".json?country=np&limit=1&types=district&access_token=pk.eyJ1Ijoib25zZXJ2aWMwMSIsImEiOiJjbGFjbGYycGIwYmljM3ZtaXFkbGFjZTcxIn0.sRocgrMGOjXS98-r7t1G_g";
+          ".json?country=np&limit=1&access_token=pk.eyJ1Ijoib25zZXJ2aWMwMSIsImEiOiJjbGFjbGYycGIwYmljM3ZtaXFkbGFjZTcxIn0.sRocgrMGOjXS98-r7t1G_g";
 
         let res = await axios.get(url);
         if (res) {
-          let district = res?.data?.features[0].text;
+          let district = res?.data?.features[0].context[1].text;
           setLiveDistrict(district);
+
+          let city = res?.data?.features[0].context[0].text;
+          setLiveCty(city);
 
           const cat = await axiosInstance.post("/sp/filteredsubcat", {
             GIVEN_API_KEY: API_KEY,
-            city: district,
+            city: livedcity,
+            district: livedistrict,
           });
 
           setSNearYou(cat?.data?.subcat);
@@ -157,7 +163,9 @@ export const ContextProvider = ({ children }) => {
     const getSubCategories = () => {
       try {
         axiosInstance
-          .post("/subcategories/getmixedsubcategory", { GIVEN_API_KEY: API_KEY })
+          .post("/subcategories/getmixedsubcategory", {
+            GIVEN_API_KEY: API_KEY,
+          })
           .then((res) => {
             setSubCategories(res.data.data);
           });
@@ -185,6 +193,8 @@ export const ContextProvider = ({ children }) => {
         livedistrict,
         setLiveDistrict,
         setCoords,
+        setLiveCty,
+        livedcity,
         setUser,
         setLogged,
         user,
