@@ -71,23 +71,16 @@ export default UpdateUser = ({ navigation }) => {
   async function postData(values, { setSubmitting, setFieldError }) {
     setLoad(true);
     if (values.image != userData?.user_profileImage) {
-
       const img = await uploadImage([values.image]);
       let image = img[0];
       sendData(image, values);
-      console.log(1)
-    }
-    else
-    {
-   const  img = userData?.user_profileImage;
-            console.log(2)
-     sendData(img,values);
-
+    } else {
+      const img = userData?.user_profileImage;
+      sendData(img, values);
     }
   }
-  async function sendData(img,values)
-  {
-        let response = await axios.post(
+  async function sendData(img, values) {
+    let response = await axios.post(
       BASE_OUR_API_URL + "/v1/api/user/updateUser",
       {
         API_KEY: API_KEY,
