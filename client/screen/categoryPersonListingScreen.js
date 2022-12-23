@@ -71,7 +71,7 @@ export default function CategoryPersonListingScreen({
         style={{ paddingHorizontal: 10 }}
         icon="arrow-left-line"
       />
-     
+
       <View style={{ marginBottom: 50 }}>
         <ScrollView
           style={{ backgroundColor: Colors.gray200 }}
@@ -104,7 +104,16 @@ export default function CategoryPersonListingScreen({
             </Pressable>
           ) : null}
           <View style={{ marginTop: 20 }}>
-            {livedistrict ? (
+            <Text
+              style={{
+                fontFamily: "Regular",
+                marginHorizontal: 15,
+              }}
+            >
+              This Data contains the list of the service provider who are near
+              to your city.
+            </Text>
+            {/* {livedistrict ? (
               <Text
                 style={{
                   fontFamily: "Regular",
@@ -131,7 +140,7 @@ export default function CategoryPersonListingScreen({
                 This Data contains the list of the service provider from All
                 Over Nepal
               </Text>
-            )}
+            )} */}
             {hasData
               ? spData.map((persons) => {
                   return (
