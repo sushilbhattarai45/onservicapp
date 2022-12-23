@@ -72,8 +72,8 @@ export default UpdateUser = ({ navigation }) => {
     setLoad(true);
     if (values.image != userData?.user_profileImage) {
 
-      const [img] = await uploadImage([values.image]);
-      let image = img;
+      const img = await uploadImage([values.image]);
+      let image = img[0];
       sendData(image, values);
       console.log(1)
     }
