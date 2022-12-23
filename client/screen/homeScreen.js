@@ -108,7 +108,7 @@ const HomeScreen = ({ navigation }) => {
                   {/* {userData?.user_name} */}
                 </Text>
               ) : (
-                <Text style={styles.userName}>Hello User!{API_URL}</Text>
+                <Text style={styles.userName}>Hello User!</Text>
               )}
 
               <Text style={styles.userNeedHelp}>{livedistrict}</Text>
@@ -269,7 +269,7 @@ const HomeScreen = ({ navigation }) => {
                       color: Colors.primary,
                     }}
                   >
-                    See {user}{" "}
+                    See More{" "}
                   </Text>
                   <Icon
                     name="arrow-right-s-line"
