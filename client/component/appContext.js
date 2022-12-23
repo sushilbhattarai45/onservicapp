@@ -56,7 +56,6 @@ export const ContextProvider = ({ children }) => {
           ".json?country=np&limit=1&access_token=pk.eyJ1Ijoib25zZXJ2aWMwMSIsImEiOiJjbGFjbGYycGIwYmljM3ZtaXFkbGFjZTcxIn0.sRocgrMGOjXS98-r7t1G_g";
 
         let res = await axios.get(url);
-        alert(JSON.stringify(res.data.features[0].context));
         if (res) {
           let district = res?.data?.features[0].context[1].text;
           let city = res?.data?.features[0].context[0].text;
