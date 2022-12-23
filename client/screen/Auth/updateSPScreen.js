@@ -120,7 +120,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
   const submit = async (values) => {
     setLoad(true);
     const img =
-      values.photo.length > 0 ? await uploadImage(values.photo) : null;
+      values.photo ? await uploadImage(values.photo) : null;
     let vdo = values.video ? await uploadImage([values.video]) : null;
 
     axiosInstance
@@ -141,7 +141,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         sp_tiktok: values.tiktok,
         sp_media: {
           photo: img,
-          video: vdo[0],
+          video: vdo? vdo[0]: null,
         },
         sp_profileImage: userData?.user_profileImage,
       })

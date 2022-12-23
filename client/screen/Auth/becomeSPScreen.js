@@ -105,9 +105,7 @@ const userValidationSchema = yup.object().shape({
     .of(yup.string().required())
     .min(1, "Please, select at least one skills.")
     .required(),
-  photo: yup
-    .array()
-    .max(10, "Max of 10 photos can be added"),
+  photo: yup.array().max(10, "Max of 10 photos can be added"),
   video: yup.string(),
 });
 
@@ -120,15 +118,13 @@ const BecomeSPScreen = ({ navigation }) => {
   const [load, setLoad] = useState(false);
   const submit = async (values) => {
     setLoad(true);
-    const img =
-      values.photo.length > 0 ? await uploadImage(values.photo) : console.log('empty');
-    let vdo = values.video ? await uploadImage([values.video]) : console.log('empty');
-    console.log(img, vdo);
-
+    const img = values.photo ? await uploadImage(values.photo) : null;
+    let vdo = values.video ? await uploadImage([values.video]) : null;
+    
     if (isChecked) {
-      post(values.officePhone, values, img, vdo[0]);
+      post(values.officePhone, values, img, vdo ? vdo[0] : null);
     } else {
-      post(" ", values, img, vdo[0]);
+      post(" ", values, img, vdo ? vdo[0] : null);
     }
   };
   async function post(wnum, values, img, vdo) {
