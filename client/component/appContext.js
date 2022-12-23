@@ -4,8 +4,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import * as Location from "expo-location";
 import { Alert } from "react-native";
-const AppContext = createContext({});
 import { API_KEY } from "@env";
+
+
+const AppContext = createContext({});
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isitsp, setIsitSp] = useState(null);
@@ -43,7 +45,6 @@ export const ContextProvider = ({ children }) => {
         text = errorMsg;
       } else if (location) {
         setLpermission("true");
-
         setCoords({
           latitude: location?.coords?.latitude,
           longitude: location?.coords?.longitude,

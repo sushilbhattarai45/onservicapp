@@ -2,25 +2,20 @@ import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Image,
-  Text,
   View,
   Linking,
-  ImageBackground,
   ScrollView,
   Pressable,
 } from "react-native";
 import SubCategory from "../component/subCategory";
 import Header from "../component/Header";
-import Constants from "expo-constants";
 import { Colors } from "../styles/main";
-import axios from "axios";
 import { axiosInstance } from "../component/tools";
 import Search from "../component/searchBar";
 import { API_KEY } from "@env";
 
 export default function SubCategoryScreen({
   route,
-  category_name,
   navigation: { goBack },
 }) {
   const { category_id, cat_name } = route.params;

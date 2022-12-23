@@ -185,7 +185,7 @@ const HomeScreen = ({ navigation }) => {
             <View>
               {categories !== [] &&
                 categories
-                  .slice(0, categoriesOpen ? categories.length : 4)
+                  ?.slice(0, categoriesOpen ? categories.length : 4)
                   .map((item, index) => {
                     if (index % 2 == 0) {
                       return (
