@@ -497,35 +497,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   placeholder="City (Eg. Butwal or Eg. Hetauda)"
                   placeholderTextColor={Colors.gray900}
                 />
-                {/* <Dropdown
-                  style={[
-                    {
-                      width: "100%",
-                      marginTop: 8,
-                      marginRight: -10,
-                      borderWidth: 1,
-                      padding: 16,
-                      borderRadius: 4,
-                      height: 50,
-                    },
-                    !touched.city
-                      ? { borderColor: Colors.gray900 }
-                      : values.city
-                      ? { borderColor: Colors.primary }
-                      : { borderColor: "red" },
-                  ]}
-                  placeholderStyle={{ color: Colors.gray900, fontSize: 14 }}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  data={citiesList ? citiesList : []}
-                  labelField="label"
-                  onBlur={() => setFieldTouched("city")}
-                  valueField="label"
-                  placeholder={"Select item"}
-                  value={values.city}
-                  onChange={(item) => {
-                    setFieldValue("city", item.label);
-                  }}
-                /> */}
+
                 {!values.city && touched.city ? (
                   <Text style={{ color: "red" }}>{errors.city}</Text>
                 ) : null}

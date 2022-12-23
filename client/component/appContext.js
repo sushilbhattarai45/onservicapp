@@ -56,22 +56,20 @@ export const ContextProvider = ({ children }) => {
           ".json?country=np&limit=1&access_token=pk.eyJ1Ijoib25zZXJ2aWMwMSIsImEiOiJjbGFjbGYycGIwYmljM3ZtaXFkbGFjZTcxIn0.sRocgrMGOjXS98-r7t1G_g";
 
         let res = await axios.get(url);
+        alert(JSON.stringify(res.data.features[0].context));
         if (res) {
           let district = res?.data?.features[0].context[1].text;
-          setLiveDistrict(district);
-
           let city = res?.data?.features[0].context[0].text;
+          setLiveDistrict(district);
           setLiveCty(city);
 
           const cat = await axiosInstance.post("/sp/filteredsubcat", {
             GIVEN_API_KEY: API_KEY,
-            city: livedcity,
-            district: livedistrict,
+            city: city,
+            district: district,
           });
-
-          setSNearYou(cat?.data?.subcat);
-          console.log("ok");
-          console.log(snearyou);
+          // alert(await cat?.data?.subcat);
+          setSNearYou(await cat?.data?.subcat);
         }
       }
     }
