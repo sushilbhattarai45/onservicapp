@@ -102,9 +102,7 @@ const userValidationSchema = yup.object().shape({
     .of(yup.string().required())
     .min(1, "Please, select at least one skills.")
     .required(),
-  photo: yup
-    .array()
-    .max(10, "Max of 10 photos can be added"),
+  photo: yup.array().max(10, "Max of 10 photos can be added"),
   video: yup.string(),
 });
 
@@ -119,8 +117,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
 
   const submit = async (values) => {
     setLoad(true);
-    const img =
-      values.photo ? await uploadImage(values.photo) : null;
+    const img = values.photo ? await uploadImage(values.photo) : null;
     let vdo = values.video ? await uploadImage([values.video]) : null;
 
     axiosInstance
@@ -141,7 +138,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
         sp_tiktok: values.tiktok,
         sp_media: {
           photo: img,
-          video: vdo? vdo[0]: null,
+          video: vdo ? vdo[0] : null,
         },
         sp_profileImage: userData?.user_profileImage,
       })
@@ -226,7 +223,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
             whatsapp: sp?.sp_whatsapp,
             bio: sp?.sp_bio,
             photo: sp?.sp_media.photo,
-            video: sp?.sp_media.video,
+            video: sp?.sp_media.video ? sp?.sp_media.video : "",
           }}
           validationSchema={userValidationSchema}
           onSubmit={(values) => submit(values)}
