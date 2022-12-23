@@ -28,6 +28,7 @@ export const postSp = async (req, res) => {
     sp_location,
     sp_platform,
     sp_paid,
+    sp_status,
     employee_contact,
     sp_profileImage,
     sp_media,
@@ -44,6 +45,7 @@ export const postSp = async (req, res) => {
       if (!exists || exists?.length == 0) {
         console.log(sp_whatsapp);
         const sp = new spSchema({
+          sp_status: sp_status,
           sp_name: sp_name,
           user_id: user_id,
           sp_billid: sp_billid,
