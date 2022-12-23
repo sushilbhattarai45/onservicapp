@@ -36,15 +36,17 @@ import NewlyAddedServices from "../component/NewlyAddedServices";
 import { ImageSlider } from "react-native-image-slider-banner";
 import { Video } from "expo-av";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as Location from "expo-location";
+import axios from "axios";
 
 const HomeScreen = ({ navigation }) => {
   const {
     categories,
-    snearyou,
     logged,
     userData,
     livedcity,
     livedistrict,
+    snearyou,
     user,
     ads,
     lpermission,
@@ -52,41 +54,90 @@ const HomeScreen = ({ navigation }) => {
   } = useContext(AppContext);
   const [newaddons, setNewaddons] = useState();
   const [featured, setFeatured] = useState();
+  // const [livedistrict, setLiveDistrict] = useState(null);
+  // const [livedcity, setLiveCity] = useState(null);
+  // const [snearyou, setSNearYou] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState();
   const video = useRef(null);
+  const [coords, setCoords] = useState({
+    latitude: "",
+    longitude: "",
+  });
+  // const [errorMsg, setErrorMsg] = useState(null);
+  // async function getLocation() {
+  //   let { status } = await Location.requestForegroundPermissionsAsync();
+  //   if (status !== "granted") {
+  //     setLpermission("false");
+  //     setErrorMsg("Permission to access location was denied");
+  //     return;
+  //   }
+
+  //   let location = await Location.getCurrentPositionAsync({});
+  //   let text = "Waiting..";
+  //   if (errorMsg) {
+  //     text = errorMsg;
+  //   } else if (location) {
+  //     setLpermission("true");
+
+  //     setCoords({
+  //       latitude: location?.coords?.latitude,
+  //       longitude: location?.coords?.longitude,
+  //     });
+  //     text = location?.coords?.latitude;
+  //     let url =
+  //       "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
+  //       location?.coords?.longitude +
+  //       "," +
+  //       location?.coords?.latitude +
+  //       ".json?country=np&limit=1&access_token=pk.eyJ1Ijoib25zZXJ2aWMwMSIsImEiOiJjbGFjbGYycGIwYmljM3ZtaXFkbGFjZTcxIn0.sRocgrMGOjXS98-r7t1G_g";
+
+  //     let res = await axios.get(url);
+  //     if (res) {
+  //       let district = res?.data?.features[0].context[1].text;
+  //       setLiveDistrict(district);
+
+  //       let city = res?.data?.features[0].context[0].text;
+  //       setLiveCity(city);
+
+  //       const cat = await axiosInstance.post("/sp/filteredsubcat", {
+  //         GIVEN_API_KEY: API_KEY,
+  //         city: livedcity,
+  //         district: livedistrict,
+  //       });
+
+  //       setSNearYou(cat?.data?.subcat);
+  //       console.log(JSON.stringify(snearyou));
+  //     }
+  //   }
+  // }
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener(
-      "focus",
-      () => {
-        getData();
-      },
-      [livedistrict]
-    );
-    async function getData() {
-      let featuredOnHome = await axiosInstance.post(
-        "/categories/featuredOnHome",
-        {
-          GIVEN_API_KEY: API_KEY,
-        }
-      );
-      let newaddons = await axiosInstance.post("/subcategories/newaddons", {
-        GIVEN_API_KEY: API_KEY,
-      });   
-      console.log("newaddons")
-      console.log(newaddons.data.data)
-      console.log(featuredOnHome.data);
-      if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
-      if (!newaddons.error) setNewaddons(newaddons.data.data);
-      else setNewaddons(null);
+    // getLocation();
+    const unsubscribe = navigation.addListener("focus", () => {
+      getData();
+    });
 
-      if (featuredOnHome.error || newaddons.error) {
-        console.error(featuredOnHome?.error);
-        console.error(newaddons?.error);
+    return unsubscribe;
+  }, [livedistrict]);
+  async function getData() {
+    let featuredOnHome = await axiosInstance.post(
+      "/categories/featuredOnHome",
+      {
+        GIVEN_API_KEY: API_KEY,
       }
+    );
+    let newaddons = await axiosInstance.post("/subcategories/newaddons", {
+      GIVEN_API_KEY: API_KEY,
+    });
+
+    if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
+    if (!newaddons.error) setNewaddons(newaddons.data.data);
+    else setNewaddons(null);
+
+    if (featuredOnHome.error || newaddons.error) {
     }
-  }, []);
+  }
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -384,7 +435,7 @@ const HomeScreen = ({ navigation }) => {
               Services Near You
             </Text>
             {lpermission == "true" ? (
-              snearyou ? (
+              snearyou != null ? (
                 <FlatList
                   style={{ marginBottom: 32 }}
                   horizontal={true}

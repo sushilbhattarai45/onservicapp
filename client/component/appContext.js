@@ -16,7 +16,7 @@ export const ContextProvider = ({ children }) => {
   const [subCategories, setSubCategories] = useState([]);
   const [ads, setAds] = useState({});
   const [location, setLocation] = useState(null);
-  const [snearyou, setSNearYou] = useState();
+  const [snearyou, setSNearYou] = useState(null);
   const [livedistrict, setLiveDistrict] = useState("");
   const [livedcity, setLiveCty] = useState("");
 
@@ -70,6 +70,8 @@ export const ContextProvider = ({ children }) => {
           });
 
           setSNearYou(cat?.data?.subcat);
+          console.log("ok");
+          console.log(snearyou);
         }
       }
     }
@@ -91,7 +93,6 @@ export const ContextProvider = ({ children }) => {
       });
       if (!res.error) {
         setAds(res.data);
-        console.log(res.data);
       }
     };
     const getUser = async () => {

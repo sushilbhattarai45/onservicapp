@@ -14,7 +14,6 @@ import Search from "../component/searchBar";
 import { Colors } from "../styles/main";
 import Header from "../component/Header";
 import { API_KEY } from "@env";
-
 import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
 export default function CategoryPersonListingScreen({

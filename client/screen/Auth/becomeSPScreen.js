@@ -120,7 +120,7 @@ const BecomeSPScreen = ({ navigation }) => {
     setLoad(true);
     const img = values.photo ? await uploadImage(values.photo) : null;
     let vdo = values.video ? await uploadImage([values.video]) : null;
-    
+
     if (isChecked) {
       post(values.officePhone, values, img, vdo ? vdo[0] : null);
     } else {
@@ -504,7 +504,7 @@ const BecomeSPScreen = ({ navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>City *</Text>
+                <Text>City (Municipality/ Rural Municipality) *</Text>
                 <TextInput
                   style={[
                     styles.inputStyle,
@@ -519,7 +519,7 @@ const BecomeSPScreen = ({ navigation }) => {
                   value={values.city}
                   onChangeText={handleChange("city")}
                   onBlur={() => setFieldTouched("city")}
-                  placeholder="City"
+                  placeholder="City (Eg. Butwal or Eg. Hetauda)"
                   placeholderTextColor={Colors.gray900}
                 />
                 {/* <Dropdown

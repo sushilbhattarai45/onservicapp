@@ -479,7 +479,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   marginTop: 12,
                 }}
               >
-                <Text>City *</Text>
+                <Text>City (Municipality/ Rural Municipality) *</Text>
                 <TextInput
                   style={[
                     styles.inputStyle,
@@ -494,7 +494,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   value={values.city}
                   onChangeText={handleChange("city")}
                   onBlur={() => setFieldTouched("city")}
-                  placeholder="City"
+                  placeholder="City (Eg. Butwal or Eg. Hetauda)"
                   placeholderTextColor={Colors.gray900}
                 />
                 {/* <Dropdown
@@ -550,7 +550,7 @@ const UpdateSpScreen = ({ route, navigation }) => {
                   value={values.street}
                   onChangeText={handleChange("street")}
                   onBlur={() => setFieldTouched("street")}
-                  placeholder="Street"
+                  placeholder="Street (optional)"
                   placeholderTextColor={Colors.gray900}
                   // placeholderStyle={{ color: Colors.gray900 }}
                 />
