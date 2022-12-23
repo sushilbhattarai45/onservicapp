@@ -20,13 +20,11 @@ connectDB();
 App.use(cors())
 
 App.use(Express.json());
-App.listen(3001, (req,res) => {
+App.listen(PORT, (req,res) => {
   console.log("listening on port " + PORT + hostName);
 });
 App.use("/uploads", Express.static("uploads"));
-// App.use("/", (req, res) => {
-//   res.send("ok");
-// });
+
 
 App.use("/v1/api/user", user_route);
 App.use("/v1/api/sp", sp_route);

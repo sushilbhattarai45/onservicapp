@@ -42,7 +42,7 @@ export const postSp = async (req, res) => {
       const sp_billid = Date.now();
       const exists = await spSchema.findOne({ sp_contact: sp_contact });
       if (!exists || exists?.length == 0) {
-        console.log(sp_whatsapp)
+        console.log(sp_whatsapp);
         const sp = new spSchema({
           sp_name: sp_name,
           user_id: user_id,
@@ -56,14 +56,14 @@ export const postSp = async (req, res) => {
           sp_street: sp_street,
           sp_createdBy: sp_createdBy,
           sp_gender: sp_gender,
-          sp_paid:sp_paid,
+          sp_paid: sp_paid,
           sp_location: sp_location,
-          sp_whatsapp:sp_whatsapp,
+          sp_whatsapp: sp_whatsapp,
           employee_contact: employee_contact,
           sp_toc: timeanddate,
           sp_profileImage: sp_profileImage,
           sp_media: sp_media,
-          sp_updatedBy:sp_updatedBy,
+          sp_updatedBy: sp_updatedBy,
         });
 
         if (sp_platform == "APP") {
@@ -199,11 +199,13 @@ export const getSearchedSp = async (req, res) => {
     try {
       console.log(city);
       if (city && city !== "") {
-        const spdata = await spSchema.find({
-          sp_skills: skill,
-          sp_district: city,
-          sp_status: "ACTIVE",
-        }).sort({ _id: -1 });
+        const spdata = await spSchema
+          .find({
+            sp_skills: skill,
+            sp_district: city,
+            sp_status: "ACTIVE",
+          })
+          .sort({ _id: -1 });
         console.log(spdata);
 
         return res.json({ statuscode: 201, data: spdata });
@@ -227,7 +229,7 @@ export const getSearchedSp = async (req, res) => {
 };
 
 export const getFilteredSubCat = async (req, res) => {
-  const { GIVEN_API_KEY, city } = req.body;
+  const { GIVEN_API_KEY, city, district } = req.body;
   if (GIVEN_API_KEY == API_KEY) {
     try {
       let subcatid = [];
@@ -235,7 +237,16 @@ export const getFilteredSubCat = async (req, res) => {
 
       if (city && city !== "") {
         const spdata = await spSchema.find({
-          sp_district: city,
+          sp_city: city,
+          sp_status: "ACTIVE",
+        });
+
+        const spddata = await spSchema.find({
+          sp_district: district,
+          sp_status: "ACTIVE",
+        });
+        const spnation = await spSchema.find({
+          sp_status: "ACTIVE",
         });
         console.log(spdata);
         let count = 0;
@@ -263,11 +274,55 @@ export const getFilteredSubCat = async (req, res) => {
             data: subcatid,
             subcat: subcatdetails,
           });
-        } else {
-          return res.json({
-            statuscode: 400,
+        } else if (spddata != 0) {
+          spddata.map((item) => {
+            item.sp_skills.map((skill) => {
+              if (!subcatid.includes(skill)) {
+                subcatid.push(skill);
+              }
+            });
+          });
 
-            message: "No Data found",
+          subcatdetails = await Promise.all(
+            subcatid.map(async (item) => {
+              const subcat = await subCatSchema.find({
+                subCat_name: item,
+              });
+              console.log(subcat[0]);
+              return subcat[0];
+            })
+          );
+
+          return res.json({
+            statuscode: 201,
+            data: subcatid,
+            subcat: subcatdetails,
+          });
+        } else {
+          spnation.map((item) => {
+            item.sp_skills.map((skill) => {
+              if (!subcatid.includes(skill)) {
+                subcatid.push(skill);
+              }
+            });
+          });
+
+          subcatdetails = await Promise.all(
+            subcatid.map(async (item) => {
+              const subcat = await subCatSchema.find({
+                subCat_name: item,
+              });
+              console.log(subcat[0]);
+              return subcat[0];
+            })
+          );
+
+          return res.json({
+            statuscode: 201,
+            spnation: "ok",
+
+            data: subcatid,
+            subcat: subcatdetails,
           });
         }
       } else {
@@ -369,20 +424,19 @@ export const getEmployeeCreatedSp = async (req, res) => {
     });
   }
 };
- export const getMoreskilledSp  = async (req, res) => {
+export const getMoreskilledSp = async (req, res) => {
   const { GIVEN_API_KEY, employee_contact } = req.body;
   console.log("apiKEy", GIVEN_API_KEY);
   if (GIVEN_API_KEY == API_KEY) {
     try {
       const data = await spSchema.find();
       const finaldata = [];
-      data.map(item => {
-        if (item.sp_skills.length > 1)
-        {
-          finaldata.push(item)
+      data.map((item) => {
+        if (item.sp_skills.length > 1) {
+          finaldata.push(item);
         }
-      })
-      
+      });
+
       return res.json({ statuscode: 201, data: finaldata });
     } catch (e) {
       return res.json({ error: e });
@@ -401,12 +455,12 @@ export const getimedSp = async (req, res) => {
     try {
       const data = await spSchema.find();
       const finaldata = [];
-      data.map(item => {
+      data.map((item) => {
         if (item.sp_toc.date == creationdate) {
-          finaldata.push(item)
+          finaldata.push(item);
         }
-      })
-      
+      });
+
       return res.json({ statuscode: 201, data: finaldata });
     } catch (e) {
       return res.json({ error: e });
@@ -417,4 +471,4 @@ export const getimedSp = async (req, res) => {
       error: "WrongApi Key",
     });
   }
-}
+};
