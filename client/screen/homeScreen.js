@@ -27,9 +27,8 @@ import SubCategoryGroupCard from "../component/subCategoryGroupCard";
 import Icon from "../component/Icon";
 
 import { axiosInstance } from "../component/tools";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppContext from "../component/appContext";
-import { API_KEY } from "@env";
+import { API_KEY, API_URL } from "@env";
 
 const wWidth = Dimensions.get("window").width;
 
@@ -73,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
       );
       let newaddons = await axiosInstance.post("/subcategories/newaddons", {
         GIVEN_API_KEY: API_KEY,
-      });
+      });   
       console.log("newaddons")
       console.log(newaddons.data.data)
       console.log(featuredOnHome.data);
@@ -109,7 +108,7 @@ const HomeScreen = ({ navigation }) => {
                   {/* {userData?.user_name} */}
                 </Text>
               ) : (
-                <Text style={styles.userName}>Hello User!</Text>
+                <Text style={styles.userName}>Hello User!{API_URL}</Text>
               )}
 
               <Text style={styles.userNeedHelp}>{livedistrict}</Text>
