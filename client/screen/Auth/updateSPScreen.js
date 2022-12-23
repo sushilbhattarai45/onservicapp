@@ -104,7 +104,6 @@ const userValidationSchema = yup.object().shape({
     .required(),
   photo: yup
     .array()
-    .min(1, "Please provide photos of work")
     .max(10, "Max of 10 photos can be added"),
   video: yup.string(),
 });

@@ -213,25 +213,32 @@ const SPProfileScreen = ({ navigation, route }) => {
           }
           color={Colors.white}
         />
-        <TouchableOpacity
-          activeOpacity={1}
-          style={{ backgroundColor: Colors.primary }}
-          onPress={async () => {
-            showVideoInFullscreen();
-          }}
-        >
-          <Video
-            ref={video}
-            style={styles.video}
-            source={{ uri: sp?.sp_media?.video }}
-            isMuted={videoMuted}
-            shouldPlay
-            resizeMode="cover"
-            pointerEvents="none"
-            onFullscreenUpdate={onFullscreenUpdate}
-            isLooping
+        {sp?.sp_media?.video ? (
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{ backgroundColor: Colors.primary }}
+            onPress={async () => {
+              showVideoInFullscreen();
+            }}
+          >
+            <Video
+              ref={video}
+              style={styles.video}
+              source={{ uri: sp?.sp_media?.video }}
+              isMuted={videoMuted}
+              shouldPlay
+              resizeMode="cover"
+              pointerEvents="none"
+              onFullscreenUpdate={onFullscreenUpdate}
+              isLooping
+            />
+          </TouchableOpacity>
+        ) : (
+          <Image
+            source={require("../assets/images/logo1.png")}
+            style={{ ...styles.video, backgroundColor: Colors.gray500, height: 200 }}
           />
-        </TouchableOpacity>
+        )}
         {/* <Text>Hello</Text> */}
         <View style={styles.profileContent}>
           <View
