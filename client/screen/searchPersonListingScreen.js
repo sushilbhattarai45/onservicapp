@@ -40,6 +40,7 @@ export default function SearchPersonListingScreen({ navigation }) {
       "focus",
       () => {
         getData();
+        setValue('')
         setSearchData([]);
         setSuggestionsActive(false);
         return unsubscribe;
