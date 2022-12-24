@@ -40,8 +40,8 @@ export default function SearchPersonListingScreen({ navigation }) {
       "focus",
       () => {
         getData();
+        setSearchData([]);
         setSuggestionsActive(false);
-
         return unsubscribe;
       },
       [navigation]
