@@ -2,11 +2,11 @@
   "expo": {
     "name": "ON Servic",
     "slug": "onserivc",
-    "version": "4.1",
+    "version": "5",
     "icon": "./assets/images/logo.png",
     "ios": {
       "bundleIdentifier": "com.onservic.app",
-      "buildNumber": "4.1"
+      "buildNumber": "5"
     },
     "splash": {
       "image": "./assets/images/Splash.png",
@@ -15,7 +15,7 @@
     "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.onservicapp.app",
-      "versionCode": 4.1
+      "versionCode": 5
     },
     "extra": {
       "eas": {
