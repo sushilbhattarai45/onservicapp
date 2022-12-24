@@ -4,20 +4,15 @@ import {
   Image,
   Text,
   View,
-  ImageBackground,
   ScrollView,
-  FlatList,
   Pressable,
-  TouchableWithoutFeedback,
   Keyboard,
-  TextInput,
   Linking,
 } from "react-native";
 import PersonCard from "../component/personCard";
 import Search from "../component/searchBar";
 import { API_KEY } from "@env";
 
-import { Constants } from "expo-constants";
 import { Colors } from "../styles/main";
 import AppContext from "../component/appContext";
 import { axiosInstance } from "../component/tools";
@@ -27,15 +22,8 @@ import { Districts } from "../component/district";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function SearchPersonListingScreen({ navigation }) {
-  const {
-    subCategories,
-    userData,
-    livedistrict,
-    coords,
-    setCoords,
-    lpermission,
-    setLpermission,
-  } = useContext(AppContext);
+  const { subCategories, userData, livedistrict, lpermission } =
+    useContext(AppContext);
 
   const [suggestions, setSuggestions] = useState([]);
   const [suggestionTouched, setSuggestionsTouched] = useState(false);
@@ -52,7 +40,8 @@ export default function SearchPersonListingScreen({ navigation }) {
       "focus",
       () => {
         getData();
-        //Put your Data loading function here instead of my loadData()
+        setSuggestionsActive(false);
+
         return unsubscribe;
       },
       [navigation]
