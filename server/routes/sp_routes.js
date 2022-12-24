@@ -14,6 +14,7 @@ import {
   updateSettings,
   getFilteredSubCat,
   getEmployeeCreatedSp,
+  getCatSp,
 } from "../controller/spController.js";
 router.route("/").get(test);
 router.route("/postsp").post(postSp);
@@ -27,5 +28,6 @@ router.route("/deletesp").post(deleteSp);
 router.route("/spbyemployee").post(getEmployeeCreatedSp);
 router.route("/moreskills").post(getMoreskilledSp);
 router.route("/gettimedsp").post(getimedSp);
+router.route("/getCatSp").post(getCatSp);
 
 export default router;

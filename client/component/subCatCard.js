@@ -17,6 +17,7 @@ export default function SubCategoryCard({
   name,
   subcat_id,
   district,
+  city,
   image,
 }) {
   const navigation = useNavigation();
@@ -26,7 +27,8 @@ export default function SubCategoryCard({
       style={[styles.Category, { ...containerStyle }]}
       onPress={() => {
         navigation.navigate("CategoryPersonListing", {
-          givencity: district,
+          givencity: city,
+          givendistrict: district,
           sub_name: name,
         });
       }}
@@ -40,8 +42,8 @@ export default function SubCategoryCard({
           style={{
             backgroundColor: "white",
             borderRadius: 5,
-            padding:2,
-            color: 'black',
+            padding: 2,
+            color: "black",
             fontSize: 11,
             fontWeight: "800",
             fontFamily: "Regular",

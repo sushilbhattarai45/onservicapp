@@ -195,6 +195,56 @@ export const getOneSp = async (req, res) => {
   }
 };
 
+export const getCatSp = async (req, res) => {
+  console.log("ok");
+  const { GIVEN_API_KEY, city, district, skill } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      console.log(city);
+      if (city && city !== "") {
+        const spdata = await spSchema.find({
+          sp_skills: skill,
+          sp_city: city,
+          sp_status: "ACTIVE",
+        });
+        const spddata = await spSchema
+          .find({
+            sp_skills: skill,
+            sp_district: district,
+            sp_status: "ACTIVE",
+          })
+          .sort({ _id: -1 });
+
+        if (spdata.length != 0) {
+          return res.json({ statuscode: 201, data: spdata });
+        } else if (spddata.length != 0) {
+          return res.json({ statuscode: 201, data: spddata });
+        } else {
+          const spnationdata = await spSchema.find({
+            sp_skills: skill,
+            sp_status: "ACTIVE",
+          });
+          return res.json({ statuscode: 201, data: spnationdata });
+        }
+      } else {
+        const spdata = await spSchema.find({
+          sp_skills: skill,
+          sp_status: "ACTIVE",
+        });
+        console.log(spdata);
+
+        return res.json({ statuscode: 201, data: spdata });
+      }
+    } catch (e) {
+      return res.json({
+        error: "Sry there is some error in our side",
+      });
+    }
+  } else {
+    return res.json({ statuscode: 700, message: "Wrong Api Key" });
+  }
+};
+
 export const getSearchedSp = async (req, res) => {
   const { GIVEN_API_KEY, city, skill } = req.body;
   if (GIVEN_API_KEY == API_KEY) {

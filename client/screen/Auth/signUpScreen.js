@@ -25,7 +25,7 @@ import { Colors } from "../../styles/main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import ModalPopup from "../../component/Modal";
 import { API_KEY } from "@env";
-
+import { Linking } from "react-native";
 import AppContext from "../../component/appContext";
 import { BASE_OUR_API_URL, getSms, uploadImage } from "../../component/tools";
 
@@ -594,6 +594,9 @@ export default registerUser = ({ navigation }) => {
                           color: errors.accepted ? Colors.black : Colors.red,
                           fontSize: 12,
                         }}
+                        onPress={() =>
+                          Linking.openURL("https://onservic.com/privacy.txt")
+                        }
                       >
                         I agree to the{" "}
                         <Text

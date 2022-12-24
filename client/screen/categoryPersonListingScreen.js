@@ -21,7 +21,7 @@ export default function CategoryPersonListingScreen({
   navigation,
   navigation: { goBack },
 }) {
-  const { livedistrict } = useContext(AppContext);
+  const { livedistrict, livedcity } = useContext(AppContext);
   const [rating, setRating] = useState(3);
   const { userData, logged } = useContext(AppContext);
   const { category_id, cat_name, givencity, sub_name } = route.params;
@@ -42,9 +42,10 @@ export default function CategoryPersonListingScreen({
     }
 
     async function getSpData() {
-      const data = await axiosInstance.post("sp/getSearchedSp", {
+      const data = await axiosInstance.post("sp/getCatSp", {
         GIVEN_API_KEY: API_KEY,
-        city: livedistrict,
+        city: livedcity,
+        district: livedistrict,
         skill: sub_name,
       });
       setSpData(data.data.data);

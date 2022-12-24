@@ -121,7 +121,12 @@ export default function SearchPersonListingScreen({ navigation }) {
             }}
           />
         </View>
-        <ScrollView keyboardShouldPersistTaps="handled">
+        <ScrollView
+          style={{
+            marginBottom: 50,
+          }}
+          keyboardShouldPersistTaps="handled"
+        >
           <View
             style={{
               marginTop: 5,
