@@ -130,9 +130,12 @@ const HomeScreen = ({ navigation }) => {
     let newaddons = await axiosInstance.post("/subcategories/newaddons", {
       GIVEN_API_KEY: API_KEY,
     });
+    let formatedNewAddons = [];
+    while (newaddons.data.data.length > 0)
+      formatedNewAddons.push(newaddons.data.data.splice(0, 2));
 
     if (!featuredOnHome.error) setFeatured(featuredOnHome.data);
-    if (!newaddons.error) setNewaddons(newaddons.data.data);
+    if (!newaddons.error) setNewaddons(formatedNewAddons);
     else setNewaddons(null);
 
     if (featuredOnHome.error || newaddons.error) {
@@ -361,45 +364,41 @@ const HomeScreen = ({ navigation }) => {
             >
               Newly added Services
             </Text>
-
-            <ScrollView
-              contentContainerStyle={{ alignItems: "flex-start" }}
+            <FlatList
+              data={newaddons}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
-            >
-              {newaddons &&
-                newaddons?.map((item, index) => {
-                  if (index % 2 == 0) {
-                    return (
-                      <View
-                        style={{
-                          justifyContent: "center",
-                          marginLeft: index === 0 ? 24 : 0,
-                          marginRight: index === newaddons.length - 1 ? 24 : 0,
-                        }}
-                      >
-                        <NewlyAddedServices
-                          image={item?.subCat_photo}
-                          name={item?.subCat_name}
-                          cat_id={item?._id}
-                          givencity={livedistrict}
-                          navigation={navigation}
-                        />
-                        {categories[index + 1] && (
-                          <NewlyAddedServices
-                            givencity={livedistrict}
-                            image={newaddons[index + 1]?.subCat_photo}
-                            cat_id={newaddons[index + 1]?._id}
-                            navigation={navigation}
-                            name={newaddons[index + 1]?.subCat_name}
-                            containerStyle={{ marginTop: 24, marginRight: 24 }}
-                          />
-                        )}
-                      </View>
-                    );
-                  }
-                })}
-            </ScrollView>
+              renderItem={({ item, index }) => {
+                return (
+                  <View
+                    style={{
+                      marginLeft: index === 0 ? 24 : 0,
+                      marginRight: index === newaddons?.length - 1 ? 24 : 0,
+                    }}
+                  >
+                    <NewlyAddedServices
+                      key={item[0]?.subCat_id}
+                      image={item[0]?.subCat_photo}
+                      name={item[0]?.subCat_name}
+                      cat_id={item[0]._id}
+                      givencity={livedistrict}
+                      navigation={navigation}
+                    />
+                    {item.length > 1 ? (
+                      <NewlyAddedServices
+                        key={item[1]?.subCat_id}
+                        image={item[1]?.subCat_photo}
+                        name={item[1]?.subCat_name}
+                        cat_id={item[1]._id}
+                        givencity={livedistrict}
+                        navigation={navigation}
+                        containerStyle={{ marginTop: 24, marginRight: 24 }}
+                      />
+                    ) : null}
+                  </View>
+                );
+              }}
+            />
           </View>
 
           {/* Add */}
