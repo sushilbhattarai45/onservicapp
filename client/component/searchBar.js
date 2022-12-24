@@ -22,7 +22,7 @@ export default function Search({
       />
       <TextInput
         style={[styles.input, inputStyle]}
-        placeholder={active ? "" : "Search for services"}
+        placeholder={active ? "" : "Search by Services & Location"}
         onChangeText={onChangeText}
         {...props}
       />

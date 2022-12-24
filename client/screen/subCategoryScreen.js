@@ -14,10 +14,7 @@ import { axiosInstance } from "../component/tools";
 import Search from "../component/searchBar";
 import { API_KEY } from "@env";
 
-export default function SubCategoryScreen({
-  route,
-  navigation: { goBack },
-}) {
+export default function SubCategoryScreen({ route, navigation: { goBack } }) {
   const { category_id, cat_name } = route.params;
   useEffect(() => {
     async function getAd() {
@@ -93,14 +90,13 @@ export default function SubCategoryScreen({
             }}
           />
         </View>
-
-        <View style={{ marginTop: 4 }}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={{
-              marginBottom: 16,
-            }}
-          >
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{
+            marginBottom: 50,
+          }}
+        >
+          <View style={{ marginTop: 4 }}>
             <View>
               {urisource ? (
                 <Pressable
@@ -149,8 +145,8 @@ export default function SubCategoryScreen({
                   : null}
               </View>
             </View>
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );

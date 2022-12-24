@@ -162,7 +162,7 @@ const HomeScreen = ({ navigation }) => {
                   {/* {userData?.user_name} */}
                 </Text>
               ) : (
-                <Text style={styles.userName}>Hello User!</Text>
+                <Text style={styles.userName}>Hi Guest User!</Text>
               )}
 
               <Text style={styles.userNeedHelp}>{livedcity}</Text>
@@ -445,6 +445,7 @@ const HomeScreen = ({ navigation }) => {
                     return (
                       <SubCatCard
                         key={item?._id}
+                        city={livedcity}
                         district={livedistrict}
                         image={item?.subCat_photo}
                         category_id={item?._id}

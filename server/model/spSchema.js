@@ -7,14 +7,14 @@ const sp = new mongoose.Schema({
   user_id: {
     type: String,
   },
-    sp_updatedBy: {
-      type: String,
-      default:"APP",
+  sp_updatedBy: {
+    type: String,
+    default: "APP",
   },
   sp_district: {
     type: String,
   },
-   sp_billid: {
+  sp_billid: {
     type: String,
   },
   sp_paid: {
@@ -54,7 +54,7 @@ const sp = new mongoose.Schema({
   },
   sp_status: {
     type: String,
-    default: "ACTIVE",
+    default: "INACTIVE",
   },
   sp_media: {
     photo: { type: Array },
@@ -65,7 +65,7 @@ const sp = new mongoose.Schema({
     default: "Onservic Service Provider",
   },
   sp_whatsapp: {
-    type:String,
+    type: String,
   },
   sp_showReview: {
     type: Boolean,

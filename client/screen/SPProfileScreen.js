@@ -963,7 +963,7 @@ const SPProfileScreen = ({ navigation, route }) => {
                 paddingVertical: 12,
                 // backgroundColor:'red'
               }}
-              onPress={() => Linking.openURL(`tel:${sp?.sp_contact}`)}
+              onPress={() => Linking.openURL(`tel:${sp?.sp_officeNumber}`)}
             >
               <Icon name="phone-fill" color={Colors.gray900} size={20} />
               <Text

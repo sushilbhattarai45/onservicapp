@@ -28,6 +28,7 @@ export const postSp = async (req, res) => {
     sp_location,
     sp_platform,
     sp_paid,
+    sp_status,
     employee_contact,
     sp_profileImage,
     sp_media,
@@ -44,6 +45,7 @@ export const postSp = async (req, res) => {
       if (!exists || exists?.length == 0) {
         console.log(sp_whatsapp);
         const sp = new spSchema({
+          sp_status: sp_status,
           sp_name: sp_name,
           user_id: user_id,
           sp_billid: sp_billid,
@@ -183,6 +185,56 @@ export const getOneSp = async (req, res) => {
       if (spdata) {
         return res.json({ statuscode: 201, data: spdata, message: "True" });
       } else return res.json({ statuscode: 400, message: "False" });
+    } catch (e) {
+      return res.json({
+        error: "Sry there is some error in our side",
+      });
+    }
+  } else {
+    return res.json({ statuscode: 700, message: "Wrong Api Key" });
+  }
+};
+
+export const getCatSp = async (req, res) => {
+  console.log("ok");
+  const { GIVEN_API_KEY, city, district, skill } = req.body;
+  if (GIVEN_API_KEY == API_KEY) {
+    try {
+      console.log(city);
+      if (city && city !== "") {
+        const spdata = await spSchema.find({
+          sp_skills: skill,
+          sp_city: city,
+          sp_status: "ACTIVE",
+        });
+        const spddata = await spSchema
+          .find({
+            sp_skills: skill,
+            sp_district: district,
+            sp_status: "ACTIVE",
+          })
+          .sort({ _id: -1 });
+
+        if (spdata.length != 0) {
+          return res.json({ statuscode: 201, data: spdata });
+        } else if (spddata.length != 0) {
+          return res.json({ statuscode: 201, data: spddata });
+        } else {
+          const spnationdata = await spSchema.find({
+            sp_skills: skill,
+            sp_status: "ACTIVE",
+          });
+          return res.json({ statuscode: 201, data: spnationdata });
+        }
+      } else {
+        const spdata = await spSchema.find({
+          sp_skills: skill,
+          sp_status: "ACTIVE",
+        });
+        console.log(spdata);
+
+        return res.json({ statuscode: 201, data: spdata });
+      }
     } catch (e) {
       return res.json({
         error: "Sry there is some error in our side",

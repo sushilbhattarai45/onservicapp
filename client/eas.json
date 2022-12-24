@@ -16,14 +16,12 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {
-      
-    }
+    "production": {}
   },
   "submit": {
     "production": {
-      "android":{
-        "serviceAccountKeyPath":"./playfile.json"
+      "android": {
+        "serviceAccountKeyPath": "../../playfile.json"
       }
     }
   }

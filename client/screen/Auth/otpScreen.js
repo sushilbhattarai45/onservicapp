@@ -98,12 +98,11 @@ export default function OtpScreen({ navigation, route }) {
             },
           }
         );
-        const finaldata = response?.data?.user;
-        console.log(finaldata);
-        setData(finaldata);
-        setUserData(finaldata);
-        setLogged("true");
 
+        console.log(response?.data?.user);
+        setData(response?.data?.user);
+        setUserData(response?.data?.user);
+        setLogged("true");
         setUser(values.phone);
         setIsitSp(null);
         await storeData(values.phone);

@@ -594,6 +594,102 @@ export default function UserProfileScreen({ navigation }) {
                 )}
               </View>
             </View>
+            <View
+              style={{
+                flex: 1,
+                paddingHorizontal: 24,
+                paddingVertical: 30,
+                backgroundColor: Colors.white,
+                marginTop: 5,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={require("../assets/images/onservicLogo.png")}
+                style={{ height: 30, width: 180 }}
+              />
+              <View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 4,
+                  }}
+                >
+                  <Icon name="phone-fill" size={14} color={Colors.gray900} />
+                  <Text
+                    style={{
+                      fontFamily: "Regular",
+                      fontSize: 12,
+                      color: Colors.gray900,
+                    }}
+                  >
+                    {" "}
+                    NTC 9762592690
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 4,
+                  }}
+                >
+                  <Icon name="phone-fill" size={14} color={Colors.gray900} />
+                  <Text
+                    style={{
+                      fontFamily: "Regular",
+                      fontSize: 12,
+                      color: Colors.gray900,
+                    }}
+                  >
+                    {" "}
+                    Ncell 9810623203
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 4,
+                  }}
+                >
+                  <Icon name="map-pin-fill" size={14} color={Colors.gray900} />
+                  <Text
+                    style={{
+                      fontFamily: "Regular",
+                      fontSize: 12,
+                      color: Colors.gray900,
+                    }}
+                  >
+                    {" "}
+                    Butwal 11, Rupandehi
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 4,
+                  }}
+                >
+                  <Icon name="chat-1-fill" size={14} color={Colors.gray900} />
+                  <Text
+                    style={{
+                      fontFamily: "Regular",
+                      fontSize: 12,
+                      color: Colors.gray900,
+                    }}
+                  >
+                    {" "}
+                    contact@onservic.com{" "}
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
         </SafeAreaView>
       </View>
